@@ -2,6 +2,7 @@ package pl.java.scalatech.domain;
 
 import java.io.Serializable;
 import java.time.LocalDate;
+import java.time.ZonedDateTime;
 
 import javax.persistence.EntityListeners;
 import javax.persistence.FetchType;
@@ -25,11 +26,11 @@ public abstract class Audit implements Serializable{
     private static final long serialVersionUID = 2663518387056045900L;
 
     @CreatedDate
-    private LocalDate createdDate = LocalDate.now();
+    private ZonedDateTime createdDate = ZonedDateTime.now();
 
     @LastModifiedDate
-    private LocalDate lastModifiedDate = LocalDate.now();
-
+    private ZonedDateTime lastModifiedDate = ZonedDateTime.now();
+    
     @CreatedBy
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn
