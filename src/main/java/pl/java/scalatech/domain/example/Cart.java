@@ -24,6 +24,6 @@ public class Cart extends AbstractEntity{
     @OneToMany(cascade=CascadeType.ALL)
     @OrderBy("name desc")
     @JoinColumn(name="cartId")
-    private List<Product> products;
+    private List<SimpleProduct> products;
     
 }

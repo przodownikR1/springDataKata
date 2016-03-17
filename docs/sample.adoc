@@ -1,0 +1,49 @@
+= Jpa and spring data kata
+
+#Sample demo to show how jpa work in effiecient way
+
+
+== Topic
+
+* Problem on granularity
+  Productivity 
+   - concentrate on the business problem 
+   - reduce develop time
+   
+  Maintainability
+    -reduce of LOC
+    - making system more understandable
+  Performance
+    - might be faster in the same query write in classic jdbc way
+    - enable caching in application tier
+  Vendor independence
+     - can help to flexible migrate data from one dataStore to other
+     
+     
+  * Modules: 
+     - EntityManager
+     - Validator - implementation on 
+     - Search - help in easy way handle lucene index. Allow on effient full-text search capabilities    
+     - OGM - support for NoSql database operation. Reusing Hibernate core engine to persistence and mapping nosql data.
+     - Envers - audit logging and keeping multiple version. Allow to show history operation is also similar to version control system like svn or git
+  
+* Problem of subtypes
+
+* Simple entity
+  - class must have @Entity annotation
+  - must have an identifier attribute like @Id
+  - someone must generate id number
+  - no argument constructor
+  - getter and setter for all interested fields
+  - 
+
+:source-highlighter: coderay
+
+[source,java]
+----
+System.out.println("test code");
+----
+
+
+
+

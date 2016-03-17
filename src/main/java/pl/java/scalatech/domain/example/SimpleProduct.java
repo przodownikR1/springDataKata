@@ -16,7 +16,7 @@ import pl.java.scalatech.domain.converter.MoneyConverter;
 @NoArgsConstructor
 @Builder
 @ToString
-public class Product extends AbstractEntity{
+public class SimpleProduct extends AbstractEntity{
     
     private String name;
     @Convert(converter = MoneyConverter.class)

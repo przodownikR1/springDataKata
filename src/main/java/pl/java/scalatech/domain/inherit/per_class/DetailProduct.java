@@ -11,7 +11,6 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import pl.java.scalatech.domain.converter.MoneyConverter;
-import pl.java.scalatech.domain.inherit.per_class.StockProduct.StockProductBuilder;
 
 @Entity
 @Table(name="details")

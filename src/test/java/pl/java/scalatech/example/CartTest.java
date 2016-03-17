@@ -18,7 +18,7 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import lombok.extern.slf4j.Slf4j;
 import pl.java.scalatech.config.TestJpaConfig;
 import pl.java.scalatech.domain.example.Cart;
-import pl.java.scalatech.domain.example.Product;
+import pl.java.scalatech.domain.example.SimpleProduct;
 import pl.java.scalatech.repository.CartRepository;
 
 @Slf4j
@@ -32,9 +32,9 @@ public class CartTest {
     @Test
     public void shouldPersistAndRetrieve(){
         CurrencyUnit currency = Monetary.getCurrency(Locale.US);
-        Product tv = Product.builder().name("tv").price(Money.of(10, currency)).build();
-        Product gameConsole = Product.builder().name("playstation").price(Money.of(100, currency)).build();
-        Product amplituner = Product.builder().name("amplituner").price(Money.of(45, currency)).build();
+        SimpleProduct tv = SimpleProduct.builder().name("tv").price(Money.of(10, currency)).build();
+        SimpleProduct gameConsole = SimpleProduct.builder().name("playstation").price(Money.of(100, currency)).build();
+        SimpleProduct amplituner = SimpleProduct.builder().name("amplituner").price(Money.of(45, currency)).build();
         Cart cart = Cart.builder().name("przodownik").products(newArrayList(tv,gameConsole,amplituner)).build();
         
         cartRepository.save(cart);
