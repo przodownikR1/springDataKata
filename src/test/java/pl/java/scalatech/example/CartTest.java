@@ -13,6 +13,7 @@ import org.javamoney.moneta.Money;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.autoconfigure.data.jpa.JpaRepositoriesAutoConfiguration;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
@@ -24,7 +25,7 @@ import pl.java.scalatech.repository.CartRepository;
 
 @Slf4j
 @RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration(classes=TestJpaConfig.class)
+@ContextConfiguration(classes={TestJpaConfig.class,JpaRepositoriesAutoConfiguration.class})
 public class CartTest {
     @Autowired
     private CartRepository cartRepository;
