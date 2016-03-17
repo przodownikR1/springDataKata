@@ -18,6 +18,8 @@
 	</appender>
 	
 	<logger name="org.springframework.aop.interceptor" level="trace" />
+	 <logger name="org.springframework.data" level="info" >
+    <logger name="org.hibernate" level="info"/>
 
 	<root level="INFO">
 	    <appender-ref ref="console"/>
