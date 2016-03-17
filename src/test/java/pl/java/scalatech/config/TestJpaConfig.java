@@ -13,24 +13,12 @@ import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 
 @Configuration
 
-@ComponentScan(basePackages= {"pl.java.scalatech.repository"})
-@EnableJpaRepositories(basePackages="pl.java.scalatech.repository")
-@EntityScan(basePackages="pl.java.scalatech.domain")
-@PropertySource(value="classpath:application-test.properties")
-@Import({DataSourceAutoConfiguration.class, HibernateJpaAutoConfiguration.class,PersistenceExceptionTranslationAutoConfiguration.class,
-    PropertyPlaceholderAutoConfiguration.class})
+@ComponentScan(basePackages = { "pl.java.scalatech.repository" })
+@EnableJpaRepositories(basePackages = "pl.java.scalatech.repository")
+@EntityScan(basePackages = "pl.java.scalatech.domain")
+@PropertySource(value = "classpath:application-test.properties")
+@Import({ DataSourceAutoConfiguration.class, HibernateJpaAutoConfiguration.class, PersistenceExceptionTranslationAutoConfiguration.class,
+        PropertyPlaceholderAutoConfiguration.class })
 public class TestJpaConfig {
 
- /* //TODO how to set minimal spring boot config to start working log sql 
-    @Bean
-    @Primary
-    public JpaVendorAdapter jpaVendorAdapter() {
-        HibernateJpaVendorAdapter hibernateJpaVendorAdapter = new HibernateJpaVendorAdapter();
-        hibernateJpaVendorAdapter.setShowSql(true);
-        hibernateJpaVendorAdapter.setGenerateDdl(true);
-        hibernateJpaVendorAdapter.setDatabase(Database.HSQL);
-        hibernateJpaVendorAdapter.setDatabasePlatform("org.hibernate.dialect.HSQLDialect");
-        hibernateJpaVendorAdapter.getJpaPropertyMap().put("hibernate.generate_statistics", true);
-        return hibernateJpaVendorAdapter;
-    }*/
 }
