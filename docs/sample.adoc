@@ -256,6 +256,14 @@ ISBN id;
 String title;
 ----
 
+== Pitfalls
+ n+1 selects problem
+ https://dzone.com/articles/pitfalls-hibernate-second-0
+ https://blog.srcclr.com/jpa-query-performance/
+ http://www.developerfusion.com/article/84945/flush-and-clear-or-mapping-antipatterns/
+ http://lorenzo-dee.blogspot.com/2016/01/jpa-pitfalls-mistakes.html
+
+
 == O mnie
 * programista
 * blog link:http://przewidywalna-java.blogspot.com[]
