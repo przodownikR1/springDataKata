@@ -256,6 +256,9 @@ ISBN id;
 String title;
 ----
 
+
+
+
 == Pitfalls
  n+1 selects problem
  https://dzone.com/articles/pitfalls-hibernate-second-0

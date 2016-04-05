@@ -1,0 +1,121 @@
+= JPA/Hibernate camp
+:docInfo1
+:numbered:
+:icons: font
+:pagenums:
+:imagesdir: images
+:source-highlighter: coderay
+
+:image-link: https://pbs.twimg.com/profile_images/425289501980639233/tUWf7KiC.jpeg
+
+ifndef::sourcedir[:sourcedir: ./src/main/java/]
+
+#Sample demo to show how jpa work in effiecient way
+
+
+== Topic
+
+* Problem on granularity
+
+== Minimalna konfiguracja projektu :
+
+ * Maven
+ 
+ * Gradle
+ 
+ 
+* Connection pooling
+
+Tworzenie  połączeń do bazy danych  jest kosztowne.
+Hibernate dostarcza gotowe rozwiązanie do poolingu. Jednak rozwiązanie nie jest zalecane w produkcyjnym środowisku.
+Zalecane w środowiskach produkcyjnych jest wykorzystanie zewnętrzych poll poprzez odwołania z JNDI lub konfigurowane zewnętrznie poprzez classpath czy odpowienie pliki properties.
+
+Przykład zewnętrznej puli połączeń c3p0: 
+
+[source,xml]
+----
+<dependencies>
+   <dependency>
+       <groupId>org.hibernate</groupId>
+       <artifactId>hibernate-c3p0</artifactId>
+       <version>[4.2.6,4.2.9)</version>
+    </dependency>
+  <dependency>
+       <groupId>com.mchange</groupId>
+       <artifactId>c3p0</artifactId>
+       <version>[0.9.2.1,)</version>
+  </dependency>
+</dependencies>
+----
+
+Aby użyć powyższą konfigurację c3p0 wszystko co musimy zrobić to dodać wpis do konfiguracji hibernate: 
+[source,xml]
+----
+<property name="c3p0.timeout">10</property>
+----
+W ten sposób Hibernate wyłączy wewnętrzną pulę połączeń i przestawi się na zewnętrzną.
+
+* Inne rozwiązania to : 
+   http://proxool.sourceforge.net/
+   boneCp
+   Apache poll connection
+   hikarii
+   Spring poll connection
+   
+   
+== Cykl życia   
+ * Transient - obiekt istnie w pamięci i jest rozłączony od kontekstu Hibernate. Taki obiekt nie może być zarządzany przez Hibernate
+ * Persistence - obiekt istnieje w bazie danych. Obiekt jest zarządzany przez Hibernate
+ * Detached - obiekt ma reprezentacje w bazie danych , ale zmiana wartości obiektu nie ma wpływu na reprezentacje bazodanową i odwrotnie.
+ * Removed - obiekty były zarządzane przez Hibernate, ale w wyniku operacji remove() zostały skasowane z bazy danych.
+ 
+ 
+== Identyfikatory
+[source,xml]
+----
+@Id
+public Long id;
+----
+
+== Relacje
+* One-To-One
+[source,xml]
+----
+@Entity
+public class Message {
+@Id
+Long id;
+
+@Column
+String content;
+ 
+@OneToOne
+Email email;
+
+}
+//ommit mutators and accessors 
+}
+----
+* One-To-Many
+* Many-To-One
+* Many-To-Many
+
+
+   
+== Walidacja
+
+== Problemy wydajnościowe
+
+== Rozwiązywanie problemów
+
+== Dobre praktyki
+
+
+== O mnie
+* programista
+* blog link:http://przewidywalna-java.blogspot.com[]
+* image:{image-link} [role='img-circle']
+
+
+http://undermineddeveloper.com/2013/09/11/hibernating/
+
