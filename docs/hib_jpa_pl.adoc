@@ -322,6 +322,9 @@ public Long id;
 ----
 
 == Relacje
+
+@JoinColumn + @JoinTable
+
 * One-To-One 1:1
 [source,xml]
 ----
@@ -612,6 +615,10 @@ A common mistake when designing entity models is to try to make all associations
 Load vs get
 Lepiej na początku jest sprawdzić czy obiekt jest null czy nie jeśli chcemy użyć metody get(). (NullPointerException problem)
 
+Unikaj relacji dwukierunkowych
+ - tight coupling
+ - cykliczność
+ - utrzymanie spójności
 
 
 == O mnie
