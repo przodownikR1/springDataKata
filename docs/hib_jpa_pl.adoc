@@ -15,14 +15,118 @@ ifndef::sourcedir[:sourcedir: ./src/main/java/]
 
 == Topic
 
+* Zalety
+
+Standardowe podejście oparte na JDBC wymaga od programisty następujących czynności: 
+ Opening a database connection
+ Maintaining an open connection
+ Building a query
+ Executing a query
+ Getting a response to the query
+ Mapping the query response with the custom classes
+ Closing the database connection
+
+Czyli ORM : 
+ - redukuje znaczenie ilość kodu potrzebnego to stworzenia i wykonania zapytania 
+ - redukuje koszt i czas deploymentu
+ - zwiększa szybkość wytwarzania (produktywność - metaDane, query data)
+ - dostarcza mechanizmy przenośności na inne bazy (nie musimy ograniczać się do danego typu bazy )  
+   * Dostępne dialekty : 
+	 DB2Dialect (supports DB2)
+	 FrontBaseDialect
+	 HSQLDialect
+	 InformixDialect
+	 IngresDialect
+	 InterbaseDialect
+	 MySQLDialect
+	 Oracle8Dialect
+	 Oracle9Dialect
+	 Oracle10Dialect
+	 PointbaseDialect
+	 PostgreSQLDialect
+	 ProgressDialect
+	 SybaseDialect 
+   
+ 
+ - idealnie nadaje się do protytypowania 
+
+Dodatkowo otwiera możliwości : 
+ - reużywalności kodu
+ - zarządzania transakcjami
+ - wydajnego operowania na kolekcjach relacji
+ - wbudowany mechanizm cache'u
+ - wprowadza obiektowe techniki do świata relacyjnych baz danych
+
+Wady: 
+- krzywa nauki 
+- dodatkowy narzut na zapytania (overhead)
+- w pewnych przypadkach powoduje spadek wydajności z stosunku do zwykłych zapytania JDBC
+ 
+
+== Moduły
+* Hibernate Core 
+ - odpowiada za generowanie natywnych kwerent SQL
+ - dostarcza dialekty 
+ - dostarcza mechanizmy obsługi i translacji zapytań jak : HQL, Criteria Query czy QBE
+ - odpowiada za buforowanie i efektywne pobieranie danych - czyli optymalizuje zapytania 
+* Hibernate Annotation
+ - dostarcza znacziki metadanych równorzędne do konfiguracji mapować w XML
+* Hibernate EntityManager
+ - jest implementacją interfejsu JPA
+* Hibernate Search
+ - dostarcza rozwiązań użycia indeksów Lucene
+* Hibernate Validator
+ - obsługa walidacji danych
+* Hibernate OGM
+ - rozwiazania NoSql
+   
+
 * Problem on granularity
 
 == Minimalna konfiguracja projektu :
 
- * Maven
+== Hibernate
+* Maven
+[source,xml]
+-----
+   <dependencies>
+		<dependency>
+			<groupId>org.hibernate</groupId>
+			<artifactId>hibernate-core</artifactId>
+			<version>4.3.5.Final</version>
+		</dependency>
+	</dependencies>
+-----
  
- * Gradle
+* Gradle
  
+ * Konfiguracja bazy 
+ * maven
+[source,xml]
+----
+  <dependency>
+    <groupId>com.h2database</groupId>
+    <artifactId>h2</artifactId>
+    <version>1.4.178</version>
+</dependency>
+----
+* Możliwe typy konfiguracji : 
+  - konfiguracja bezpośrednio w kodzie
+[source,java]
+----
+   Configuration configuration = new Configuration().addResource("Book.hbm.xml")
+.setProperty("hibernate.dialect", "org.hibernate.dialect.DerbyTenSevenDialect")
+.setProperty("hibernate.connection.driver_class", "org.apache.derby.jdbc.EmbeddedDriver")
+.setProperty("hibernate.connection.url", "jdbc:derby://localhost:1527/BookDB")
+.setProperty("hibernate.connection.username", "book")
+.setProperty("hibernate.connection.password", "book");
+ 
+ServiceRegistry serviceRegistry = new StandardServiceRegistryBuilder().applySettings(configuration.getProperties()).build();
+sessionFactory = configuration.buildSessionFactory(serviceRegistry);
+----
+  - konfiguracja xml 
+  - konfiguracja z użyciem plików properties
+  
  
 * Connection pooling
 
@@ -68,7 +172,76 @@ W ten sposób Hibernate wyłączy wewnętrzną pulę połączeń i przestawi si�
  * Persistence - obiekt istnieje w bazie danych. Obiekt jest zarządzany przez Hibernate
  * Detached - obiekt ma reprezentacje w bazie danych , ale zmiana wartości obiektu nie ma wpływu na reprezentacje bazodanową i odwrotnie.
  * Removed - obiekty były zarządzane przez Hibernate, ale w wyniku operacji remove() zostały skasowane z bazy danych.
+
+==Session Factory
+[source,java]
+----
+----
+SessionFactory factory = configuration.buildSessionFactory(serviceRegistry);
+
+[source,xml]
+----
+<hibernate-configuration>
+<session-factory>
+<!-- H2 Configuration -->
+<property name="connection.driver_class">org.h2.Driver</property>
+<property name="connection.url">jdbc:h2:file:./chapter1</property>
+<property name="connection.username">sa</property>
+<property name="connection.password"></property>
  
+<property name="hibernate.dialect">org.hibernate.dialect.H2Dialect</property>
+<property name="hibernate.show_sql">true</property>
+<property name="hibernate.hbm2ddl.auto">create</property>
+<mapping resource="Book.hbm.xml"/>
+<mapping resource="Publisher.hbm.xml"/>
+</session-factory>
+</hibernate-configuration>
+----
+ 
+A session factory is a global object for maintaining org.hibernate.Session objects. It i’s
+instantiated once and i’s thread-safe.
+ 
+== Tworzenie i zamykanie sesji
+A Hibernate Session object represents a unit of work and is bound to the current thread. It also represents a
+transaction in a database. A session begins when getCurrentSession() is first called on the current thread.
+The Session object is then bound to the current thread. When the trans
+[source,java]
+----
+Session session = factory.openSession();
+try {
+// Using the session to retrieve objects
+}catch(Exception e)
+{
+e.printStackTrace();
+} finally {
+session.close();
+}
+----
+
+== Użycie annotacji Hibernate i JPA (podstawy)
+
+@Entity - annotation is defined by the JPA 2.0 specification to annotate an entity bean. An entity
+represents a lightweight persistent domain object or a Plain Old Java Object (POJO).
+ The entities can be accessed
+through the JPA javax.persistence.EntityManager or the Hibernate org.hibernate.Session object.
+ An entity class must have a public or protected no-arg constructor, and it can have other constructors
+as well. It should be a top-level class and must not be final. If the entity is to be passed by value (that is,
+through a remote interface), it must implement a Serializable interface.
+Every entity must have a
+primary key that must be declared only once in the entity hierarchy.
+
+@Id -  primary key
+
+•	 Database sequence
+•	 Native generator
+•	 Increment generator
+•	 Hilo generator
+
+@Column
+
+@Transient
+
+Komponenty zagnieżdzone 
  
 == Identyfikatory
 [source,xml]
@@ -100,13 +273,182 @@ Email email;
 * Many-To-One
 * Many-To-Many
 
-
+== Object Equality and Identity
    
+== Pobieranie encji
+* load()
+
+Na podstawie danego Id metoda load próbuje pobrać obiekt z bazy danych. Jeśli obiekt nie istnieje wyrzucany jest wyjątek org.hibernate.ObjectNotFoundException
+Metoda load() zwraca też proxy, oznacza to tyle, że nie nastąpi uderzenie do bazy danych do czasu kiedy faktycznie będziemy potrzebować danego obiektu.
+Proxy zwraca daną sesję , która jest skojarzona z encją. 
+
+
+[source,java]
+----
+public Object load(Class theClass, Serializable id) throws HibernateException
+public Object load(String entityName, Serializable id) throws HibernateException
+public void load(Object object, Serializable id) throws HibernateException
+----
+
+* Lock
+
+* NONE: Uses no row-level locking, and uses a cached object if available; this is the Hibernate default.
+* READ: Prevents other SELECT queries from reading data that is in the middle of a transaction (and thus possibly invalid) until it is committed.
+As usual, there’s more to this than we’re discussing here. We’ll add more methods to this list as we keep going through Hibernate’s
+capabilities. We’re keeping the list small for simplicity’s sake.
+* UPGRADE: Uses the SELECT FOR UPDATE SQL syntax to lock the data until the transaction is finished.
+* UPGRADE_NOWAIT: Uses the NOWAIT keyword (for Oracle), which returns an error immediately if there is another thread using that row; otherwise this is similar to UPGRADE.
+* FORCE: Similar to UPGRADE but increments the version for objects with automatic versioning when loaded.
+
+[source,java]
+----
+public Object load(Class theClass, Serializable id, LockMode lockMode) throws HibernateException 
+public Object load(String entityName, Serializable id, LockMode lockMode) throws HibernateException
+----
+ 
+ 
+ You should not use a load() method unless you are sure that the object exists. If you are not certain, then use
+one of the get() methods. The load() methods will throw an exception if the unique ID is not found in the database,
+whereas the get() methods will merely return a null reference.
+ 
+
+* get()   
+
+Na podstawie danego Id metoda get() próbuje pobrać obiekt z bazy danych. Jeśli obiekt nie istnieje zwraca null.
+Metoda get() w przeciwieństwie do metody load() uderza do bazy bezpośrednio.
+ 
+[source,java]
+----
+public Object get(Class clazz, Serializable id) throws HibernateException
+public Object get(String entityName, Serializable id) throws HibernateException
+public Object get(Class clazz, Serializable id, LockMode lockMode) throws HibernateException
+public Object get(String entityName, Serializable id, LockMode lockMode) throws HibernateException
+----
+
+
+przykład : 
+[source,java]
+----
+Book book = (Book) session.load(Book.class, isbn);
+
+Book book = (Book) session.get(Book.class, isbn);
+----
+
+== Zapytania
+[source,java]
+----
+Query query = session.createQuery("from Book");
+List books = query.list();
+
+Query query = session.createQuery("from Book where isbn = ?");
+query.setString(0, isbn);
+Book book = (Book) query.uniqueResult();
+----
+
+
+
+== Merge
+
+Merge jest odwrotną operacją do operacji refresh()
+Nadpisuje encje w bazie danych wartościami encji odłączonych.
+
+== Odświeżanie encji (Refreshing Entities)
+
+Metoda reload odświeża wartości dla encji wartościami z bazy danych. (odwrotność do merge)
+
+[source,java]
+----
+public void refresh(Object object)  throws HibernateException
+ 
+public void refresh(Object object, LockMode lockMode)  throws HibernateException
+----
+
+* Hibernate
+[source,java]
+----
+Object merge(Object object)
+ 
+Object merge(String entityName, Object object)
+----
+
+* JPA
+
+== Użycie EntityManager'a [JPA]
+
+* Zależności 
+[source,xml]
+----
+<dependency>
+  <groupId>org.hibernate</groupId>
+  <artifactId>hibernate-entitymanager</artifactId>
+  <version>4.3.5.Final</version>
+</dependency>
+----
+
+EntityManagerFactory(JPA) = SessionFactory(Hibernate)
+Może być programowalny manualnie lub przy pomocy pliku persistence.xml, który to musi znajdować się w classpath projektu.
+
+Plik persistence.xml jest unikalny dla danego kontekstu persistence unit.
+
+Przykładowy plik persistence.xml
+[source,xml]
+----
+<persistence xmlns="http://java.sun.com/xml/ns/persistence"
+xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+xsi:schemaLocation="http://java.sun.com/xml/ns/persistence http://java.sun.com/xml/ns/persistence/persistence_2_0.xsd" version="2.0">
+<persistence-unit name="myPu" transaction-type="RESOURCE_LOCAL">
+<mapping-file>Author.hbm.xml</mapping-file>
+<mapping-file>Book.hbm.xml</mapping-file>
+ 
+<class>domain.Author</class>
+<class>domain.Book</class>
+ 
+<properties>
+<property name="javax.persistence.jdbc.driver" value="org.h2.Driver"/>
+<property name="javax.persistence.jdbc.user" value="sa"/>
+<property name="javax.persistence.jdbc.password" value=""/>
+<property name="javax.persistence.jdbc.url" value="jdbc:h2:file:~/testjpa"/>
+<property name="hibernate.dialect" value="org.hibernate.dialect.HSQLDialect"/>
+<property name="hibernate.hbm2ddl.auto" value="create"/>
+<property name="hibernate.show_sql" value="true"/>
+</properties>
+</persistence-unit>
+</persistence>
+----   
+
+RESOURCE_LOCAL transaction - sama aplikacja zarządza transakcjami .
+
+JTA transaction - transakcjami zarządza kontener na serwerze aplikacyjnym
+
+Zestawienie EntityManagera
+[source,java]
+----
+public static EntityManager getEntityManager() {
+ EntityManagerFactory managerFactory = Persistence.createEntityManagerFactory("myPu");
+ EntityManager manager = managerFactory.createEntityManager(); 
+return manager;
+}
+----
+
+== Logowanie zdarzeń
+[source,xml]
+----
+<property name="show_sql">true</property>
+----
+
+* Włączenie  Live Statistics
+[source,xml]
+----
+<property name="hibernate.generate_statistics">true</property>
+----
+
+
 == Walidacja
 
 == Problemy wydajnościowe
 
 == Rozwiązywanie problemów
+A common mistake when designing entity models is to try to make all associations bidirectional
 
 == Dobre praktyki
 
