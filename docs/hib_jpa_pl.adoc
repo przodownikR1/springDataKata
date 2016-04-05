@@ -602,6 +602,105 @@ cascade="save-update, delete
 
 == Kaskadowość
 
+== Cache level One
+Activated by default
+
+Linked to the Hibernate session
+
+Stores all entities that were used within a session
+
+== Cache level two
+
+Session independent entity store
+Needs to be activated
+persistence.xml or EntityManagerFactory
+Transparent usage
+PersistenceProvider doesn‘t need to provide it Not always portable
+
+
+Cache configuration
+
+Cache Retrieve Mode
+How to read entities from the cache
+
+Cache Store Mode
+How to write entities to the cache
+
+Concurrency Strategy
+How to handle concurrent access
+
+
+Stores query results for a query and its parameters
+
+[„FROM Author WHERE id=?“, 1]     [1]
+
+Stores only entity references or scalars
+
+Always use together with 2nd Level Cache
+
+
+Hibernate specific
+
+Stores query result session independent
+
+Needs to be activated
+persistence.xml: hibernate.cache.use_query_cache = true
+
+Activate caching for a specific query
+org.hibernate.Query.setCacheable(true)
+@NamedQuery(… hints = @QueryHint(name="org.hibernate.cacheable", value="true"))
+
+
+== FetchType
+* Lazy
+* Eager
+* Fetch all required entities with one query
+ - Fetch Join
+[source,java]
+----
+List<Author> authors = this.em.createQuery(
+		"SELECT DISTINCT a FROM Author a JOIN FETCH a.books b", 
+		Author.class).getResultList();
+----
+
++ Relationships gets loaded in same query
+- Requires a special query for each use case
+- Creates cartesian product
+
+		 
+ - @NamedEntityGraph
+ Declaratively defines a graph of entities which will be loaded
+[source,java]
+----
+@NamedEntityGraph(
+	name = "graph.AuthorBooksReviews", 
+
+	attributeNodes = 
+@NamedAttributeNode(value = "books")
+)
+----
+
+
+
+Graph is query independent
+
+ 
+ - EntityGraph
+
+== Zapytania natywne  
+
+SqlResultSetMapping
+
+@SqlResultSetMapping(
+	name		= "myResultMapping ",
+	entities		= {@EntityResult(...), …},
+	classes	= {@ConstructorResult (…), …},
+	columns	= {@ColumnResult(…), …}
+)
+
+this.em.createNativeQuery(“Select …", "myResultMapping")
+
+
 == Orphal Removal
 
 == Walidacja
@@ -610,11 +709,24 @@ cascade="save-update, delete
 
 * N+1
 * Paginacja
+* 
+
+
 
 == Rozwiązywanie problemów
 A common mistake when designing entity models is to try to make all associations bidirectional
 
 * kłopoty z pamięcią
+
+* Problemy z wydajnością mechnika : 
+ - sprawdź wygenerowane SQL
+ - sprawdź execution plan 
+ - sprawdź poprawność indeksów bazodanowych
+ - próba optymalizacji zapytania
+ - próba rozważenia zapytania natywnego
+     - jpql wspiera tylko niektóre podzbiory features z bazy danych 
+     - SQL dla danej bazy może być wysoce wyspecjalizowany
+      
 
 
 == Dobre praktyki
@@ -630,7 +742,8 @@ A common mistake when designing entity models is to try to make all associations
  - utrzymanie spójności (musimy pamiętać aby obsłużyć dwie strony relacji)
  - paginacja
  - DDD agregacja
-
+ - unikaj merge 
+ - unikaj obiektów odłączonych
 
 == O mnie
 * programista
