@@ -48,8 +48,8 @@ Czyli ORM :
 	 SybaseDialect 
    
  
- - idealnie nadaje się do protytypowania 
-
+ - idealnie nadaje się do protytypowania  
+ 
 Dodatkowo otwiera możliwości : 
  - reużywalności kodu
  - zarządzania transakcjami
@@ -61,6 +61,7 @@ Wady:
 - krzywa nauki 
 - dodatkowy narzut na zapytania (overhead)
 - w pewnych przypadkach powoduje spadek wydajności z stosunku do zwykłych zapytania JDBC
+- wraz ze wzrostem złożoności modelu domenowego występują trudności z mapowaniem, wydajnością. Skutkuje to często wprowadzaniem 'haków' 
  
 
 == Moduły
@@ -169,11 +170,31 @@ W ten sposób Hibernate wyłączy wewnętrzną pulę połączeń i przestawi si�
    
 == Cykl życia   
  * Transient - obiekt istnie w pamięci i jest rozłączony od kontekstu Hibernate. Taki obiekt nie może być zarządzany przez Hibernate
- * Persistence - obiekt istnieje w bazie danych. Obiekt jest zarządzany przez Hibernate
- * Detached - obiekt ma reprezentacje w bazie danych , ale zmiana wartości obiektu nie ma wpływu na reprezentacje bazodanową i odwrotnie.
+   Tworzony za pomocą operatora new. Nie skojarzony z sesją.
+   
+   Utrwalenie:  save(), persist(), saveOrUpdate()
+   save() i persist() -> Insert
+   update() i merge() -> Update
+   
+ * Persistence - obiekt istnieje w bazie danych. Obiekt jest zarządzany przez Hibernate czyli jest związany z sesją.
+ 
+   Usunięcie : delete()
+ 
+ * Detached - obiekt ma reprezentacje w bazie danych, ale zmiana wartości obiektu nie ma wpływu na reprezentacje bazodanową i odwrotnie.
+   Był trwały ale został odłączony od sesji.
+   Możliwy do modyfikacji poza kontekstem.
+   Przyłączenie do sesji jest możliwe
  * Removed - obiekty były zarządzane przez Hibernate, ale w wyniku operacji remove() zostały skasowane z bazy danych.
 
 ==Session Factory
+
+- Służy do tworzenia obiektów Session (tworzenie, zarządzanie i pobieranie Session) 
+- Jedna na kontekst (singleton pattern)
+- thread-safe (immutable)
+- ciężka i kosztowna do stworzenia
+- konfigurowalna programowo lub poprzez konfiguracją xml
+
+
 [source,java]
 ----
 ----
@@ -198,10 +219,37 @@ SessionFactory factory = configuration.buildSessionFactory(serviceRegistry);
 </hibernate-configuration>
 ----
  
-A session factory is a global object for maintaining org.hibernate.Session objects. It i’s
-instantiated once and i’s thread-safe.
+
+ 
+== Session 
+- 'Unit of work'
+-  Obsługuje transakcje
+-  Lekka i szybka do stworzenia
+-  można ją traktować jako fizyczne buforowalne połączenie z bazą danych  
+    
+Otwieranie nowej sesji : 
+[source,java]
+----
+Session session = sessionFactory.openSession();
+----
+
  
 == Tworzenie i zamykanie sesji
+
+Otwieranie nowej sesji dla każdej transakcji bazowanowej jest dobrą praktyką (wielowątkowość)
+
+
+
+SessionFactory sessionFactory =
+HibernateUtil.getSessionFactory();
+Session session = sessionFactory.getCurrentSession();
+It may seem easy to get the current session, but the twist here is that you have to provide
+more configuration to the Configuration object if you plan to reuse the Session , as
+shown in the following code:
+<property name="hibernate.current_session_context_class">
+Thread
+</property>
+
 A Hibernate Session object represents a unit of work and is bound to the current thread. It also represents a
 transaction in a database. A session begins when getCurrentSession() is first called on the current thread.
 The Session object is then bound to the current thread. When the trans
@@ -217,6 +265,8 @@ e.printStackTrace();
 session.close();
 }
 ----
+
+== Opening a stateless session
 
 == Użycie annotacji Hibernate i JPA (podstawy)
 
@@ -241,7 +291,28 @@ primary key that must be declared only once in the entity hierarchy.
 
 @Transient
 
+
+@UniqueConstraint(columnNames = { "id" , "empCode"}))
+
 Komponenty zagnieżdzone 
+
+
+composite primary key column – @Id and @IdClass
+
+
+@ElementCollection(fetch=FetchType.LAZY)
+@CollectionTable(name = "email")
+@IndexColumn(name="email_index")
+private List<String> emails;
+
+@CollectionTable : This annotation indicates that the current field is of the
+Collection type, and hibernate creates a separate table for it. It also creates a
+reference between them. In this case, hibernate creates a table named email with
+email and employee_id . The employee_id column is made by joining the persisted
+class name and the primary key column of the employee class with an underscore ( _ ).
+f f @ElementCollection : This annotation is used to define the relationship with the
+embedded or basic type.
+
  
 == Identyfikatory
 [source,xml]
@@ -251,7 +322,7 @@ public Long id;
 ----
 
 == Relacje
-* One-To-One
+* One-To-One 1:1
 [source,xml]
 ----
 @Entity
@@ -269,9 +340,13 @@ Email email;
 //ommit mutators and accessors 
 }
 ----
-* One-To-Many
-* Many-To-One
-* Many-To-Many
+* One-To-Many 1:N
+Za pomoca kluczu obcego
+
+Za pomoca kluczu głównego
+
+* Many-To-One N:1
+* Many-To-Many N:M
 
 == Object Equality and Identity
    
@@ -280,7 +355,9 @@ Email email;
 
 Na podstawie danego Id metoda load próbuje pobrać obiekt z bazy danych. Jeśli obiekt nie istnieje wyrzucany jest wyjątek org.hibernate.ObjectNotFoundException
 Metoda load() zwraca też proxy, oznacza to tyle, że nie nastąpi uderzenie do bazy danych do czasu kiedy faktycznie będziemy potrzebować danego obiektu.
-Proxy zwraca daną sesję , która jest skojarzona z encją. 
+Proxy zwraca dummy object zamiast uderzyć do db. Jeśli obiekt jest w first-level cache zwróci obiekt.
+Jeśli obiektu nie ma w first-level-cache uderzy do bazy.
+
 
 
 [source,java]
@@ -344,6 +421,40 @@ Query query = session.createQuery("from Book where isbn = ?");
 query.setString(0, isbn);
 Book book = (Book) query.uniqueResult();
 ----
+
+== Usuwanie obiektów z bazy
+DELETE FROM employee WHERE id=1;
+[source,java]
+----
+Book book = (Book) session.get(Book.class,new Long(1));
+session.delete(book);
+----
+Metoda ta wyrzuci wyjątek jeśli obiekt o podanym identyfikatorze nie istnieje w bazie (java.lang.IllegalArgumentException)
+
+
+If the record does not exist in the database, you will face the Exception in thread
+"main" java.lang.IllegalArgumentException: attempt to create delete
+event with null entity exception because get() returns the null object while you try
+to delete that object.
+However, if you use the following code to delete the record, you will face another type of error:
+Employee employee = new Employee();
+employee.setId(1);
+session.delete(employee);
+When the preceding code is executed, you will face the Exception in thread "main"
+org.hibernate.StaleStateException: Batch update returned unexpected
+row count from update [0]; actual row count: 0; expected: 1 " exception.
+This is because we are trying to delete Employee#1 from the database (which does not
+exist), and the employee object is also not null; so, it throws an error.
+
+== Aktualizacja 
+UPDATE book SET title='jpa book' WHERE id=2;
+
+In the preceding section, we used the update() method for updating a particular
+record. Apart from this method, hibernate will provide one more useful method called
+saveOrUpdate() .
+This particular method is used to save or update records. Hibernate updates the records for a
+given object if the identifier field is given. If an identifier is not given, then hibernate will insert
+a new record.
 
 
 
@@ -430,6 +541,44 @@ return manager;
 }
 ----
 
+== Dziedziczenie
+* Tabela na klasę konkretną
+* Tabela na każdą hierarchię klas
+* Tabela na każdą podklasę
+
+== Trwałość przez osiągalność
+
+Ma miejsce wtedy, gdy z obiektu trwałego jest referencja do
+innego obiektu
+wtedy ten inny obiekt realizuje trwałość przez osiągalność
+Jest rekurencyjna
+Zapewnia integralność więzów referencyjnych
+graf obiektów można odtworzyć wczytując jego korzeń
+Teoretycznie istnieje obiekt korzenia, z którego da przejść do
+dowolnego innego obiektu trwałego
+w szczególności nieosiągalne obiekty powinny być z bazy
+usunięte (niewydajne)
+Hibernate nie implementuje tego modelu
+
+
+== Trwałość kaskadowa
+Trwałość przechodnia w Hibernate
+Trwałość kaskadowa
+Model realizowany w Hibernate
+Koncepcja podobna do trwałości przez osiągalność
+Powiązania są odtwarzane na podstawie asocjacji
+domyślnie, hibernate nie dokonuje analizy asocjacji
+Kaskady zwykle używa się do relacji jeden-do-jednego i
+jeden-do-wielu
+używanie kaskady w przypadkach wiele-do-jednego i
+wiele-do-wielu jest raczej bez sensu
+Wartości kaskady można łączyć, np.
+cascade="save-update, delete
+
+== Criteria
+
+
+
 == Logowanie zdarzeń
 [source,xml]
 ----
@@ -442,15 +591,27 @@ return manager;
 <property name="hibernate.generate_statistics">true</property>
 ----
 
+== Kaskadowość
+
+== Orphal Removal
 
 == Walidacja
 
 == Problemy wydajnościowe
 
+* N+1
+
 == Rozwiązywanie problemów
 A common mistake when designing entity models is to try to make all associations bidirectional
 
+* kłopoty z pamięcią
+
+
 == Dobre praktyki
+
+Load vs get
+Lepiej na początku jest sprawdzić czy obiekt jest null czy nie jeśli chcemy użyć metody get(). (NullPointerException problem)
+
 
 
 == O mnie
