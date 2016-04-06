@@ -216,6 +216,17 @@ public class Todo {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	
 ---- 
+
+Programmatic Named Queries
+addNamedQuery(String name, Query query) 
+
+
+Named Entity Graph
+
+Java 8 Date Time API
+The Hibernate support for Java 8 Date Time API is provided in a separate module called hibernate-java8
+
+
 * Connection pooling
 
 Tworzenie  połączeń do bazy danych  jest kosztowne.
