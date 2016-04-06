@@ -129,6 +129,76 @@ sessionFactory = configuration.buildSessionFactory(serviceRegistry);
   - konfiguracja z użyciem plików properties
   
  
+* Pojęcia
+  Encja
+  PersistenceUnit
+[source,java]
+----
+@PersistenceUnit(unitName="pu-unit")
+private EntityManagerFactory emf;
+----
+  PersistenceContext
+[source,java]
+----
+@PersistenceContext (unitName = "pu-unit")
+EntityManager entityManager;
+----  
+  JPQL
+  Criteria API
+  MetaData 
+
+
+== Nowości w JPA 2.1
+Querying Stored Procedure
+[source,java]
+----
+  @Test
+    public void testCallStoreProcedure() {       
+        StoredProcedureQuery query = em.createStoredProcedureQuery("my_sum");
+        query.registerStoredProcedureParameter("x",Integer.class,ParameterMode.IN);
+        query.registerStoredProcedureParameter("y",Integer.class,ParameterMode.IN);
+        query.registerStoredProcedureParameter("sum",Integer.class,ParameterMode.OUT);
+        
+        query.setParameter("x", 5);
+        query.setParameter("y", 4);
+        query.execute();
+        Integer sum = (Integer) query.getOutputParameterValue("sum");
+        assertEquals(sum, new Integer(9));
+    }
+----
+
+Attribute Converter 
+[source,java]
+----
+@Converter
+public class PasswordConverter implements AttributeConverter<String, String> {
+    @Override
+    public String convertToDatabaseColumn(String arg0) {
+        if(arg0!=null) {
+            return Base64.getEncoder().encodeToString(arg0.getBytes());
+        } else {
+            return null;
+        }
+    }
+
+    @Override
+    public String convertToEntityAttribute(String arg0) {
+        if(arg0!=null) {
+            return new String(Base64.getDecoder().decode(arg0));
+        } else {
+            return null;
+        }
+    }
+}
+---- 
+[source,java]
+----
+@Entity
+public class Person {
+    @Convert(converter=PasswordConverter.class)
+    String password;
+----
+ 
 * Connection pooling
 
 Tworzenie  połączeń do bazy danych  jest kosztowne.
