@@ -824,7 +824,15 @@ A common mistake when designing entity models is to try to make all associations
  - próba rozważenia zapytania natywnego
      - jpql wspiera tylko niektóre podzbiory features z bazy danych 
      - SQL dla danej bazy może być wysoce wyspecjalizowany
-      
+
+@Basic(lazy)      
+Lazy attribute fetching: an attribute or single valued association is fetched when the instance variable is accessed.
+ This approach requires buildtime bytecode instrumentation and is rarely necessary.
+Emmanuel Bernard wrote  @Lob are lazy by default
+@Lob
+@Fetch(FetchMode.SELECT)
+@Type(type="org.hibernate.type.PrimitiveByteArrayBlobType")
+byte[] myBlob;
 
 
 == Dobre praktyki
