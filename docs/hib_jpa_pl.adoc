@@ -198,7 +198,35 @@ public class Person {
     @Convert(converter=PasswordConverter.class)
     String password;
 ----
- 
+Constructor Result Mapping
+ @ConstructorResult annotation is a handy addition to the already existing @SqlResultSetMapping and can be used to map the result of a query to a constructor call. 
+[source,java]
+----
+@Entity
+@NamedNativeQuery(name = "findWithTodoResultSetMapper", query = "SELECT id, description FROM TODO where description like ?1", resultSetMapping = "TodoResultSetMapper")
+@SqlResultSetMapping(name = "TodoResultSetMapper", classes = @ConstructorResult(targetClass = org.hall.jpa.model.TodoPOJO.class, columns = {
+		@ColumnResult(name = "id", type = Long.class),
+		@ColumnResult(name = "description") }))
+public class Todo {
+	private Long id;
+	private String summary;
+	private String description;
+
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	
+---- 
+
+Programmatic Named Queries
+addNamedQuery(String name, Query query) 
+
+
+Named Entity Graph
+
+Java 8 Date Time API
+The Hibernate support for Java 8 Date Time API is provided in a separate module called hibernate-java8
+
+
 * Connection pooling
 
 Tworzenie  połączeń do bazy danych  jest kosztowne.
@@ -796,7 +824,15 @@ A common mistake when designing entity models is to try to make all associations
  - próba rozważenia zapytania natywnego
      - jpql wspiera tylko niektóre podzbiory features z bazy danych 
      - SQL dla danej bazy może być wysoce wyspecjalizowany
-      
+
+@Basic(lazy)      
+Lazy attribute fetching: an attribute or single valued association is fetched when the instance variable is accessed.
+ This approach requires buildtime bytecode instrumentation and is rarely necessary.
+Emmanuel Bernard wrote  @Lob are lazy by default
+@Lob
+@Fetch(FetchMode.SELECT)
+@Type(type="org.hibernate.type.PrimitiveByteArrayBlobType")
+byte[] myBlob;
 
 
 == Dobre praktyki
