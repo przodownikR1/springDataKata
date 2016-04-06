@@ -8017,3 +8017,874 @@ insert into EMAILS (version, from, time, to, topic, id) values (?, ?, ?, ?, ?, ?
 [INFO] 2016-04-05 12:56:21.941 [main] p.j.s.oneToOneBi.OneToOneBiTest - [requestID: ] [FAILED toString()]
 [INFO] 2016-04-05 12:56:22.003 [Thread-3] o.s.c.s.GenericApplicationContext - [requestID: ] Closing org.springframework.context.support.GenericApplicationContext@77167fb7: startup date [Tue Apr 05 12:56:18 CEST 2016]; root of context hierarchy
 [INFO] 2016-04-05 12:56:22.007 [Thread-3] o.s.o.j.LocalContainerEntityManagerFactoryBean - [requestID: ] Closing JPA EntityManagerFactory for persistence unit 'default'
+[INFO] 2016-04-06 14:01:14.864 [main] o.s.t.c.s.DefaultTestContextBootstrapper - [requestID: ] Loaded default TestExecutionListener class names from location [META-INF/spring.factories]: [org.springframework.test.context.web.ServletTestExecutionListener, org.springframework.test.context.support.DirtiesContextBeforeModesTestExecutionListener, org.springframework.test.context.support.DependencyInjectionTestExecutionListener, org.springframework.test.context.support.DirtiesContextTestExecutionListener, org.springframework.test.context.transaction.TransactionalTestExecutionListener, org.springframework.test.context.jdbc.SqlScriptsTestExecutionListener]
+[INFO] 2016-04-06 14:01:14.880 [main] o.s.t.c.s.DefaultTestContextBootstrapper - [requestID: ] Using TestExecutionListeners: [org.springframework.test.context.web.ServletTestExecutionListener@44a664f2, org.springframework.test.context.support.DirtiesContextBeforeModesTestExecutionListener@7f9fcf7f, org.springframework.test.context.support.DependencyInjectionTestExecutionListener@2357d90a, org.springframework.test.context.support.DirtiesContextTestExecutionListener@6328d34a, org.springframework.test.context.transaction.TransactionalTestExecutionListener@145eaa29, org.springframework.test.context.jdbc.SqlScriptsTestExecutionListener@15bb6bea]
+[INFO] 2016-04-06 14:01:15.021 [main] o.s.c.s.GenericApplicationContext - [requestID: ] Refreshing org.springframework.context.support.GenericApplicationContext@13acb0d1: startup date [Wed Apr 06 14:01:15 CEST 2016]; root of context hierarchy
+[INFO] 2016-04-06 14:01:15.641 [main] o.h.validator.internal.util.Version - [requestID: ] HV000001: Hibernate Validator 5.3.0.Alpha1
+[INFO] 2016-04-06 14:01:16.112 [main] o.s.o.j.LocalContainerEntityManagerFactoryBean - [requestID: ] Building JPA container EntityManagerFactory for persistence unit 'default'
+[INFO] 2016-04-06 14:01:16.133 [main] o.h.jpa.internal.util.LogHelper - [requestID: ] HHH000204: Processing PersistenceUnitInfo [
+	name: default
+	...]
+[INFO] 2016-04-06 14:01:16.201 [main] org.hibernate.Version - [requestID: ] HHH000412: Hibernate Core {5.1.0.Final}
+[INFO] 2016-04-06 14:01:16.203 [main] org.hibernate.cfg.Environment - [requestID: ] HHH000206: hibernate.properties not found
+[INFO] 2016-04-06 14:01:16.205 [main] org.hibernate.cfg.Environment - [requestID: ] HHH000021: Bytecode provider name : javassist
+[INFO] 2016-04-06 14:01:16.247 [main] o.h.annotations.common.Version - [requestID: ] HCANN000001: Hibernate Commons Annotations {5.0.1.Final}
+[WARN] 2016-04-06 14:01:16.256 [main] org.hibernate.orm.deprecation - [requestID: ] HHH90000006: Attempted to specify unsupported NamingStrategy via setting [hibernate.ejb.naming_strategy]; NamingStrategy has been removed in favor of the split ImplicitNamingStrategy and PhysicalNamingStrategy; use [hibernate.implicit_naming_strategy] or [hibernate.physical_naming_strategy], respectively, instead.
+[INFO] 2016-04-06 14:01:16.885 [main] org.hibernate.dialect.Dialect - [requestID: ] HHH000400: Using dialect: org.hibernate.dialect.H2Dialect
+[INFO] 2016-04-06 14:01:17.850 [main] o.h.t.s.e.i.InformationExtractorJdbcDatabaseMetaDataImpl - [requestID: ] HHH000262: Table not found: BI_EMAIL_MESSAGES
+[INFO] 2016-04-06 14:01:17.852 [main] o.h.t.s.e.i.InformationExtractorJdbcDatabaseMetaDataImpl - [requestID: ] HHH000262: Table not found: BI_EMAIL_MESSAGES
+[INFO] 2016-04-06 14:01:17.860 [main] o.h.t.s.e.i.InformationExtractorJdbcDatabaseMetaDataImpl - [requestID: ] HHH000262: Table not found: BI_EMAILS
+[INFO] 2016-04-06 14:01:17.861 [main] o.h.t.s.e.i.InformationExtractorJdbcDatabaseMetaDataImpl - [requestID: ] HHH000262: Table not found: BI_EMAILS
+[INFO] 2016-04-06 14:01:17.864 [main] o.h.t.s.e.i.InformationExtractorJdbcDatabaseMetaDataImpl - [requestID: ] HHH000262: Table not found: bucket
+[INFO] 2016-04-06 14:01:17.866 [main] o.h.t.s.e.i.InformationExtractorJdbcDatabaseMetaDataImpl - [requestID: ] HHH000262: Table not found: bucket
+[INFO] 2016-04-06 14:01:17.869 [main] o.h.t.s.e.i.InformationExtractorJdbcDatabaseMetaDataImpl - [requestID: ] HHH000262: Table not found: bucket_Item
+[INFO] 2016-04-06 14:01:17.871 [main] o.h.t.s.e.i.InformationExtractorJdbcDatabaseMetaDataImpl - [requestID: ] HHH000262: Table not found: bucket_Item
+[INFO] 2016-04-06 14:01:17.872 [main] o.h.t.s.e.i.InformationExtractorJdbcDatabaseMetaDataImpl - [requestID: ] HHH000262: Table not found: Cart
+[INFO] 2016-04-06 14:01:17.874 [main] o.h.t.s.e.i.InformationExtractorJdbcDatabaseMetaDataImpl - [requestID: ] HHH000262: Table not found: Cart
+[INFO] 2016-04-06 14:01:17.877 [main] o.h.t.s.e.i.InformationExtractorJdbcDatabaseMetaDataImpl - [requestID: ] HHH000262: Table not found: City
+[INFO] 2016-04-06 14:01:17.878 [main] o.h.t.s.e.i.InformationExtractorJdbcDatabaseMetaDataImpl - [requestID: ] HHH000262: Table not found: City
+[INFO] 2016-04-06 14:01:17.882 [main] o.h.t.s.e.i.InformationExtractorJdbcDatabaseMetaDataImpl - [requestID: ] HHH000262: Table not found: details
+[INFO] 2016-04-06 14:01:17.883 [main] o.h.t.s.e.i.InformationExtractorJdbcDatabaseMetaDataImpl - [requestID: ] HHH000262: Table not found: details
+[INFO] 2016-04-06 14:01:17.888 [main] o.h.t.s.e.i.InformationExtractorJdbcDatabaseMetaDataImpl - [requestID: ] HHH000262: Table not found: EMAIL_MESSAGES
+[INFO] 2016-04-06 14:01:17.889 [main] o.h.t.s.e.i.InformationExtractorJdbcDatabaseMetaDataImpl - [requestID: ] HHH000262: Table not found: EMAIL_MESSAGES
+[INFO] 2016-04-06 14:01:17.892 [main] o.h.t.s.e.i.InformationExtractorJdbcDatabaseMetaDataImpl - [requestID: ] HHH000262: Table not found: EMAILS
+[INFO] 2016-04-06 14:01:17.893 [main] o.h.t.s.e.i.InformationExtractorJdbcDatabaseMetaDataImpl - [requestID: ] HHH000262: Table not found: EMAILS
+[INFO] 2016-04-06 14:01:17.896 [main] o.h.t.s.e.i.InformationExtractorJdbcDatabaseMetaDataImpl - [requestID: ] HHH000262: Table not found: Hotel
+[INFO] 2016-04-06 14:01:17.897 [main] o.h.t.s.e.i.InformationExtractorJdbcDatabaseMetaDataImpl - [requestID: ] HHH000262: Table not found: Hotel
+[INFO] 2016-04-06 14:01:17.900 [main] o.h.t.s.e.i.InformationExtractorJdbcDatabaseMetaDataImpl - [requestID: ] HHH000262: Table not found: Item
+[INFO] 2016-04-06 14:01:17.901 [main] o.h.t.s.e.i.InformationExtractorJdbcDatabaseMetaDataImpl - [requestID: ] HHH000262: Table not found: Item
+[INFO] 2016-04-06 14:01:17.904 [main] o.h.t.s.e.i.InformationExtractorJdbcDatabaseMetaDataImpl - [requestID: ] HHH000262: Table not found: Person
+[INFO] 2016-04-06 14:01:17.906 [main] o.h.t.s.e.i.InformationExtractorJdbcDatabaseMetaDataImpl - [requestID: ] HHH000262: Table not found: Person
+[INFO] 2016-04-06 14:01:17.910 [main] o.h.t.s.e.i.InformationExtractorJdbcDatabaseMetaDataImpl - [requestID: ] HHH000262: Table not found: SimpleProduct
+[INFO] 2016-04-06 14:01:17.912 [main] o.h.t.s.e.i.InformationExtractorJdbcDatabaseMetaDataImpl - [requestID: ] HHH000262: Table not found: SimpleProduct
+[INFO] 2016-04-06 14:01:17.916 [main] o.h.t.s.e.i.InformationExtractorJdbcDatabaseMetaDataImpl - [requestID: ] HHH000262: Table not found: stock
+[INFO] 2016-04-06 14:01:17.918 [main] o.h.t.s.e.i.InformationExtractorJdbcDatabaseMetaDataImpl - [requestID: ] HHH000262: Table not found: stock
+[INFO] 2016-04-06 14:01:17.922 [main] o.h.t.s.e.i.InformationExtractorJdbcDatabaseMetaDataImpl - [requestID: ] HHH000262: Table not found: tasks
+[INFO] 2016-04-06 14:01:17.923 [main] o.h.t.s.e.i.InformationExtractorJdbcDatabaseMetaDataImpl - [requestID: ] HHH000262: Table not found: tasks
+[INFO] 2016-04-06 14:01:18.003 [main] o.h.t.s.e.i.InformationExtractorJdbcDatabaseMetaDataImpl - [requestID: ] HHH000262: Table not found: Product
+[INFO] 2016-04-06 14:01:18.005 [main] o.h.t.s.e.i.InformationExtractorJdbcDatabaseMetaDataImpl - [requestID: ] HHH000262: Table not found: Product
+[DEBUG] 2016-04-06 14:01:18.424 [main] o.h.s.internal.StatisticsInitiator - [requestID: ] Statistics initialized [enabled=false]
+[INFO] 2016-04-06 14:01:18.629 [main] o.h.h.i.QueryTranslatorFactoryInitiator - [requestID: ] HHH000397: Using ASTQueryTranslatorFactory
+[INFO] 2016-04-06 14:01:18.865 [Thread-3] o.s.c.s.GenericApplicationContext - [requestID: ] Closing org.springframework.context.support.GenericApplicationContext@13acb0d1: startup date [Wed Apr 06 14:01:15 CEST 2016]; root of context hierarchy
+[INFO] 2016-04-06 14:01:18.869 [Thread-3] o.s.o.j.LocalContainerEntityManagerFactoryBean - [requestID: ] Closing JPA EntityManagerFactory for persistence unit 'default'
+[INFO] 2016-04-06 14:01:50.252 [main] o.s.t.c.s.DefaultTestContextBootstrapper - [requestID: ] Loaded default TestExecutionListener class names from location [META-INF/spring.factories]: [org.springframework.test.context.web.ServletTestExecutionListener, org.springframework.test.context.support.DirtiesContextBeforeModesTestExecutionListener, org.springframework.test.context.support.DependencyInjectionTestExecutionListener, org.springframework.test.context.support.DirtiesContextTestExecutionListener, org.springframework.test.context.transaction.TransactionalTestExecutionListener, org.springframework.test.context.jdbc.SqlScriptsTestExecutionListener]
+[INFO] 2016-04-06 14:01:50.271 [main] o.s.t.c.s.DefaultTestContextBootstrapper - [requestID: ] Using TestExecutionListeners: [org.springframework.test.context.web.ServletTestExecutionListener@44a664f2, org.springframework.test.context.support.DirtiesContextBeforeModesTestExecutionListener@7f9fcf7f, org.springframework.test.context.support.DependencyInjectionTestExecutionListener@2357d90a, org.springframework.test.context.support.DirtiesContextTestExecutionListener@6328d34a, org.springframework.test.context.transaction.TransactionalTestExecutionListener@145eaa29, org.springframework.test.context.jdbc.SqlScriptsTestExecutionListener@15bb6bea]
+[INFO] 2016-04-06 14:01:50.423 [main] o.s.c.s.GenericApplicationContext - [requestID: ] Refreshing org.springframework.context.support.GenericApplicationContext@13acb0d1: startup date [Wed Apr 06 14:01:50 CEST 2016]; root of context hierarchy
+[INFO] 2016-04-06 14:01:51.072 [main] o.h.validator.internal.util.Version - [requestID: ] HV000001: Hibernate Validator 5.3.0.Alpha1
+[INFO] 2016-04-06 14:01:51.474 [main] o.s.o.j.LocalContainerEntityManagerFactoryBean - [requestID: ] Building JPA container EntityManagerFactory for persistence unit 'default'
+[INFO] 2016-04-06 14:01:51.493 [main] o.h.jpa.internal.util.LogHelper - [requestID: ] HHH000204: Processing PersistenceUnitInfo [
+	name: default
+	...]
+[INFO] 2016-04-06 14:01:51.564 [main] org.hibernate.Version - [requestID: ] HHH000412: Hibernate Core {5.1.0.Final}
+[INFO] 2016-04-06 14:01:51.566 [main] org.hibernate.cfg.Environment - [requestID: ] HHH000206: hibernate.properties not found
+[INFO] 2016-04-06 14:01:51.568 [main] org.hibernate.cfg.Environment - [requestID: ] HHH000021: Bytecode provider name : javassist
+[INFO] 2016-04-06 14:01:51.611 [main] o.h.annotations.common.Version - [requestID: ] HCANN000001: Hibernate Commons Annotations {5.0.1.Final}
+[WARN] 2016-04-06 14:01:51.620 [main] org.hibernate.orm.deprecation - [requestID: ] HHH90000006: Attempted to specify unsupported NamingStrategy via setting [hibernate.ejb.naming_strategy]; NamingStrategy has been removed in favor of the split ImplicitNamingStrategy and PhysicalNamingStrategy; use [hibernate.implicit_naming_strategy] or [hibernate.physical_naming_strategy], respectively, instead.
+[INFO] 2016-04-06 14:01:52.179 [main] org.hibernate.dialect.Dialect - [requestID: ] HHH000400: Using dialect: org.hibernate.dialect.H2Dialect
+[INFO] 2016-04-06 14:01:53.302 [main] o.h.t.s.e.i.InformationExtractorJdbcDatabaseMetaDataImpl - [requestID: ] HHH000262: Table not found: BI_EMAIL_MESSAGES
+[INFO] 2016-04-06 14:01:53.304 [main] o.h.t.s.e.i.InformationExtractorJdbcDatabaseMetaDataImpl - [requestID: ] HHH000262: Table not found: BI_EMAIL_MESSAGES
+[INFO] 2016-04-06 14:01:53.312 [main] o.h.t.s.e.i.InformationExtractorJdbcDatabaseMetaDataImpl - [requestID: ] HHH000262: Table not found: BI_EMAILS
+[INFO] 2016-04-06 14:01:53.314 [main] o.h.t.s.e.i.InformationExtractorJdbcDatabaseMetaDataImpl - [requestID: ] HHH000262: Table not found: BI_EMAILS
+[INFO] 2016-04-06 14:01:53.318 [main] o.h.t.s.e.i.InformationExtractorJdbcDatabaseMetaDataImpl - [requestID: ] HHH000262: Table not found: bucket
+[INFO] 2016-04-06 14:01:53.319 [main] o.h.t.s.e.i.InformationExtractorJdbcDatabaseMetaDataImpl - [requestID: ] HHH000262: Table not found: bucket
+[INFO] 2016-04-06 14:01:53.323 [main] o.h.t.s.e.i.InformationExtractorJdbcDatabaseMetaDataImpl - [requestID: ] HHH000262: Table not found: bucket_Item
+[INFO] 2016-04-06 14:01:53.325 [main] o.h.t.s.e.i.InformationExtractorJdbcDatabaseMetaDataImpl - [requestID: ] HHH000262: Table not found: bucket_Item
+[INFO] 2016-04-06 14:01:53.327 [main] o.h.t.s.e.i.InformationExtractorJdbcDatabaseMetaDataImpl - [requestID: ] HHH000262: Table not found: Cart
+[INFO] 2016-04-06 14:01:53.328 [main] o.h.t.s.e.i.InformationExtractorJdbcDatabaseMetaDataImpl - [requestID: ] HHH000262: Table not found: Cart
+[INFO] 2016-04-06 14:01:53.331 [main] o.h.t.s.e.i.InformationExtractorJdbcDatabaseMetaDataImpl - [requestID: ] HHH000262: Table not found: City
+[INFO] 2016-04-06 14:01:53.332 [main] o.h.t.s.e.i.InformationExtractorJdbcDatabaseMetaDataImpl - [requestID: ] HHH000262: Table not found: City
+[INFO] 2016-04-06 14:01:53.336 [main] o.h.t.s.e.i.InformationExtractorJdbcDatabaseMetaDataImpl - [requestID: ] HHH000262: Table not found: details
+[INFO] 2016-04-06 14:01:53.337 [main] o.h.t.s.e.i.InformationExtractorJdbcDatabaseMetaDataImpl - [requestID: ] HHH000262: Table not found: details
+[INFO] 2016-04-06 14:01:53.342 [main] o.h.t.s.e.i.InformationExtractorJdbcDatabaseMetaDataImpl - [requestID: ] HHH000262: Table not found: EMAIL_MESSAGES
+[INFO] 2016-04-06 14:01:53.344 [main] o.h.t.s.e.i.InformationExtractorJdbcDatabaseMetaDataImpl - [requestID: ] HHH000262: Table not found: EMAIL_MESSAGES
+[INFO] 2016-04-06 14:01:53.346 [main] o.h.t.s.e.i.InformationExtractorJdbcDatabaseMetaDataImpl - [requestID: ] HHH000262: Table not found: EMAILS
+[INFO] 2016-04-06 14:01:53.347 [main] o.h.t.s.e.i.InformationExtractorJdbcDatabaseMetaDataImpl - [requestID: ] HHH000262: Table not found: EMAILS
+[INFO] 2016-04-06 14:01:53.350 [main] o.h.t.s.e.i.InformationExtractorJdbcDatabaseMetaDataImpl - [requestID: ] HHH000262: Table not found: Hotel
+[INFO] 2016-04-06 14:01:53.351 [main] o.h.t.s.e.i.InformationExtractorJdbcDatabaseMetaDataImpl - [requestID: ] HHH000262: Table not found: Hotel
+[INFO] 2016-04-06 14:01:53.354 [main] o.h.t.s.e.i.InformationExtractorJdbcDatabaseMetaDataImpl - [requestID: ] HHH000262: Table not found: Item
+[INFO] 2016-04-06 14:01:53.356 [main] o.h.t.s.e.i.InformationExtractorJdbcDatabaseMetaDataImpl - [requestID: ] HHH000262: Table not found: Item
+[INFO] 2016-04-06 14:01:53.359 [main] o.h.t.s.e.i.InformationExtractorJdbcDatabaseMetaDataImpl - [requestID: ] HHH000262: Table not found: Person
+[INFO] 2016-04-06 14:01:53.360 [main] o.h.t.s.e.i.InformationExtractorJdbcDatabaseMetaDataImpl - [requestID: ] HHH000262: Table not found: Person
+[INFO] 2016-04-06 14:01:53.363 [main] o.h.t.s.e.i.InformationExtractorJdbcDatabaseMetaDataImpl - [requestID: ] HHH000262: Table not found: SimpleProduct
+[INFO] 2016-04-06 14:01:53.365 [main] o.h.t.s.e.i.InformationExtractorJdbcDatabaseMetaDataImpl - [requestID: ] HHH000262: Table not found: SimpleProduct
+[INFO] 2016-04-06 14:01:53.369 [main] o.h.t.s.e.i.InformationExtractorJdbcDatabaseMetaDataImpl - [requestID: ] HHH000262: Table not found: stock
+[INFO] 2016-04-06 14:01:53.370 [main] o.h.t.s.e.i.InformationExtractorJdbcDatabaseMetaDataImpl - [requestID: ] HHH000262: Table not found: stock
+[INFO] 2016-04-06 14:01:53.374 [main] o.h.t.s.e.i.InformationExtractorJdbcDatabaseMetaDataImpl - [requestID: ] HHH000262: Table not found: tasks
+[INFO] 2016-04-06 14:01:53.375 [main] o.h.t.s.e.i.InformationExtractorJdbcDatabaseMetaDataImpl - [requestID: ] HHH000262: Table not found: tasks
+[INFO] 2016-04-06 14:01:53.453 [main] o.h.t.s.e.i.InformationExtractorJdbcDatabaseMetaDataImpl - [requestID: ] HHH000262: Table not found: Product
+[INFO] 2016-04-06 14:01:53.455 [main] o.h.t.s.e.i.InformationExtractorJdbcDatabaseMetaDataImpl - [requestID: ] HHH000262: Table not found: Product
+[DEBUG] 2016-04-06 14:01:53.904 [main] o.h.s.internal.StatisticsInitiator - [requestID: ] Statistics initialized [enabled=false]
+[INFO] 2016-04-06 14:01:54.176 [main] o.h.h.i.QueryTranslatorFactoryInitiator - [requestID: ] HHH000397: Using ASTQueryTranslatorFactory
+[INFO] 2016-04-06 14:01:54.418 [Thread-3] o.s.c.s.GenericApplicationContext - [requestID: ] Closing org.springframework.context.support.GenericApplicationContext@13acb0d1: startup date [Wed Apr 06 14:01:50 CEST 2016]; root of context hierarchy
+[INFO] 2016-04-06 14:01:54.433 [Thread-3] o.s.o.j.LocalContainerEntityManagerFactoryBean - [requestID: ] Closing JPA EntityManagerFactory for persistence unit 'default'
+[INFO] 2016-04-06 14:05:50.042 [main] o.s.t.c.s.DefaultTestContextBootstrapper - [requestID: ] Loaded default TestExecutionListener class names from location [META-INF/spring.factories]: [org.springframework.test.context.web.ServletTestExecutionListener, org.springframework.test.context.support.DirtiesContextBeforeModesTestExecutionListener, org.springframework.test.context.support.DependencyInjectionTestExecutionListener, org.springframework.test.context.support.DirtiesContextTestExecutionListener, org.springframework.test.context.transaction.TransactionalTestExecutionListener, org.springframework.test.context.jdbc.SqlScriptsTestExecutionListener]
+[INFO] 2016-04-06 14:05:50.062 [main] o.s.t.c.s.DefaultTestContextBootstrapper - [requestID: ] Using TestExecutionListeners: [org.springframework.test.context.web.ServletTestExecutionListener@15bb6bea, org.springframework.test.context.support.DirtiesContextBeforeModesTestExecutionListener@8b96fde, org.springframework.test.context.support.DependencyInjectionTestExecutionListener@2d2e5f00, org.springframework.test.context.support.DirtiesContextTestExecutionListener@4c40b76e, org.springframework.test.context.transaction.TransactionalTestExecutionListener@2ea6137, org.springframework.test.context.jdbc.SqlScriptsTestExecutionListener@41ee392b]
+[INFO] 2016-04-06 14:05:50.220 [main] o.s.c.s.GenericApplicationContext - [requestID: ] Refreshing org.springframework.context.support.GenericApplicationContext@6107227e: startup date [Wed Apr 06 14:05:50 CEST 2016]; root of context hierarchy
+[INFO] 2016-04-06 14:05:50.875 [main] o.h.validator.internal.util.Version - [requestID: ] HV000001: Hibernate Validator 5.3.0.Alpha1
+[INFO] 2016-04-06 14:05:51.312 [main] o.s.o.j.LocalContainerEntityManagerFactoryBean - [requestID: ] Building JPA container EntityManagerFactory for persistence unit 'default'
+[INFO] 2016-04-06 14:05:51.332 [main] o.h.jpa.internal.util.LogHelper - [requestID: ] HHH000204: Processing PersistenceUnitInfo [
+	name: default
+	...]
+[INFO] 2016-04-06 14:05:51.408 [main] org.hibernate.Version - [requestID: ] HHH000412: Hibernate Core {5.1.0.Final}
+[INFO] 2016-04-06 14:05:51.410 [main] org.hibernate.cfg.Environment - [requestID: ] HHH000206: hibernate.properties not found
+[INFO] 2016-04-06 14:05:51.412 [main] org.hibernate.cfg.Environment - [requestID: ] HHH000021: Bytecode provider name : javassist
+[INFO] 2016-04-06 14:05:51.452 [main] o.h.annotations.common.Version - [requestID: ] HCANN000001: Hibernate Commons Annotations {5.0.1.Final}
+[WARN] 2016-04-06 14:05:51.461 [main] org.hibernate.orm.deprecation - [requestID: ] HHH90000006: Attempted to specify unsupported NamingStrategy via setting [hibernate.ejb.naming_strategy]; NamingStrategy has been removed in favor of the split ImplicitNamingStrategy and PhysicalNamingStrategy; use [hibernate.implicit_naming_strategy] or [hibernate.physical_naming_strategy], respectively, instead.
+[INFO] 2016-04-06 14:05:51.939 [main] org.hibernate.dialect.Dialect - [requestID: ] HHH000400: Using dialect: org.hibernate.dialect.H2Dialect
+[INFO] 2016-04-06 14:05:52.877 [main] o.h.t.s.e.i.InformationExtractorJdbcDatabaseMetaDataImpl - [requestID: ] HHH000262: Table not found: BI_EMAIL_MESSAGES
+[INFO] 2016-04-06 14:05:52.879 [main] o.h.t.s.e.i.InformationExtractorJdbcDatabaseMetaDataImpl - [requestID: ] HHH000262: Table not found: BI_EMAIL_MESSAGES
+[INFO] 2016-04-06 14:05:52.887 [main] o.h.t.s.e.i.InformationExtractorJdbcDatabaseMetaDataImpl - [requestID: ] HHH000262: Table not found: BI_EMAILS
+[INFO] 2016-04-06 14:05:52.889 [main] o.h.t.s.e.i.InformationExtractorJdbcDatabaseMetaDataImpl - [requestID: ] HHH000262: Table not found: BI_EMAILS
+[INFO] 2016-04-06 14:05:52.892 [main] o.h.t.s.e.i.InformationExtractorJdbcDatabaseMetaDataImpl - [requestID: ] HHH000262: Table not found: bucket
+[INFO] 2016-04-06 14:05:52.893 [main] o.h.t.s.e.i.InformationExtractorJdbcDatabaseMetaDataImpl - [requestID: ] HHH000262: Table not found: bucket
+[INFO] 2016-04-06 14:05:52.897 [main] o.h.t.s.e.i.InformationExtractorJdbcDatabaseMetaDataImpl - [requestID: ] HHH000262: Table not found: bucket_Item
+[INFO] 2016-04-06 14:05:52.899 [main] o.h.t.s.e.i.InformationExtractorJdbcDatabaseMetaDataImpl - [requestID: ] HHH000262: Table not found: bucket_Item
+[INFO] 2016-04-06 14:05:52.901 [main] o.h.t.s.e.i.InformationExtractorJdbcDatabaseMetaDataImpl - [requestID: ] HHH000262: Table not found: Cart
+[INFO] 2016-04-06 14:05:52.902 [main] o.h.t.s.e.i.InformationExtractorJdbcDatabaseMetaDataImpl - [requestID: ] HHH000262: Table not found: Cart
+[INFO] 2016-04-06 14:05:52.905 [main] o.h.t.s.e.i.InformationExtractorJdbcDatabaseMetaDataImpl - [requestID: ] HHH000262: Table not found: City
+[INFO] 2016-04-06 14:05:52.906 [main] o.h.t.s.e.i.InformationExtractorJdbcDatabaseMetaDataImpl - [requestID: ] HHH000262: Table not found: City
+[INFO] 2016-04-06 14:05:52.909 [main] o.h.t.s.e.i.InformationExtractorJdbcDatabaseMetaDataImpl - [requestID: ] HHH000262: Table not found: details
+[INFO] 2016-04-06 14:05:52.910 [main] o.h.t.s.e.i.InformationExtractorJdbcDatabaseMetaDataImpl - [requestID: ] HHH000262: Table not found: details
+[INFO] 2016-04-06 14:05:52.916 [main] o.h.t.s.e.i.InformationExtractorJdbcDatabaseMetaDataImpl - [requestID: ] HHH000262: Table not found: EMAIL_MESSAGES
+[INFO] 2016-04-06 14:05:52.917 [main] o.h.t.s.e.i.InformationExtractorJdbcDatabaseMetaDataImpl - [requestID: ] HHH000262: Table not found: EMAIL_MESSAGES
+[INFO] 2016-04-06 14:05:52.920 [main] o.h.t.s.e.i.InformationExtractorJdbcDatabaseMetaDataImpl - [requestID: ] HHH000262: Table not found: EMAILS
+[INFO] 2016-04-06 14:05:52.921 [main] o.h.t.s.e.i.InformationExtractorJdbcDatabaseMetaDataImpl - [requestID: ] HHH000262: Table not found: EMAILS
+[INFO] 2016-04-06 14:05:52.925 [main] o.h.t.s.e.i.InformationExtractorJdbcDatabaseMetaDataImpl - [requestID: ] HHH000262: Table not found: Hotel
+[INFO] 2016-04-06 14:05:52.926 [main] o.h.t.s.e.i.InformationExtractorJdbcDatabaseMetaDataImpl - [requestID: ] HHH000262: Table not found: Hotel
+[INFO] 2016-04-06 14:05:52.930 [main] o.h.t.s.e.i.InformationExtractorJdbcDatabaseMetaDataImpl - [requestID: ] HHH000262: Table not found: Item
+[INFO] 2016-04-06 14:05:52.931 [main] o.h.t.s.e.i.InformationExtractorJdbcDatabaseMetaDataImpl - [requestID: ] HHH000262: Table not found: Item
+[INFO] 2016-04-06 14:05:52.934 [main] o.h.t.s.e.i.InformationExtractorJdbcDatabaseMetaDataImpl - [requestID: ] HHH000262: Table not found: Person
+[INFO] 2016-04-06 14:05:52.935 [main] o.h.t.s.e.i.InformationExtractorJdbcDatabaseMetaDataImpl - [requestID: ] HHH000262: Table not found: Person
+[INFO] 2016-04-06 14:05:52.938 [main] o.h.t.s.e.i.InformationExtractorJdbcDatabaseMetaDataImpl - [requestID: ] HHH000262: Table not found: SimpleProduct
+[INFO] 2016-04-06 14:05:52.940 [main] o.h.t.s.e.i.InformationExtractorJdbcDatabaseMetaDataImpl - [requestID: ] HHH000262: Table not found: SimpleProduct
+[INFO] 2016-04-06 14:05:52.943 [main] o.h.t.s.e.i.InformationExtractorJdbcDatabaseMetaDataImpl - [requestID: ] HHH000262: Table not found: stock
+[INFO] 2016-04-06 14:05:52.944 [main] o.h.t.s.e.i.InformationExtractorJdbcDatabaseMetaDataImpl - [requestID: ] HHH000262: Table not found: stock
+[INFO] 2016-04-06 14:05:52.947 [main] o.h.t.s.e.i.InformationExtractorJdbcDatabaseMetaDataImpl - [requestID: ] HHH000262: Table not found: tasks
+[INFO] 2016-04-06 14:05:52.948 [main] o.h.t.s.e.i.InformationExtractorJdbcDatabaseMetaDataImpl - [requestID: ] HHH000262: Table not found: tasks
+[INFO] 2016-04-06 14:05:53.010 [main] o.h.t.s.e.i.InformationExtractorJdbcDatabaseMetaDataImpl - [requestID: ] HHH000262: Table not found: Product
+[INFO] 2016-04-06 14:05:53.011 [main] o.h.t.s.e.i.InformationExtractorJdbcDatabaseMetaDataImpl - [requestID: ] HHH000262: Table not found: Product
+[DEBUG] 2016-04-06 14:05:53.384 [main] o.h.s.internal.StatisticsInitiator - [requestID: ] Statistics initialized [enabled=false]
+[INFO] 2016-04-06 14:05:53.658 [main] o.h.h.i.QueryTranslatorFactoryInitiator - [requestID: ] HHH000397: Using ASTQueryTranslatorFactory
+[INFO] 2016-04-06 14:05:53.835 [Thread-3] o.s.c.s.GenericApplicationContext - [requestID: ] Closing org.springframework.context.support.GenericApplicationContext@6107227e: startup date [Wed Apr 06 14:05:50 CEST 2016]; root of context hierarchy
+[INFO] 2016-04-06 14:05:53.841 [Thread-3] o.s.o.j.LocalContainerEntityManagerFactoryBean - [requestID: ] Closing JPA EntityManagerFactory for persistence unit 'default'
+[INFO] 2016-04-06 14:06:47.589 [main] o.s.t.c.s.DefaultTestContextBootstrapper - [requestID: ] Loaded default TestExecutionListener class names from location [META-INF/spring.factories]: [org.springframework.test.context.web.ServletTestExecutionListener, org.springframework.test.context.support.DirtiesContextBeforeModesTestExecutionListener, org.springframework.test.context.support.DependencyInjectionTestExecutionListener, org.springframework.test.context.support.DirtiesContextTestExecutionListener, org.springframework.test.context.transaction.TransactionalTestExecutionListener, org.springframework.test.context.jdbc.SqlScriptsTestExecutionListener]
+[INFO] 2016-04-06 14:06:47.608 [main] o.s.t.c.s.DefaultTestContextBootstrapper - [requestID: ] Using TestExecutionListeners: [org.springframework.test.context.web.ServletTestExecutionListener@15bb6bea, org.springframework.test.context.support.DirtiesContextBeforeModesTestExecutionListener@8b96fde, org.springframework.test.context.support.DependencyInjectionTestExecutionListener@2d2e5f00, org.springframework.test.context.support.DirtiesContextTestExecutionListener@4c40b76e, org.springframework.test.context.transaction.TransactionalTestExecutionListener@2ea6137, org.springframework.test.context.jdbc.SqlScriptsTestExecutionListener@41ee392b]
+[INFO] 2016-04-06 14:06:47.752 [main] o.s.c.s.GenericApplicationContext - [requestID: ] Refreshing org.springframework.context.support.GenericApplicationContext@6107227e: startup date [Wed Apr 06 14:06:47 CEST 2016]; root of context hierarchy
+[INFO] 2016-04-06 14:06:48.407 [main] o.h.validator.internal.util.Version - [requestID: ] HV000001: Hibernate Validator 5.3.0.Alpha1
+[INFO] 2016-04-06 14:06:48.832 [main] o.s.o.j.LocalContainerEntityManagerFactoryBean - [requestID: ] Building JPA container EntityManagerFactory for persistence unit 'default'
+[INFO] 2016-04-06 14:06:48.854 [main] o.h.jpa.internal.util.LogHelper - [requestID: ] HHH000204: Processing PersistenceUnitInfo [
+	name: default
+	...]
+[INFO] 2016-04-06 14:06:48.932 [main] org.hibernate.Version - [requestID: ] HHH000412: Hibernate Core {5.1.0.Final}
+[INFO] 2016-04-06 14:06:48.934 [main] org.hibernate.cfg.Environment - [requestID: ] HHH000206: hibernate.properties not found
+[INFO] 2016-04-06 14:06:48.936 [main] org.hibernate.cfg.Environment - [requestID: ] HHH000021: Bytecode provider name : javassist
+[INFO] 2016-04-06 14:06:48.992 [main] o.h.annotations.common.Version - [requestID: ] HCANN000001: Hibernate Commons Annotations {5.0.1.Final}
+[WARN] 2016-04-06 14:06:49.004 [main] org.hibernate.orm.deprecation - [requestID: ] HHH90000006: Attempted to specify unsupported NamingStrategy via setting [hibernate.ejb.naming_strategy]; NamingStrategy has been removed in favor of the split ImplicitNamingStrategy and PhysicalNamingStrategy; use [hibernate.implicit_naming_strategy] or [hibernate.physical_naming_strategy], respectively, instead.
+[INFO] 2016-04-06 14:06:49.648 [main] org.hibernate.dialect.Dialect - [requestID: ] HHH000400: Using dialect: org.hibernate.dialect.H2Dialect
+[INFO] 2016-04-06 14:06:50.835 [main] o.h.t.s.e.i.InformationExtractorJdbcDatabaseMetaDataImpl - [requestID: ] HHH000262: Table not found: BI_EMAIL_MESSAGES
+[INFO] 2016-04-06 14:06:50.837 [main] o.h.t.s.e.i.InformationExtractorJdbcDatabaseMetaDataImpl - [requestID: ] HHH000262: Table not found: BI_EMAIL_MESSAGES
+[INFO] 2016-04-06 14:06:50.845 [main] o.h.t.s.e.i.InformationExtractorJdbcDatabaseMetaDataImpl - [requestID: ] HHH000262: Table not found: BI_EMAILS
+[INFO] 2016-04-06 14:06:50.847 [main] o.h.t.s.e.i.InformationExtractorJdbcDatabaseMetaDataImpl - [requestID: ] HHH000262: Table not found: BI_EMAILS
+[INFO] 2016-04-06 14:06:50.850 [main] o.h.t.s.e.i.InformationExtractorJdbcDatabaseMetaDataImpl - [requestID: ] HHH000262: Table not found: bucket
+[INFO] 2016-04-06 14:06:50.851 [main] o.h.t.s.e.i.InformationExtractorJdbcDatabaseMetaDataImpl - [requestID: ] HHH000262: Table not found: bucket
+[INFO] 2016-04-06 14:06:50.855 [main] o.h.t.s.e.i.InformationExtractorJdbcDatabaseMetaDataImpl - [requestID: ] HHH000262: Table not found: bucket_Item
+[INFO] 2016-04-06 14:06:50.857 [main] o.h.t.s.e.i.InformationExtractorJdbcDatabaseMetaDataImpl - [requestID: ] HHH000262: Table not found: bucket_Item
+[INFO] 2016-04-06 14:06:50.859 [main] o.h.t.s.e.i.InformationExtractorJdbcDatabaseMetaDataImpl - [requestID: ] HHH000262: Table not found: Cart
+[INFO] 2016-04-06 14:06:50.861 [main] o.h.t.s.e.i.InformationExtractorJdbcDatabaseMetaDataImpl - [requestID: ] HHH000262: Table not found: Cart
+[INFO] 2016-04-06 14:06:50.863 [main] o.h.t.s.e.i.InformationExtractorJdbcDatabaseMetaDataImpl - [requestID: ] HHH000262: Table not found: City
+[INFO] 2016-04-06 14:06:50.864 [main] o.h.t.s.e.i.InformationExtractorJdbcDatabaseMetaDataImpl - [requestID: ] HHH000262: Table not found: City
+[INFO] 2016-04-06 14:06:50.868 [main] o.h.t.s.e.i.InformationExtractorJdbcDatabaseMetaDataImpl - [requestID: ] HHH000262: Table not found: details
+[INFO] 2016-04-06 14:06:50.869 [main] o.h.t.s.e.i.InformationExtractorJdbcDatabaseMetaDataImpl - [requestID: ] HHH000262: Table not found: details
+[INFO] 2016-04-06 14:06:50.875 [main] o.h.t.s.e.i.InformationExtractorJdbcDatabaseMetaDataImpl - [requestID: ] HHH000262: Table not found: EMAIL_MESSAGES
+[INFO] 2016-04-06 14:06:50.876 [main] o.h.t.s.e.i.InformationExtractorJdbcDatabaseMetaDataImpl - [requestID: ] HHH000262: Table not found: EMAIL_MESSAGES
+[INFO] 2016-04-06 14:06:50.879 [main] o.h.t.s.e.i.InformationExtractorJdbcDatabaseMetaDataImpl - [requestID: ] HHH000262: Table not found: EMAILS
+[INFO] 2016-04-06 14:06:50.880 [main] o.h.t.s.e.i.InformationExtractorJdbcDatabaseMetaDataImpl - [requestID: ] HHH000262: Table not found: EMAILS
+[INFO] 2016-04-06 14:06:50.883 [main] o.h.t.s.e.i.InformationExtractorJdbcDatabaseMetaDataImpl - [requestID: ] HHH000262: Table not found: Hotel
+[INFO] 2016-04-06 14:06:50.885 [main] o.h.t.s.e.i.InformationExtractorJdbcDatabaseMetaDataImpl - [requestID: ] HHH000262: Table not found: Hotel
+[INFO] 2016-04-06 14:06:50.888 [main] o.h.t.s.e.i.InformationExtractorJdbcDatabaseMetaDataImpl - [requestID: ] HHH000262: Table not found: Item
+[INFO] 2016-04-06 14:06:50.889 [main] o.h.t.s.e.i.InformationExtractorJdbcDatabaseMetaDataImpl - [requestID: ] HHH000262: Table not found: Item
+[INFO] 2016-04-06 14:06:50.892 [main] o.h.t.s.e.i.InformationExtractorJdbcDatabaseMetaDataImpl - [requestID: ] HHH000262: Table not found: Person
+[INFO] 2016-04-06 14:06:50.893 [main] o.h.t.s.e.i.InformationExtractorJdbcDatabaseMetaDataImpl - [requestID: ] HHH000262: Table not found: Person
+[INFO] 2016-04-06 14:06:50.896 [main] o.h.t.s.e.i.InformationExtractorJdbcDatabaseMetaDataImpl - [requestID: ] HHH000262: Table not found: SimpleProduct
+[INFO] 2016-04-06 14:06:50.898 [main] o.h.t.s.e.i.InformationExtractorJdbcDatabaseMetaDataImpl - [requestID: ] HHH000262: Table not found: SimpleProduct
+[INFO] 2016-04-06 14:06:50.900 [main] o.h.t.s.e.i.InformationExtractorJdbcDatabaseMetaDataImpl - [requestID: ] HHH000262: Table not found: stock
+[INFO] 2016-04-06 14:06:50.901 [main] o.h.t.s.e.i.InformationExtractorJdbcDatabaseMetaDataImpl - [requestID: ] HHH000262: Table not found: stock
+[INFO] 2016-04-06 14:06:50.904 [main] o.h.t.s.e.i.InformationExtractorJdbcDatabaseMetaDataImpl - [requestID: ] HHH000262: Table not found: tasks
+[INFO] 2016-04-06 14:06:50.905 [main] o.h.t.s.e.i.InformationExtractorJdbcDatabaseMetaDataImpl - [requestID: ] HHH000262: Table not found: tasks
+[INFO] 2016-04-06 14:06:50.966 [main] o.h.t.s.e.i.InformationExtractorJdbcDatabaseMetaDataImpl - [requestID: ] HHH000262: Table not found: Product
+[INFO] 2016-04-06 14:06:50.967 [main] o.h.t.s.e.i.InformationExtractorJdbcDatabaseMetaDataImpl - [requestID: ] HHH000262: Table not found: Product
+[DEBUG] 2016-04-06 14:06:51.351 [main] o.h.s.internal.StatisticsInitiator - [requestID: ] Statistics initialized [enabled=false]
+[INFO] 2016-04-06 14:06:51.599 [main] o.h.h.i.QueryTranslatorFactoryInitiator - [requestID: ] HHH000397: Using ASTQueryTranslatorFactory
+[INFO] 2016-04-06 14:06:51.826 [main] o.h.e.j.b.internal.AbstractBatchImpl - [requestID: ] HHH000010: On release of batch it still contained JDBC statements
+[INFO] 2016-04-06 14:06:51.834 [Thread-3] o.s.c.s.GenericApplicationContext - [requestID: ] Closing org.springframework.context.support.GenericApplicationContext@6107227e: startup date [Wed Apr 06 14:06:47 CEST 2016]; root of context hierarchy
+[INFO] 2016-04-06 14:06:51.840 [Thread-3] o.s.o.j.LocalContainerEntityManagerFactoryBean - [requestID: ] Closing JPA EntityManagerFactory for persistence unit 'default'
+[INFO] 2016-04-06 14:07:30.022 [main] o.s.t.c.s.DefaultTestContextBootstrapper - [requestID: ] Loaded default TestExecutionListener class names from location [META-INF/spring.factories]: [org.springframework.test.context.web.ServletTestExecutionListener, org.springframework.test.context.support.DirtiesContextBeforeModesTestExecutionListener, org.springframework.test.context.support.DependencyInjectionTestExecutionListener, org.springframework.test.context.support.DirtiesContextTestExecutionListener, org.springframework.test.context.transaction.TransactionalTestExecutionListener, org.springframework.test.context.jdbc.SqlScriptsTestExecutionListener]
+[INFO] 2016-04-06 14:07:30.040 [main] o.s.t.c.s.DefaultTestContextBootstrapper - [requestID: ] Using TestExecutionListeners: [org.springframework.test.context.web.ServletTestExecutionListener@15bb6bea, org.springframework.test.context.support.DirtiesContextBeforeModesTestExecutionListener@8b96fde, org.springframework.test.context.support.DependencyInjectionTestExecutionListener@2d2e5f00, org.springframework.test.context.support.DirtiesContextTestExecutionListener@4c40b76e, org.springframework.test.context.transaction.TransactionalTestExecutionListener@2ea6137, org.springframework.test.context.jdbc.SqlScriptsTestExecutionListener@41ee392b]
+[INFO] 2016-04-06 14:07:30.184 [main] o.s.c.s.GenericApplicationContext - [requestID: ] Refreshing org.springframework.context.support.GenericApplicationContext@6107227e: startup date [Wed Apr 06 14:07:30 CEST 2016]; root of context hierarchy
+[INFO] 2016-04-06 14:07:30.856 [main] o.h.validator.internal.util.Version - [requestID: ] HV000001: Hibernate Validator 5.3.0.Alpha1
+[INFO] 2016-04-06 14:07:31.351 [main] o.s.o.j.LocalContainerEntityManagerFactoryBean - [requestID: ] Building JPA container EntityManagerFactory for persistence unit 'default'
+[INFO] 2016-04-06 14:07:31.375 [main] o.h.jpa.internal.util.LogHelper - [requestID: ] HHH000204: Processing PersistenceUnitInfo [
+	name: default
+	...]
+[INFO] 2016-04-06 14:07:31.449 [main] org.hibernate.Version - [requestID: ] HHH000412: Hibernate Core {5.1.0.Final}
+[INFO] 2016-04-06 14:07:31.451 [main] org.hibernate.cfg.Environment - [requestID: ] HHH000206: hibernate.properties not found
+[INFO] 2016-04-06 14:07:31.453 [main] org.hibernate.cfg.Environment - [requestID: ] HHH000021: Bytecode provider name : javassist
+[INFO] 2016-04-06 14:07:31.499 [main] o.h.annotations.common.Version - [requestID: ] HCANN000001: Hibernate Commons Annotations {5.0.1.Final}
+[WARN] 2016-04-06 14:07:31.510 [main] org.hibernate.orm.deprecation - [requestID: ] HHH90000006: Attempted to specify unsupported NamingStrategy via setting [hibernate.ejb.naming_strategy]; NamingStrategy has been removed in favor of the split ImplicitNamingStrategy and PhysicalNamingStrategy; use [hibernate.implicit_naming_strategy] or [hibernate.physical_naming_strategy], respectively, instead.
+[INFO] 2016-04-06 14:07:32.159 [main] org.hibernate.dialect.Dialect - [requestID: ] HHH000400: Using dialect: org.hibernate.dialect.H2Dialect
+[INFO] 2016-04-06 14:07:33.217 [main] o.h.t.s.e.i.InformationExtractorJdbcDatabaseMetaDataImpl - [requestID: ] HHH000262: Table not found: BI_EMAIL_MESSAGES
+[INFO] 2016-04-06 14:07:33.219 [main] o.h.t.s.e.i.InformationExtractorJdbcDatabaseMetaDataImpl - [requestID: ] HHH000262: Table not found: BI_EMAIL_MESSAGES
+[INFO] 2016-04-06 14:07:33.227 [main] o.h.t.s.e.i.InformationExtractorJdbcDatabaseMetaDataImpl - [requestID: ] HHH000262: Table not found: BI_EMAILS
+[INFO] 2016-04-06 14:07:33.228 [main] o.h.t.s.e.i.InformationExtractorJdbcDatabaseMetaDataImpl - [requestID: ] HHH000262: Table not found: BI_EMAILS
+[INFO] 2016-04-06 14:07:33.232 [main] o.h.t.s.e.i.InformationExtractorJdbcDatabaseMetaDataImpl - [requestID: ] HHH000262: Table not found: bucket
+[INFO] 2016-04-06 14:07:33.234 [main] o.h.t.s.e.i.InformationExtractorJdbcDatabaseMetaDataImpl - [requestID: ] HHH000262: Table not found: bucket
+[INFO] 2016-04-06 14:07:33.238 [main] o.h.t.s.e.i.InformationExtractorJdbcDatabaseMetaDataImpl - [requestID: ] HHH000262: Table not found: bucket_Item
+[INFO] 2016-04-06 14:07:33.240 [main] o.h.t.s.e.i.InformationExtractorJdbcDatabaseMetaDataImpl - [requestID: ] HHH000262: Table not found: bucket_Item
+[INFO] 2016-04-06 14:07:33.243 [main] o.h.t.s.e.i.InformationExtractorJdbcDatabaseMetaDataImpl - [requestID: ] HHH000262: Table not found: Cart
+[INFO] 2016-04-06 14:07:33.244 [main] o.h.t.s.e.i.InformationExtractorJdbcDatabaseMetaDataImpl - [requestID: ] HHH000262: Table not found: Cart
+[INFO] 2016-04-06 14:07:33.249 [main] o.h.t.s.e.i.InformationExtractorJdbcDatabaseMetaDataImpl - [requestID: ] HHH000262: Table not found: City
+[INFO] 2016-04-06 14:07:33.250 [main] o.h.t.s.e.i.InformationExtractorJdbcDatabaseMetaDataImpl - [requestID: ] HHH000262: Table not found: City
+[INFO] 2016-04-06 14:07:33.253 [main] o.h.t.s.e.i.InformationExtractorJdbcDatabaseMetaDataImpl - [requestID: ] HHH000262: Table not found: details
+[INFO] 2016-04-06 14:07:33.254 [main] o.h.t.s.e.i.InformationExtractorJdbcDatabaseMetaDataImpl - [requestID: ] HHH000262: Table not found: details
+[INFO] 2016-04-06 14:07:33.261 [main] o.h.t.s.e.i.InformationExtractorJdbcDatabaseMetaDataImpl - [requestID: ] HHH000262: Table not found: EMAIL_MESSAGES
+[INFO] 2016-04-06 14:07:33.263 [main] o.h.t.s.e.i.InformationExtractorJdbcDatabaseMetaDataImpl - [requestID: ] HHH000262: Table not found: EMAIL_MESSAGES
+[INFO] 2016-04-06 14:07:33.265 [main] o.h.t.s.e.i.InformationExtractorJdbcDatabaseMetaDataImpl - [requestID: ] HHH000262: Table not found: EMAILS
+[INFO] 2016-04-06 14:07:33.267 [main] o.h.t.s.e.i.InformationExtractorJdbcDatabaseMetaDataImpl - [requestID: ] HHH000262: Table not found: EMAILS
+[INFO] 2016-04-06 14:07:33.270 [main] o.h.t.s.e.i.InformationExtractorJdbcDatabaseMetaDataImpl - [requestID: ] HHH000262: Table not found: Hotel
+[INFO] 2016-04-06 14:07:33.271 [main] o.h.t.s.e.i.InformationExtractorJdbcDatabaseMetaDataImpl - [requestID: ] HHH000262: Table not found: Hotel
+[INFO] 2016-04-06 14:07:33.275 [main] o.h.t.s.e.i.InformationExtractorJdbcDatabaseMetaDataImpl - [requestID: ] HHH000262: Table not found: Item
+[INFO] 2016-04-06 14:07:33.276 [main] o.h.t.s.e.i.InformationExtractorJdbcDatabaseMetaDataImpl - [requestID: ] HHH000262: Table not found: Item
+[INFO] 2016-04-06 14:07:33.281 [main] o.h.t.s.e.i.InformationExtractorJdbcDatabaseMetaDataImpl - [requestID: ] HHH000262: Table not found: Person
+[INFO] 2016-04-06 14:07:33.282 [main] o.h.t.s.e.i.InformationExtractorJdbcDatabaseMetaDataImpl - [requestID: ] HHH000262: Table not found: Person
+[INFO] 2016-04-06 14:07:33.286 [main] o.h.t.s.e.i.InformationExtractorJdbcDatabaseMetaDataImpl - [requestID: ] HHH000262: Table not found: SimpleProduct
+[INFO] 2016-04-06 14:07:33.288 [main] o.h.t.s.e.i.InformationExtractorJdbcDatabaseMetaDataImpl - [requestID: ] HHH000262: Table not found: SimpleProduct
+[INFO] 2016-04-06 14:07:33.290 [main] o.h.t.s.e.i.InformationExtractorJdbcDatabaseMetaDataImpl - [requestID: ] HHH000262: Table not found: stock
+[INFO] 2016-04-06 14:07:33.292 [main] o.h.t.s.e.i.InformationExtractorJdbcDatabaseMetaDataImpl - [requestID: ] HHH000262: Table not found: stock
+[INFO] 2016-04-06 14:07:33.296 [main] o.h.t.s.e.i.InformationExtractorJdbcDatabaseMetaDataImpl - [requestID: ] HHH000262: Table not found: tasks
+[INFO] 2016-04-06 14:07:33.297 [main] o.h.t.s.e.i.InformationExtractorJdbcDatabaseMetaDataImpl - [requestID: ] HHH000262: Table not found: tasks
+[INFO] 2016-04-06 14:07:33.363 [main] o.h.t.s.e.i.InformationExtractorJdbcDatabaseMetaDataImpl - [requestID: ] HHH000262: Table not found: Product
+[INFO] 2016-04-06 14:07:33.364 [main] o.h.t.s.e.i.InformationExtractorJdbcDatabaseMetaDataImpl - [requestID: ] HHH000262: Table not found: Product
+[DEBUG] 2016-04-06 14:07:33.743 [main] o.h.s.internal.StatisticsInitiator - [requestID: ] Statistics initialized [enabled=false]
+[INFO] 2016-04-06 14:07:33.992 [main] o.h.h.i.QueryTranslatorFactoryInitiator - [requestID: ] HHH000397: Using ASTQueryTranslatorFactory
+[INFO] 2016-04-06 14:07:34.326 [main] p.j.scalatech.one2many.OneToManyTest - [requestID: ] [FAILED toString()]
+[INFO] 2016-04-06 14:07:34.332 [Thread-3] o.s.c.s.GenericApplicationContext - [requestID: ] Closing org.springframework.context.support.GenericApplicationContext@6107227e: startup date [Wed Apr 06 14:07:30 CEST 2016]; root of context hierarchy
+[INFO] 2016-04-06 14:07:34.343 [Thread-3] o.s.o.j.LocalContainerEntityManagerFactoryBean - [requestID: ] Closing JPA EntityManagerFactory for persistence unit 'default'
+[INFO] 2016-04-06 14:08:17.415 [main] o.s.t.c.s.DefaultTestContextBootstrapper - [requestID: ] Loaded default TestExecutionListener class names from location [META-INF/spring.factories]: [org.springframework.test.context.web.ServletTestExecutionListener, org.springframework.test.context.support.DirtiesContextBeforeModesTestExecutionListener, org.springframework.test.context.support.DependencyInjectionTestExecutionListener, org.springframework.test.context.support.DirtiesContextTestExecutionListener, org.springframework.test.context.transaction.TransactionalTestExecutionListener, org.springframework.test.context.jdbc.SqlScriptsTestExecutionListener]
+[INFO] 2016-04-06 14:08:17.432 [main] o.s.t.c.s.DefaultTestContextBootstrapper - [requestID: ] Using TestExecutionListeners: [org.springframework.test.context.web.ServletTestExecutionListener@15bb6bea, org.springframework.test.context.support.DirtiesContextBeforeModesTestExecutionListener@8b96fde, org.springframework.test.context.support.DependencyInjectionTestExecutionListener@2d2e5f00, org.springframework.test.context.support.DirtiesContextTestExecutionListener@4c40b76e, org.springframework.test.context.transaction.TransactionalTestExecutionListener@2ea6137, org.springframework.test.context.jdbc.SqlScriptsTestExecutionListener@41ee392b]
+[INFO] 2016-04-06 14:08:17.589 [main] o.s.c.s.GenericApplicationContext - [requestID: ] Refreshing org.springframework.context.support.GenericApplicationContext@6107227e: startup date [Wed Apr 06 14:08:17 CEST 2016]; root of context hierarchy
+[INFO] 2016-04-06 14:08:18.250 [main] o.h.validator.internal.util.Version - [requestID: ] HV000001: Hibernate Validator 5.3.0.Alpha1
+[INFO] 2016-04-06 14:08:18.684 [main] o.s.o.j.LocalContainerEntityManagerFactoryBean - [requestID: ] Building JPA container EntityManagerFactory for persistence unit 'default'
+[INFO] 2016-04-06 14:08:18.704 [main] o.h.jpa.internal.util.LogHelper - [requestID: ] HHH000204: Processing PersistenceUnitInfo [
+	name: default
+	...]
+[INFO] 2016-04-06 14:08:18.786 [main] org.hibernate.Version - [requestID: ] HHH000412: Hibernate Core {5.1.0.Final}
+[INFO] 2016-04-06 14:08:18.788 [main] org.hibernate.cfg.Environment - [requestID: ] HHH000206: hibernate.properties not found
+[INFO] 2016-04-06 14:08:18.791 [main] org.hibernate.cfg.Environment - [requestID: ] HHH000021: Bytecode provider name : javassist
+[INFO] 2016-04-06 14:08:18.836 [main] o.h.annotations.common.Version - [requestID: ] HCANN000001: Hibernate Commons Annotations {5.0.1.Final}
+[WARN] 2016-04-06 14:08:18.846 [main] org.hibernate.orm.deprecation - [requestID: ] HHH90000006: Attempted to specify unsupported NamingStrategy via setting [hibernate.ejb.naming_strategy]; NamingStrategy has been removed in favor of the split ImplicitNamingStrategy and PhysicalNamingStrategy; use [hibernate.implicit_naming_strategy] or [hibernate.physical_naming_strategy], respectively, instead.
+[INFO] 2016-04-06 14:08:19.421 [main] org.hibernate.dialect.Dialect - [requestID: ] HHH000400: Using dialect: org.hibernate.dialect.H2Dialect
+[INFO] 2016-04-06 14:08:20.554 [main] o.h.t.s.e.i.InformationExtractorJdbcDatabaseMetaDataImpl - [requestID: ] HHH000262: Table not found: BI_EMAIL_MESSAGES
+[INFO] 2016-04-06 14:08:20.556 [main] o.h.t.s.e.i.InformationExtractorJdbcDatabaseMetaDataImpl - [requestID: ] HHH000262: Table not found: BI_EMAIL_MESSAGES
+[INFO] 2016-04-06 14:08:20.568 [main] o.h.t.s.e.i.InformationExtractorJdbcDatabaseMetaDataImpl - [requestID: ] HHH000262: Table not found: BI_EMAILS
+[INFO] 2016-04-06 14:08:20.571 [main] o.h.t.s.e.i.InformationExtractorJdbcDatabaseMetaDataImpl - [requestID: ] HHH000262: Table not found: BI_EMAILS
+[INFO] 2016-04-06 14:08:20.574 [main] o.h.t.s.e.i.InformationExtractorJdbcDatabaseMetaDataImpl - [requestID: ] HHH000262: Table not found: bucket
+[INFO] 2016-04-06 14:08:20.576 [main] o.h.t.s.e.i.InformationExtractorJdbcDatabaseMetaDataImpl - [requestID: ] HHH000262: Table not found: bucket
+[INFO] 2016-04-06 14:08:20.580 [main] o.h.t.s.e.i.InformationExtractorJdbcDatabaseMetaDataImpl - [requestID: ] HHH000262: Table not found: bucket_Item
+[INFO] 2016-04-06 14:08:20.583 [main] o.h.t.s.e.i.InformationExtractorJdbcDatabaseMetaDataImpl - [requestID: ] HHH000262: Table not found: bucket_Item
+[INFO] 2016-04-06 14:08:20.585 [main] o.h.t.s.e.i.InformationExtractorJdbcDatabaseMetaDataImpl - [requestID: ] HHH000262: Table not found: Cart
+[INFO] 2016-04-06 14:08:20.588 [main] o.h.t.s.e.i.InformationExtractorJdbcDatabaseMetaDataImpl - [requestID: ] HHH000262: Table not found: Cart
+[INFO] 2016-04-06 14:08:20.591 [main] o.h.t.s.e.i.InformationExtractorJdbcDatabaseMetaDataImpl - [requestID: ] HHH000262: Table not found: City
+[INFO] 2016-04-06 14:08:20.592 [main] o.h.t.s.e.i.InformationExtractorJdbcDatabaseMetaDataImpl - [requestID: ] HHH000262: Table not found: City
+[INFO] 2016-04-06 14:08:20.595 [main] o.h.t.s.e.i.InformationExtractorJdbcDatabaseMetaDataImpl - [requestID: ] HHH000262: Table not found: details
+[INFO] 2016-04-06 14:08:20.597 [main] o.h.t.s.e.i.InformationExtractorJdbcDatabaseMetaDataImpl - [requestID: ] HHH000262: Table not found: details
+[INFO] 2016-04-06 14:08:20.605 [main] o.h.t.s.e.i.InformationExtractorJdbcDatabaseMetaDataImpl - [requestID: ] HHH000262: Table not found: EMAIL_MESSAGES
+[INFO] 2016-04-06 14:08:20.607 [main] o.h.t.s.e.i.InformationExtractorJdbcDatabaseMetaDataImpl - [requestID: ] HHH000262: Table not found: EMAIL_MESSAGES
+[INFO] 2016-04-06 14:08:20.610 [main] o.h.t.s.e.i.InformationExtractorJdbcDatabaseMetaDataImpl - [requestID: ] HHH000262: Table not found: EMAILS
+[INFO] 2016-04-06 14:08:20.611 [main] o.h.t.s.e.i.InformationExtractorJdbcDatabaseMetaDataImpl - [requestID: ] HHH000262: Table not found: EMAILS
+[INFO] 2016-04-06 14:08:20.614 [main] o.h.t.s.e.i.InformationExtractorJdbcDatabaseMetaDataImpl - [requestID: ] HHH000262: Table not found: Hotel
+[INFO] 2016-04-06 14:08:20.616 [main] o.h.t.s.e.i.InformationExtractorJdbcDatabaseMetaDataImpl - [requestID: ] HHH000262: Table not found: Hotel
+[INFO] 2016-04-06 14:08:20.620 [main] o.h.t.s.e.i.InformationExtractorJdbcDatabaseMetaDataImpl - [requestID: ] HHH000262: Table not found: Item
+[INFO] 2016-04-06 14:08:20.622 [main] o.h.t.s.e.i.InformationExtractorJdbcDatabaseMetaDataImpl - [requestID: ] HHH000262: Table not found: Item
+[INFO] 2016-04-06 14:08:20.627 [main] o.h.t.s.e.i.InformationExtractorJdbcDatabaseMetaDataImpl - [requestID: ] HHH000262: Table not found: Person
+[INFO] 2016-04-06 14:08:20.628 [main] o.h.t.s.e.i.InformationExtractorJdbcDatabaseMetaDataImpl - [requestID: ] HHH000262: Table not found: Person
+[INFO] 2016-04-06 14:08:20.631 [main] o.h.t.s.e.i.InformationExtractorJdbcDatabaseMetaDataImpl - [requestID: ] HHH000262: Table not found: SimpleProduct
+[INFO] 2016-04-06 14:08:20.633 [main] o.h.t.s.e.i.InformationExtractorJdbcDatabaseMetaDataImpl - [requestID: ] HHH000262: Table not found: SimpleProduct
+[INFO] 2016-04-06 14:08:20.636 [main] o.h.t.s.e.i.InformationExtractorJdbcDatabaseMetaDataImpl - [requestID: ] HHH000262: Table not found: stock
+[INFO] 2016-04-06 14:08:20.638 [main] o.h.t.s.e.i.InformationExtractorJdbcDatabaseMetaDataImpl - [requestID: ] HHH000262: Table not found: stock
+[INFO] 2016-04-06 14:08:20.641 [main] o.h.t.s.e.i.InformationExtractorJdbcDatabaseMetaDataImpl - [requestID: ] HHH000262: Table not found: tasks
+[INFO] 2016-04-06 14:08:20.642 [main] o.h.t.s.e.i.InformationExtractorJdbcDatabaseMetaDataImpl - [requestID: ] HHH000262: Table not found: tasks
+[INFO] 2016-04-06 14:08:20.728 [main] o.h.t.s.e.i.InformationExtractorJdbcDatabaseMetaDataImpl - [requestID: ] HHH000262: Table not found: Product
+[INFO] 2016-04-06 14:08:20.730 [main] o.h.t.s.e.i.InformationExtractorJdbcDatabaseMetaDataImpl - [requestID: ] HHH000262: Table not found: Product
+[DEBUG] 2016-04-06 14:08:21.169 [main] o.h.s.internal.StatisticsInitiator - [requestID: ] Statistics initialized [enabled=false]
+[INFO] 2016-04-06 14:08:21.449 [main] o.h.h.i.QueryTranslatorFactoryInitiator - [requestID: ] HHH000397: Using ASTQueryTranslatorFactory
+[INFO] 2016-04-06 14:08:21.748 [main] p.j.scalatech.one2many.OneToManyTest - [requestID: ] [Bucket(own=przodownik, items=[Item(id=2, name=spoon, price=34.00), Item(id=3, name=fork, price=7.00), Item(id=4, name=knife, price=12.00)])]
+[INFO] 2016-04-06 14:08:21.751 [Thread-3] o.s.c.s.GenericApplicationContext - [requestID: ] Closing org.springframework.context.support.GenericApplicationContext@6107227e: startup date [Wed Apr 06 14:08:17 CEST 2016]; root of context hierarchy
+[INFO] 2016-04-06 14:08:21.757 [Thread-3] o.s.o.j.LocalContainerEntityManagerFactoryBean - [requestID: ] Closing JPA EntityManagerFactory for persistence unit 'default'
+[INFO] 2016-04-06 14:08:59.797 [main] o.s.t.c.s.DefaultTestContextBootstrapper - [requestID: ] Loaded default TestExecutionListener class names from location [META-INF/spring.factories]: [org.springframework.test.context.web.ServletTestExecutionListener, org.springframework.test.context.support.DirtiesContextBeforeModesTestExecutionListener, org.springframework.test.context.support.DependencyInjectionTestExecutionListener, org.springframework.test.context.support.DirtiesContextTestExecutionListener, org.springframework.test.context.transaction.TransactionalTestExecutionListener, org.springframework.test.context.jdbc.SqlScriptsTestExecutionListener]
+[INFO] 2016-04-06 14:08:59.815 [main] o.s.t.c.s.DefaultTestContextBootstrapper - [requestID: ] Using TestExecutionListeners: [org.springframework.test.context.web.ServletTestExecutionListener@15bb6bea, org.springframework.test.context.support.DirtiesContextBeforeModesTestExecutionListener@8b96fde, org.springframework.test.context.support.DependencyInjectionTestExecutionListener@2d2e5f00, org.springframework.test.context.support.DirtiesContextTestExecutionListener@4c40b76e, org.springframework.test.context.transaction.TransactionalTestExecutionListener@2ea6137, org.springframework.test.context.jdbc.SqlScriptsTestExecutionListener@41ee392b]
+[INFO] 2016-04-06 14:08:59.964 [main] o.s.c.s.GenericApplicationContext - [requestID: ] Refreshing org.springframework.context.support.GenericApplicationContext@6107227e: startup date [Wed Apr 06 14:08:59 CEST 2016]; root of context hierarchy
+[INFO] 2016-04-06 14:09:00.578 [main] o.h.validator.internal.util.Version - [requestID: ] HV000001: Hibernate Validator 5.3.0.Alpha1
+[INFO] 2016-04-06 14:09:01.032 [main] o.s.o.j.LocalContainerEntityManagerFactoryBean - [requestID: ] Building JPA container EntityManagerFactory for persistence unit 'default'
+[INFO] 2016-04-06 14:09:01.053 [main] o.h.jpa.internal.util.LogHelper - [requestID: ] HHH000204: Processing PersistenceUnitInfo [
+	name: default
+	...]
+[INFO] 2016-04-06 14:09:01.139 [main] org.hibernate.Version - [requestID: ] HHH000412: Hibernate Core {5.1.0.Final}
+[INFO] 2016-04-06 14:09:01.141 [main] org.hibernate.cfg.Environment - [requestID: ] HHH000206: hibernate.properties not found
+[INFO] 2016-04-06 14:09:01.143 [main] org.hibernate.cfg.Environment - [requestID: ] HHH000021: Bytecode provider name : javassist
+[INFO] 2016-04-06 14:09:01.188 [main] o.h.annotations.common.Version - [requestID: ] HCANN000001: Hibernate Commons Annotations {5.0.1.Final}
+[WARN] 2016-04-06 14:09:01.197 [main] org.hibernate.orm.deprecation - [requestID: ] HHH90000006: Attempted to specify unsupported NamingStrategy via setting [hibernate.ejb.naming_strategy]; NamingStrategy has been removed in favor of the split ImplicitNamingStrategy and PhysicalNamingStrategy; use [hibernate.implicit_naming_strategy] or [hibernate.physical_naming_strategy], respectively, instead.
+[INFO] 2016-04-06 14:09:01.844 [main] org.hibernate.dialect.Dialect - [requestID: ] HHH000400: Using dialect: org.hibernate.dialect.H2Dialect
+[INFO] 2016-04-06 14:09:02.961 [main] o.h.t.s.e.i.InformationExtractorJdbcDatabaseMetaDataImpl - [requestID: ] HHH000262: Table not found: BI_EMAIL_MESSAGES
+[INFO] 2016-04-06 14:09:02.964 [main] o.h.t.s.e.i.InformationExtractorJdbcDatabaseMetaDataImpl - [requestID: ] HHH000262: Table not found: BI_EMAIL_MESSAGES
+[INFO] 2016-04-06 14:09:02.976 [main] o.h.t.s.e.i.InformationExtractorJdbcDatabaseMetaDataImpl - [requestID: ] HHH000262: Table not found: BI_EMAILS
+[INFO] 2016-04-06 14:09:02.978 [main] o.h.t.s.e.i.InformationExtractorJdbcDatabaseMetaDataImpl - [requestID: ] HHH000262: Table not found: BI_EMAILS
+[INFO] 2016-04-06 14:09:02.982 [main] o.h.t.s.e.i.InformationExtractorJdbcDatabaseMetaDataImpl - [requestID: ] HHH000262: Table not found: bucket
+[INFO] 2016-04-06 14:09:02.984 [main] o.h.t.s.e.i.InformationExtractorJdbcDatabaseMetaDataImpl - [requestID: ] HHH000262: Table not found: bucket
+[INFO] 2016-04-06 14:09:02.988 [main] o.h.t.s.e.i.InformationExtractorJdbcDatabaseMetaDataImpl - [requestID: ] HHH000262: Table not found: bucket_Item
+[INFO] 2016-04-06 14:09:02.991 [main] o.h.t.s.e.i.InformationExtractorJdbcDatabaseMetaDataImpl - [requestID: ] HHH000262: Table not found: bucket_Item
+[INFO] 2016-04-06 14:09:02.994 [main] o.h.t.s.e.i.InformationExtractorJdbcDatabaseMetaDataImpl - [requestID: ] HHH000262: Table not found: Cart
+[INFO] 2016-04-06 14:09:02.996 [main] o.h.t.s.e.i.InformationExtractorJdbcDatabaseMetaDataImpl - [requestID: ] HHH000262: Table not found: Cart
+[INFO] 2016-04-06 14:09:03.000 [main] o.h.t.s.e.i.InformationExtractorJdbcDatabaseMetaDataImpl - [requestID: ] HHH000262: Table not found: City
+[INFO] 2016-04-06 14:09:03.002 [main] o.h.t.s.e.i.InformationExtractorJdbcDatabaseMetaDataImpl - [requestID: ] HHH000262: Table not found: City
+[INFO] 2016-04-06 14:09:03.007 [main] o.h.t.s.e.i.InformationExtractorJdbcDatabaseMetaDataImpl - [requestID: ] HHH000262: Table not found: details
+[INFO] 2016-04-06 14:09:03.008 [main] o.h.t.s.e.i.InformationExtractorJdbcDatabaseMetaDataImpl - [requestID: ] HHH000262: Table not found: details
+[INFO] 2016-04-06 14:09:03.016 [main] o.h.t.s.e.i.InformationExtractorJdbcDatabaseMetaDataImpl - [requestID: ] HHH000262: Table not found: EMAIL_MESSAGES
+[INFO] 2016-04-06 14:09:03.018 [main] o.h.t.s.e.i.InformationExtractorJdbcDatabaseMetaDataImpl - [requestID: ] HHH000262: Table not found: EMAIL_MESSAGES
+[INFO] 2016-04-06 14:09:03.022 [main] o.h.t.s.e.i.InformationExtractorJdbcDatabaseMetaDataImpl - [requestID: ] HHH000262: Table not found: EMAILS
+[INFO] 2016-04-06 14:09:03.023 [main] o.h.t.s.e.i.InformationExtractorJdbcDatabaseMetaDataImpl - [requestID: ] HHH000262: Table not found: EMAILS
+[INFO] 2016-04-06 14:09:03.027 [main] o.h.t.s.e.i.InformationExtractorJdbcDatabaseMetaDataImpl - [requestID: ] HHH000262: Table not found: Hotel
+[INFO] 2016-04-06 14:09:03.028 [main] o.h.t.s.e.i.InformationExtractorJdbcDatabaseMetaDataImpl - [requestID: ] HHH000262: Table not found: Hotel
+[INFO] 2016-04-06 14:09:03.032 [main] o.h.t.s.e.i.InformationExtractorJdbcDatabaseMetaDataImpl - [requestID: ] HHH000262: Table not found: Item
+[INFO] 2016-04-06 14:09:03.043 [main] o.h.t.s.e.i.InformationExtractorJdbcDatabaseMetaDataImpl - [requestID: ] HHH000262: Table not found: Item
+[INFO] 2016-04-06 14:09:03.048 [main] o.h.t.s.e.i.InformationExtractorJdbcDatabaseMetaDataImpl - [requestID: ] HHH000262: Table not found: Person
+[INFO] 2016-04-06 14:09:03.050 [main] o.h.t.s.e.i.InformationExtractorJdbcDatabaseMetaDataImpl - [requestID: ] HHH000262: Table not found: Person
+[INFO] 2016-04-06 14:09:03.056 [main] o.h.t.s.e.i.InformationExtractorJdbcDatabaseMetaDataImpl - [requestID: ] HHH000262: Table not found: SimpleProduct
+[INFO] 2016-04-06 14:09:03.060 [main] o.h.t.s.e.i.InformationExtractorJdbcDatabaseMetaDataImpl - [requestID: ] HHH000262: Table not found: SimpleProduct
+[INFO] 2016-04-06 14:09:03.067 [main] o.h.t.s.e.i.InformationExtractorJdbcDatabaseMetaDataImpl - [requestID: ] HHH000262: Table not found: stock
+[INFO] 2016-04-06 14:09:03.069 [main] o.h.t.s.e.i.InformationExtractorJdbcDatabaseMetaDataImpl - [requestID: ] HHH000262: Table not found: stock
+[INFO] 2016-04-06 14:09:03.073 [main] o.h.t.s.e.i.InformationExtractorJdbcDatabaseMetaDataImpl - [requestID: ] HHH000262: Table not found: tasks
+[INFO] 2016-04-06 14:09:03.075 [main] o.h.t.s.e.i.InformationExtractorJdbcDatabaseMetaDataImpl - [requestID: ] HHH000262: Table not found: tasks
+[INFO] 2016-04-06 14:09:03.142 [main] o.h.t.s.e.i.InformationExtractorJdbcDatabaseMetaDataImpl - [requestID: ] HHH000262: Table not found: Product
+[INFO] 2016-04-06 14:09:03.143 [main] o.h.t.s.e.i.InformationExtractorJdbcDatabaseMetaDataImpl - [requestID: ] HHH000262: Table not found: Product
+[DEBUG] 2016-04-06 14:09:03.561 [main] o.h.s.internal.StatisticsInitiator - [requestID: ] Statistics initialized [enabled=false]
+[INFO] 2016-04-06 14:09:03.832 [main] o.h.h.i.QueryTranslatorFactoryInitiator - [requestID: ] HHH000397: Using ASTQueryTranslatorFactory
+[INFO] 2016-04-06 14:09:04.127 [main] p.j.scalatech.one2many.OneToManyTest - [requestID: ] [FAILED toString()]
+[INFO] 2016-04-06 14:09:04.132 [Thread-3] o.s.c.s.GenericApplicationContext - [requestID: ] Closing org.springframework.context.support.GenericApplicationContext@6107227e: startup date [Wed Apr 06 14:08:59 CEST 2016]; root of context hierarchy
+[INFO] 2016-04-06 14:09:04.138 [Thread-3] o.s.o.j.LocalContainerEntityManagerFactoryBean - [requestID: ] Closing JPA EntityManagerFactory for persistence unit 'default'
+[INFO] 2016-04-06 14:09:18.466 [main] o.s.t.c.s.DefaultTestContextBootstrapper - [requestID: ] Loaded default TestExecutionListener class names from location [META-INF/spring.factories]: [org.springframework.test.context.web.ServletTestExecutionListener, org.springframework.test.context.support.DirtiesContextBeforeModesTestExecutionListener, org.springframework.test.context.support.DependencyInjectionTestExecutionListener, org.springframework.test.context.support.DirtiesContextTestExecutionListener, org.springframework.test.context.transaction.TransactionalTestExecutionListener, org.springframework.test.context.jdbc.SqlScriptsTestExecutionListener]
+[INFO] 2016-04-06 14:09:18.486 [main] o.s.t.c.s.DefaultTestContextBootstrapper - [requestID: ] Using TestExecutionListeners: [org.springframework.test.context.web.ServletTestExecutionListener@15bb6bea, org.springframework.test.context.support.DirtiesContextBeforeModesTestExecutionListener@8b96fde, org.springframework.test.context.support.DependencyInjectionTestExecutionListener@2d2e5f00, org.springframework.test.context.support.DirtiesContextTestExecutionListener@4c40b76e, org.springframework.test.context.transaction.TransactionalTestExecutionListener@2ea6137, org.springframework.test.context.jdbc.SqlScriptsTestExecutionListener@41ee392b]
+[INFO] 2016-04-06 14:09:18.674 [main] o.s.c.s.GenericApplicationContext - [requestID: ] Refreshing org.springframework.context.support.GenericApplicationContext@6107227e: startup date [Wed Apr 06 14:09:18 CEST 2016]; root of context hierarchy
+[INFO] 2016-04-06 14:09:19.336 [main] o.h.validator.internal.util.Version - [requestID: ] HV000001: Hibernate Validator 5.3.0.Alpha1
+[INFO] 2016-04-06 14:09:19.817 [main] o.s.o.j.LocalContainerEntityManagerFactoryBean - [requestID: ] Building JPA container EntityManagerFactory for persistence unit 'default'
+[INFO] 2016-04-06 14:09:19.845 [main] o.h.jpa.internal.util.LogHelper - [requestID: ] HHH000204: Processing PersistenceUnitInfo [
+	name: default
+	...]
+[INFO] 2016-04-06 14:09:19.927 [main] org.hibernate.Version - [requestID: ] HHH000412: Hibernate Core {5.1.0.Final}
+[INFO] 2016-04-06 14:09:19.929 [main] org.hibernate.cfg.Environment - [requestID: ] HHH000206: hibernate.properties not found
+[INFO] 2016-04-06 14:09:19.931 [main] org.hibernate.cfg.Environment - [requestID: ] HHH000021: Bytecode provider name : javassist
+[INFO] 2016-04-06 14:09:19.987 [main] o.h.annotations.common.Version - [requestID: ] HCANN000001: Hibernate Commons Annotations {5.0.1.Final}
+[WARN] 2016-04-06 14:09:20.007 [main] org.hibernate.orm.deprecation - [requestID: ] HHH90000006: Attempted to specify unsupported NamingStrategy via setting [hibernate.ejb.naming_strategy]; NamingStrategy has been removed in favor of the split ImplicitNamingStrategy and PhysicalNamingStrategy; use [hibernate.implicit_naming_strategy] or [hibernate.physical_naming_strategy], respectively, instead.
+[INFO] 2016-04-06 14:09:20.665 [main] org.hibernate.dialect.Dialect - [requestID: ] HHH000400: Using dialect: org.hibernate.dialect.H2Dialect
+[INFO] 2016-04-06 14:09:21.742 [main] o.h.t.s.e.i.InformationExtractorJdbcDatabaseMetaDataImpl - [requestID: ] HHH000262: Table not found: BI_EMAIL_MESSAGES
+[INFO] 2016-04-06 14:09:21.744 [main] o.h.t.s.e.i.InformationExtractorJdbcDatabaseMetaDataImpl - [requestID: ] HHH000262: Table not found: BI_EMAIL_MESSAGES
+[INFO] 2016-04-06 14:09:21.753 [main] o.h.t.s.e.i.InformationExtractorJdbcDatabaseMetaDataImpl - [requestID: ] HHH000262: Table not found: BI_EMAILS
+[INFO] 2016-04-06 14:09:21.755 [main] o.h.t.s.e.i.InformationExtractorJdbcDatabaseMetaDataImpl - [requestID: ] HHH000262: Table not found: BI_EMAILS
+[INFO] 2016-04-06 14:09:21.758 [main] o.h.t.s.e.i.InformationExtractorJdbcDatabaseMetaDataImpl - [requestID: ] HHH000262: Table not found: bucket
+[INFO] 2016-04-06 14:09:21.760 [main] o.h.t.s.e.i.InformationExtractorJdbcDatabaseMetaDataImpl - [requestID: ] HHH000262: Table not found: bucket
+[INFO] 2016-04-06 14:09:21.763 [main] o.h.t.s.e.i.InformationExtractorJdbcDatabaseMetaDataImpl - [requestID: ] HHH000262: Table not found: bucket_Item
+[INFO] 2016-04-06 14:09:21.765 [main] o.h.t.s.e.i.InformationExtractorJdbcDatabaseMetaDataImpl - [requestID: ] HHH000262: Table not found: bucket_Item
+[INFO] 2016-04-06 14:09:21.767 [main] o.h.t.s.e.i.InformationExtractorJdbcDatabaseMetaDataImpl - [requestID: ] HHH000262: Table not found: Cart
+[INFO] 2016-04-06 14:09:21.768 [main] o.h.t.s.e.i.InformationExtractorJdbcDatabaseMetaDataImpl - [requestID: ] HHH000262: Table not found: Cart
+[INFO] 2016-04-06 14:09:21.771 [main] o.h.t.s.e.i.InformationExtractorJdbcDatabaseMetaDataImpl - [requestID: ] HHH000262: Table not found: City
+[INFO] 2016-04-06 14:09:21.772 [main] o.h.t.s.e.i.InformationExtractorJdbcDatabaseMetaDataImpl - [requestID: ] HHH000262: Table not found: City
+[INFO] 2016-04-06 14:09:21.775 [main] o.h.t.s.e.i.InformationExtractorJdbcDatabaseMetaDataImpl - [requestID: ] HHH000262: Table not found: details
+[INFO] 2016-04-06 14:09:21.776 [main] o.h.t.s.e.i.InformationExtractorJdbcDatabaseMetaDataImpl - [requestID: ] HHH000262: Table not found: details
+[INFO] 2016-04-06 14:09:21.782 [main] o.h.t.s.e.i.InformationExtractorJdbcDatabaseMetaDataImpl - [requestID: ] HHH000262: Table not found: EMAIL_MESSAGES
+[INFO] 2016-04-06 14:09:21.783 [main] o.h.t.s.e.i.InformationExtractorJdbcDatabaseMetaDataImpl - [requestID: ] HHH000262: Table not found: EMAIL_MESSAGES
+[INFO] 2016-04-06 14:09:21.786 [main] o.h.t.s.e.i.InformationExtractorJdbcDatabaseMetaDataImpl - [requestID: ] HHH000262: Table not found: EMAILS
+[INFO] 2016-04-06 14:09:21.787 [main] o.h.t.s.e.i.InformationExtractorJdbcDatabaseMetaDataImpl - [requestID: ] HHH000262: Table not found: EMAILS
+[INFO] 2016-04-06 14:09:21.790 [main] o.h.t.s.e.i.InformationExtractorJdbcDatabaseMetaDataImpl - [requestID: ] HHH000262: Table not found: Hotel
+[INFO] 2016-04-06 14:09:21.792 [main] o.h.t.s.e.i.InformationExtractorJdbcDatabaseMetaDataImpl - [requestID: ] HHH000262: Table not found: Hotel
+[INFO] 2016-04-06 14:09:21.795 [main] o.h.t.s.e.i.InformationExtractorJdbcDatabaseMetaDataImpl - [requestID: ] HHH000262: Table not found: Item
+[INFO] 2016-04-06 14:09:21.796 [main] o.h.t.s.e.i.InformationExtractorJdbcDatabaseMetaDataImpl - [requestID: ] HHH000262: Table not found: Item
+[INFO] 2016-04-06 14:09:21.799 [main] o.h.t.s.e.i.InformationExtractorJdbcDatabaseMetaDataImpl - [requestID: ] HHH000262: Table not found: Person
+[INFO] 2016-04-06 14:09:21.800 [main] o.h.t.s.e.i.InformationExtractorJdbcDatabaseMetaDataImpl - [requestID: ] HHH000262: Table not found: Person
+[INFO] 2016-04-06 14:09:21.804 [main] o.h.t.s.e.i.InformationExtractorJdbcDatabaseMetaDataImpl - [requestID: ] HHH000262: Table not found: SimpleProduct
+[INFO] 2016-04-06 14:09:21.805 [main] o.h.t.s.e.i.InformationExtractorJdbcDatabaseMetaDataImpl - [requestID: ] HHH000262: Table not found: SimpleProduct
+[INFO] 2016-04-06 14:09:21.808 [main] o.h.t.s.e.i.InformationExtractorJdbcDatabaseMetaDataImpl - [requestID: ] HHH000262: Table not found: stock
+[INFO] 2016-04-06 14:09:21.809 [main] o.h.t.s.e.i.InformationExtractorJdbcDatabaseMetaDataImpl - [requestID: ] HHH000262: Table not found: stock
+[INFO] 2016-04-06 14:09:21.813 [main] o.h.t.s.e.i.InformationExtractorJdbcDatabaseMetaDataImpl - [requestID: ] HHH000262: Table not found: tasks
+[INFO] 2016-04-06 14:09:21.814 [main] o.h.t.s.e.i.InformationExtractorJdbcDatabaseMetaDataImpl - [requestID: ] HHH000262: Table not found: tasks
+[INFO] 2016-04-06 14:09:21.886 [main] o.h.t.s.e.i.InformationExtractorJdbcDatabaseMetaDataImpl - [requestID: ] HHH000262: Table not found: Product
+[INFO] 2016-04-06 14:09:21.888 [main] o.h.t.s.e.i.InformationExtractorJdbcDatabaseMetaDataImpl - [requestID: ] HHH000262: Table not found: Product
+[DEBUG] 2016-04-06 14:09:22.332 [main] o.h.s.internal.StatisticsInitiator - [requestID: ] Statistics initialized [enabled=false]
+[INFO] 2016-04-06 14:09:22.563 [main] o.h.h.i.QueryTranslatorFactoryInitiator - [requestID: ] HHH000397: Using ASTQueryTranslatorFactory
+[INFO] 2016-04-06 14:09:22.881 [main] p.j.scalatech.one2many.OneToManyTest - [requestID: ] [Bucket(own=przodownik, items=[Item(id=2, name=spoon, price=34.00), Item(id=3, name=fork, price=7.00), Item(id=4, name=knife, price=12.00)])]
+[INFO] 2016-04-06 14:09:22.883 [Thread-3] o.s.c.s.GenericApplicationContext - [requestID: ] Closing org.springframework.context.support.GenericApplicationContext@6107227e: startup date [Wed Apr 06 14:09:18 CEST 2016]; root of context hierarchy
+[INFO] 2016-04-06 14:09:22.888 [Thread-3] o.s.o.j.LocalContainerEntityManagerFactoryBean - [requestID: ] Closing JPA EntityManagerFactory for persistence unit 'default'
+[INFO] 2016-04-06 14:10:14.642 [restartedMain] p.j.s.SpringDataTestApplication - [requestID: ] Starting SpringDataTestApplication on przodownik-Dell-System-XPS-L702X with PID 20022 (/home/przodownik/blog/springDataKata/build/classes/main started by przodownik in /home/przodownik/blog/springDataKata)
+[INFO] 2016-04-06 14:10:14.646 [restartedMain] p.j.s.SpringDataTestApplication - [requestID: ] No active profile set, falling back to default profiles: default
+[INFO] 2016-04-06 14:10:14.986 [restartedMain] o.s.b.c.e.AnnotationConfigEmbeddedWebApplicationContext - [requestID: ] Refreshing org.springframework.boot.context.embedded.AnnotationConfigEmbeddedWebApplicationContext@eec24fa: startup date [Wed Apr 06 14:10:14 CEST 2016]; root of context hierarchy
+[INFO] 2016-04-06 14:10:15.014 [background-preinit] o.h.validator.internal.util.Version - [requestID: ] HV000001: Hibernate Validator 5.3.0.Alpha1
+[INFO] 2016-04-06 14:10:16.439 [restartedMain] o.s.b.f.s.DefaultListableBeanFactory - [requestID: ] Overriding bean definition for bean 'beanNameViewResolver' with a different definition: replacing [Root bean: class [null]; scope=; abstract=false; lazyInit=false; autowireMode=3; dependencyCheck=0; autowireCandidate=true; primary=false; factoryBeanName=org.springframework.boot.autoconfigure.web.ErrorMvcAutoConfiguration$WhitelabelErrorViewConfiguration; factoryMethodName=beanNameViewResolver; initMethodName=null; destroyMethodName=(inferred); defined in class path resource [org/springframework/boot/autoconfigure/web/ErrorMvcAutoConfiguration$WhitelabelErrorViewConfiguration.class]] with [Root bean: class [null]; scope=; abstract=false; lazyInit=false; autowireMode=3; dependencyCheck=0; autowireCandidate=true; primary=false; factoryBeanName=org.springframework.boot.autoconfigure.web.WebMvcAutoConfiguration$WebMvcAutoConfigurationAdapter; factoryMethodName=beanNameViewResolver; initMethodName=null; destroyMethodName=(inferred); defined in class path resource [org/springframework/boot/autoconfigure/web/WebMvcAutoConfiguration$WebMvcAutoConfigurationAdapter.class]]
+[INFO] 2016-04-06 14:10:17.170 [restartedMain] o.s.c.s.PostProcessorRegistrationDelegate$BeanPostProcessorChecker - [requestID: ] Bean 'org.springframework.transaction.annotation.ProxyTransactionManagementConfiguration' of type [class org.springframework.transaction.annotation.ProxyTransactionManagementConfiguration$$EnhancerBySpringCGLIB$$c7308021] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+[INFO] 2016-04-06 14:10:17.215 [restartedMain] o.s.c.s.PostProcessorRegistrationDelegate$BeanPostProcessorChecker - [requestID: ] Bean 'aopProfiler' of type [class pl.java.scalatech.config.AopProfiler$$EnhancerBySpringCGLIB$$20c2fe51] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+[INFO] 2016-04-06 14:10:17.234 [restartedMain] o.s.c.s.PostProcessorRegistrationDelegate$BeanPostProcessorChecker - [requestID: ] Bean 'interceptor' of type [class org.springframework.aop.interceptor.CustomizableTraceInterceptor] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+[INFO] 2016-04-06 14:10:17.239 [restartedMain] o.s.c.s.PostProcessorRegistrationDelegate$BeanPostProcessorChecker - [requestID: ] Bean 'traceAdvisor' of type [class org.springframework.aop.support.DefaultPointcutAdvisor] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+[INFO] 2016-04-06 14:10:17.893 [restartedMain] o.s.b.c.e.t.TomcatEmbeddedServletContainer - [requestID: ] Tomcat initialized with port(s): 9444 (http)
+[INFO] 2016-04-06 14:10:17.913 [restartedMain] o.a.catalina.core.StandardService - [requestID: ] Starting service Tomcat
+[INFO] 2016-04-06 14:10:17.916 [restartedMain] o.a.catalina.core.StandardEngine - [requestID: ] Starting Servlet Engine: Apache Tomcat/8.0.32
+[INFO] 2016-04-06 14:10:18.079 [localhost-startStop-1] o.a.c.c.C.[Tomcat].[localhost].[/] - [requestID: ] Initializing Spring embedded WebApplicationContext
+[INFO] 2016-04-06 14:10:18.080 [localhost-startStop-1] o.s.web.context.ContextLoader - [requestID: ] Root WebApplicationContext: initialization completed in 3098 ms
+[INFO] 2016-04-06 14:10:18.543 [localhost-startStop-1] o.s.b.c.e.ServletRegistrationBean - [requestID: ] Mapping servlet: 'dispatcherServlet' to [/]
+[INFO] 2016-04-06 14:10:18.546 [localhost-startStop-1] o.s.b.c.e.ServletRegistrationBean - [requestID: ] Mapping servlet: 'webServlet' to [/h2-console/*]
+[INFO] 2016-04-06 14:10:18.550 [localhost-startStop-1] o.s.b.c.e.FilterRegistrationBean - [requestID: ] Mapping filter: 'characterEncodingFilter' to: [/*]
+[INFO] 2016-04-06 14:10:18.552 [localhost-startStop-1] o.s.b.c.e.FilterRegistrationBean - [requestID: ] Mapping filter: 'hiddenHttpMethodFilter' to: [/*]
+[INFO] 2016-04-06 14:10:18.552 [localhost-startStop-1] o.s.b.c.e.FilterRegistrationBean - [requestID: ] Mapping filter: 'httpPutFormContentFilter' to: [/*]
+[INFO] 2016-04-06 14:10:18.553 [localhost-startStop-1] o.s.b.c.e.FilterRegistrationBean - [requestID: ] Mapping filter: 'requestContextFilter' to: [/*]
+[INFO] 2016-04-06 14:10:18.942 [restartedMain] o.s.o.j.LocalContainerEntityManagerFactoryBean - [requestID: ] Building JPA container EntityManagerFactory for persistence unit 'default'
+[INFO] 2016-04-06 14:10:18.967 [restartedMain] o.h.jpa.internal.util.LogHelper - [requestID: ] HHH000204: Processing PersistenceUnitInfo [
+	name: default
+	...]
+[INFO] 2016-04-06 14:10:19.061 [restartedMain] org.hibernate.Version - [requestID: ] HHH000412: Hibernate Core {5.1.0.Final}
+[INFO] 2016-04-06 14:10:19.063 [restartedMain] org.hibernate.cfg.Environment - [requestID: ] HHH000206: hibernate.properties not found
+[INFO] 2016-04-06 14:10:19.066 [restartedMain] org.hibernate.cfg.Environment - [requestID: ] HHH000021: Bytecode provider name : javassist
+[INFO] 2016-04-06 14:10:19.120 [restartedMain] o.h.annotations.common.Version - [requestID: ] HCANN000001: Hibernate Commons Annotations {5.0.1.Final}
+[WARN] 2016-04-06 14:10:19.134 [restartedMain] org.hibernate.orm.deprecation - [requestID: ] HHH90000006: Attempted to specify unsupported NamingStrategy via setting [hibernate.ejb.naming_strategy]; NamingStrategy has been removed in favor of the split ImplicitNamingStrategy and PhysicalNamingStrategy; use [hibernate.implicit_naming_strategy] or [hibernate.physical_naming_strategy], respectively, instead.
+[INFO] 2016-04-06 14:10:19.615 [restartedMain] org.hibernate.dialect.Dialect - [requestID: ] HHH000400: Using dialect: org.hibernate.dialect.H2Dialect
+[INFO] 2016-04-06 14:10:20.589 [restartedMain] o.h.t.s.e.i.InformationExtractorJdbcDatabaseMetaDataImpl - [requestID: ] HHH000262: Table not found: BI_EMAIL_MESSAGES
+[INFO] 2016-04-06 14:10:20.591 [restartedMain] o.h.t.s.e.i.InformationExtractorJdbcDatabaseMetaDataImpl - [requestID: ] HHH000262: Table not found: BI_EMAIL_MESSAGES
+[INFO] 2016-04-06 14:10:20.605 [restartedMain] o.h.t.s.e.i.InformationExtractorJdbcDatabaseMetaDataImpl - [requestID: ] HHH000262: Table not found: BI_EMAILS
+[INFO] 2016-04-06 14:10:20.607 [restartedMain] o.h.t.s.e.i.InformationExtractorJdbcDatabaseMetaDataImpl - [requestID: ] HHH000262: Table not found: BI_EMAILS
+[INFO] 2016-04-06 14:10:20.612 [restartedMain] o.h.t.s.e.i.InformationExtractorJdbcDatabaseMetaDataImpl - [requestID: ] HHH000262: Table not found: bucket
+[INFO] 2016-04-06 14:10:20.613 [restartedMain] o.h.t.s.e.i.InformationExtractorJdbcDatabaseMetaDataImpl - [requestID: ] HHH000262: Table not found: bucket
+[INFO] 2016-04-06 14:10:20.618 [restartedMain] o.h.t.s.e.i.InformationExtractorJdbcDatabaseMetaDataImpl - [requestID: ] HHH000262: Table not found: bucket_Item
+[INFO] 2016-04-06 14:10:20.621 [restartedMain] o.h.t.s.e.i.InformationExtractorJdbcDatabaseMetaDataImpl - [requestID: ] HHH000262: Table not found: bucket_Item
+[INFO] 2016-04-06 14:10:20.625 [restartedMain] o.h.t.s.e.i.InformationExtractorJdbcDatabaseMetaDataImpl - [requestID: ] HHH000262: Table not found: Cart
+[INFO] 2016-04-06 14:10:20.628 [restartedMain] o.h.t.s.e.i.InformationExtractorJdbcDatabaseMetaDataImpl - [requestID: ] HHH000262: Table not found: Cart
+[INFO] 2016-04-06 14:10:20.633 [restartedMain] o.h.t.s.e.i.InformationExtractorJdbcDatabaseMetaDataImpl - [requestID: ] HHH000262: Table not found: City
+[INFO] 2016-04-06 14:10:20.634 [restartedMain] o.h.t.s.e.i.InformationExtractorJdbcDatabaseMetaDataImpl - [requestID: ] HHH000262: Table not found: City
+[INFO] 2016-04-06 14:10:20.639 [restartedMain] o.h.t.s.e.i.InformationExtractorJdbcDatabaseMetaDataImpl - [requestID: ] HHH000262: Table not found: details
+[INFO] 2016-04-06 14:10:20.641 [restartedMain] o.h.t.s.e.i.InformationExtractorJdbcDatabaseMetaDataImpl - [requestID: ] HHH000262: Table not found: details
+[INFO] 2016-04-06 14:10:20.650 [restartedMain] o.h.t.s.e.i.InformationExtractorJdbcDatabaseMetaDataImpl - [requestID: ] HHH000262: Table not found: EMAIL_MESSAGES
+[INFO] 2016-04-06 14:10:20.652 [restartedMain] o.h.t.s.e.i.InformationExtractorJdbcDatabaseMetaDataImpl - [requestID: ] HHH000262: Table not found: EMAIL_MESSAGES
+[INFO] 2016-04-06 14:10:20.656 [restartedMain] o.h.t.s.e.i.InformationExtractorJdbcDatabaseMetaDataImpl - [requestID: ] HHH000262: Table not found: EMAILS
+[INFO] 2016-04-06 14:10:20.657 [restartedMain] o.h.t.s.e.i.InformationExtractorJdbcDatabaseMetaDataImpl - [requestID: ] HHH000262: Table not found: EMAILS
+[INFO] 2016-04-06 14:10:20.661 [restartedMain] o.h.t.s.e.i.InformationExtractorJdbcDatabaseMetaDataImpl - [requestID: ] HHH000262: Table not found: Hotel
+[INFO] 2016-04-06 14:10:20.662 [restartedMain] o.h.t.s.e.i.InformationExtractorJdbcDatabaseMetaDataImpl - [requestID: ] HHH000262: Table not found: Hotel
+[INFO] 2016-04-06 14:10:20.666 [restartedMain] o.h.t.s.e.i.InformationExtractorJdbcDatabaseMetaDataImpl - [requestID: ] HHH000262: Table not found: Item
+[INFO] 2016-04-06 14:10:20.667 [restartedMain] o.h.t.s.e.i.InformationExtractorJdbcDatabaseMetaDataImpl - [requestID: ] HHH000262: Table not found: Item
+[INFO] 2016-04-06 14:10:20.671 [restartedMain] o.h.t.s.e.i.InformationExtractorJdbcDatabaseMetaDataImpl - [requestID: ] HHH000262: Table not found: Person
+[INFO] 2016-04-06 14:10:20.674 [restartedMain] o.h.t.s.e.i.InformationExtractorJdbcDatabaseMetaDataImpl - [requestID: ] HHH000262: Table not found: Person
+[INFO] 2016-04-06 14:10:20.680 [restartedMain] o.h.t.s.e.i.InformationExtractorJdbcDatabaseMetaDataImpl - [requestID: ] HHH000262: Table not found: SimpleProduct
+[INFO] 2016-04-06 14:10:20.682 [restartedMain] o.h.t.s.e.i.InformationExtractorJdbcDatabaseMetaDataImpl - [requestID: ] HHH000262: Table not found: SimpleProduct
+[INFO] 2016-04-06 14:10:20.688 [restartedMain] o.h.t.s.e.i.InformationExtractorJdbcDatabaseMetaDataImpl - [requestID: ] HHH000262: Table not found: stock
+[INFO] 2016-04-06 14:10:20.690 [restartedMain] o.h.t.s.e.i.InformationExtractorJdbcDatabaseMetaDataImpl - [requestID: ] HHH000262: Table not found: stock
+[INFO] 2016-04-06 14:10:20.705 [restartedMain] o.h.t.s.e.i.InformationExtractorJdbcDatabaseMetaDataImpl - [requestID: ] HHH000262: Table not found: tasks
+[INFO] 2016-04-06 14:10:20.709 [restartedMain] o.h.t.s.e.i.InformationExtractorJdbcDatabaseMetaDataImpl - [requestID: ] HHH000262: Table not found: tasks
+[INFO] 2016-04-06 14:10:20.823 [restartedMain] o.h.t.s.e.i.InformationExtractorJdbcDatabaseMetaDataImpl - [requestID: ] HHH000262: Table not found: Product
+[INFO] 2016-04-06 14:10:20.825 [restartedMain] o.h.t.s.e.i.InformationExtractorJdbcDatabaseMetaDataImpl - [requestID: ] HHH000262: Table not found: Product
+[DEBUG] 2016-04-06 14:10:21.192 [restartedMain] o.h.s.internal.StatisticsInitiator - [requestID: ] Statistics initialized [enabled=true]
+[INFO] 2016-04-06 14:10:21.202 [restartedMain] o.h.e.i.StatisticalLoggingSessionEventListener - [requestID: ] Session Metrics {
+    0 nanoseconds spent acquiring 0 JDBC connections;
+    0 nanoseconds spent releasing 0 JDBC connections;
+    0 nanoseconds spent preparing 0 JDBC statements;
+    0 nanoseconds spent executing 0 JDBC statements;
+    0 nanoseconds spent executing 0 JDBC batches;
+    0 nanoseconds spent performing 0 L2C puts;
+    0 nanoseconds spent performing 0 L2C hits;
+    0 nanoseconds spent performing 0 L2C misses;
+    0 nanoseconds spent executing 0 flushes (flushing a total of 0 entities and 0 collections);
+    0 nanoseconds spent executing 0 partial-flushes (flushing a total of 0 entities and 0 collections)
+}
+[INFO] 2016-04-06 14:10:21.205 [restartedMain] o.h.e.i.StatisticalLoggingSessionEventListener - [requestID: ] Session Metrics {
+    0 nanoseconds spent acquiring 0 JDBC connections;
+    0 nanoseconds spent releasing 0 JDBC connections;
+    0 nanoseconds spent preparing 0 JDBC statements;
+    0 nanoseconds spent executing 0 JDBC statements;
+    0 nanoseconds spent executing 0 JDBC batches;
+    0 nanoseconds spent performing 0 L2C puts;
+    0 nanoseconds spent performing 0 L2C hits;
+    0 nanoseconds spent performing 0 L2C misses;
+    0 nanoseconds spent executing 0 flushes (flushing a total of 0 entities and 0 collections);
+    0 nanoseconds spent executing 0 partial-flushes (flushing a total of 0 entities and 0 collections)
+}
+[INFO] 2016-04-06 14:10:21.233 [restartedMain] o.h.e.i.StatisticalLoggingSessionEventListener - [requestID: ] Session Metrics {
+    0 nanoseconds spent acquiring 0 JDBC connections;
+    0 nanoseconds spent releasing 0 JDBC connections;
+    0 nanoseconds spent preparing 0 JDBC statements;
+    0 nanoseconds spent executing 0 JDBC statements;
+    0 nanoseconds spent executing 0 JDBC batches;
+    0 nanoseconds spent performing 0 L2C puts;
+    0 nanoseconds spent performing 0 L2C hits;
+    0 nanoseconds spent performing 0 L2C misses;
+    0 nanoseconds spent executing 0 flushes (flushing a total of 0 entities and 0 collections);
+    0 nanoseconds spent executing 0 partial-flushes (flushing a total of 0 entities and 0 collections)
+}
+[INFO] 2016-04-06 14:10:21.267 [restartedMain] o.h.e.i.StatisticalLoggingSessionEventListener - [requestID: ] Session Metrics {
+    0 nanoseconds spent acquiring 0 JDBC connections;
+    0 nanoseconds spent releasing 0 JDBC connections;
+    0 nanoseconds spent preparing 0 JDBC statements;
+    0 nanoseconds spent executing 0 JDBC statements;
+    0 nanoseconds spent executing 0 JDBC batches;
+    0 nanoseconds spent performing 0 L2C puts;
+    0 nanoseconds spent performing 0 L2C hits;
+    0 nanoseconds spent performing 0 L2C misses;
+    0 nanoseconds spent executing 0 flushes (flushing a total of 0 entities and 0 collections);
+    0 nanoseconds spent executing 0 partial-flushes (flushing a total of 0 entities and 0 collections)
+}
+[INFO] 2016-04-06 14:10:21.298 [restartedMain] o.h.e.i.StatisticalLoggingSessionEventListener - [requestID: ] Session Metrics {
+    0 nanoseconds spent acquiring 0 JDBC connections;
+    0 nanoseconds spent releasing 0 JDBC connections;
+    0 nanoseconds spent preparing 0 JDBC statements;
+    0 nanoseconds spent executing 0 JDBC statements;
+    0 nanoseconds spent executing 0 JDBC batches;
+    0 nanoseconds spent performing 0 L2C puts;
+    0 nanoseconds spent performing 0 L2C hits;
+    0 nanoseconds spent performing 0 L2C misses;
+    0 nanoseconds spent executing 0 flushes (flushing a total of 0 entities and 0 collections);
+    0 nanoseconds spent executing 0 partial-flushes (flushing a total of 0 entities and 0 collections)
+}
+[INFO] 2016-04-06 14:10:21.406 [restartedMain] o.h.h.i.QueryTranslatorFactoryInitiator - [requestID: ] HHH000397: Using ASTQueryTranslatorFactory
+[INFO] 2016-04-06 14:10:21.506 [restartedMain] o.h.e.i.StatisticalLoggingSessionEventListener - [requestID: ] Session Metrics {
+    0 nanoseconds spent acquiring 0 JDBC connections;
+    0 nanoseconds spent releasing 0 JDBC connections;
+    0 nanoseconds spent preparing 0 JDBC statements;
+    0 nanoseconds spent executing 0 JDBC statements;
+    0 nanoseconds spent executing 0 JDBC batches;
+    0 nanoseconds spent performing 0 L2C puts;
+    0 nanoseconds spent performing 0 L2C hits;
+    0 nanoseconds spent performing 0 L2C misses;
+    0 nanoseconds spent executing 0 flushes (flushing a total of 0 entities and 0 collections);
+    0 nanoseconds spent executing 0 partial-flushes (flushing a total of 0 entities and 0 collections)
+}
+[INFO] 2016-04-06 14:10:21.709 [restartedMain] o.h.e.i.StatisticalLoggingSessionEventListener - [requestID: ] Session Metrics {
+    0 nanoseconds spent acquiring 0 JDBC connections;
+    0 nanoseconds spent releasing 0 JDBC connections;
+    0 nanoseconds spent preparing 0 JDBC statements;
+    0 nanoseconds spent executing 0 JDBC statements;
+    0 nanoseconds spent executing 0 JDBC batches;
+    0 nanoseconds spent performing 0 L2C puts;
+    0 nanoseconds spent performing 0 L2C hits;
+    0 nanoseconds spent performing 0 L2C misses;
+    0 nanoseconds spent executing 0 flushes (flushing a total of 0 entities and 0 collections);
+    0 nanoseconds spent executing 0 partial-flushes (flushing a total of 0 entities and 0 collections)
+}
+[INFO] 2016-04-06 14:10:21.712 [restartedMain] o.h.e.i.StatisticalLoggingSessionEventListener - [requestID: ] Session Metrics {
+    0 nanoseconds spent acquiring 0 JDBC connections;
+    0 nanoseconds spent releasing 0 JDBC connections;
+    0 nanoseconds spent preparing 0 JDBC statements;
+    0 nanoseconds spent executing 0 JDBC statements;
+    0 nanoseconds spent executing 0 JDBC batches;
+    0 nanoseconds spent performing 0 L2C puts;
+    0 nanoseconds spent performing 0 L2C hits;
+    0 nanoseconds spent performing 0 L2C misses;
+    0 nanoseconds spent executing 0 flushes (flushing a total of 0 entities and 0 collections);
+    0 nanoseconds spent executing 0 partial-flushes (flushing a total of 0 entities and 0 collections)
+}
+[INFO] 2016-04-06 14:10:21.715 [restartedMain] o.h.e.i.StatisticalLoggingSessionEventListener - [requestID: ] Session Metrics {
+    0 nanoseconds spent acquiring 0 JDBC connections;
+    0 nanoseconds spent releasing 0 JDBC connections;
+    0 nanoseconds spent preparing 0 JDBC statements;
+    0 nanoseconds spent executing 0 JDBC statements;
+    0 nanoseconds spent executing 0 JDBC batches;
+    0 nanoseconds spent performing 0 L2C puts;
+    0 nanoseconds spent performing 0 L2C hits;
+    0 nanoseconds spent performing 0 L2C misses;
+    0 nanoseconds spent executing 0 flushes (flushing a total of 0 entities and 0 collections);
+    0 nanoseconds spent executing 0 partial-flushes (flushing a total of 0 entities and 0 collections)
+}
+[INFO] 2016-04-06 14:10:21.728 [restartedMain] o.h.e.i.StatisticalLoggingSessionEventListener - [requestID: ] Session Metrics {
+    0 nanoseconds spent acquiring 0 JDBC connections;
+    0 nanoseconds spent releasing 0 JDBC connections;
+    0 nanoseconds spent preparing 0 JDBC statements;
+    0 nanoseconds spent executing 0 JDBC statements;
+    0 nanoseconds spent executing 0 JDBC batches;
+    0 nanoseconds spent performing 0 L2C puts;
+    0 nanoseconds spent performing 0 L2C hits;
+    0 nanoseconds spent performing 0 L2C misses;
+    0 nanoseconds spent executing 0 flushes (flushing a total of 0 entities and 0 collections);
+    0 nanoseconds spent executing 0 partial-flushes (flushing a total of 0 entities and 0 collections)
+}
+[INFO] 2016-04-06 14:10:21.732 [restartedMain] o.h.e.i.StatisticalLoggingSessionEventListener - [requestID: ] Session Metrics {
+    0 nanoseconds spent acquiring 0 JDBC connections;
+    0 nanoseconds spent releasing 0 JDBC connections;
+    0 nanoseconds spent preparing 0 JDBC statements;
+    0 nanoseconds spent executing 0 JDBC statements;
+    0 nanoseconds spent executing 0 JDBC batches;
+    0 nanoseconds spent performing 0 L2C puts;
+    0 nanoseconds spent performing 0 L2C hits;
+    0 nanoseconds spent performing 0 L2C misses;
+    0 nanoseconds spent executing 0 flushes (flushing a total of 0 entities and 0 collections);
+    0 nanoseconds spent executing 0 partial-flushes (flushing a total of 0 entities and 0 collections)
+}
+[INFO] 2016-04-06 14:10:21.737 [restartedMain] o.h.e.i.StatisticalLoggingSessionEventListener - [requestID: ] Session Metrics {
+    0 nanoseconds spent acquiring 0 JDBC connections;
+    0 nanoseconds spent releasing 0 JDBC connections;
+    0 nanoseconds spent preparing 0 JDBC statements;
+    0 nanoseconds spent executing 0 JDBC statements;
+    0 nanoseconds spent executing 0 JDBC batches;
+    0 nanoseconds spent performing 0 L2C puts;
+    0 nanoseconds spent performing 0 L2C hits;
+    0 nanoseconds spent performing 0 L2C misses;
+    0 nanoseconds spent executing 0 flushes (flushing a total of 0 entities and 0 collections);
+    0 nanoseconds spent executing 0 partial-flushes (flushing a total of 0 entities and 0 collections)
+}
+[INFO] 2016-04-06 14:10:21.749 [restartedMain] o.h.e.i.StatisticalLoggingSessionEventListener - [requestID: ] Session Metrics {
+    0 nanoseconds spent acquiring 0 JDBC connections;
+    0 nanoseconds spent releasing 0 JDBC connections;
+    0 nanoseconds spent preparing 0 JDBC statements;
+    0 nanoseconds spent executing 0 JDBC statements;
+    0 nanoseconds spent executing 0 JDBC batches;
+    0 nanoseconds spent performing 0 L2C puts;
+    0 nanoseconds spent performing 0 L2C hits;
+    0 nanoseconds spent performing 0 L2C misses;
+    0 nanoseconds spent executing 0 flushes (flushing a total of 0 entities and 0 collections);
+    0 nanoseconds spent executing 0 partial-flushes (flushing a total of 0 entities and 0 collections)
+}
+[INFO] 2016-04-06 14:10:21.752 [restartedMain] o.h.e.i.StatisticalLoggingSessionEventListener - [requestID: ] Session Metrics {
+    0 nanoseconds spent acquiring 0 JDBC connections;
+    0 nanoseconds spent releasing 0 JDBC connections;
+    0 nanoseconds spent preparing 0 JDBC statements;
+    0 nanoseconds spent executing 0 JDBC statements;
+    0 nanoseconds spent executing 0 JDBC batches;
+    0 nanoseconds spent performing 0 L2C puts;
+    0 nanoseconds spent performing 0 L2C hits;
+    0 nanoseconds spent performing 0 L2C misses;
+    0 nanoseconds spent executing 0 flushes (flushing a total of 0 entities and 0 collections);
+    0 nanoseconds spent executing 0 partial-flushes (flushing a total of 0 entities and 0 collections)
+}
+[INFO] 2016-04-06 14:10:21.754 [restartedMain] o.h.e.i.StatisticalLoggingSessionEventListener - [requestID: ] Session Metrics {
+    0 nanoseconds spent acquiring 0 JDBC connections;
+    0 nanoseconds spent releasing 0 JDBC connections;
+    0 nanoseconds spent preparing 0 JDBC statements;
+    0 nanoseconds spent executing 0 JDBC statements;
+    0 nanoseconds spent executing 0 JDBC batches;
+    0 nanoseconds spent performing 0 L2C puts;
+    0 nanoseconds spent performing 0 L2C hits;
+    0 nanoseconds spent performing 0 L2C misses;
+    0 nanoseconds spent executing 0 flushes (flushing a total of 0 entities and 0 collections);
+    0 nanoseconds spent executing 0 partial-flushes (flushing a total of 0 entities and 0 collections)
+}
+[INFO] 2016-04-06 14:10:21.764 [restartedMain] o.h.e.i.StatisticalLoggingSessionEventListener - [requestID: ] Session Metrics {
+    0 nanoseconds spent acquiring 0 JDBC connections;
+    0 nanoseconds spent releasing 0 JDBC connections;
+    0 nanoseconds spent preparing 0 JDBC statements;
+    0 nanoseconds spent executing 0 JDBC statements;
+    0 nanoseconds spent executing 0 JDBC batches;
+    0 nanoseconds spent performing 0 L2C puts;
+    0 nanoseconds spent performing 0 L2C hits;
+    0 nanoseconds spent performing 0 L2C misses;
+    0 nanoseconds spent executing 0 flushes (flushing a total of 0 entities and 0 collections);
+    0 nanoseconds spent executing 0 partial-flushes (flushing a total of 0 entities and 0 collections)
+}
+[INFO] 2016-04-06 14:10:21.767 [restartedMain] o.h.e.i.StatisticalLoggingSessionEventListener - [requestID: ] Session Metrics {
+    0 nanoseconds spent acquiring 0 JDBC connections;
+    0 nanoseconds spent releasing 0 JDBC connections;
+    0 nanoseconds spent preparing 0 JDBC statements;
+    0 nanoseconds spent executing 0 JDBC statements;
+    0 nanoseconds spent executing 0 JDBC batches;
+    0 nanoseconds spent performing 0 L2C puts;
+    0 nanoseconds spent performing 0 L2C hits;
+    0 nanoseconds spent performing 0 L2C misses;
+    0 nanoseconds spent executing 0 flushes (flushing a total of 0 entities and 0 collections);
+    0 nanoseconds spent executing 0 partial-flushes (flushing a total of 0 entities and 0 collections)
+}
+[INFO] 2016-04-06 14:10:21.770 [restartedMain] o.h.e.i.StatisticalLoggingSessionEventListener - [requestID: ] Session Metrics {
+    0 nanoseconds spent acquiring 0 JDBC connections;
+    0 nanoseconds spent releasing 0 JDBC connections;
+    0 nanoseconds spent preparing 0 JDBC statements;
+    0 nanoseconds spent executing 0 JDBC statements;
+    0 nanoseconds spent executing 0 JDBC batches;
+    0 nanoseconds spent performing 0 L2C puts;
+    0 nanoseconds spent performing 0 L2C hits;
+    0 nanoseconds spent performing 0 L2C misses;
+    0 nanoseconds spent executing 0 flushes (flushing a total of 0 entities and 0 collections);
+    0 nanoseconds spent executing 0 partial-flushes (flushing a total of 0 entities and 0 collections)
+}
+[INFO] 2016-04-06 14:10:21.775 [restartedMain] o.h.e.i.StatisticalLoggingSessionEventListener - [requestID: ] Session Metrics {
+    0 nanoseconds spent acquiring 0 JDBC connections;
+    0 nanoseconds spent releasing 0 JDBC connections;
+    0 nanoseconds spent preparing 0 JDBC statements;
+    0 nanoseconds spent executing 0 JDBC statements;
+    0 nanoseconds spent executing 0 JDBC batches;
+    0 nanoseconds spent performing 0 L2C puts;
+    0 nanoseconds spent performing 0 L2C hits;
+    0 nanoseconds spent performing 0 L2C misses;
+    0 nanoseconds spent executing 0 flushes (flushing a total of 0 entities and 0 collections);
+    0 nanoseconds spent executing 0 partial-flushes (flushing a total of 0 entities and 0 collections)
+}
+[INFO] 2016-04-06 14:10:21.788 [restartedMain] o.h.e.i.StatisticalLoggingSessionEventListener - [requestID: ] Session Metrics {
+    0 nanoseconds spent acquiring 0 JDBC connections;
+    0 nanoseconds spent releasing 0 JDBC connections;
+    0 nanoseconds spent preparing 0 JDBC statements;
+    0 nanoseconds spent executing 0 JDBC statements;
+    0 nanoseconds spent executing 0 JDBC batches;
+    0 nanoseconds spent performing 0 L2C puts;
+    0 nanoseconds spent performing 0 L2C hits;
+    0 nanoseconds spent performing 0 L2C misses;
+    0 nanoseconds spent executing 0 flushes (flushing a total of 0 entities and 0 collections);
+    0 nanoseconds spent executing 0 partial-flushes (flushing a total of 0 entities and 0 collections)
+}
+[INFO] 2016-04-06 14:10:21.790 [restartedMain] o.h.e.i.StatisticalLoggingSessionEventListener - [requestID: ] Session Metrics {
+    0 nanoseconds spent acquiring 0 JDBC connections;
+    0 nanoseconds spent releasing 0 JDBC connections;
+    0 nanoseconds spent preparing 0 JDBC statements;
+    0 nanoseconds spent executing 0 JDBC statements;
+    0 nanoseconds spent executing 0 JDBC batches;
+    0 nanoseconds spent performing 0 L2C puts;
+    0 nanoseconds spent performing 0 L2C hits;
+    0 nanoseconds spent performing 0 L2C misses;
+    0 nanoseconds spent executing 0 flushes (flushing a total of 0 entities and 0 collections);
+    0 nanoseconds spent executing 0 partial-flushes (flushing a total of 0 entities and 0 collections)
+}
+[INFO] 2016-04-06 14:10:21.792 [restartedMain] o.h.e.i.StatisticalLoggingSessionEventListener - [requestID: ] Session Metrics {
+    0 nanoseconds spent acquiring 0 JDBC connections;
+    0 nanoseconds spent releasing 0 JDBC connections;
+    0 nanoseconds spent preparing 0 JDBC statements;
+    0 nanoseconds spent executing 0 JDBC statements;
+    0 nanoseconds spent executing 0 JDBC batches;
+    0 nanoseconds spent performing 0 L2C puts;
+    0 nanoseconds spent performing 0 L2C hits;
+    0 nanoseconds spent performing 0 L2C misses;
+    0 nanoseconds spent executing 0 flushes (flushing a total of 0 entities and 0 collections);
+    0 nanoseconds spent executing 0 partial-flushes (flushing a total of 0 entities and 0 collections)
+}
+[INFO] 2016-04-06 14:10:21.796 [restartedMain] o.h.e.i.StatisticalLoggingSessionEventListener - [requestID: ] Session Metrics {
+    0 nanoseconds spent acquiring 0 JDBC connections;
+    0 nanoseconds spent releasing 0 JDBC connections;
+    0 nanoseconds spent preparing 0 JDBC statements;
+    0 nanoseconds spent executing 0 JDBC statements;
+    0 nanoseconds spent executing 0 JDBC batches;
+    0 nanoseconds spent performing 0 L2C puts;
+    0 nanoseconds spent performing 0 L2C hits;
+    0 nanoseconds spent performing 0 L2C misses;
+    0 nanoseconds spent executing 0 flushes (flushing a total of 0 entities and 0 collections);
+    0 nanoseconds spent executing 0 partial-flushes (flushing a total of 0 entities and 0 collections)
+}
+[INFO] 2016-04-06 14:10:21.799 [restartedMain] o.h.e.i.StatisticalLoggingSessionEventListener - [requestID: ] Session Metrics {
+    0 nanoseconds spent acquiring 0 JDBC connections;
+    0 nanoseconds spent releasing 0 JDBC connections;
+    0 nanoseconds spent preparing 0 JDBC statements;
+    0 nanoseconds spent executing 0 JDBC statements;
+    0 nanoseconds spent executing 0 JDBC batches;
+    0 nanoseconds spent performing 0 L2C puts;
+    0 nanoseconds spent performing 0 L2C hits;
+    0 nanoseconds spent performing 0 L2C misses;
+    0 nanoseconds spent executing 0 flushes (flushing a total of 0 entities and 0 collections);
+    0 nanoseconds spent executing 0 partial-flushes (flushing a total of 0 entities and 0 collections)
+}
+[INFO] 2016-04-06 14:10:21.813 [restartedMain] o.h.e.i.StatisticalLoggingSessionEventListener - [requestID: ] Session Metrics {
+    0 nanoseconds spent acquiring 0 JDBC connections;
+    0 nanoseconds spent releasing 0 JDBC connections;
+    0 nanoseconds spent preparing 0 JDBC statements;
+    0 nanoseconds spent executing 0 JDBC statements;
+    0 nanoseconds spent executing 0 JDBC batches;
+    0 nanoseconds spent performing 0 L2C puts;
+    0 nanoseconds spent performing 0 L2C hits;
+    0 nanoseconds spent performing 0 L2C misses;
+    0 nanoseconds spent executing 0 flushes (flushing a total of 0 entities and 0 collections);
+    0 nanoseconds spent executing 0 partial-flushes (flushing a total of 0 entities and 0 collections)
+}
+[INFO] 2016-04-06 14:10:21.817 [restartedMain] o.h.e.i.StatisticalLoggingSessionEventListener - [requestID: ] Session Metrics {
+    0 nanoseconds spent acquiring 0 JDBC connections;
+    0 nanoseconds spent releasing 0 JDBC connections;
+    0 nanoseconds spent preparing 0 JDBC statements;
+    0 nanoseconds spent executing 0 JDBC statements;
+    0 nanoseconds spent executing 0 JDBC batches;
+    0 nanoseconds spent performing 0 L2C puts;
+    0 nanoseconds spent performing 0 L2C hits;
+    0 nanoseconds spent performing 0 L2C misses;
+    0 nanoseconds spent executing 0 flushes (flushing a total of 0 entities and 0 collections);
+    0 nanoseconds spent executing 0 partial-flushes (flushing a total of 0 entities and 0 collections)
+}
+[INFO] 2016-04-06 14:10:21.820 [restartedMain] o.h.e.i.StatisticalLoggingSessionEventListener - [requestID: ] Session Metrics {
+    0 nanoseconds spent acquiring 0 JDBC connections;
+    0 nanoseconds spent releasing 0 JDBC connections;
+    0 nanoseconds spent preparing 0 JDBC statements;
+    0 nanoseconds spent executing 0 JDBC statements;
+    0 nanoseconds spent executing 0 JDBC batches;
+    0 nanoseconds spent performing 0 L2C puts;
+    0 nanoseconds spent performing 0 L2C hits;
+    0 nanoseconds spent performing 0 L2C misses;
+    0 nanoseconds spent executing 0 flushes (flushing a total of 0 entities and 0 collections);
+    0 nanoseconds spent executing 0 partial-flushes (flushing a total of 0 entities and 0 collections)
+}
+[INFO] 2016-04-06 14:10:21.889 [restartedMain] o.s.w.s.m.m.a.RequestMappingHandlerAdapter - [requestID: ] Looking for @ControllerAdvice: org.springframework.boot.context.embedded.AnnotationConfigEmbeddedWebApplicationContext@eec24fa: startup date [Wed Apr 06 14:10:14 CEST 2016]; root of context hierarchy
+[INFO] 2016-04-06 14:10:21.989 [restartedMain] o.s.w.s.m.m.a.RequestMappingHandlerMapping - [requestID: ] Mapped "{[/error],produces=[text/html]}" onto public org.springframework.web.servlet.ModelAndView org.springframework.boot.autoconfigure.web.BasicErrorController.errorHtml(javax.servlet.http.HttpServletRequest,javax.servlet.http.HttpServletResponse)
+[INFO] 2016-04-06 14:10:21.991 [restartedMain] o.s.w.s.m.m.a.RequestMappingHandlerMapping - [requestID: ] Mapped "{[/error]}" onto public org.springframework.http.ResponseEntity<java.util.Map<java.lang.String, java.lang.Object>> org.springframework.boot.autoconfigure.web.BasicErrorController.error(javax.servlet.http.HttpServletRequest)
+[INFO] 2016-04-06 14:10:22.034 [restartedMain] o.s.w.s.h.SimpleUrlHandlerMapping - [requestID: ] Mapped URL path [/webjars/**] onto handler of type [class org.springframework.web.servlet.resource.ResourceHttpRequestHandler]
+[INFO] 2016-04-06 14:10:22.035 [restartedMain] o.s.w.s.h.SimpleUrlHandlerMapping - [requestID: ] Mapped URL path [/**] onto handler of type [class org.springframework.web.servlet.resource.ResourceHttpRequestHandler]
+[INFO] 2016-04-06 14:10:22.094 [restartedMain] o.s.w.s.h.SimpleUrlHandlerMapping - [requestID: ] Mapped URL path [/**/favicon.ico] onto handler of type [class org.springframework.web.servlet.resource.ResourceHttpRequestHandler]
+[INFO] 2016-04-06 14:10:22.803 [restartedMain] o.s.b.d.a.OptionalLiveReloadServer - [requestID: ] LiveReload server is running on port 35729
+[INFO] 2016-04-06 14:10:22.927 [restartedMain] o.s.j.e.a.AnnotationMBeanExporter - [requestID: ] Registering beans for JMX exposure on startup
+[INFO] 2016-04-06 14:10:22.930 [restartedMain] o.s.j.e.a.AnnotationMBeanExporter - [requestID: ] Bean with name 'dataSourceMBean' has been autodetected for JMX exposure
+[INFO] 2016-04-06 14:10:22.939 [restartedMain] o.s.j.e.a.AnnotationMBeanExporter - [requestID: ] Located MBean 'dataSourceMBean': registering with JMX server as MBean [org.apache.tomcat.jdbc.pool.jmx:name=dataSourceMBean,type=ConnectionPool]
+[INFO] 2016-04-06 14:10:22.996 [restartedMain] o.a.coyote.http11.Http11NioProtocol - [requestID: ] Initializing ProtocolHandler ["http-nio-9444"]
+[INFO] 2016-04-06 14:10:23.010 [restartedMain] o.a.coyote.http11.Http11NioProtocol - [requestID: ] Starting ProtocolHandler ["http-nio-9444"]
+[INFO] 2016-04-06 14:10:23.024 [restartedMain] o.a.tomcat.util.net.NioSelectorPool - [requestID: ] Using a shared selector for servlet write/read
+[INFO] 2016-04-06 14:10:23.061 [restartedMain] o.s.b.c.e.t.TomcatEmbeddedServletContainer - [requestID: ] Tomcat started on port(s): 9444 (http)
+[TRACE] 2016-04-06 14:10:23.086 [restartedMain] o.s.a.i.CustomizableTraceInterceptor - [requestID: ] Entering save(Person(id=null, firstname=slawek, email=przodownikR1@gmail.com, modify=null, birthDay=2016-04-06T14:10:23.081+02:00[Europe/Warsaw])).
+[INFO] 2016-04-06 14:10:23.186 [restartedMain] o.h.e.i.StatisticalLoggingSessionEventListener - [requestID: ] Session Metrics {
+    93655 nanoseconds spent acquiring 1 JDBC connections;
+    0 nanoseconds spent releasing 0 JDBC connections;
+    1717456 nanoseconds spent preparing 2 JDBC statements;
+    2691111 nanoseconds spent executing 2 JDBC statements;
+    0 nanoseconds spent executing 0 JDBC batches;
+    0 nanoseconds spent performing 0 L2C puts;
+    0 nanoseconds spent performing 0 L2C hits;
+    0 nanoseconds spent performing 0 L2C misses;
+    30131867 nanoseconds spent executing 1 flushes (flushing a total of 1 entities and 0 collections);
+    0 nanoseconds spent executing 0 partial-flushes (flushing a total of 0 entities and 0 collections)
+}
+[TRACE] 2016-04-06 14:10:23.188 [restartedMain] o.s.a.i.CustomizableTraceInterceptor - [requestID: ] Leaving save(..) with return value Person(id=1, firstname=slawek, email=przodownikR1@gmail.com, modify=null, birthDay=2016-04-06T14:10:23.081+02:00[Europe/Warsaw]), took 101ms.
+[TRACE] 2016-04-06 14:10:23.189 [restartedMain] o.s.a.i.CustomizableTraceInterceptor - [requestID: ] Entering findAll().
+[DEBUG] 2016-04-06 14:10:23.225 [restartedMain] o.h.s.i.ConcurrentStatisticsImpl - [requestID: ] HHH000117: HQL: select generatedAlias0 from Person as generatedAlias0, time: 13ms, rows: 1
+[INFO] 2016-04-06 14:10:23.229 [restartedMain] o.h.e.i.StatisticalLoggingSessionEventListener - [requestID: ] Session Metrics {
+    98316 nanoseconds spent acquiring 1 JDBC connections;
+    0 nanoseconds spent releasing 0 JDBC connections;
+    528750 nanoseconds spent preparing 1 JDBC statements;
+    207984 nanoseconds spent executing 1 JDBC statements;
+    0 nanoseconds spent executing 0 JDBC batches;
+    0 nanoseconds spent performing 0 L2C puts;
+    0 nanoseconds spent performing 0 L2C hits;
+    0 nanoseconds spent performing 0 L2C misses;
+    0 nanoseconds spent executing 0 flushes (flushing a total of 0 entities and 0 collections);
+    36989 nanoseconds spent executing 1 partial-flushes (flushing a total of 0 entities and 0 collections)
+}
+[TRACE] 2016-04-06 14:10:23.230 [restartedMain] o.s.a.i.CustomizableTraceInterceptor - [requestID: ] Leaving findAll(..) with return value [Person(id=1, firstname=slawek, email=przodownikR1@gmail.com, modify=null, birthDay=2016-04-06T14:10:23.081+02:00[Europe/Warsaw])], took 41ms.
+[INFO] 2016-04-06 14:10:23.230 [restartedMain] p.j.s.SpringDataTestApplication - [requestID: ] [Person(id=1, firstname=slawek, email=przodownikR1@gmail.com, modify=null, birthDay=2016-04-06T14:10:23.081+02:00[Europe/Warsaw])] 
+[INFO] 2016-04-06 14:10:23.232 [restartedMain] p.j.s.SpringDataTestApplication - [requestID: ] Started SpringDataTestApplication in 8.907 seconds (JVM running for 9.462)
+[INFO] 2016-04-06 14:10:40.484 [http-nio-9444-exec-1] o.a.c.c.C.[Tomcat].[localhost].[/] - [requestID: ] Initializing Spring FrameworkServlet 'dispatcherServlet'
+[INFO] 2016-04-06 14:10:40.484 [http-nio-9444-exec-1] o.s.web.servlet.DispatcherServlet - [requestID: ] FrameworkServlet 'dispatcherServlet': initialization started
+[INFO] 2016-04-06 14:10:40.505 [http-nio-9444-exec-1] o.s.web.servlet.DispatcherServlet - [requestID: ] FrameworkServlet 'dispatcherServlet': initialization completed in 21 ms
+[INFO] 2016-04-06 14:10:40.573 [http-nio-9444-exec-1] o.h.e.i.StatisticalLoggingSessionEventListener - [requestID: ] Session Metrics {
+    0 nanoseconds spent acquiring 0 JDBC connections;
+    0 nanoseconds spent releasing 0 JDBC connections;
+    0 nanoseconds spent preparing 0 JDBC statements;
+    0 nanoseconds spent executing 0 JDBC statements;
+    0 nanoseconds spent executing 0 JDBC batches;
+    0 nanoseconds spent performing 0 L2C puts;
+    0 nanoseconds spent performing 0 L2C hits;
+    0 nanoseconds spent performing 0 L2C misses;
+    0 nanoseconds spent executing 0 flushes (flushing a total of 0 entities and 0 collections);
+    0 nanoseconds spent executing 0 partial-flushes (flushing a total of 0 entities and 0 collections)
+}
+[INFO] 2016-04-06 14:10:46.374 [http-nio-9444-exec-3] o.h.e.i.StatisticalLoggingSessionEventListener - [requestID: ] Session Metrics {
+    0 nanoseconds spent acquiring 0 JDBC connections;
+    0 nanoseconds spent releasing 0 JDBC connections;
+    0 nanoseconds spent preparing 0 JDBC statements;
+    0 nanoseconds spent executing 0 JDBC statements;
+    0 nanoseconds spent executing 0 JDBC batches;
+    0 nanoseconds spent performing 0 L2C puts;
+    0 nanoseconds spent performing 0 L2C hits;
+    0 nanoseconds spent performing 0 L2C misses;
+    0 nanoseconds spent executing 0 flushes (flushing a total of 0 entities and 0 collections);
+    0 nanoseconds spent executing 0 partial-flushes (flushing a total of 0 entities and 0 collections)
+}
+[INFO] 2016-04-06 14:22:40.294 [Thread-10] o.s.b.c.e.AnnotationConfigEmbeddedWebApplicationContext - [requestID: ] Closing org.springframework.boot.context.embedded.AnnotationConfigEmbeddedWebApplicationContext@eec24fa: startup date [Wed Apr 06 14:10:14 CEST 2016]; root of context hierarchy
+[WARN] 2016-04-06 14:22:40.309 [Thread-10] o.s.b.f.s.DisposableBeanAdapter - [requestID: ] Invocation of destroy method failed on bean with name 'inMemoryDatabaseShutdownExecutor': org.h2.jdbc.JdbcSQLException: Baza danych jest już zamknięta (aby zablokować samoczynne zamykanie podczas zamknięcia VM dodaj ";DB_CLOSE_ON_EXIT=FALSE" do URL bazy danych)
+Database is already closed (to disable automatic closing at VM shutdown, add ";DB_CLOSE_ON_EXIT=FALSE" to the db URL) [90121-191]
+[INFO] 2016-04-06 14:22:40.312 [Thread-10] o.s.j.e.a.AnnotationMBeanExporter - [requestID: ] Unregistering JMX-exposed beans on shutdown
+[INFO] 2016-04-06 14:22:40.313 [Thread-10] o.s.j.e.a.AnnotationMBeanExporter - [requestID: ] Unregistering JMX-exposed beans
+[INFO] 2016-04-06 14:22:40.321 [Thread-10] o.s.o.j.LocalContainerEntityManagerFactoryBean - [requestID: ] Closing JPA EntityManagerFactory for persistence unit 'default'
