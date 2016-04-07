@@ -9587,3 +9587,545 @@ Database is already closed (to disable automatic closing at VM shutdown, add ";D
 [INFO] 2016-04-06 15:21:52.680 [main] p.j.s.m.Many2OneJoinColumnTest - [requestID: ] person site : [Person(id=2, firstname=slawek, email=slawek@tlen.pl, modify=null, birthDay=2016-04-06T15:21:52.535+02:00[Europe/Warsaw]), Person(id=4, firstname=slawek, email=slawek@tlen.pl, modify=null, birthDay=2016-04-06T15:21:52.670+02:00[Europe/Warsaw])]
 [INFO] 2016-04-06 15:21:52.682 [Thread-3] o.s.c.s.GenericApplicationContext - [requestID: ] Closing org.springframework.context.support.GenericApplicationContext@15761df8: startup date [Wed Apr 06 15:21:48 CEST 2016]; root of context hierarchy
 [INFO] 2016-04-06 15:21:52.690 [Thread-3] o.s.o.j.LocalContainerEntityManagerFactoryBean - [requestID: ] Closing JPA EntityManagerFactory for persistence unit 'default'
+[INFO] 2016-04-07 08:09:15.506 [restartedMain] p.j.s.SpringDataTestApplication - [requestID: ] Starting SpringDataTestApplication on przodownik-Dell-System-XPS-L702X with PID 5351 (/home/przodownik/blog/springDataKata/build/classes/main started by przodownik in /home/przodownik/blog/springDataKata)
+[INFO] 2016-04-07 08:09:15.511 [restartedMain] p.j.s.SpringDataTestApplication - [requestID: ] No active profile set, falling back to default profiles: default
+[INFO] 2016-04-07 08:09:15.798 [background-preinit] o.h.validator.internal.util.Version - [requestID: ] HV000001: Hibernate Validator 5.3.0.Alpha1
+[INFO] 2016-04-07 08:09:15.829 [restartedMain] o.s.b.c.e.AnnotationConfigEmbeddedWebApplicationContext - [requestID: ] Refreshing org.springframework.boot.context.embedded.AnnotationConfigEmbeddedWebApplicationContext@eec24fa: startup date [Thu Apr 07 08:09:15 CEST 2016]; root of context hierarchy
+[INFO] 2016-04-07 08:09:17.013 [restartedMain] o.s.b.f.s.DefaultListableBeanFactory - [requestID: ] Overriding bean definition for bean 'beanNameViewResolver' with a different definition: replacing [Root bean: class [null]; scope=; abstract=false; lazyInit=false; autowireMode=3; dependencyCheck=0; autowireCandidate=true; primary=false; factoryBeanName=org.springframework.boot.autoconfigure.web.ErrorMvcAutoConfiguration$WhitelabelErrorViewConfiguration; factoryMethodName=beanNameViewResolver; initMethodName=null; destroyMethodName=(inferred); defined in class path resource [org/springframework/boot/autoconfigure/web/ErrorMvcAutoConfiguration$WhitelabelErrorViewConfiguration.class]] with [Root bean: class [null]; scope=; abstract=false; lazyInit=false; autowireMode=3; dependencyCheck=0; autowireCandidate=true; primary=false; factoryBeanName=org.springframework.boot.autoconfigure.web.WebMvcAutoConfiguration$WebMvcAutoConfigurationAdapter; factoryMethodName=beanNameViewResolver; initMethodName=null; destroyMethodName=(inferred); defined in class path resource [org/springframework/boot/autoconfigure/web/WebMvcAutoConfiguration$WebMvcAutoConfigurationAdapter.class]]
+[INFO] 2016-04-07 08:09:17.671 [restartedMain] o.s.c.s.PostProcessorRegistrationDelegate$BeanPostProcessorChecker - [requestID: ] Bean 'org.springframework.transaction.annotation.ProxyTransactionManagementConfiguration' of type [class org.springframework.transaction.annotation.ProxyTransactionManagementConfiguration$$EnhancerBySpringCGLIB$$de978754] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+[INFO] 2016-04-07 08:09:17.710 [restartedMain] o.s.c.s.PostProcessorRegistrationDelegate$BeanPostProcessorChecker - [requestID: ] Bean 'aopProfiler' of type [class pl.java.scalatech.config.AopProfiler$$EnhancerBySpringCGLIB$$382a0584] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+[INFO] 2016-04-07 08:09:17.730 [restartedMain] o.s.c.s.PostProcessorRegistrationDelegate$BeanPostProcessorChecker - [requestID: ] Bean 'interceptor' of type [class org.springframework.aop.interceptor.CustomizableTraceInterceptor] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+[INFO] 2016-04-07 08:09:17.734 [restartedMain] o.s.c.s.PostProcessorRegistrationDelegate$BeanPostProcessorChecker - [requestID: ] Bean 'traceAdvisor' of type [class org.springframework.aop.support.DefaultPointcutAdvisor] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+[INFO] 2016-04-07 08:09:18.320 [restartedMain] o.s.b.c.e.t.TomcatEmbeddedServletContainer - [requestID: ] Tomcat initialized with port(s): 9444 (http)
+[INFO] 2016-04-07 08:09:18.342 [restartedMain] o.a.catalina.core.StandardService - [requestID: ] Starting service Tomcat
+[INFO] 2016-04-07 08:09:18.344 [restartedMain] o.a.catalina.core.StandardEngine - [requestID: ] Starting Servlet Engine: Apache Tomcat/8.0.32
+[INFO] 2016-04-07 08:09:18.464 [localhost-startStop-1] o.a.c.c.C.[Tomcat].[localhost].[/] - [requestID: ] Initializing Spring embedded WebApplicationContext
+[INFO] 2016-04-07 08:09:18.464 [localhost-startStop-1] o.s.web.context.ContextLoader - [requestID: ] Root WebApplicationContext: initialization completed in 2640 ms
+[INFO] 2016-04-07 08:09:18.879 [localhost-startStop-1] o.s.b.c.e.ServletRegistrationBean - [requestID: ] Mapping servlet: 'dispatcherServlet' to [/]
+[INFO] 2016-04-07 08:09:18.882 [localhost-startStop-1] o.s.b.c.e.ServletRegistrationBean - [requestID: ] Mapping servlet: 'webServlet' to [/h2-console/*]
+[INFO] 2016-04-07 08:09:18.888 [localhost-startStop-1] o.s.b.c.e.FilterRegistrationBean - [requestID: ] Mapping filter: 'characterEncodingFilter' to: [/*]
+[INFO] 2016-04-07 08:09:18.889 [localhost-startStop-1] o.s.b.c.e.FilterRegistrationBean - [requestID: ] Mapping filter: 'hiddenHttpMethodFilter' to: [/*]
+[INFO] 2016-04-07 08:09:18.890 [localhost-startStop-1] o.s.b.c.e.FilterRegistrationBean - [requestID: ] Mapping filter: 'httpPutFormContentFilter' to: [/*]
+[INFO] 2016-04-07 08:09:18.890 [localhost-startStop-1] o.s.b.c.e.FilterRegistrationBean - [requestID: ] Mapping filter: 'requestContextFilter' to: [/*]
+[INFO] 2016-04-07 08:09:19.257 [restartedMain] o.s.o.j.LocalContainerEntityManagerFactoryBean - [requestID: ] Building JPA container EntityManagerFactory for persistence unit 'default'
+[INFO] 2016-04-07 08:09:19.289 [restartedMain] o.h.jpa.internal.util.LogHelper - [requestID: ] HHH000204: Processing PersistenceUnitInfo [
+	name: default
+	...]
+[INFO] 2016-04-07 08:09:19.419 [restartedMain] org.hibernate.Version - [requestID: ] HHH000412: Hibernate Core {5.1.0.Final}
+[INFO] 2016-04-07 08:09:19.422 [restartedMain] org.hibernate.cfg.Environment - [requestID: ] HHH000206: hibernate.properties not found
+[INFO] 2016-04-07 08:09:19.425 [restartedMain] org.hibernate.cfg.Environment - [requestID: ] HHH000021: Bytecode provider name : javassist
+[INFO] 2016-04-07 08:09:19.482 [restartedMain] o.h.annotations.common.Version - [requestID: ] HCANN000001: Hibernate Commons Annotations {5.0.1.Final}
+[WARN] 2016-04-07 08:09:19.497 [restartedMain] org.hibernate.orm.deprecation - [requestID: ] HHH90000006: Attempted to specify unsupported NamingStrategy via setting [hibernate.ejb.naming_strategy]; NamingStrategy has been removed in favor of the split ImplicitNamingStrategy and PhysicalNamingStrategy; use [hibernate.implicit_naming_strategy] or [hibernate.physical_naming_strategy], respectively, instead.
+[INFO] 2016-04-07 08:09:19.949 [restartedMain] org.hibernate.dialect.Dialect - [requestID: ] HHH000400: Using dialect: org.hibernate.dialect.H2Dialect
+[INFO] 2016-04-07 08:09:20.808 [restartedMain] o.h.t.s.e.i.InformationExtractorJdbcDatabaseMetaDataImpl - [requestID: ] HHH000262: Table not found: BI_EMAIL_MESSAGES
+[INFO] 2016-04-07 08:09:20.809 [restartedMain] o.h.t.s.e.i.InformationExtractorJdbcDatabaseMetaDataImpl - [requestID: ] HHH000262: Table not found: BI_EMAIL_MESSAGES
+[INFO] 2016-04-07 08:09:20.818 [restartedMain] o.h.t.s.e.i.InformationExtractorJdbcDatabaseMetaDataImpl - [requestID: ] HHH000262: Table not found: BI_EMAILS
+[INFO] 2016-04-07 08:09:20.819 [restartedMain] o.h.t.s.e.i.InformationExtractorJdbcDatabaseMetaDataImpl - [requestID: ] HHH000262: Table not found: BI_EMAILS
+[INFO] 2016-04-07 08:09:20.823 [restartedMain] o.h.t.s.e.i.InformationExtractorJdbcDatabaseMetaDataImpl - [requestID: ] HHH000262: Table not found: bucket
+[INFO] 2016-04-07 08:09:20.825 [restartedMain] o.h.t.s.e.i.InformationExtractorJdbcDatabaseMetaDataImpl - [requestID: ] HHH000262: Table not found: bucket
+[INFO] 2016-04-07 08:09:20.828 [restartedMain] o.h.t.s.e.i.InformationExtractorJdbcDatabaseMetaDataImpl - [requestID: ] HHH000262: Table not found: bucket_Item
+[INFO] 2016-04-07 08:09:20.830 [restartedMain] o.h.t.s.e.i.InformationExtractorJdbcDatabaseMetaDataImpl - [requestID: ] HHH000262: Table not found: bucket_Item
+[INFO] 2016-04-07 08:09:20.832 [restartedMain] o.h.t.s.e.i.InformationExtractorJdbcDatabaseMetaDataImpl - [requestID: ] HHH000262: Table not found: Cart
+[INFO] 2016-04-07 08:09:20.834 [restartedMain] o.h.t.s.e.i.InformationExtractorJdbcDatabaseMetaDataImpl - [requestID: ] HHH000262: Table not found: Cart
+[INFO] 2016-04-07 08:09:20.837 [restartedMain] o.h.t.s.e.i.InformationExtractorJdbcDatabaseMetaDataImpl - [requestID: ] HHH000262: Table not found: City
+[INFO] 2016-04-07 08:09:20.839 [restartedMain] o.h.t.s.e.i.InformationExtractorJdbcDatabaseMetaDataImpl - [requestID: ] HHH000262: Table not found: City
+[INFO] 2016-04-07 08:09:20.842 [restartedMain] o.h.t.s.e.i.InformationExtractorJdbcDatabaseMetaDataImpl - [requestID: ] HHH000262: Table not found: details
+[INFO] 2016-04-07 08:09:20.844 [restartedMain] o.h.t.s.e.i.InformationExtractorJdbcDatabaseMetaDataImpl - [requestID: ] HHH000262: Table not found: details
+[INFO] 2016-04-07 08:09:20.849 [restartedMain] o.h.t.s.e.i.InformationExtractorJdbcDatabaseMetaDataImpl - [requestID: ] HHH000262: Table not found: EMAIL_MESSAGES
+[INFO] 2016-04-07 08:09:20.850 [restartedMain] o.h.t.s.e.i.InformationExtractorJdbcDatabaseMetaDataImpl - [requestID: ] HHH000262: Table not found: EMAIL_MESSAGES
+[INFO] 2016-04-07 08:09:20.853 [restartedMain] o.h.t.s.e.i.InformationExtractorJdbcDatabaseMetaDataImpl - [requestID: ] HHH000262: Table not found: EMAILS
+[INFO] 2016-04-07 08:09:20.854 [restartedMain] o.h.t.s.e.i.InformationExtractorJdbcDatabaseMetaDataImpl - [requestID: ] HHH000262: Table not found: EMAILS
+[INFO] 2016-04-07 08:09:20.858 [restartedMain] o.h.t.s.e.i.InformationExtractorJdbcDatabaseMetaDataImpl - [requestID: ] HHH000262: Table not found: groupPeople
+[INFO] 2016-04-07 08:09:20.860 [restartedMain] o.h.t.s.e.i.InformationExtractorJdbcDatabaseMetaDataImpl - [requestID: ] HHH000262: Table not found: groupPeople
+[INFO] 2016-04-07 08:09:20.863 [restartedMain] o.h.t.s.e.i.InformationExtractorJdbcDatabaseMetaDataImpl - [requestID: ] HHH000262: Table not found: Hotel
+[INFO] 2016-04-07 08:09:20.865 [restartedMain] o.h.t.s.e.i.InformationExtractorJdbcDatabaseMetaDataImpl - [requestID: ] HHH000262: Table not found: Hotel
+[INFO] 2016-04-07 08:09:20.868 [restartedMain] o.h.t.s.e.i.InformationExtractorJdbcDatabaseMetaDataImpl - [requestID: ] HHH000262: Table not found: Item
+[INFO] 2016-04-07 08:09:20.869 [restartedMain] o.h.t.s.e.i.InformationExtractorJdbcDatabaseMetaDataImpl - [requestID: ] HHH000262: Table not found: Item
+[INFO] 2016-04-07 08:09:20.874 [restartedMain] o.h.t.s.e.i.InformationExtractorJdbcDatabaseMetaDataImpl - [requestID: ] HHH000262: Table not found: Person
+[INFO] 2016-04-07 08:09:20.876 [restartedMain] o.h.t.s.e.i.InformationExtractorJdbcDatabaseMetaDataImpl - [requestID: ] HHH000262: Table not found: Person
+[INFO] 2016-04-07 08:09:20.881 [restartedMain] o.h.t.s.e.i.InformationExtractorJdbcDatabaseMetaDataImpl - [requestID: ] HHH000262: Table not found: SimpleProduct
+[INFO] 2016-04-07 08:09:20.882 [restartedMain] o.h.t.s.e.i.InformationExtractorJdbcDatabaseMetaDataImpl - [requestID: ] HHH000262: Table not found: SimpleProduct
+[INFO] 2016-04-07 08:09:20.886 [restartedMain] o.h.t.s.e.i.InformationExtractorJdbcDatabaseMetaDataImpl - [requestID: ] HHH000262: Table not found: skills
+[INFO] 2016-04-07 08:09:20.887 [restartedMain] o.h.t.s.e.i.InformationExtractorJdbcDatabaseMetaDataImpl - [requestID: ] HHH000262: Table not found: skills
+[INFO] 2016-04-07 08:09:20.890 [restartedMain] o.h.t.s.e.i.InformationExtractorJdbcDatabaseMetaDataImpl - [requestID: ] HHH000262: Table not found: stock
+[INFO] 2016-04-07 08:09:20.891 [restartedMain] o.h.t.s.e.i.InformationExtractorJdbcDatabaseMetaDataImpl - [requestID: ] HHH000262: Table not found: stock
+[INFO] 2016-04-07 08:09:20.893 [restartedMain] o.h.t.s.e.i.InformationExtractorJdbcDatabaseMetaDataImpl - [requestID: ] HHH000262: Table not found: tasks
+[INFO] 2016-04-07 08:09:20.895 [restartedMain] o.h.t.s.e.i.InformationExtractorJdbcDatabaseMetaDataImpl - [requestID: ] HHH000262: Table not found: tasks
+[INFO] 2016-04-07 08:09:20.976 [restartedMain] o.h.t.s.e.i.InformationExtractorJdbcDatabaseMetaDataImpl - [requestID: ] HHH000262: Table not found: Product
+[INFO] 2016-04-07 08:09:20.978 [restartedMain] o.h.t.s.e.i.InformationExtractorJdbcDatabaseMetaDataImpl - [requestID: ] HHH000262: Table not found: Product
+[DEBUG] 2016-04-07 08:09:21.365 [restartedMain] o.h.s.internal.StatisticsInitiator - [requestID: ] Statistics initialized [enabled=true]
+[INFO] 2016-04-07 08:09:21.375 [restartedMain] o.h.e.i.StatisticalLoggingSessionEventListener - [requestID: ] Session Metrics {
+    0 nanoseconds spent acquiring 0 JDBC connections;
+    0 nanoseconds spent releasing 0 JDBC connections;
+    0 nanoseconds spent preparing 0 JDBC statements;
+    0 nanoseconds spent executing 0 JDBC statements;
+    0 nanoseconds spent executing 0 JDBC batches;
+    0 nanoseconds spent performing 0 L2C puts;
+    0 nanoseconds spent performing 0 L2C hits;
+    0 nanoseconds spent performing 0 L2C misses;
+    0 nanoseconds spent executing 0 flushes (flushing a total of 0 entities and 0 collections);
+    0 nanoseconds spent executing 0 partial-flushes (flushing a total of 0 entities and 0 collections)
+}
+[INFO] 2016-04-07 08:09:21.390 [restartedMain] o.h.e.i.StatisticalLoggingSessionEventListener - [requestID: ] Session Metrics {
+    0 nanoseconds spent acquiring 0 JDBC connections;
+    0 nanoseconds spent releasing 0 JDBC connections;
+    0 nanoseconds spent preparing 0 JDBC statements;
+    0 nanoseconds spent executing 0 JDBC statements;
+    0 nanoseconds spent executing 0 JDBC batches;
+    0 nanoseconds spent performing 0 L2C puts;
+    0 nanoseconds spent performing 0 L2C hits;
+    0 nanoseconds spent performing 0 L2C misses;
+    0 nanoseconds spent executing 0 flushes (flushing a total of 0 entities and 0 collections);
+    0 nanoseconds spent executing 0 partial-flushes (flushing a total of 0 entities and 0 collections)
+}
+[INFO] 2016-04-07 08:09:21.423 [restartedMain] o.h.e.i.StatisticalLoggingSessionEventListener - [requestID: ] Session Metrics {
+    0 nanoseconds spent acquiring 0 JDBC connections;
+    0 nanoseconds spent releasing 0 JDBC connections;
+    0 nanoseconds spent preparing 0 JDBC statements;
+    0 nanoseconds spent executing 0 JDBC statements;
+    0 nanoseconds spent executing 0 JDBC batches;
+    0 nanoseconds spent performing 0 L2C puts;
+    0 nanoseconds spent performing 0 L2C hits;
+    0 nanoseconds spent performing 0 L2C misses;
+    0 nanoseconds spent executing 0 flushes (flushing a total of 0 entities and 0 collections);
+    0 nanoseconds spent executing 0 partial-flushes (flushing a total of 0 entities and 0 collections)
+}
+[INFO] 2016-04-07 08:09:21.460 [restartedMain] o.h.e.i.StatisticalLoggingSessionEventListener - [requestID: ] Session Metrics {
+    0 nanoseconds spent acquiring 0 JDBC connections;
+    0 nanoseconds spent releasing 0 JDBC connections;
+    0 nanoseconds spent preparing 0 JDBC statements;
+    0 nanoseconds spent executing 0 JDBC statements;
+    0 nanoseconds spent executing 0 JDBC batches;
+    0 nanoseconds spent performing 0 L2C puts;
+    0 nanoseconds spent performing 0 L2C hits;
+    0 nanoseconds spent performing 0 L2C misses;
+    0 nanoseconds spent executing 0 flushes (flushing a total of 0 entities and 0 collections);
+    0 nanoseconds spent executing 0 partial-flushes (flushing a total of 0 entities and 0 collections)
+}
+[INFO] 2016-04-07 08:09:21.490 [restartedMain] o.h.e.i.StatisticalLoggingSessionEventListener - [requestID: ] Session Metrics {
+    0 nanoseconds spent acquiring 0 JDBC connections;
+    0 nanoseconds spent releasing 0 JDBC connections;
+    0 nanoseconds spent preparing 0 JDBC statements;
+    0 nanoseconds spent executing 0 JDBC statements;
+    0 nanoseconds spent executing 0 JDBC batches;
+    0 nanoseconds spent performing 0 L2C puts;
+    0 nanoseconds spent performing 0 L2C hits;
+    0 nanoseconds spent performing 0 L2C misses;
+    0 nanoseconds spent executing 0 flushes (flushing a total of 0 entities and 0 collections);
+    0 nanoseconds spent executing 0 partial-flushes (flushing a total of 0 entities and 0 collections)
+}
+[INFO] 2016-04-07 08:09:21.594 [restartedMain] o.h.h.i.QueryTranslatorFactoryInitiator - [requestID: ] HHH000397: Using ASTQueryTranslatorFactory
+[INFO] 2016-04-07 08:09:21.700 [restartedMain] o.h.e.i.StatisticalLoggingSessionEventListener - [requestID: ] Session Metrics {
+    0 nanoseconds spent acquiring 0 JDBC connections;
+    0 nanoseconds spent releasing 0 JDBC connections;
+    0 nanoseconds spent preparing 0 JDBC statements;
+    0 nanoseconds spent executing 0 JDBC statements;
+    0 nanoseconds spent executing 0 JDBC batches;
+    0 nanoseconds spent performing 0 L2C puts;
+    0 nanoseconds spent performing 0 L2C hits;
+    0 nanoseconds spent performing 0 L2C misses;
+    0 nanoseconds spent executing 0 flushes (flushing a total of 0 entities and 0 collections);
+    0 nanoseconds spent executing 0 partial-flushes (flushing a total of 0 entities and 0 collections)
+}
+[INFO] 2016-04-07 08:09:21.927 [restartedMain] o.h.e.i.StatisticalLoggingSessionEventListener - [requestID: ] Session Metrics {
+    0 nanoseconds spent acquiring 0 JDBC connections;
+    0 nanoseconds spent releasing 0 JDBC connections;
+    0 nanoseconds spent preparing 0 JDBC statements;
+    0 nanoseconds spent executing 0 JDBC statements;
+    0 nanoseconds spent executing 0 JDBC batches;
+    0 nanoseconds spent performing 0 L2C puts;
+    0 nanoseconds spent performing 0 L2C hits;
+    0 nanoseconds spent performing 0 L2C misses;
+    0 nanoseconds spent executing 0 flushes (flushing a total of 0 entities and 0 collections);
+    0 nanoseconds spent executing 0 partial-flushes (flushing a total of 0 entities and 0 collections)
+}
+[INFO] 2016-04-07 08:09:21.930 [restartedMain] o.h.e.i.StatisticalLoggingSessionEventListener - [requestID: ] Session Metrics {
+    0 nanoseconds spent acquiring 0 JDBC connections;
+    0 nanoseconds spent releasing 0 JDBC connections;
+    0 nanoseconds spent preparing 0 JDBC statements;
+    0 nanoseconds spent executing 0 JDBC statements;
+    0 nanoseconds spent executing 0 JDBC batches;
+    0 nanoseconds spent performing 0 L2C puts;
+    0 nanoseconds spent performing 0 L2C hits;
+    0 nanoseconds spent performing 0 L2C misses;
+    0 nanoseconds spent executing 0 flushes (flushing a total of 0 entities and 0 collections);
+    0 nanoseconds spent executing 0 partial-flushes (flushing a total of 0 entities and 0 collections)
+}
+[INFO] 2016-04-07 08:09:21.932 [restartedMain] o.h.e.i.StatisticalLoggingSessionEventListener - [requestID: ] Session Metrics {
+    0 nanoseconds spent acquiring 0 JDBC connections;
+    0 nanoseconds spent releasing 0 JDBC connections;
+    0 nanoseconds spent preparing 0 JDBC statements;
+    0 nanoseconds spent executing 0 JDBC statements;
+    0 nanoseconds spent executing 0 JDBC batches;
+    0 nanoseconds spent performing 0 L2C puts;
+    0 nanoseconds spent performing 0 L2C hits;
+    0 nanoseconds spent performing 0 L2C misses;
+    0 nanoseconds spent executing 0 flushes (flushing a total of 0 entities and 0 collections);
+    0 nanoseconds spent executing 0 partial-flushes (flushing a total of 0 entities and 0 collections)
+}
+[INFO] 2016-04-07 08:09:21.941 [restartedMain] o.h.e.i.StatisticalLoggingSessionEventListener - [requestID: ] Session Metrics {
+    0 nanoseconds spent acquiring 0 JDBC connections;
+    0 nanoseconds spent releasing 0 JDBC connections;
+    0 nanoseconds spent preparing 0 JDBC statements;
+    0 nanoseconds spent executing 0 JDBC statements;
+    0 nanoseconds spent executing 0 JDBC batches;
+    0 nanoseconds spent performing 0 L2C puts;
+    0 nanoseconds spent performing 0 L2C hits;
+    0 nanoseconds spent performing 0 L2C misses;
+    0 nanoseconds spent executing 0 flushes (flushing a total of 0 entities and 0 collections);
+    0 nanoseconds spent executing 0 partial-flushes (flushing a total of 0 entities and 0 collections)
+}
+[INFO] 2016-04-07 08:09:21.944 [restartedMain] o.h.e.i.StatisticalLoggingSessionEventListener - [requestID: ] Session Metrics {
+    0 nanoseconds spent acquiring 0 JDBC connections;
+    0 nanoseconds spent releasing 0 JDBC connections;
+    0 nanoseconds spent preparing 0 JDBC statements;
+    0 nanoseconds spent executing 0 JDBC statements;
+    0 nanoseconds spent executing 0 JDBC batches;
+    0 nanoseconds spent performing 0 L2C puts;
+    0 nanoseconds spent performing 0 L2C hits;
+    0 nanoseconds spent performing 0 L2C misses;
+    0 nanoseconds spent executing 0 flushes (flushing a total of 0 entities and 0 collections);
+    0 nanoseconds spent executing 0 partial-flushes (flushing a total of 0 entities and 0 collections)
+}
+[INFO] 2016-04-07 08:09:21.946 [restartedMain] o.h.e.i.StatisticalLoggingSessionEventListener - [requestID: ] Session Metrics {
+    0 nanoseconds spent acquiring 0 JDBC connections;
+    0 nanoseconds spent releasing 0 JDBC connections;
+    0 nanoseconds spent preparing 0 JDBC statements;
+    0 nanoseconds spent executing 0 JDBC statements;
+    0 nanoseconds spent executing 0 JDBC batches;
+    0 nanoseconds spent performing 0 L2C puts;
+    0 nanoseconds spent performing 0 L2C hits;
+    0 nanoseconds spent performing 0 L2C misses;
+    0 nanoseconds spent executing 0 flushes (flushing a total of 0 entities and 0 collections);
+    0 nanoseconds spent executing 0 partial-flushes (flushing a total of 0 entities and 0 collections)
+}
+[INFO] 2016-04-07 08:09:21.959 [restartedMain] o.h.e.i.StatisticalLoggingSessionEventListener - [requestID: ] Session Metrics {
+    0 nanoseconds spent acquiring 0 JDBC connections;
+    0 nanoseconds spent releasing 0 JDBC connections;
+    0 nanoseconds spent preparing 0 JDBC statements;
+    0 nanoseconds spent executing 0 JDBC statements;
+    0 nanoseconds spent executing 0 JDBC batches;
+    0 nanoseconds spent performing 0 L2C puts;
+    0 nanoseconds spent performing 0 L2C hits;
+    0 nanoseconds spent performing 0 L2C misses;
+    0 nanoseconds spent executing 0 flushes (flushing a total of 0 entities and 0 collections);
+    0 nanoseconds spent executing 0 partial-flushes (flushing a total of 0 entities and 0 collections)
+}
+[INFO] 2016-04-07 08:09:21.962 [restartedMain] o.h.e.i.StatisticalLoggingSessionEventListener - [requestID: ] Session Metrics {
+    0 nanoseconds spent acquiring 0 JDBC connections;
+    0 nanoseconds spent releasing 0 JDBC connections;
+    0 nanoseconds spent preparing 0 JDBC statements;
+    0 nanoseconds spent executing 0 JDBC statements;
+    0 nanoseconds spent executing 0 JDBC batches;
+    0 nanoseconds spent performing 0 L2C puts;
+    0 nanoseconds spent performing 0 L2C hits;
+    0 nanoseconds spent performing 0 L2C misses;
+    0 nanoseconds spent executing 0 flushes (flushing a total of 0 entities and 0 collections);
+    0 nanoseconds spent executing 0 partial-flushes (flushing a total of 0 entities and 0 collections)
+}
+[INFO] 2016-04-07 08:09:21.964 [restartedMain] o.h.e.i.StatisticalLoggingSessionEventListener - [requestID: ] Session Metrics {
+    0 nanoseconds spent acquiring 0 JDBC connections;
+    0 nanoseconds spent releasing 0 JDBC connections;
+    0 nanoseconds spent preparing 0 JDBC statements;
+    0 nanoseconds spent executing 0 JDBC statements;
+    0 nanoseconds spent executing 0 JDBC batches;
+    0 nanoseconds spent performing 0 L2C puts;
+    0 nanoseconds spent performing 0 L2C hits;
+    0 nanoseconds spent performing 0 L2C misses;
+    0 nanoseconds spent executing 0 flushes (flushing a total of 0 entities and 0 collections);
+    0 nanoseconds spent executing 0 partial-flushes (flushing a total of 0 entities and 0 collections)
+}
+[INFO] 2016-04-07 08:09:21.970 [restartedMain] o.h.e.i.StatisticalLoggingSessionEventListener - [requestID: ] Session Metrics {
+    0 nanoseconds spent acquiring 0 JDBC connections;
+    0 nanoseconds spent releasing 0 JDBC connections;
+    0 nanoseconds spent preparing 0 JDBC statements;
+    0 nanoseconds spent executing 0 JDBC statements;
+    0 nanoseconds spent executing 0 JDBC batches;
+    0 nanoseconds spent performing 0 L2C puts;
+    0 nanoseconds spent performing 0 L2C hits;
+    0 nanoseconds spent performing 0 L2C misses;
+    0 nanoseconds spent executing 0 flushes (flushing a total of 0 entities and 0 collections);
+    0 nanoseconds spent executing 0 partial-flushes (flushing a total of 0 entities and 0 collections)
+}
+[INFO] 2016-04-07 08:09:21.979 [restartedMain] o.h.e.i.StatisticalLoggingSessionEventListener - [requestID: ] Session Metrics {
+    0 nanoseconds spent acquiring 0 JDBC connections;
+    0 nanoseconds spent releasing 0 JDBC connections;
+    0 nanoseconds spent preparing 0 JDBC statements;
+    0 nanoseconds spent executing 0 JDBC statements;
+    0 nanoseconds spent executing 0 JDBC batches;
+    0 nanoseconds spent performing 0 L2C puts;
+    0 nanoseconds spent performing 0 L2C hits;
+    0 nanoseconds spent performing 0 L2C misses;
+    0 nanoseconds spent executing 0 flushes (flushing a total of 0 entities and 0 collections);
+    0 nanoseconds spent executing 0 partial-flushes (flushing a total of 0 entities and 0 collections)
+}
+[INFO] 2016-04-07 08:09:21.982 [restartedMain] o.h.e.i.StatisticalLoggingSessionEventListener - [requestID: ] Session Metrics {
+    0 nanoseconds spent acquiring 0 JDBC connections;
+    0 nanoseconds spent releasing 0 JDBC connections;
+    0 nanoseconds spent preparing 0 JDBC statements;
+    0 nanoseconds spent executing 0 JDBC statements;
+    0 nanoseconds spent executing 0 JDBC batches;
+    0 nanoseconds spent performing 0 L2C puts;
+    0 nanoseconds spent performing 0 L2C hits;
+    0 nanoseconds spent performing 0 L2C misses;
+    0 nanoseconds spent executing 0 flushes (flushing a total of 0 entities and 0 collections);
+    0 nanoseconds spent executing 0 partial-flushes (flushing a total of 0 entities and 0 collections)
+}
+[INFO] 2016-04-07 08:09:21.985 [restartedMain] o.h.e.i.StatisticalLoggingSessionEventListener - [requestID: ] Session Metrics {
+    0 nanoseconds spent acquiring 0 JDBC connections;
+    0 nanoseconds spent releasing 0 JDBC connections;
+    0 nanoseconds spent preparing 0 JDBC statements;
+    0 nanoseconds spent executing 0 JDBC statements;
+    0 nanoseconds spent executing 0 JDBC batches;
+    0 nanoseconds spent performing 0 L2C puts;
+    0 nanoseconds spent performing 0 L2C hits;
+    0 nanoseconds spent performing 0 L2C misses;
+    0 nanoseconds spent executing 0 flushes (flushing a total of 0 entities and 0 collections);
+    0 nanoseconds spent executing 0 partial-flushes (flushing a total of 0 entities and 0 collections)
+}
+[INFO] 2016-04-07 08:09:21.996 [restartedMain] o.h.e.i.StatisticalLoggingSessionEventListener - [requestID: ] Session Metrics {
+    0 nanoseconds spent acquiring 0 JDBC connections;
+    0 nanoseconds spent releasing 0 JDBC connections;
+    0 nanoseconds spent preparing 0 JDBC statements;
+    0 nanoseconds spent executing 0 JDBC statements;
+    0 nanoseconds spent executing 0 JDBC batches;
+    0 nanoseconds spent performing 0 L2C puts;
+    0 nanoseconds spent performing 0 L2C hits;
+    0 nanoseconds spent performing 0 L2C misses;
+    0 nanoseconds spent executing 0 flushes (flushing a total of 0 entities and 0 collections);
+    0 nanoseconds spent executing 0 partial-flushes (flushing a total of 0 entities and 0 collections)
+}
+[INFO] 2016-04-07 08:09:21.999 [restartedMain] o.h.e.i.StatisticalLoggingSessionEventListener - [requestID: ] Session Metrics {
+    0 nanoseconds spent acquiring 0 JDBC connections;
+    0 nanoseconds spent releasing 0 JDBC connections;
+    0 nanoseconds spent preparing 0 JDBC statements;
+    0 nanoseconds spent executing 0 JDBC statements;
+    0 nanoseconds spent executing 0 JDBC batches;
+    0 nanoseconds spent performing 0 L2C puts;
+    0 nanoseconds spent performing 0 L2C hits;
+    0 nanoseconds spent performing 0 L2C misses;
+    0 nanoseconds spent executing 0 flushes (flushing a total of 0 entities and 0 collections);
+    0 nanoseconds spent executing 0 partial-flushes (flushing a total of 0 entities and 0 collections)
+}
+[INFO] 2016-04-07 08:09:22.001 [restartedMain] o.h.e.i.StatisticalLoggingSessionEventListener - [requestID: ] Session Metrics {
+    0 nanoseconds spent acquiring 0 JDBC connections;
+    0 nanoseconds spent releasing 0 JDBC connections;
+    0 nanoseconds spent preparing 0 JDBC statements;
+    0 nanoseconds spent executing 0 JDBC statements;
+    0 nanoseconds spent executing 0 JDBC batches;
+    0 nanoseconds spent performing 0 L2C puts;
+    0 nanoseconds spent performing 0 L2C hits;
+    0 nanoseconds spent performing 0 L2C misses;
+    0 nanoseconds spent executing 0 flushes (flushing a total of 0 entities and 0 collections);
+    0 nanoseconds spent executing 0 partial-flushes (flushing a total of 0 entities and 0 collections)
+}
+[INFO] 2016-04-07 08:09:22.010 [restartedMain] o.h.e.i.StatisticalLoggingSessionEventListener - [requestID: ] Session Metrics {
+    0 nanoseconds spent acquiring 0 JDBC connections;
+    0 nanoseconds spent releasing 0 JDBC connections;
+    0 nanoseconds spent preparing 0 JDBC statements;
+    0 nanoseconds spent executing 0 JDBC statements;
+    0 nanoseconds spent executing 0 JDBC batches;
+    0 nanoseconds spent performing 0 L2C puts;
+    0 nanoseconds spent performing 0 L2C hits;
+    0 nanoseconds spent performing 0 L2C misses;
+    0 nanoseconds spent executing 0 flushes (flushing a total of 0 entities and 0 collections);
+    0 nanoseconds spent executing 0 partial-flushes (flushing a total of 0 entities and 0 collections)
+}
+[INFO] 2016-04-07 08:09:22.012 [restartedMain] o.h.e.i.StatisticalLoggingSessionEventListener - [requestID: ] Session Metrics {
+    0 nanoseconds spent acquiring 0 JDBC connections;
+    0 nanoseconds spent releasing 0 JDBC connections;
+    0 nanoseconds spent preparing 0 JDBC statements;
+    0 nanoseconds spent executing 0 JDBC statements;
+    0 nanoseconds spent executing 0 JDBC batches;
+    0 nanoseconds spent performing 0 L2C puts;
+    0 nanoseconds spent performing 0 L2C hits;
+    0 nanoseconds spent performing 0 L2C misses;
+    0 nanoseconds spent executing 0 flushes (flushing a total of 0 entities and 0 collections);
+    0 nanoseconds spent executing 0 partial-flushes (flushing a total of 0 entities and 0 collections)
+}
+[INFO] 2016-04-07 08:09:22.013 [restartedMain] o.h.e.i.StatisticalLoggingSessionEventListener - [requestID: ] Session Metrics {
+    0 nanoseconds spent acquiring 0 JDBC connections;
+    0 nanoseconds spent releasing 0 JDBC connections;
+    0 nanoseconds spent preparing 0 JDBC statements;
+    0 nanoseconds spent executing 0 JDBC statements;
+    0 nanoseconds spent executing 0 JDBC batches;
+    0 nanoseconds spent performing 0 L2C puts;
+    0 nanoseconds spent performing 0 L2C hits;
+    0 nanoseconds spent performing 0 L2C misses;
+    0 nanoseconds spent executing 0 flushes (flushing a total of 0 entities and 0 collections);
+    0 nanoseconds spent executing 0 partial-flushes (flushing a total of 0 entities and 0 collections)
+}
+[INFO] 2016-04-07 08:09:22.022 [restartedMain] o.h.e.i.StatisticalLoggingSessionEventListener - [requestID: ] Session Metrics {
+    0 nanoseconds spent acquiring 0 JDBC connections;
+    0 nanoseconds spent releasing 0 JDBC connections;
+    0 nanoseconds spent preparing 0 JDBC statements;
+    0 nanoseconds spent executing 0 JDBC statements;
+    0 nanoseconds spent executing 0 JDBC batches;
+    0 nanoseconds spent performing 0 L2C puts;
+    0 nanoseconds spent performing 0 L2C hits;
+    0 nanoseconds spent performing 0 L2C misses;
+    0 nanoseconds spent executing 0 flushes (flushing a total of 0 entities and 0 collections);
+    0 nanoseconds spent executing 0 partial-flushes (flushing a total of 0 entities and 0 collections)
+}
+[INFO] 2016-04-07 08:09:22.024 [restartedMain] o.h.e.i.StatisticalLoggingSessionEventListener - [requestID: ] Session Metrics {
+    0 nanoseconds spent acquiring 0 JDBC connections;
+    0 nanoseconds spent releasing 0 JDBC connections;
+    0 nanoseconds spent preparing 0 JDBC statements;
+    0 nanoseconds spent executing 0 JDBC statements;
+    0 nanoseconds spent executing 0 JDBC batches;
+    0 nanoseconds spent performing 0 L2C puts;
+    0 nanoseconds spent performing 0 L2C hits;
+    0 nanoseconds spent performing 0 L2C misses;
+    0 nanoseconds spent executing 0 flushes (flushing a total of 0 entities and 0 collections);
+    0 nanoseconds spent executing 0 partial-flushes (flushing a total of 0 entities and 0 collections)
+}
+[INFO] 2016-04-07 08:09:22.026 [restartedMain] o.h.e.i.StatisticalLoggingSessionEventListener - [requestID: ] Session Metrics {
+    0 nanoseconds spent acquiring 0 JDBC connections;
+    0 nanoseconds spent releasing 0 JDBC connections;
+    0 nanoseconds spent preparing 0 JDBC statements;
+    0 nanoseconds spent executing 0 JDBC statements;
+    0 nanoseconds spent executing 0 JDBC batches;
+    0 nanoseconds spent performing 0 L2C puts;
+    0 nanoseconds spent performing 0 L2C hits;
+    0 nanoseconds spent performing 0 L2C misses;
+    0 nanoseconds spent executing 0 flushes (flushing a total of 0 entities and 0 collections);
+    0 nanoseconds spent executing 0 partial-flushes (flushing a total of 0 entities and 0 collections)
+}
+[INFO] 2016-04-07 08:09:22.029 [restartedMain] o.h.e.i.StatisticalLoggingSessionEventListener - [requestID: ] Session Metrics {
+    0 nanoseconds spent acquiring 0 JDBC connections;
+    0 nanoseconds spent releasing 0 JDBC connections;
+    0 nanoseconds spent preparing 0 JDBC statements;
+    0 nanoseconds spent executing 0 JDBC statements;
+    0 nanoseconds spent executing 0 JDBC batches;
+    0 nanoseconds spent performing 0 L2C puts;
+    0 nanoseconds spent performing 0 L2C hits;
+    0 nanoseconds spent performing 0 L2C misses;
+    0 nanoseconds spent executing 0 flushes (flushing a total of 0 entities and 0 collections);
+    0 nanoseconds spent executing 0 partial-flushes (flushing a total of 0 entities and 0 collections)
+}
+[INFO] 2016-04-07 08:09:22.031 [restartedMain] o.h.e.i.StatisticalLoggingSessionEventListener - [requestID: ] Session Metrics {
+    0 nanoseconds spent acquiring 0 JDBC connections;
+    0 nanoseconds spent releasing 0 JDBC connections;
+    0 nanoseconds spent preparing 0 JDBC statements;
+    0 nanoseconds spent executing 0 JDBC statements;
+    0 nanoseconds spent executing 0 JDBC batches;
+    0 nanoseconds spent performing 0 L2C puts;
+    0 nanoseconds spent performing 0 L2C hits;
+    0 nanoseconds spent performing 0 L2C misses;
+    0 nanoseconds spent executing 0 flushes (flushing a total of 0 entities and 0 collections);
+    0 nanoseconds spent executing 0 partial-flushes (flushing a total of 0 entities and 0 collections)
+}
+[INFO] 2016-04-07 08:09:22.041 [restartedMain] o.h.e.i.StatisticalLoggingSessionEventListener - [requestID: ] Session Metrics {
+    0 nanoseconds spent acquiring 0 JDBC connections;
+    0 nanoseconds spent releasing 0 JDBC connections;
+    0 nanoseconds spent preparing 0 JDBC statements;
+    0 nanoseconds spent executing 0 JDBC statements;
+    0 nanoseconds spent executing 0 JDBC batches;
+    0 nanoseconds spent performing 0 L2C puts;
+    0 nanoseconds spent performing 0 L2C hits;
+    0 nanoseconds spent performing 0 L2C misses;
+    0 nanoseconds spent executing 0 flushes (flushing a total of 0 entities and 0 collections);
+    0 nanoseconds spent executing 0 partial-flushes (flushing a total of 0 entities and 0 collections)
+}
+[INFO] 2016-04-07 08:09:22.043 [restartedMain] o.h.e.i.StatisticalLoggingSessionEventListener - [requestID: ] Session Metrics {
+    0 nanoseconds spent acquiring 0 JDBC connections;
+    0 nanoseconds spent releasing 0 JDBC connections;
+    0 nanoseconds spent preparing 0 JDBC statements;
+    0 nanoseconds spent executing 0 JDBC statements;
+    0 nanoseconds spent executing 0 JDBC batches;
+    0 nanoseconds spent performing 0 L2C puts;
+    0 nanoseconds spent performing 0 L2C hits;
+    0 nanoseconds spent performing 0 L2C misses;
+    0 nanoseconds spent executing 0 flushes (flushing a total of 0 entities and 0 collections);
+    0 nanoseconds spent executing 0 partial-flushes (flushing a total of 0 entities and 0 collections)
+}
+[INFO] 2016-04-07 08:09:22.045 [restartedMain] o.h.e.i.StatisticalLoggingSessionEventListener - [requestID: ] Session Metrics {
+    0 nanoseconds spent acquiring 0 JDBC connections;
+    0 nanoseconds spent releasing 0 JDBC connections;
+    0 nanoseconds spent preparing 0 JDBC statements;
+    0 nanoseconds spent executing 0 JDBC statements;
+    0 nanoseconds spent executing 0 JDBC batches;
+    0 nanoseconds spent performing 0 L2C puts;
+    0 nanoseconds spent performing 0 L2C hits;
+    0 nanoseconds spent performing 0 L2C misses;
+    0 nanoseconds spent executing 0 flushes (flushing a total of 0 entities and 0 collections);
+    0 nanoseconds spent executing 0 partial-flushes (flushing a total of 0 entities and 0 collections)
+}
+[INFO] 2016-04-07 08:09:22.095 [restartedMain] o.s.w.s.m.m.a.RequestMappingHandlerAdapter - [requestID: ] Looking for @ControllerAdvice: org.springframework.boot.context.embedded.AnnotationConfigEmbeddedWebApplicationContext@eec24fa: startup date [Thu Apr 07 08:09:15 CEST 2016]; root of context hierarchy
+[INFO] 2016-04-07 08:09:22.172 [restartedMain] o.s.w.s.m.m.a.RequestMappingHandlerMapping - [requestID: ] Mapped "{[/error],produces=[text/html]}" onto public org.springframework.web.servlet.ModelAndView org.springframework.boot.autoconfigure.web.BasicErrorController.errorHtml(javax.servlet.http.HttpServletRequest,javax.servlet.http.HttpServletResponse)
+[INFO] 2016-04-07 08:09:22.174 [restartedMain] o.s.w.s.m.m.a.RequestMappingHandlerMapping - [requestID: ] Mapped "{[/error]}" onto public org.springframework.http.ResponseEntity<java.util.Map<java.lang.String, java.lang.Object>> org.springframework.boot.autoconfigure.web.BasicErrorController.error(javax.servlet.http.HttpServletRequest)
+[INFO] 2016-04-07 08:09:22.206 [restartedMain] o.s.w.s.h.SimpleUrlHandlerMapping - [requestID: ] Mapped URL path [/webjars/**] onto handler of type [class org.springframework.web.servlet.resource.ResourceHttpRequestHandler]
+[INFO] 2016-04-07 08:09:22.206 [restartedMain] o.s.w.s.h.SimpleUrlHandlerMapping - [requestID: ] Mapped URL path [/**] onto handler of type [class org.springframework.web.servlet.resource.ResourceHttpRequestHandler]
+[INFO] 2016-04-07 08:09:22.249 [restartedMain] o.s.w.s.h.SimpleUrlHandlerMapping - [requestID: ] Mapped URL path [/**/favicon.ico] onto handler of type [class org.springframework.web.servlet.resource.ResourceHttpRequestHandler]
+[INFO] 2016-04-07 08:09:22.797 [restartedMain] o.s.b.d.a.OptionalLiveReloadServer - [requestID: ] LiveReload server is running on port 35729
+[INFO] 2016-04-07 08:09:22.907 [restartedMain] o.s.j.e.a.AnnotationMBeanExporter - [requestID: ] Registering beans for JMX exposure on startup
+[INFO] 2016-04-07 08:09:22.910 [restartedMain] o.s.j.e.a.AnnotationMBeanExporter - [requestID: ] Bean with name 'dataSourceMBean' has been autodetected for JMX exposure
+[INFO] 2016-04-07 08:09:22.916 [restartedMain] o.s.j.e.a.AnnotationMBeanExporter - [requestID: ] Located MBean 'dataSourceMBean': registering with JMX server as MBean [org.apache.tomcat.jdbc.pool.jmx:name=dataSourceMBean,type=ConnectionPool]
+[INFO] 2016-04-07 08:09:22.963 [restartedMain] o.a.coyote.http11.Http11NioProtocol - [requestID: ] Initializing ProtocolHandler ["http-nio-9444"]
+[INFO] 2016-04-07 08:09:22.974 [restartedMain] o.a.coyote.http11.Http11NioProtocol - [requestID: ] Starting ProtocolHandler ["http-nio-9444"]
+[INFO] 2016-04-07 08:09:22.982 [restartedMain] o.a.tomcat.util.net.NioSelectorPool - [requestID: ] Using a shared selector for servlet write/read
+[INFO] 2016-04-07 08:09:23.007 [restartedMain] o.s.b.c.e.t.TomcatEmbeddedServletContainer - [requestID: ] Tomcat started on port(s): 9444 (http)
+[TRACE] 2016-04-07 08:09:23.028 [restartedMain] o.s.a.i.CustomizableTraceInterceptor - [requestID: ] Entering save(Person(id=null, firstname=slawek, email=przodownikR1@gmail.com, modify=null, birthDay=2016-04-07T08:09:23.023+02:00[Europe/Warsaw])).
+[INFO] 2016-04-07 08:09:23.105 [restartedMain] o.h.e.i.StatisticalLoggingSessionEventListener - [requestID: ] Session Metrics {
+    86536 nanoseconds spent acquiring 1 JDBC connections;
+    0 nanoseconds spent releasing 0 JDBC connections;
+    1150181 nanoseconds spent preparing 2 JDBC statements;
+    2589795 nanoseconds spent executing 2 JDBC statements;
+    0 nanoseconds spent executing 0 JDBC batches;
+    0 nanoseconds spent performing 0 L2C puts;
+    0 nanoseconds spent performing 0 L2C hits;
+    0 nanoseconds spent performing 0 L2C misses;
+    18521167 nanoseconds spent executing 1 flushes (flushing a total of 1 entities and 0 collections);
+    0 nanoseconds spent executing 0 partial-flushes (flushing a total of 0 entities and 0 collections)
+}
+[TRACE] 2016-04-07 08:09:23.106 [restartedMain] o.s.a.i.CustomizableTraceInterceptor - [requestID: ] Leaving save(..) with return value Person(id=1, firstname=slawek, email=przodownikR1@gmail.com, modify=null, birthDay=2016-04-07T08:09:23.023+02:00[Europe/Warsaw]), took 79ms.
+[TRACE] 2016-04-07 08:09:23.107 [restartedMain] o.s.a.i.CustomizableTraceInterceptor - [requestID: ] Entering findAll().
+[DEBUG] 2016-04-07 08:09:23.129 [restartedMain] o.h.s.i.ConcurrentStatisticsImpl - [requestID: ] HHH000117: HQL: select generatedAlias0 from Person as generatedAlias0, time: 8ms, rows: 1
+[INFO] 2016-04-07 08:09:23.132 [restartedMain] o.h.e.i.StatisticalLoggingSessionEventListener - [requestID: ] Session Metrics {
+    56434 nanoseconds spent acquiring 1 JDBC connections;
+    0 nanoseconds spent releasing 0 JDBC connections;
+    398935 nanoseconds spent preparing 1 JDBC statements;
+    166942 nanoseconds spent executing 1 JDBC statements;
+    0 nanoseconds spent executing 0 JDBC batches;
+    0 nanoseconds spent performing 0 L2C puts;
+    0 nanoseconds spent performing 0 L2C hits;
+    0 nanoseconds spent performing 0 L2C misses;
+    0 nanoseconds spent executing 0 flushes (flushing a total of 0 entities and 0 collections);
+    20763 nanoseconds spent executing 1 partial-flushes (flushing a total of 0 entities and 0 collections)
+}
+[TRACE] 2016-04-07 08:09:23.133 [restartedMain] o.s.a.i.CustomizableTraceInterceptor - [requestID: ] Leaving findAll(..) with return value [Person(id=1, firstname=slawek, email=przodownikR1@gmail.com, modify=null, birthDay=2016-04-07T08:09:23.023+02:00[Europe/Warsaw])], took 25ms.
+[INFO] 2016-04-07 08:09:23.133 [restartedMain] p.j.s.SpringDataTestApplication - [requestID: ] [Person(id=1, firstname=slawek, email=przodownikR1@gmail.com, modify=null, birthDay=2016-04-07T08:09:23.023+02:00[Europe/Warsaw])] 
+[INFO] 2016-04-07 08:09:23.134 [restartedMain] p.j.s.SpringDataTestApplication - [requestID: ] Started SpringDataTestApplication in 7.91 seconds (JVM running for 8.402)
+[INFO] 2016-04-07 08:13:25.518 [http-nio-9444-exec-1] o.a.c.c.C.[Tomcat].[localhost].[/] - [requestID: ] Initializing Spring FrameworkServlet 'dispatcherServlet'
+[INFO] 2016-04-07 08:13:25.518 [http-nio-9444-exec-1] o.s.web.servlet.DispatcherServlet - [requestID: ] FrameworkServlet 'dispatcherServlet': initialization started
+[INFO] 2016-04-07 08:13:25.534 [http-nio-9444-exec-1] o.s.web.servlet.DispatcherServlet - [requestID: ] FrameworkServlet 'dispatcherServlet': initialization completed in 16 ms
+[INFO] 2016-04-07 08:13:25.586 [http-nio-9444-exec-1] o.h.e.i.StatisticalLoggingSessionEventListener - [requestID: ] Session Metrics {
+    0 nanoseconds spent acquiring 0 JDBC connections;
+    0 nanoseconds spent releasing 0 JDBC connections;
+    0 nanoseconds spent preparing 0 JDBC statements;
+    0 nanoseconds spent executing 0 JDBC statements;
+    0 nanoseconds spent executing 0 JDBC batches;
+    0 nanoseconds spent performing 0 L2C puts;
+    0 nanoseconds spent performing 0 L2C hits;
+    0 nanoseconds spent performing 0 L2C misses;
+    0 nanoseconds spent executing 0 flushes (flushing a total of 0 entities and 0 collections);
+    0 nanoseconds spent executing 0 partial-flushes (flushing a total of 0 entities and 0 collections)
+}
+[INFO] 2016-04-07 08:13:30.051 [http-nio-9444-exec-2] o.h.e.i.StatisticalLoggingSessionEventListener - [requestID: ] Session Metrics {
+    0 nanoseconds spent acquiring 0 JDBC connections;
+    0 nanoseconds spent releasing 0 JDBC connections;
+    0 nanoseconds spent preparing 0 JDBC statements;
+    0 nanoseconds spent executing 0 JDBC statements;
+    0 nanoseconds spent executing 0 JDBC batches;
+    0 nanoseconds spent performing 0 L2C puts;
+    0 nanoseconds spent performing 0 L2C hits;
+    0 nanoseconds spent performing 0 L2C misses;
+    0 nanoseconds spent executing 0 flushes (flushing a total of 0 entities and 0 collections);
+    0 nanoseconds spent executing 0 partial-flushes (flushing a total of 0 entities and 0 collections)
+}
+[INFO] 2016-04-07 08:18:49.557 [Thread-10] o.s.b.c.e.AnnotationConfigEmbeddedWebApplicationContext - [requestID: ] Closing org.springframework.boot.context.embedded.AnnotationConfigEmbeddedWebApplicationContext@eec24fa: startup date [Thu Apr 07 08:09:15 CEST 2016]; root of context hierarchy
+[WARN] 2016-04-07 08:18:49.566 [Thread-10] o.s.b.f.s.DisposableBeanAdapter - [requestID: ] Invocation of destroy method failed on bean with name 'inMemoryDatabaseShutdownExecutor': org.h2.jdbc.JdbcSQLException: Baza danych jest już zamknięta (aby zablokować samoczynne zamykanie podczas zamknięcia VM dodaj ";DB_CLOSE_ON_EXIT=FALSE" do URL bazy danych)
+Database is already closed (to disable automatic closing at VM shutdown, add ";DB_CLOSE_ON_EXIT=FALSE" to the db URL) [90121-191]
+[INFO] 2016-04-07 08:18:49.574 [Thread-10] o.s.j.e.a.AnnotationMBeanExporter - [requestID: ] Unregistering JMX-exposed beans on shutdown
+[INFO] 2016-04-07 08:18:49.578 [Thread-10] o.s.j.e.a.AnnotationMBeanExporter - [requestID: ] Unregistering JMX-exposed beans
+[INFO] 2016-04-07 08:18:49.584 [Thread-10] o.s.o.j.LocalContainerEntityManagerFactoryBean - [requestID: ] Closing JPA EntityManagerFactory for persistence unit 'default'
