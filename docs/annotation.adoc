@@ -211,6 +211,14 @@ class CreditCard {
 ----
 @Formula("obj_length * obj_height * obj_width")
 private long objectVolume;
+
+
+@Formula("UPPER(name)")
+private String capitalName;
+
+@Formula("(SELECT c.name FROM category c WHERE c.id=category_id)")
+private String categoryName;
+
 ----
 
 == @Embedded

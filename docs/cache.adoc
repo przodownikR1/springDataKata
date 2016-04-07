@@ -1,0 +1,100 @@
+= JPA/Hibernate camp
+:docInfo1
+:numbered:
+:icons: font
+:pagenums:
+:imagesdir: images
+:source-highlighter: coderay
+
+:image-link: https://pbs.twimg.com/profile_images/425289501980639233/tUWf7KiC.jpeg
+
+ifndef::sourcedir[:sourcedir: ./src/main/java/]
+
+#Sample demo to show how jpa work in effiecient way
+
+== Topic
+
+== First level cache
+ właczone domyślnie. Nie można go wyłączyć
+ Ograniczony w ramach Session
+ niszczony wraz z Session
+ jeśli hibernate szuka obiektu to najpierw w cache first level jeśli go tam nie ma uderza do bazy
+ Session.evict(Object object) -usuwa pojedyńczy obiekt z cache
+ Session.clear() - czyści wszystkie obiekty znajdujace się aktualnie w cache
+ Operacja jak Save Update Get  Load  List wstawiają obiekt do first-cache
+
+== Second level cache
+
+ * Dostawcy 
+  Ehcache
+  OSCache
+  SwarmCache
+  JBoss Cache
+[source,xml]
+----
+<dependency>
+  <groupId>net.sf.ehcache</groupId>
+   <artifactId>ehcache-core</artifactId>
+</dependency>
+<dependency>
+  <groupId>org.hibernate</groupId>
+  <artifactId>hibernate-ehcache</artifactId>
+</dependency>
+----
+
+Włączenie cache
+[source,xml]
+----
+<property name="hibernate.cache.use_second_level_cache">true </property>
+<property name="hibernate.cache.region.factory_class">net.sf.ehcache.hibernate.EhCacheRegionFactory</property>
+----
+
+[source,java]
+----
+@Entity
+@Table(name="employee")
+@Cache(usage=CacheConcurrencyStrategy.READ_ONLY)
+public class Employee {
+
+}
+----
+
+*CacheConcurrencyStrategy.READ_ONLY* : This strategy is suitable where the data never changes but is required frequently.
+
+*CacheConcurrencyStrategy.NONSTRICT_READ_WRITE* : This strategy is  suitable for the applications that only rarely need to modify data.
+
+*CacheConcurrencyStrategy.READ_WRITE* : This strategy is suitable for the applications that regularly need to modify data.
+
+*CacheConcurrencyStrategy.TRNSACTIONAL* : The transactional cache strategy provides support to transactional cache providers such as JBoss TreeCache.
+
+Enabling a query cache:
+[source,xml]
+----
+<property name="hibernate.cache.use_query_cache">true</property>
+----
+
+[source,java]
+----
+Session session = sessionFactory.openSession();
+for (int i = 0; i < 5; i++) {
+/* Line 3 */ Criteria criteria = session.createCriteria(Employee.class).setCacheable(true);
+List<Employee> employees = criteria.list();
+System.out.println("Employees found: " + employees.size());
+}
+session.close();
+----
+[NOTE]
+The query cache checks whether a particular query is cached or
+not and the first-level cache checks the object in this particular cache. An invocation of the
+list() method always hits the database even if the first-level cache is enabled
+
+[WARNING]
+it's clear that if we don't set setcachable to true , hibernate will not
+cache our query, and the query will hit the database every time the loop iterates. This is not a
+feasible option as it may downgrade the performance.
+
+
+== O mnie
+* programista
+* blog link:http://przewidywalna-java.blogspot.com[]
+* image:{image-link} [role='img-circle']

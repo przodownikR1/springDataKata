@@ -1,0 +1,117 @@
+= JPA/Hibernate camp
+:docInfo1
+:numbered:
+:icons: font
+:pagenums:
+:imagesdir: images
+:source-highlighter: coderay
+
+:image-link: https://pbs.twimg.com/profile_images/425289501980639233/tUWf7KiC.jpeg
+
+ifndef::sourcedir[:sourcedir: ./src/main/java/]
+
+#Sample demo to show how jpa work in effiecient way
+
+
+== Topic
+
+== Hibernate Criteria
+
+[source,java]
+----
+Criteria criteria = session.createCriteria(Employee.class);
+criteria.add(Restrictions.eq("department.name", "account"));
+List list = criteria.list();
+----
+
+
+== Performing aggregate operations
+
+== Executing a native SQL query
+We can use Session.createSQLQuery(String query)
+
+Scalar queries
+[source,java]
+----
+SQLQuery sqlQuery = session.createSQLQuery("SELECT * FROM product");
+List<Object[]> list = sqlQuery.list();
+for(Object[] object : list){
+System.out.println("\nId: " + object[0]);
+System.out.println("Name: " + object[1]);
+System.out.println("Price: " + object[2]);
+System.out.println("Category id: " + object[3]);
+}
+
+SQLQuery sqlQuery = session.createSQLQuery("SELECT id, name, price,
+category_id FROM product");
+sqlQuery.addScalar("id", new org.hibernate.type.LongType());
+sqlQuery.addScalar("name", new org.hibernate.type.StringType());
+sqlQuery.addScalar("price", new org.hibernate.type.DoubleType());
+sqlQuery.addScalar("category_id", new
+org.hibernate.type.LongType());
+sqlQuery.setResultTransformer(Transformers.ALIAS_TO_ENTITY_MAP);
+List list = sqlQuery.list();
+
+
+
+----
+Entity queries
+[source,java]
+----
+SQLQuery sqlQuery = session.createSQLQuery("SELECT * FROM category");
+/* Line 2 */ sqlQuery.addEntity(Category.class);
+List<Category> list = sqlQuery.list();
+for(Category category: list){
+System.out.println("\nCategory id: " + category.getId());
+System.out.println("Category name: " + category.getName());
+}
+----
+
+
+== Executing a query using HQL
+[source,java]
+----
+Query query = session.createQuery("FROM Category");
+List<Category> list = query.list();
+System.out.println("Category size: " + list.size());
+
+Query query = session.createQuery("FroM Category, Product");
+List list = query.list();
+System.out.println("Result size: " + list.size());
+
+Query query = session.createQuery("SELECT id, name from Category");
+List list = query.list();
+System.out.println("Result size: " + list.size());
+
+----
+
+== Working with NamedQuery
+
+ *@NamedQuery* : This annotation is used to define a single named query
+ *@NamedQueries* : This annotation is used to define multiple queries
+
+[source,java]
+----
+@NamedQuery(name="getCategoryNameByName", query="FROM Category c WHERE c.name=:name")
+
+session.getNamedQuery("getCategoryNameByName");
+
+@NamedQueries(
+{
+@NamedQuery(
+name="getCategoryNameByName",
+query="FROM Category c WHERE c.name=:name"
+),
+@NamedQuery(
+name="getCategoryNameById",
+query="FROM Category c WHERE c.id=:id"
+),
+}
+)
+
+----
+
+== O mnie
+* programista
+* blog link:http://przewidywalna-java.blogspot.com[]
+* image:{image-link} [role='img-circle']
