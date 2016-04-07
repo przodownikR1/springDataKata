@@ -252,6 +252,19 @@ public class Simple {
 == @AttributeOverride
 
 == @Version - optymistic locking
+[source,java]
+----
+Employee employee = new Employee();
+employee.setId(1);
+employee.setName("przodownik");
+session.saveOrUpdate(employee);
+----
+[source,sql]
+----
+Hibernate: update employee set name=?, version=? where id=? and version=?
+----
+
+
 
 == @OrderColumn
 [source,java]

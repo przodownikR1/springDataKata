@@ -1,0 +1,101 @@
+= JPA/Hibernate camp
+:docInfo1
+:numbered:
+:icons: font
+:pagenums:
+:imagesdir: images
+:source-highlighter: coderay
+
+:image-link: https://pbs.twimg.com/profile_images/425289501980639233/tUWf7KiC.jpeg
+
+ifndef::sourcedir[:sourcedir: ./src/main/java/]
+
+#Sample demo to show how jpa work in effiecient way
+
+== Topic
+
+== Table per class hierarchy
+[source,java]
+----
+@Entity
+@Table(name="employee")
+@Inheritance(strategy=InheritanceType.SINGLE_TABLE)
+@DiscriminatorColumn(name="emp_type", discriminatorType=DiscriminatorType.STRING, length=2)
+@DiscriminatorValue(value="E")
+public class Employee {
+
+}
+@Entity
+@Table(name = "employee")
+@DiscriminatorValue(value="PE")
+public class PermanentEmployee extends Employee {
+}
+
+----
+*@Inheritance(strategy=InheritanceType.SINGLE_TABLE)*  - This annotation is used to define the inheritance strategy.
+*@DiscriminatorColumn(name="emp_type", discriminatorType=DiscriminatorType.STRING, length=2)* - This annotation is used to define the
+discriminator column for the SINGLE_TABLE and JOINED mapping strategies.
+
+*@DiscriminatorValue(value="E")* - This annotation defines the value of the discriminator column for this particular class. If the value is not provided, hibernate
+uses a class name in DiscriminatorType.STRING , and the provided specific functions will be used otherwise.
+
+
+
+Table per class hierarchy stores all the rows in a single table and the discriminator column
+is used to uniquely identify the records. Sometimes, the tables become very large if the
+hierarchy is deep.
+
+== Table per subclass 
+ table-per-subclass strategy, hibernate creates separate tables for each class
+[source,java]
+----
+@Entity
+@Table(name="employee")
+@Inheritance(strategy=InheritanceType.JOINED)
+public class Employee {
+}
+@Entity
+@Table
+@PrimaryKeyJoinColumn(name="emp_id")
+public class ContractualEmployee extends Employee {
+}
+----
+
+In this strategy, we used the @Inheritance annotation with
+strategy=InheritanceType.JOINED in the Employee parent class only. For the
+subclasses, we used @PrimaryKeyJoinColumn(name="emp_id") . Hibernate will create
+a foreign key column in all the subtables with the value of the name attribute of the @
+PrimaryKeyJoinColumn annotation.
+
+
+== Table per concrete class
+[source,java]
+----
+@Entity
+@Table(name="employee")
+@Inheritance(strategy=InheritanceType.TABLE_PER_CLASS)
+public class Employee {
+@Id
+@GeneratedValue(strategy = GenerationType.TABLE)
+@Column(name="id")
+private long id;
+}
+@Entity
+@AttributeOverrides({
+@AttributeOverride(name="id", column = @Column(name="id")),
+@AttributeOverride(name="name", column = @Column(name="name"))
+})
+public class ContractualEmployee extends Employee {
+}
+----
+Hibernate creates a separate table for all the subclasses. We can see here that an overridden
+attribute is created in each table.
+The disadvantage of this strategy is that if we add, delete, or update a field in the root class, it
+causes major changes in the subtable as well. This is because in this strategy, the parent class
+is scattered into the other subclasses and the subclasses use the field of the parent class.
+
+
+== O mnie
+* programista
+* blog link:http://przewidywalna-java.blogspot.com[]
+* image:{image-link} [role='img-circle']
