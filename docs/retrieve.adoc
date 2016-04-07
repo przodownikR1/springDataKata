@@ -28,6 +28,12 @@ ifndef::sourcedir[:sourcedir: ./src/main/java/]
 @IndexColumn(name="email_index")
 private List<String> emails;
 ----
+* Persisting Set
+Set provides an unordered data structure, and duplicate elements are not allowed. Some
+classes implemented by the Set interface are java.util.HashSet , java.util.
+LinkedHashSet , and so on.
+
+* Persisting Map
 
 
 == O mnie
