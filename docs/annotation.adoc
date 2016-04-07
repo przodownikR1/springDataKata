@@ -1,0 +1,292 @@
+= JPA/Hibernate camp
+:docInfo1
+:numbered:
+:icons: font
+:pagenums:
+:imagesdir: images
+:source-highlighter: coderay
+
+:image-link: https://pbs.twimg.com/profile_images/425289501980639233/tUWf7KiC.jpeg
+
+ifndef::sourcedir[:sourcedir: ./src/main/java/]
+
+#Sample demo to show how jpa work in effiecient way
+
+
+== Topic
+
+@Enumerated
+[source,java]
+----
+@Entity
+public class Person {
+   @Enumerated
+    public Gender gender;
+    public static enum Gender {
+        MALE,
+        FEMALE
+    }
+}
+----
+
+@AttribureConverter
+
+[source,java]
+----
+public enum Gender {
+
+    MALE('M'),
+    FEMALE('F');
+
+    private final char code;
+
+    private Gender( char code ) {
+        this.code = code;
+    }
+
+    public static Gender fromCode( char code ) {
+        if ( code == 'M' || code == 'm' ) {
+            return MALE;
+        }
+        if ( code == 'F' || code == 'f' ) {
+            return FEMALE;
+        }
+        throw...
+    }
+
+    public char getCode() {
+        return code;
+    }
+}
+
+@Entity
+public class Person {
+    ...
+
+    @Basic
+    @Convert( converter = GenderConverter.class )
+    public Gender gender;
+}
+
+@Converter
+public class GenderConverter implements AttributeConverter<Character, Gender> {
+
+    public Character convertToDatabaseColumn( Gender value ) {
+        if ( value == null ) {
+            return null;
+        }
+
+        return value.getCode();
+    }
+
+    public Gender convertToEntityAttribute( Character value ) {
+        if ( value == null ) {
+            return null;
+        }
+
+        return Gender.fromCode( value );
+    }
+}
+----
+
+   
+
+* Mapping LOBs
+
+java.sql.Blob
+  
+[source,java]
+----
+@Entity
+public class Step {
+    ...
+    @Lob
+    @Basic
+    public byte[] instructions;
+    ...
+}
+----    
+
+java.sql.Clob
+
+[source,java]
+----
+@Entity
+public class Product {
+    ...
+    @Lob
+    @Basic
+    public Clob description;
+    ...
+}
+----    
+
+java.sql.NClob - Mapping Nationalized Character Data
+    
+[source,java]
+----
+@Entity
+public class Product {
+    @Basic
+    @Nationalized
+    public String description;
+    ...
+}
+----    
+
+== date & time
+
+DATE
+    Represents a calendar date by storing years, months and days. The JDBC equivalent is java.sql.Date
+TIME
+    Represents the time of a day and it stores hours, minutes and seconds. The JDBC equivalent is java.sql.Time
+TIMESTAMP
+   It stores both a DATE and a TIME plus nanoseconds. The JDBC equivalent is java.sql.Timestamp
+   
+== Mapping Java 8 Date/Time Values
+
+[source,xml]
+----
+<dependency>
+    <groupId>org.hibernate</groupId>
+    <artifactId>hibernate-java8</artifactId>
+    <version>${hibernate.version}</version>
+</dependency>
+----
+
+DATE
+    java.time.LocalDate
+TIME
+    java.time.LocalTime, java.time.OffsetTime
+TIMESTAMP
+    java.time.Instant, java.time.LocalDateTime, java.time.OffsetDateTime and java.time.ZonedDateTime
+    
+
+== AttributeConverters
+[source,java]
+----
+@Converter
+public class PeriodStringConverter implements AttributeConverter<Period, String> {
+
+    @Override
+    public String convertToDatabaseColumn(Period attribute) {
+        return attribute.toString();
+    }
+
+    @Override
+    public Period convertToEntityAttribute(String dbData) {
+        return Period.parse(dbData);
+    }
+}
+
+@Entity
+public class Event  {
+    @Convert(converter = PeriodStringConverter.class)
+    private Period span;
+
+}
+----    
+
+== Column transformers: read and write expressions
+[source,java]
+----
+
+
+@Entity
+class CreditCard {
+
+    @Id
+    private Integer id;
+
+    @Column(name="credit_card_num")
+    @ColumnTransformer(
+        read="decrypt(credit_card_num)",
+        write="encrypt(?)"
+    )
+    private String creditCardNumber;
+}
+----
+== Formula
+[source,java]
+----
+@Formula("obj_length * obj_height * obj_width")
+private long objectVolume;
+----
+
+== @Embedded
+
+== @Id
+[source,java]
+----
+@Id
+private Integer id;
+----
+
+== @Entity
+[source,java]
+----
+@Entity
+public class Simple {
+    ...
+}
+----
+
+== @Table
+[source,java]
+----
+@Entity
+@Table( catalog = "CRM", schema = "purchasing", name = "t_simple" )
+public class Simple {
+    ...
+}
+----
+
+== @AttributeOverride
+
+== @Version - optymistic locking
+
+== @OrderColumn
+[source,java]
+----
+@OrderColumn(name = "index_id")
+    private List<Change> changes = new ArrayList<>();
+----
+
+
+== @ForeignKey
+[source,java]
+----
+@Entity
+public class Phone {
+ @ManyToOne
+    @JoinColumn(name = "person_id",
+            foreignKey = @ForeignKey(name = "PERSON_ID_FK")
+    )
+    }
+----
+[source,sql]
+----
+
+CREATE TABLE Phone (
+    id BIGINT NOT NULL ,
+    number VARCHAR(255) ,
+    person_id BIGINT ,
+    PRIMARY KEY ( id )
+ )
+
+ALTER TABLE Phone ADD CONSTRAINT PERSON_ID_FK FOREIGN KEY (person_id) REFERENCES Person
+----
+
+== Bidirectional @OneToMany
+
+
+The bidirectional @OneToMany association also requires a @ManyToOne association on the child side. Although the Domain Model exposes two sides to navigate this association, behind the scenes, the relational database has only one foreign key for this relationship.
+
+Every bidirectional association must have one owning side only (the child side), the other one being referred to as the inverse (or the mappedBy) side.
+
+
+
+== O mnie
+* programista
+* blog link:http://przewidywalna-java.blogspot.com[]
+* image:{image-link} [role='img-circle']
