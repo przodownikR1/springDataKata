@@ -1,0 +1,76 @@
+= JPA/Hibernate camp
+:docInfo1
+:numbered:
+:icons: font
+:pagenums:
+:imagesdir: images
+:source-highlighter: coderay
+
+:image-link: https://pbs.twimg.com/profile_images/425289501980639233/tUWf7KiC.jpeg
+
+ifndef::sourcedir[:sourcedir: ./src/main/java/]
+
+#Sample demo to show how jpa work in effiecient way
+
+== Topic
+
+* Analiza logów Hibernate - poprawa wolnych zapytań
+
+* Analiza statystyk
+You can use these information during development and check them against your expectations. 
+By doing this regularly, you can avoid the most common issues caused by slow queries, too many queries and missing cache usage. 
+And keep in mind that you are working with a small test database. 
+5 or 10 additional queries during your test might be several hundreds or thousands, if you switch to the bigger production database.
+
+* Wybór strategii pobierania danych : fetchType
+
+  FETCH JOIN
+[source,sql]
+----
+  SELECT DISTINCT a FROM Author a JOIN FETCH a.books b
+----
+
+@NamedEntityGraph
+
+[source,sql]
+----
+@NamedEntityGraph(name = "graph.AuthorBooksReviews",  attributeNodes = @NamedAttributeNode(value = "books"))
+----
+ 
+* Ciężkie zapytania np raporty powinny być wykonywane po stronie bazy
+@NamedStoredProcedureQuery
+
+* Użyj cache 
+The 1st level cache is activated by default and caches all entities that were used within the current session.   
+
+The session independent 2nd level cache also stores entities but needs to be activated by setting the shared-cache-mode property in the persistence.xml. 
+The caching of specific entities can be activated by adding the javax.persistence.
+Cacheable or the org.hibernate.annotations.Cache annotation to the entity.
+
+The query cache is the only one which does not store entities.
+ It caches query results and contains only entity references and scalar values.
+  You need to activate the cache by setting the hibernate.cache.use_query_cache property in the persistence.xml file and set the cacheable
+   property on the Query.
+
+* Masowe operacje UPDATE i DELETE
+CriteriaUpdate and CriteriaDelete 
+
+Updating or deleting one entity after the other feels quite natural in Java but it is also very inefficient. Hibernate creates one SQL query for each entity that was updated or deleted. The better approach would be to perform these operations in bulks by creating update or delete statements that affect multiple records at once.
+
+[source,java]
+----
+CriteriaBuilder cb = this.em.getCriteriaBuilder();
+  
+// create update
+CriteriaUpdate<Order> update = cb.createCriteriaUpdate(Order.class);
+
+// set the root class
+Root e = update.from(Order.class);
+
+// set update and where clause
+update.set("amount", newAmount);
+update.where(cb.greaterThanOrEqualTo(e.get("amount"), oldAmount));
+
+// perform update
+this.em.createQuery(update).executeUpdate();
+----
