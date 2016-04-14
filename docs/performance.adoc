@@ -74,3 +74,29 @@ update.where(cb.greaterThanOrEqualTo(e.get("amount"), oldAmount));
 // perform update
 this.em.createQuery(update).executeUpdate();
 ----
+
+* Strategie pobierania (Fetching Strategies)
+
+** Eager
+   - natychmiatowe
+   - czasem wygodne do użycia
+   - znaczący przyrost danych pobieranych z bazy 
+   
+** Lazy
+   - opóźniony/odroczony dostęp do danych
+   - proxy
+   
+   
+** Extra lazy
+   - tylko dla kolekcji
+   - nie dociąga całej kolekcji 
+      
+
+* Second level cache
+
+* Query cache
+
+
+
+
+

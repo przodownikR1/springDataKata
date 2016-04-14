@@ -29,8 +29,11 @@ Standardowe podejście oparte na JDBC wymaga od programisty następujących czyn
 Czyli ORM : 
  - redukuje znaczenie ilość kodu potrzebnego to stworzenia i wykonania zapytania 
  - redukuje koszt i czas deploymentu
+ - redukcja boilerplate JDBC 
+ - skupienie na problemach biznesowych 
+ - mniej synchronizacji kodu z relacyjną bazą danych
  - zwiększa szybkość wytwarzania (produktywność - metaDane, query data)
- - dostarcza mechanizmy przenośności na inne bazy (nie musimy ograniczać się do danego typu bazy )  
+ - dostarcza mechanizmy przenośności na inne bazy (nie musimy ograniczać się do danego typu bazy )  (portability)
    * Dostępne dialekty : 
 	 DB2Dialect (supports DB2)
 	 FrontBaseDialect
@@ -219,7 +222,16 @@ public class Todo {
 
 Programmatic Named Queries
 addNamedQuery(String name, Query query) 
+[source,java]
+----
+Query q = this.em.createQuery("SELECT a FROM Book b JOIN b.authors a WHERE b.title LIKE :title GROUP BY a");
+this.em.getEntityManagerFactory().addNamedQuery("selectAuthorOfBook", q);
 
+TypedQuery<Author> nq = this.em.createNamedQuery("selectAuthorOfBook", Author.class);
+nq.setParameter("title", "%Java%");
+List<Author> authors = nq.getResultList();
+
+----
 
 Named Entity Graph
 
@@ -323,7 +335,10 @@ SessionFactory factory = configuration.buildSessionFactory(serviceRegistry);
 - 'Unit of work'
 -  Obsługuje transakcje
 -  Lekka i szybka do stworzenia
--  można ją traktować jako fizyczne buforowalne połączenie z bazą danych  
+-  można ją traktować jako fizyczne buforowalne połączenie z bazą danych
+-  jedno wątkowy
+-  krótki okres życia  
+ 
     
 Otwieranie nowej sesji : 
 [source,java]
@@ -364,6 +379,11 @@ session.close();
 }
 ----
 
+== Transaction 
+ - jedno wątkowy
+ - określa granice jednej transakcji
+ - 
+
 == Opening a stateless session
 
 == Tożsamość obiektu : Equals & hashcode
@@ -392,6 +412,34 @@ primary key that must be declared only once in the entity hierarchy.
 •	 Hilo generator
 
 @Column
+[source,java]
+----
+
+    @Column(name = "retryattempt", columnDefinition = "numeric", nullable = true)
+    private int retryAttempt = 0;
+
+    @Column(name = "messageerror", columnDefinition = "nvarchar")
+    private String messageError;
+
+    @Column(name = "messagebody", length = Integer.MAX_VALUE, columnDefinition = "nvarchar")
+    private String body;
+
+    @Column(name = "detailstatus", columnDefinition = "nvarchar")
+    @Enumerated(EnumType.STRING)
+    private DetailStatus status;
+----
+
+
+@Type (Hibernate only) 
+[source,java]
+----
+@org.hibernate.annotations.Type( type = "nstring" )
+private String name;
+
+@org.hibernate.annotations.Type( type = "materialized_nclob" )
+private String description;
+----
+
 
 @Transient
 
