@@ -14,6 +14,10 @@ ifndef::sourcedir[:sourcedir: ./src/main/java/]
 
 == Topic
 
+* Tabela na klasę konkretną
+* Tabela na każdą hierarchię klas
+* Tabela na każdą podklasę
+
 == Table per class hierarchy
 [source,java]
 ----

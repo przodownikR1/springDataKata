@@ -3,100 +3,124 @@
 :numbered:
 :icons: font
 :pagenums:
-:imagesdir: images
-:source-highlighter: coderay
+:imagesdir: ./img
+:iconsdir: ./icons
+:stylesdir: ./styles
+:scriptsdir: ./js
 
 :image-link: https://pbs.twimg.com/profile_images/425289501980639233/tUWf7KiC.jpeg
-
 ifndef::sourcedir[:sourcedir: ./src/main/java/]
+ifndef::resourcedir[:resourcedir: ./src/main/resources/]
 
-#Sample demo to show how jpa work in effiecient way
+:source-highlighter: coderay
+
 
 
 == Topic
 
-* Zalety
+image::hibernate.png
 
-Standardowe podejście oparte na JDBC wymaga od programisty następujących czynności: 
- Opening a database connection
- Maintaining an open connection
- Building a query
- Executing a query
- Getting a response to the query
- Mapping the query response with the custom classes
- Closing the database connection
+**Zalety**
 
-Czyli ORM : 
- - redukuje znaczenie ilość kodu potrzebnego to stworzenia i wykonania zapytania 
- - redukuje koszt i czas deploymentu
- - redukcja boilerplate JDBC 
- - skupienie na problemach biznesowych 
- - mniej synchronizacji kodu z relacyjną bazą danych
- - zwiększa szybkość wytwarzania (produktywność - metaDane, query data)
- - dostarcza mechanizmy przenośności na inne bazy (nie musimy ograniczać się do danego typu bazy )  (portability)
-   * Dostępne dialekty : 
-	 DB2Dialect (supports DB2)
-	 FrontBaseDialect
-	 HSQLDialect
-	 InformixDialect
-	 IngresDialect
-	 InterbaseDialect
-	 MySQLDialect
-	 Oracle8Dialect
-	 Oracle9Dialect
-	 Oracle10Dialect
-	 PointbaseDialect
-	 PostgreSQLDialect
-	 ProgressDialect
-	 SybaseDialect 
+Standardowe podejście oparte na JDBC wymaga od programisty następujących czynności:
+ 
+ - Opening a database connection
+ - Maintaining an open connection
+ - Building a query
+ - Executing a query
+ - Getting a response to the query
+ - Mapping the query response with the custom classes
+ - Closing the database connection
+
+
+**Czyli ORM :**
+[options=interactive]
+
+*    redukuje znaczenie ilość kodu potrzebnego to stworzenia i wykonania zapytania 
+*    redukuje koszt i czas deploymentu
+*    redukcja boilerplate JDBC 
+*    skupienie na problemach biznesowych 
+*    mniej synchronizacji kodu z relacyjną bazą danych
+*    zwiększa szybkość wytwarzania (produktywność - metaDane, query data)
+*    dostarcza mechanizmy przenośności na inne bazy (nie musimy ograniczać się do danego typu bazy )  (portability)
+
+**   **Dostępne dialekty :** 
+   
+***	 DB2Dialect (supports DB2)
+***	 FrontBaseDialect
+***	 HSQLDialect
+***	 InformixDialect
+***	 IngresDialect
+***	 InterbaseDialect
+***	 MySQLDialect
+***	 Oracle8Dialect
+***	 Oracle9Dialect
+***	 Oracle10Dialect
+***	 PointbaseDialect
+***	 PostgreSQLDialect
+***	 ProgressDialect
+***	 SybaseDialect 
    
  
- - idealnie nadaje się do protytypowania  
+* idealnie nadaje się do protytypowania  
  
-Dodatkowo otwiera możliwości : 
- - reużywalności kodu
- - zarządzania transakcjami
- - wydajnego operowania na kolekcjach relacji
- - wbudowany mechanizm cache'u
- - wprowadza obiektowe techniki do świata relacyjnych baz danych
+**Dodatkowo otwiera możliwości :** 
 
-Wady: 
-- krzywa nauki 
-- dodatkowy narzut na zapytania (overhead)
-- w pewnych przypadkach powoduje spadek wydajności z stosunku do zwykłych zapytania JDBC
-- wraz ze wzrostem złożoności modelu domenowego występują trudności z mapowaniem, wydajnością. Skutkuje to często wprowadzaniem 'haków' 
+* reużywalności kodu
+* zarządzania transakcjami
+* wydajnego operowania na kolekcjach relacji
+* wbudowany mechanizm cache'u
+* wprowadza obiektowe techniki do świata relacyjnych baz danych
+ 
+**Wady:**
+
+
+* krzywa nauki 
+* dodatkowy narzut na zapytania (overhead)
+* w pewnych przypadkach powoduje spadek wydajności z stosunku do zwykłych zapytania JDBC
+* wraz ze wzrostem złożoności modelu domenowego występują trudności z mapowaniem, wydajnością. Skutkuje to często wprowadzaniem 'haków' 
  
 
 == Moduły
-* Hibernate Core 
- - odpowiada za generowanie natywnych kwerent SQL
- - dostarcza dialekty 
- - dostarcza mechanizmy obsługi i translacji zapytań jak : HQL, Criteria Query czy QBE
- - odpowiada za buforowanie i efektywne pobieranie danych - czyli optymalizuje zapytania 
-* Hibernate Annotation
- - dostarcza znacziki metadanych równorzędne do konfiguracji mapować w XML
-* Hibernate EntityManager
- - jest implementacją interfejsu JPA
-* Hibernate Search
- - dostarcza rozwiązań użycia indeksów Lucene
-* Hibernate Validator
- - obsługa walidacji danych
-* Hibernate OGM
- - rozwiazania NoSql
+[square]
+**Hibernate Core**
+
+-  odpowiada za generowanie natywnych kwerent SQL
+-  dostarcza dialekty 
+-  dostarcza mechanizmy obsługi i translacji zapytań jak : HQL, Criteria Query czy QBE
+-  odpowiada za buforowanie i efektywne pobieranie danych - czyli optymalizuje zapytania 
  
-* DataSourcePool
-hibernate-c3p0
-    Integrates the C3P0 connection pooling library into Hibernate
-hibernate-hikaricp
-    Integrates the HikariCP connection pooling library into Hibernate
-hibernate-proxool
-    Integrates the Proxool connection pooling library into Hibernate
+**Hibernate Annotation**
+
+-  dostarcza znacziki metadanych równorzędne do konfiguracji mapować w XML
+
+**Hibernate EntityManager**
+
+- jest implementacją interfejsu JPA
  
-* Cache
-hibernate-ehcache
-    Integrates the Ehcache caching library into Hibernate as a second-level cache provider.
-hibernate-infinispan
-    Integrates the Infinispan caching library into Hibernate as a second-level cache provider.
+**Hibernate Search**
+
+-  dostarcza rozwiązań użycia indeksów Lucene
+ 
+**Hibernate Validator**
+
+-  obsługa walidacji danych
+ 
+**Hibernate OGM**
+
+-  rozwiazania NoSql
+ 
+**DataSourcePool**
+ 
+- hibernate-c3p0  Integrates the C3P0 connection pooling library into Hibernate 
+- hibernate-hikaricp  Integrates the HikariCP connection pooling library into Hibernate
+- hibernate-proxool   Integrates the Proxool connection pooling library into Hibernate
+ 
+**Cache**
+
+*hibernate-ehcache*  Integrates the Ehcache caching library into Hibernate as a second-level cache provider.
+    
+*hibernate-infinispan* Integrates the Infinispan caching library into Hibernate as a second-level cache provider.
  
  
  
@@ -107,8 +131,9 @@ hibernate-infinispan
 == Minimalna konfiguracja projektu :
 
 == Hibernate
-* Maven
-[source,xml]
+- [ ] Maven
+
+[source, xml]
 -----
    <dependencies>
 		<dependency>
@@ -119,22 +144,26 @@ hibernate-infinispan
 	</dependencies>
 -----
  
-* Gradle
+- [ ] Gradle
  
  * Konfiguracja bazy 
- * maven
+- [ ] maven
+
 [source,xml]
 ----
-  <dependency>
+
+<dependency>
     <groupId>com.h2database</groupId>
     <artifactId>h2</artifactId>
     <version>1.4.178</version>
 </dependency>
+
 ----
-* Możliwe typy konfiguracji : 
+**Możliwe typy konfiguracji :** 
   - konfiguracja bezpośrednio w kodzie
 [source,java]
 ----
+
    Configuration configuration = new Configuration().addResource("Book.hbm.xml")
 .setProperty("hibernate.dialect", "org.hibernate.dialect.DerbyTenSevenDialect")
 .setProperty("hibernate.connection.driver_class", "org.apache.derby.jdbc.EmbeddedDriver")
@@ -144,34 +173,40 @@ hibernate-infinispan
  
 ServiceRegistry serviceRegistry = new StandardServiceRegistryBuilder().applySettings(configuration.getProperties()).build();
 sessionFactory = configuration.buildSessionFactory(serviceRegistry);
+
 ----
-  - konfiguracja xml 
-  - konfiguracja z użyciem plików properties
+- konfiguracja xml 
+- konfiguracja z użyciem plików properties
   
  
 * Pojęcia
-  Encja
-  PersistenceUnit
+**  Encja
+**  PersistenceUnit
+
 [source,java]
 ----
+
 @PersistenceUnit(unitName="pu-unit")
 private EntityManagerFactory emf;
+
 ----
-  PersistenceContext
+
+** PersistenceContext
+  
 [source,java]
 ----
+
 @PersistenceContext (unitName = "pu-unit")
 EntityManager entityManager;
-----  
-  JPQL
-  Criteria API
-  MetaData 
 
-
+----
+  
 == Nowości w JPA 2.1
 Querying Stored Procedure
+
 [source,java]
 ----
+
   @Test
     public void testCallStoreProcedure() {       
         StoredProcedureQuery query = em.createStoredProcedureQuery("my_sum");
@@ -185,11 +220,14 @@ Querying Stored Procedure
         Integer sum = (Integer) query.getOutputParameterValue("sum");
         assertEquals(sum, new Integer(9));
     }
+    
 ----
 
-Attribute Converter 
+Attribute Converter
+ 
 [source,java]
 ----
+
 @Converter
 public class PasswordConverter implements AttributeConverter<String, String> {
     @Override
@@ -210,9 +248,12 @@ public class PasswordConverter implements AttributeConverter<String, String> {
         }
     }
 }
----- 
+
+----
+ 
 [source,java]
 ----
+
 @Entity
 public class Person {
     @Convert(converter=PasswordConverter.class)
@@ -241,6 +282,7 @@ Programmatic Named Queries
 addNamedQuery(String name, Query query) 
 [source,java]
 ----
+
 Query q = this.em.createQuery("SELECT a FROM Book b JOIN b.authors a WHERE b.title LIKE :title GROUP BY a");
 this.em.getEntityManagerFactory().addNamedQuery("selectAuthorOfBook", q);
 
@@ -296,22 +338,24 @@ W ten sposób Hibernate wyłączy wewnętrzną pulę połączeń i przestawi si�
    
    
 == Cykl życia   
- * Transient - obiekt istnie w pamięci i jest rozłączony od kontekstu Hibernate. Taki obiekt nie może być zarządzany przez Hibernate
-   Tworzony za pomocą operatora new. Nie skojarzony z sesją.
+* Transient - obiekt istnie w pamięci i jest rozłączony od kontekstu Hibernate. Taki obiekt nie może być zarządzany przez Hibernate
+  ** Tworzony za pomocą operatora new. Nie skojarzony z sesją.
    
    Utrwalenie:  save(), persist(), saveOrUpdate()
    save() i persist() -> Insert
    update() i merge() -> Update
    
- * Persistence - obiekt istnieje w bazie danych. Obiekt jest zarządzany przez Hibernate czyli jest związany z sesją.
+* Persistence - obiekt istnieje w bazie danych. Obiekt jest zarządzany przez Hibernate czyli jest związany z sesją.
  
    Usunięcie : delete()
  
- * Detached - obiekt ma reprezentacje w bazie danych, ale zmiana wartości obiektu nie ma wpływu na reprezentacje bazodanową i odwrotnie.
+* Detached - obiekt ma reprezentacje w bazie danych, ale zmiana wartości obiektu nie ma wpływu na reprezentacje bazodanową i odwrotnie.
+
    Był trwały ale został odłączony od sesji.
    Możliwy do modyfikacji poza kontekstem.
    Przyłączenie do sesji jest możliwe
- * Removed - obiekty były zarządzane przez Hibernate, ale w wyniku operacji remove() zostały skasowane z bazy danych.
+   
+*  Removed - obiekty były zarządzane przez Hibernate, ale w wyniku operacji remove() zostały skasowane z bazy danych.
 
 ==Session Factory
 
@@ -349,12 +393,12 @@ SessionFactory factory = configuration.buildSessionFactory(serviceRegistry);
 
  
 == Session 
-- 'Unit of work'
--  Obsługuje transakcje
--  Lekka i szybka do stworzenia
--  można ją traktować jako fizyczne buforowalne połączenie z bazą danych
--  jedno wątkowy
--  krótki okres życia  
+- [ ] 'Unit of work'
+- [ ]  Obsługuje transakcje
+- [ ]  Lekka i szybka do stworzenia
+- [ ] można ją traktować jako fizyczne buforowalne połączenie z bazą danych
+- [ ]  jedno wątkowy
+- [ ] krótki okres życia  
  
     
 Otwieranie nowej sesji : 
@@ -475,15 +519,7 @@ Book book = (Book) session.get(Book.class, isbn);
 ----
 
 == Zapytania
-[source,java]
-----
-Query query = session.createQuery("from Book");
-List books = query.list();
-
-Query query = session.createQuery("from Book where isbn = ?");
-query.setString(0, isbn);
-Book book = (Book) query.uniqueResult();
-----
+include::retrieve.adoc
 
 == Usuwanie obiektów z bazy
 DELETE FROM employee WHERE id=1;
@@ -544,102 +580,12 @@ Object merge(Object object)
  
 Object merge(String entityName, Object object)
 ----
-
+[square]
 * JPA
-
-* Wymagane min 
-[source,xml]
-----
-<dependency>
-<groupId>org.hibernate</groupId>
-<artifactId>hibernate-entitymanager</artifactId>
-<version>5+.Final</version>
-</dependency>
-----
-
-* Persistence Context
-[source,xml]
-----
-
-----
-
-[source,java]
-----
-EntityManagerFactory emf = Persistence.createEntityManagerFactory("HelloWorldPU");
-
-UserTransaction tx = TM.getUserTransaction();
-tx.begin();
-EntityManager em = emf.createEntityManager();
-Message message = new Message()
-message.setText("Hello World!");
-em.persist(message);
-tx.commit();
-// INSERT into MESSAGE (ID, TEXT) values (1, 'Hello World!')
-em.close();
-----
-
-
-== Użycie EntityManager'a [JPA]
-
-* Zależności 
-[source,xml]
-----
-<dependency>
-  <groupId>org.hibernate</groupId>
-  <artifactId>hibernate-entitymanager</artifactId>
-  <version>4.3.5.Final</version>
-</dependency>
-----
-
-EntityManagerFactory(JPA) = SessionFactory(Hibernate)
-Może być programowalny manualnie lub przy pomocy pliku persistence.xml, który to musi znajdować się w classpath projektu.
-
-Plik persistence.xml jest unikalny dla danego kontekstu persistence unit.
-
-Przykładowy plik persistence.xml
-[source,xml]
-----
-<persistence xmlns="http://java.sun.com/xml/ns/persistence"
-xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-xsi:schemaLocation="http://java.sun.com/xml/ns/persistence http://java.sun.com/xml/ns/persistence/persistence_2_0.xsd" version="2.0">
-<persistence-unit name="myPu" transaction-type="RESOURCE_LOCAL">
-<mapping-file>Author.hbm.xml</mapping-file>
-<mapping-file>Book.hbm.xml</mapping-file>
- 
-<class>domain.Author</class>
-<class>domain.Book</class>
- 
-<properties>
-<property name="javax.persistence.jdbc.driver" value="org.h2.Driver"/>
-<property name="javax.persistence.jdbc.user" value="sa"/>
-<property name="javax.persistence.jdbc.password" value=""/>
-<property name="javax.persistence.jdbc.url" value="jdbc:h2:file:~/testjpa"/>
-<property name="hibernate.dialect" value="org.hibernate.dialect.HSQLDialect"/>
-<property name="hibernate.hbm2ddl.auto" value="create"/>
-<property name="hibernate.show_sql" value="true"/>
-</properties>
-</persistence-unit>
-</persistence>
-----   
-
-RESOURCE_LOCAL transaction - sama aplikacja zarządza transakcjami .
-
-JTA transaction - transakcjami zarządza kontener na serwerze aplikacyjnym
-
-Zestawienie EntityManagera
-[source,java]
-----
-public static EntityManager getEntityManager() {
- EntityManagerFactory managerFactory = Persistence.createEntityManagerFactory("myPu");
- EntityManager manager = managerFactory.createEntityManager(); 
-return manager;
-}
-----
+include::jpa.adoc
 
 == Dziedziczenie
-* Tabela na klasę konkretną
-* Tabela na każdą hierarchię klas
-* Tabela na każdą podklasę
+include::inheritence.adoc[]
 
 == Trwałość przez osiągalność
 
@@ -672,7 +618,8 @@ cascade="save-update, delete
 
 == Criteria
 
-
+== Transakcyjność
+include::transactions.adoc[]
 
 == Logowanie zdarzeń
 [source,xml]
@@ -687,6 +634,9 @@ cascade="save-update, delete
 ----
 
 == Kaskadowość
+
+
+include::cache.adoc[]
 
 == Cache level One
 Activated by default
@@ -792,6 +742,7 @@ this.em.createNativeQuery(“Select …", "myResultMapping")
 == Walidacja
 
 == Problemy wydajnościowe
+include::performance.adoc[] 
 
 * N+1
 * Paginacja

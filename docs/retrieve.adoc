@@ -15,6 +15,18 @@ ifndef::sourcedir[:sourcedir: ./src/main/java/]
 
 == Topic
 
+
+[source,java]
+----
+Query query = session.createQuery("from Book");
+List books = query.list();
+
+Query query = session.createQuery("from Book where isbn = ?");
+query.setString(0, isbn);
+Book book = (Book) query.uniqueResult();
+----
+
+
 *  *ElementCollection*
 
 *@CollectionTable* - wskazuje na pole o typie Collection dla którego Hibernate stworzy osobną tabelę

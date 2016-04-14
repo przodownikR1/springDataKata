@@ -1,0 +1,107 @@
+= JPA/Hibernate camp
+:docInfo1
+:numbered:
+:icons: font
+:pagenums:
+:imagesdir: images
+:source-highlighter: coderay
+
+:image-link: https://pbs.twimg.com/profile_images/425289501980639233/tUWf7KiC.jpeg
+
+ifndef::sourcedir[:sourcedir: ./src/main/java/]
+
+#Sample demo to show how jpa work in effiecient way
+
+== Topic
+
+
+* Wymagane min 
+[source,xml]
+----
+<dependency>
+<groupId>org.hibernate</groupId>
+<artifactId>hibernate-entitymanager</artifactId>
+<version>5+.Final</version>
+</dependency>
+----
+
+* Persistence Context
+[source,xml]
+----
+include::{resourcedir}META-INF/persistence.xml[]
+----
+[[entityManager picture]]
+image::entityManager.jpg
+
+[source,java]
+----
+EntityManagerFactory emf = Persistence.createEntityManagerFactory("HelloWorldPU");
+
+UserTransaction tx = TM.getUserTransaction();
+tx.begin();
+EntityManager em = emf.createEntityManager();
+Message message = new Message()
+message.setText("Hello World!");
+em.persist(message);
+tx.commit();
+// INSERT into MESSAGE (ID, TEXT) values (1, 'Hello World!')
+em.close();
+----
+
+
+== Użycie EntityManager'a [JPA]
+
+* Zależności 
+[source,xml]
+----
+<dependency>
+  <groupId>org.hibernate</groupId>
+  <artifactId>hibernate-entitymanager</artifactId>
+  <version>4.3.5.Final</version>
+</dependency>
+----
+
+EntityManagerFactory(JPA) = SessionFactory(Hibernate)
+Może być programowalny manualnie lub przy pomocy pliku persistence.xml, który to musi znajdować się w classpath projektu.
+
+Plik persistence.xml jest unikalny dla danego kontekstu persistence unit.
+
+Przykładowy plik persistence.xml
+[source,xml]
+----
+<persistence xmlns="http://java.sun.com/xml/ns/persistence"
+xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+xsi:schemaLocation="http://java.sun.com/xml/ns/persistence http://java.sun.com/xml/ns/persistence/persistence_2_0.xsd" version="2.0">
+<persistence-unit name="myPu" transaction-type="RESOURCE_LOCAL">
+<mapping-file>Author.hbm.xml</mapping-file>
+<mapping-file>Book.hbm.xml</mapping-file>
+ 
+<class>domain.Author</class>
+<class>domain.Book</class>
+ 
+<properties>
+<property name="javax.persistence.jdbc.driver" value="org.h2.Driver"/>
+<property name="javax.persistence.jdbc.user" value="sa"/>
+<property name="javax.persistence.jdbc.password" value=""/>
+<property name="javax.persistence.jdbc.url" value="jdbc:h2:file:~/testjpa"/>
+<property name="hibernate.dialect" value="org.hibernate.dialect.HSQLDialect"/>
+<property name="hibernate.hbm2ddl.auto" value="create"/>
+<property name="hibernate.show_sql" value="true"/>
+</properties>
+</persistence-unit>
+</persistence>
+----   
+
+RESOURCE_LOCAL transaction - sama aplikacja zarządza transakcjami .
+
+JTA transaction - transakcjami zarządza kontener na serwerze aplikacyjnym
+
+Zestawienie EntityManagera
+[source,java]
+----
+public static EntityManager getEntityManager() {
+ EntityManagerFactory managerFactory = Persistence.createEntityManagerFactory("myPu");
+ EntityManager manager = managerFactory.createEntityManager(); 
+return manager;
+}
+----
