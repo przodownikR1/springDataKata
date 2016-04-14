@@ -83,6 +83,23 @@ Wady:
  - obsługa walidacji danych
 * Hibernate OGM
  - rozwiazania NoSql
+ 
+* DataSourcePool
+hibernate-c3p0
+    Integrates the C3P0 connection pooling library into Hibernate
+hibernate-hikaricp
+    Integrates the HikariCP connection pooling library into Hibernate
+hibernate-proxool
+    Integrates the Proxool connection pooling library into Hibernate
+ 
+* Cache
+hibernate-ehcache
+    Integrates the Ehcache caching library into Hibernate as a second-level cache provider.
+hibernate-infinispan
+    Integrates the Infinispan caching library into Hibernate as a second-level cache provider.
+ 
+ 
+ 
    
 
 * Problem on granularity
@@ -530,6 +547,38 @@ Object merge(String entityName, Object object)
 
 * JPA
 
+* Wymagane min 
+[source,xml]
+----
+<dependency>
+<groupId>org.hibernate</groupId>
+<artifactId>hibernate-entitymanager</artifactId>
+<version>5+.Final</version>
+</dependency>
+----
+
+* Persistence Context
+[source,xml]
+----
+
+----
+
+[source,java]
+----
+EntityManagerFactory emf = Persistence.createEntityManagerFactory("HelloWorldPU");
+
+UserTransaction tx = TM.getUserTransaction();
+tx.begin();
+EntityManager em = emf.createEntityManager();
+Message message = new Message()
+message.setText("Hello World!");
+em.persist(message);
+tx.commit();
+// INSERT into MESSAGE (ID, TEXT) values (1, 'Hello World!')
+em.close();
+----
+
+
 == Użycie EntityManager'a [JPA]
 
 * Zależności 
@@ -748,6 +797,12 @@ this.em.createNativeQuery(“Select …", "myResultMapping")
 * Paginacja
 * 
 
+== Blokowanie
+
+* Optymistyczne 
+  OptimisticLockException
+  
+* Pesymistyczne  
 
 
 == Rozwiązywanie problemów
@@ -789,6 +844,8 @@ byte[] myBlob;
  - DDD agregacja
  - unikaj merge 
  - unikaj obiektów odłączonych
+ - pobieranie zbyt dużych ilości danych powoduje marnowanie pamięci w warstwie aplikacji
+ - 
 
 == O mnie
 * programista

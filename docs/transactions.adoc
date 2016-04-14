@@ -1,0 +1,49 @@
+= JPA/Hibernate camp
+:docInfo1
+:numbered:
+:icons: font
+:pagenums:
+:imagesdir: images
+:source-highlighter: coderay
+
+:image-link: https://pbs.twimg.com/profile_images/425289501980639233/tUWf7KiC.jpeg
+
+ifndef::sourcedir[:sourcedir: ./src/main/java/]
+
+#Sample demo to show how jpa work in effiecient way
+
+== Topic
+
+== Izolacja
+   Stopień uniezależnienia od siebie poszczególnych transackcji
+   Wyższy poziom zapewnia lepszą separację - kosztem wydajności
+   Poprzez separacje rozumiemy, że jedna niezależna transakcja nie będzie wpływała na inną równoległą w systemie.
+   
+
+
+== Odczyt niezatwierdzych (Read uncommited)
+   - brak izolacji
+    Jedna transakcja ma dostęp do danych modyfikowanych przez inne transakcji
+   
+== Odczyt zatwierdzonych (Read commited)
+   Bieżąca transakcja widzi tylko dane zatwierdzone.
+   - problem z długi transakcjami, gdyż bieżąca transakcja będzie odczytywała dane zatwierdzone chwilowo przez inne.
+   - transakcja odczytują dwa razy te same dane może zwrócić inne wyniki
+   
+== Odczyt powtarzalny (Repeatable read)
+   Bieżąca transakcja widzi zmiany zatwierdzone już po jej rozpoczęciu przez inne równoległe transakcje.
+   Ma zapewnioną powtarzalność odczytów
+   
+== Szeregowalność (Serializable)
+   Transakcja szeregowana. Możemy te sposób izolacji traktować synchroniczne wykonywane krok po kroku zamiast opcji zrównoleglenia.
+   Bardzo możliwe są konflikty.
+  
+
+
+
+
+
+== O mnie
+* programista
+* blog link:http://przewidywalna-java.blogspot.com[]
+* image:{image-link} [role='img-circle']
