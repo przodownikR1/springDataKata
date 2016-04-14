@@ -29,8 +29,11 @@ Standardowe podejście oparte na JDBC wymaga od programisty następujących czyn
 Czyli ORM : 
  - redukuje znaczenie ilość kodu potrzebnego to stworzenia i wykonania zapytania 
  - redukuje koszt i czas deploymentu
+ - redukcja boilerplate JDBC 
+ - skupienie na problemach biznesowych 
+ - mniej synchronizacji kodu z relacyjną bazą danych
  - zwiększa szybkość wytwarzania (produktywność - metaDane, query data)
- - dostarcza mechanizmy przenośności na inne bazy (nie musimy ograniczać się do danego typu bazy )  
+ - dostarcza mechanizmy przenośności na inne bazy (nie musimy ograniczać się do danego typu bazy )  (portability)
    * Dostępne dialekty : 
 	 DB2Dialect (supports DB2)
 	 FrontBaseDialect
@@ -219,7 +222,16 @@ public class Todo {
 
 Programmatic Named Queries
 addNamedQuery(String name, Query query) 
+[source,java]
+----
+Query q = this.em.createQuery("SELECT a FROM Book b JOIN b.authors a WHERE b.title LIKE :title GROUP BY a");
+this.em.getEntityManagerFactory().addNamedQuery("selectAuthorOfBook", q);
 
+TypedQuery<Author> nq = this.em.createNamedQuery("selectAuthorOfBook", Author.class);
+nq.setParameter("title", "%Java%");
+List<Author> authors = nq.getResultList();
+
+----
 
 Named Entity Graph
 
@@ -323,7 +335,10 @@ SessionFactory factory = configuration.buildSessionFactory(serviceRegistry);
 - 'Unit of work'
 -  Obsługuje transakcje
 -  Lekka i szybka do stworzenia
--  można ją traktować jako fizyczne buforowalne połączenie z bazą danych  
+-  można ją traktować jako fizyczne buforowalne połączenie z bazą danych
+-  jedno wątkowy
+-  krótki okres życia  
+ 
     
 Otwieranie nowej sesji : 
 [source,java]
@@ -364,6 +379,11 @@ session.close();
 }
 ----
 
+== Transaction 
+ - jedno wątkowy
+ - określa granice jednej transakcji
+ - 
+
 == Opening a stateless session
 
 == Tożsamość obiektu : Equals & hashcode
@@ -372,88 +392,7 @@ session.close();
   - klucz biznesowy 
   - application managed id - (z bazy danych na aplikacje) (moment poczęcia lub urodzenia) 
 
-== Użycie annotacji Hibernate i JPA (podstawy)
 
-@Entity - annotation is defined by the JPA 2.0 specification to annotate an entity bean. An entity
-represents a lightweight persistent domain object or a Plain Old Java Object (POJO).
- The entities can be accessed
-through the JPA javax.persistence.EntityManager or the Hibernate org.hibernate.Session object.
- An entity class must have a public or protected no-arg constructor, and it can have other constructors
-as well. It should be a top-level class and must not be final. If the entity is to be passed by value (that is,
-through a remote interface), it must implement a Serializable interface.
-Every entity must have a
-primary key that must be declared only once in the entity hierarchy.
-
-@Id -  primary key
-
-•	 Database sequence
-•	 Native generator
-•	 Increment generator
-•	 Hilo generator
-
-@Column
-
-@Transient
-
-
-@UniqueConstraint(columnNames = { "id" , "empCode"}))
-
-Komponenty zagnieżdzone 
-
-
-composite primary key column – @Id and @IdClass
-
-
-@ElementCollection(fetch=FetchType.LAZY)
-@CollectionTable(name = "email")
-@IndexColumn(name="email_index")
-private List<String> emails;
-
-@CollectionTable : This annotation indicates that the current field is of the
-Collection type, and hibernate creates a separate table for it. It also creates a
-reference between them. In this case, hibernate creates a table named email with
-email and employee_id . The employee_id column is made by joining the persisted
-class name and the primary key column of the employee class with an underscore ( _ ).
-f f @ElementCollection : This annotation is used to define the relationship with the
-embedded or basic type.
-
- 
-== Identyfikatory
-[source,xml]
-----
-@Id
-public Long id;
-----
-
-== Relacje
-
-@JoinColumn + @JoinTable
-
-* One-To-One 1:1
-[source,xml]
-----
-@Entity
-public class Message {
-@Id
-Long id;
-
-@Column
-String content;
- 
-@OneToOne
-Email email;
-
-}
-//ommit mutators and accessors 
-}
-----
-* One-To-Many 1:N
-Za pomoca kluczu obcego
-
-Za pomoca kluczu głównego
-
-* Many-To-One N:1
-* Many-To-Many N:M
 
 == Object Equality and Identity
    

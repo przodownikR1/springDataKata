@@ -222,6 +222,152 @@ private String categoryName;
 ----
 
 == @Embedded
+[source,java]
+----
+@Embeddable
+public class Address {
+
+    private String line1;
+
+    private String line2;
+
+    @Embedded
+    private ZipCode zipCode;
+
+    ...
+
+    @Embeddable
+    public static class Zip {
+
+        private String postalCode;
+
+        private String plus4;
+
+        ...
+    }
+}
+@Entity
+public class Person {
+
+    @Id
+    private Integer id;
+
+    @Embedded
+    private Name name;
+
+    ...
+}
+----
+
+@Multiple embeddable types
+[source,java]
+----
+@Entity
+public class Contact {
+
+    @Id
+    private Integer id;
+
+    @Embedded
+    private Name name;
+
+    @Embedded
+    private Address homeAddress;
+
+    @Embedded
+    private Address mailingAddress;
+
+    @Embedded
+    private Address workAddress;
+
+    ...
+}
+----
+@AttributeOverride
+[source,java]
+----
+
+
+@Entity
+public class Contact {
+
+    @Id
+    private Integer id;
+
+    @Embedded
+    private Name name;
+
+    @Embedded
+    @AttributeOverrides(
+        @AttributeOverride(
+            name = "line1",
+            column = @Column( name = "home_address_line1" ),
+        ),
+        @AttributeOverride(
+            name = "line2",
+            column = @Column( name = "home_address_line2" )
+        ),
+        @AttributeOverride(
+            name = "zipCode.postalCode",
+            column = @Column( name = "home_address_postal_cd" )
+        ),
+        @AttributeOverride(
+            name = "zipCode.plus4",
+            column = @Column( name = "home_address_postal_plus4" )
+        )
+    )
+    private Address homeAddress;
+
+    @Embedded
+    @AttributeOverrides(
+        @AttributeOverride(
+            name = "line1",
+            column = @Column( name = "mailing_address_line1" ),
+        ),
+        @AttributeOverride(
+            name = "line2",
+            column = @Column( name = "mailing_address_line2" )
+        ),
+        @AttributeOverride(
+            name = "zipCode.postalCode",
+            column = @Column( name = "mailing_address_postal_cd" )
+        ),
+        @AttributeOverride(
+            name = "zipCode.plus4",
+            column = @Column( name = "mailing_address_postal_plus4" )
+        )
+    )
+    private Address mailingAddress;
+
+    @Embedded
+    @AttributeOverrides(
+        @AttributeOverride(
+            name = "line1",
+            column = @Column( name = "work_address_line1" ),
+        ),
+        @AttributeOverride(
+            name = "line2",
+            column = @Column( name = "work_address_line2" )
+        ),
+        @AttributeOverride(
+            name = "zipCode.postalCode",
+            column = @Column( name = "work_address_postal_cd" )
+        ),
+        @AttributeOverride(
+            name = "zipCode.plus4",
+            column = @Column( name = "work_address_postal_plus4" )
+        )
+    )
+    private Address workAddress;
+
+    ...
+}
+
+
+----
+ 
+ 
+
 
 == @Id
 [source,java]
@@ -304,6 +450,267 @@ ALTER TABLE Phone ADD CONSTRAINT PERSON_ID_FK FOREIGN KEY (person_id) REFERENCES
 The bidirectional @OneToMany association also requires a @ManyToOne association on the child side. Although the Domain Model exposes two sides to navigate this association, behind the scenes, the relational database has only one foreign key for this relationship.
 
 Every bidirectional association must have one owning side only (the child side), the other one being referred to as the inverse (or the mappedBy) side.
+
+== Użycie annotacji Hibernate i JPA (podstawy)
+
+@Entity - annotation is defined by the JPA 2.0 specification to annotate an entity bean. An entity
+represents a lightweight persistent domain object or a Plain Old Java Object (POJO).
+ The entities can be accessed
+through the JPA javax.persistence.EntityManager or the Hibernate org.hibernate.Session object.
+ An entity class must have a public or protected no-arg constructor, and it can have other constructors
+as well. It should be a top-level class and must not be final. If the entity is to be passed by value (that is,
+through a remote interface), it must implement a Serializable interface.
+Every entity must have a
+primary key that must be declared only once in the entity hierarchy.
+
+@Id -  primary key
+
+•	 Database sequence
+•	 Native generator
+•	 Increment generator
+•	 Hilo generator
+
+@Column
+[source,java]
+----
+
+    @Column(name = "retryattempt", columnDefinition = "numeric", nullable = true)
+    private int retryAttempt = 0;
+
+    @Column(name = "messageerror", columnDefinition = "nvarchar")
+    private String messageError;
+
+    @Column(name = "messagebody", length = Integer.MAX_VALUE, columnDefinition = "nvarchar")
+    private String body;
+
+    @Column(name = "detailstatus", columnDefinition = "nvarchar")
+    @Enumerated(EnumType.STRING)
+    private DetailStatus status;
+----
+
+
+@Table
+[source,java]
+----
+@Entity @Table(name="`Line Item`")
+----
+
+
+@Type (Hibernate only) 
+[source,java]
+----
+@org.hibernate.annotations.Type( type = "nstring" )
+private String name;
+
+@org.hibernate.annotations.Type( type = "materialized_nclob" )
+private String description;
+----
+
+
+@Transient
+
+
+@Enumerated
+[source,java]
+----
+@Entity
+public class Person {
+    ...
+
+    @Enumerated
+    public Gender gender;
+
+    public static enum Gender {
+        MALE,
+        FEMALE
+    }
+}
+----
+ 
+@AttributeConverter
+[source,java]
+----
+public enum Gender {
+
+    MALE('M'),
+    FEMALE('F');
+
+    private final char code;
+
+    private Gender( char code ) {
+        this.code = code;
+    }
+
+    public static Gender fromCode( char code ) {
+        if ( code == 'M' || code == 'm' ) {
+            return MALE;
+        }
+        if ( code == 'F' || code == 'f' ) {
+            return FEMALE;
+        }
+        throw...
+    }
+
+    public char getCode() {
+        return code;
+    }
+}
+
+@Entity
+public class Person {
+    ...
+
+    @Basic
+    @Convert( converter = GenderConverter.class )
+    public Gender gender;
+}
+
+@Converter
+public class GenderConverter implements AttributeConverter<Character, Gender> {
+
+    public Character convertToDatabaseColumn( Gender value ) {
+        if ( value == null ) {
+            return null;
+        }
+
+        return value.getCode();
+    }
+
+    public Gender convertToEntityAttribute( Character value ) {
+        if ( value == null ) {
+            return null;
+        }
+
+        return Gender.fromCode( value );
+    }
+}
+---- 
+ 
+@Mapping LOBs
+[source,java]
+----
+@Entity
+public class Product {
+    ...
+
+    @Lob
+    @Basic
+    public Clob description;
+    ...
+    
+    @Lob
+    @Basic
+    public char[] description;
+    
+    
+    @Lob
+    @Basic
+    public Blob instructions;
+    
+     @Lob
+    @Basic
+    public byte[] instructions;
+}
+----
+ 
+@Mapping Nationalized Character Data
+[source,java]
+----
+@Entity
+public class Product {
+    ...
+
+    @Basic
+    @Nationalized
+    public String description;
+
+    ...
+}
+---- 
+hibernate.use_nationalized_character_data
+
+
+@Mapping Date/Time Values
+@Temporal
+
+DATE  Represents a calendar date by storing years, months and days. The JDBC equivalent is java.sql.Date
+DATE java8   java.time.LocalDate
+[source,sql]
+----
+INSERT INTO DateEvent( timestamp, id ) VALUES ( '2015-12-29', 1 )
+----
+TIME     Represents the time of a day and it stores hours, minutes and seconds. The JDBC equivalent is java.sql.Time
+java8 - java.time.LocalTime, java.time.OffsetTime
+[source,sql]
+----
+INSERT INTO DateEvent( timestamp, id ) VALUES ( '16:51:58', 1 )
+----
+TIMESTAMP It stores both a DATE and a TIME plus nanoseconds. The JDBC equivalent is java.sql.Timestamp
+java 8  java.time.Instant, java.time.LocalDateTime, java.time.OffsetDateTime and java.time.ZonedDateTime
+[source,sql]
+----
+INSERT INTO DateEvent  ( timestamp, id ) VALUES ( '2015-12-29 16:54:04.544', 1
+----
+
+@UniqueConstraint(columnNames = { "id" , "empCode"}))
+
+Komponenty zagnieżdzone 
+
+
+composite primary key column – @Id and @IdClass
+
+
+@ElementCollection(fetch=FetchType.LAZY)
+@CollectionTable(name = "email")
+@IndexColumn(name="email_index")
+private List<String> emails;
+
+@CollectionTable : This annotation indicates that the current field is of the
+Collection type, and hibernate creates a separate table for it. It also creates a
+reference between them. In this case, hibernate creates a table named email with
+email and employee_id . The employee_id column is made by joining the persisted
+class name and the primary key column of the employee class with an underscore ( _ ).
+f f @ElementCollection : This annotation is used to define the relationship with the
+embedded or basic type.
+
+ 
+== Identyfikatory
+[source,xml]
+----
+@Id
+public Long id;
+----
+
+== Relacje
+
+@JoinColumn + @JoinTable
+
+* One-To-One 1:1
+[source,xml]
+----
+@Entity
+public class Message {
+@Id
+Long id;
+
+@Column
+String content;
+ 
+@OneToOne
+Email email;
+
+}
+//ommit mutators and accessors 
+}
+----
+* One-To-Many 1:N
+Za pomoca kluczu obcego
+
+Za pomoca kluczu głównego
+
+* Many-To-One N:1
+* Many-To-Many N:M
+
 
 
 
