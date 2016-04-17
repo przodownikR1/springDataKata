@@ -2,7 +2,6 @@ package pl.java.scalatech.domain;
 
 import java.io.Serializable;
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.time.ZonedDateTime;
 
 import javax.persistence.Entity;
@@ -10,7 +9,6 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Past;
 
 import org.springframework.format.annotation.DateTimeFormat;
 
@@ -34,7 +32,7 @@ public class Person implements Serializable{
 
     private  String firstname;
     private  String email;
-    
+
     private LocalDate modify;
 
     @DateTimeFormat(pattern = "dd/MM/yy")

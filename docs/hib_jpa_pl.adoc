@@ -1,0 +1,861 @@
+= JPA/Hibernate camp
+:docInfo1
+:numbered:
+:icons: font
+:pagenums:
+:imagesdir: images
+:source-highlighter: coderay
+
+:image-link: https://pbs.twimg.com/profile_images/425289501980639233/tUWf7KiC.jpeg
+
+ifndef::sourcedir[:sourcedir: ./src/main/java/]
+
+#Sample demo to show how jpa work in effiecient way
+
+
+== Topic
+
+* Zalety
+
+Standardowe podejście oparte na JDBC wymaga od programisty następujących czynności: 
+ Opening a database connection
+ Maintaining an open connection
+ Building a query
+ Executing a query
+ Getting a response to the query
+ Mapping the query response with the custom classes
+ Closing the database connection
+
+Czyli ORM : 
+ - redukuje znaczenie ilość kodu potrzebnego to stworzenia i wykonania zapytania 
+ - redukuje koszt i czas deploymentu
+ - zwiększa szybkość wytwarzania (produktywność - metaDane, query data)
+ - dostarcza mechanizmy przenośności na inne bazy (nie musimy ograniczać się do danego typu bazy )  
+   * Dostępne dialekty : 
+	 DB2Dialect (supports DB2)
+	 FrontBaseDialect
+	 HSQLDialect
+	 InformixDialect
+	 IngresDialect
+	 InterbaseDialect
+	 MySQLDialect
+	 Oracle8Dialect
+	 Oracle9Dialect
+	 Oracle10Dialect
+	 PointbaseDialect
+	 PostgreSQLDialect
+	 ProgressDialect
+	 SybaseDialect 
+   
+ 
+ - idealnie nadaje się do protytypowania  
+ 
+Dodatkowo otwiera możliwości : 
+ - reużywalności kodu
+ - zarządzania transakcjami
+ - wydajnego operowania na kolekcjach relacji
+ - wbudowany mechanizm cache'u
+ - wprowadza obiektowe techniki do świata relacyjnych baz danych
+
+Wady: 
+- krzywa nauki 
+- dodatkowy narzut na zapytania (overhead)
+- w pewnych przypadkach powoduje spadek wydajności z stosunku do zwykłych zapytania JDBC
+- wraz ze wzrostem złożoności modelu domenowego występują trudności z mapowaniem, wydajnością. Skutkuje to często wprowadzaniem 'haków' 
+ 
+
+== Moduły
+* Hibernate Core 
+ - odpowiada za generowanie natywnych kwerent SQL
+ - dostarcza dialekty 
+ - dostarcza mechanizmy obsługi i translacji zapytań jak : HQL, Criteria Query czy QBE
+ - odpowiada za buforowanie i efektywne pobieranie danych - czyli optymalizuje zapytania 
+* Hibernate Annotation
+ - dostarcza znacziki metadanych równorzędne do konfiguracji mapować w XML
+* Hibernate EntityManager
+ - jest implementacją interfejsu JPA
+* Hibernate Search
+ - dostarcza rozwiązań użycia indeksów Lucene
+* Hibernate Validator
+ - obsługa walidacji danych
+* Hibernate OGM
+ - rozwiazania NoSql
+   
+
+* Problem on granularity
+
+== Minimalna konfiguracja projektu :
+
+== Hibernate
+* Maven
+[source,xml]
+-----
+   <dependencies>
+		<dependency>
+			<groupId>org.hibernate</groupId>
+			<artifactId>hibernate-core</artifactId>
+			<version>4.3.5.Final</version>
+		</dependency>
+	</dependencies>
+-----
+ 
+* Gradle
+ 
+ * Konfiguracja bazy 
+ * maven
+[source,xml]
+----
+  <dependency>
+    <groupId>com.h2database</groupId>
+    <artifactId>h2</artifactId>
+    <version>1.4.178</version>
+</dependency>
+----
+* Możliwe typy konfiguracji : 
+  - konfiguracja bezpośrednio w kodzie
+[source,java]
+----
+   Configuration configuration = new Configuration().addResource("Book.hbm.xml")
+.setProperty("hibernate.dialect", "org.hibernate.dialect.DerbyTenSevenDialect")
+.setProperty("hibernate.connection.driver_class", "org.apache.derby.jdbc.EmbeddedDriver")
+.setProperty("hibernate.connection.url", "jdbc:derby://localhost:1527/BookDB")
+.setProperty("hibernate.connection.username", "book")
+.setProperty("hibernate.connection.password", "book");
+ 
+ServiceRegistry serviceRegistry = new StandardServiceRegistryBuilder().applySettings(configuration.getProperties()).build();
+sessionFactory = configuration.buildSessionFactory(serviceRegistry);
+----
+  - konfiguracja xml 
+  - konfiguracja z użyciem plików properties
+  
+ 
+* Pojęcia
+  Encja
+  PersistenceUnit
+[source,java]
+----
+@PersistenceUnit(unitName="pu-unit")
+private EntityManagerFactory emf;
+----
+  PersistenceContext
+[source,java]
+----
+@PersistenceContext (unitName = "pu-unit")
+EntityManager entityManager;
+----  
+  JPQL
+  Criteria API
+  MetaData 
+
+
+== Nowości w JPA 2.1
+Querying Stored Procedure
+[source,java]
+----
+  @Test
+    public void testCallStoreProcedure() {       
+        StoredProcedureQuery query = em.createStoredProcedureQuery("my_sum");
+        query.registerStoredProcedureParameter("x",Integer.class,ParameterMode.IN);
+        query.registerStoredProcedureParameter("y",Integer.class,ParameterMode.IN);
+        query.registerStoredProcedureParameter("sum",Integer.class,ParameterMode.OUT);
+        
+        query.setParameter("x", 5);
+        query.setParameter("y", 4);
+        query.execute();
+        Integer sum = (Integer) query.getOutputParameterValue("sum");
+        assertEquals(sum, new Integer(9));
+    }
+----
+
+Attribute Converter 
+[source,java]
+----
+@Converter
+public class PasswordConverter implements AttributeConverter<String, String> {
+    @Override
+    public String convertToDatabaseColumn(String arg0) {
+        if(arg0!=null) {
+            return Base64.getEncoder().encodeToString(arg0.getBytes());
+        } else {
+            return null;
+        }
+    }
+
+    @Override
+    public String convertToEntityAttribute(String arg0) {
+        if(arg0!=null) {
+            return new String(Base64.getDecoder().decode(arg0));
+        } else {
+            return null;
+        }
+    }
+}
+---- 
+[source,java]
+----
+@Entity
+public class Person {
+    @Convert(converter=PasswordConverter.class)
+    String password;
+----
+Constructor Result Mapping
+ @ConstructorResult annotation is a handy addition to the already existing @SqlResultSetMapping and can be used to map the result of a query to a constructor call. 
+[source,java]
+----
+@Entity
+@NamedNativeQuery(name = "findWithTodoResultSetMapper", query = "SELECT id, description FROM TODO where description like ?1", resultSetMapping = "TodoResultSetMapper")
+@SqlResultSetMapping(name = "TodoResultSetMapper", classes = @ConstructorResult(targetClass = org.hall.jpa.model.TodoPOJO.class, columns = {
+		@ColumnResult(name = "id", type = Long.class),
+		@ColumnResult(name = "description") }))
+public class Todo {
+	private Long id;
+	private String summary;
+	private String description;
+
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	
+---- 
+
+Programmatic Named Queries
+addNamedQuery(String name, Query query) 
+
+
+Named Entity Graph
+
+Java 8 Date Time API
+The Hibernate support for Java 8 Date Time API is provided in a separate module called hibernate-java8
+
+
+* Connection pooling
+
+Tworzenie  połączeń do bazy danych  jest kosztowne.
+Hibernate dostarcza gotowe rozwiązanie do poolingu. Jednak rozwiązanie nie jest zalecane w produkcyjnym środowisku.
+Zalecane w środowiskach produkcyjnych jest wykorzystanie zewnętrzych poll poprzez odwołania z JNDI lub konfigurowane zewnętrznie poprzez classpath czy odpowienie pliki properties.
+
+Przykład zewnętrznej puli połączeń c3p0: 
+
+[source,xml]
+----
+<dependencies>
+   <dependency>
+       <groupId>org.hibernate</groupId>
+       <artifactId>hibernate-c3p0</artifactId>
+       <version>[4.2.6,4.2.9)</version>
+    </dependency>
+  <dependency>
+       <groupId>com.mchange</groupId>
+       <artifactId>c3p0</artifactId>
+       <version>[0.9.2.1,)</version>
+  </dependency>
+</dependencies>
+----
+
+Aby użyć powyższą konfigurację c3p0 wszystko co musimy zrobić to dodać wpis do konfiguracji hibernate: 
+[source,xml]
+----
+<property name="c3p0.timeout">10</property>
+----
+W ten sposób Hibernate wyłączy wewnętrzną pulę połączeń i przestawi się na zewnętrzną.
+
+* Inne rozwiązania to : 
+   http://proxool.sourceforge.net/
+   boneCp
+   Apache poll connection
+   hikarii
+   Spring poll connection
+   
+   
+== Cykl życia   
+ * Transient - obiekt istnie w pamięci i jest rozłączony od kontekstu Hibernate. Taki obiekt nie może być zarządzany przez Hibernate
+   Tworzony za pomocą operatora new. Nie skojarzony z sesją.
+   
+   Utrwalenie:  save(), persist(), saveOrUpdate()
+   save() i persist() -> Insert
+   update() i merge() -> Update
+   
+ * Persistence - obiekt istnieje w bazie danych. Obiekt jest zarządzany przez Hibernate czyli jest związany z sesją.
+ 
+   Usunięcie : delete()
+ 
+ * Detached - obiekt ma reprezentacje w bazie danych, ale zmiana wartości obiektu nie ma wpływu na reprezentacje bazodanową i odwrotnie.
+   Był trwały ale został odłączony od sesji.
+   Możliwy do modyfikacji poza kontekstem.
+   Przyłączenie do sesji jest możliwe
+ * Removed - obiekty były zarządzane przez Hibernate, ale w wyniku operacji remove() zostały skasowane z bazy danych.
+
+==Session Factory
+
+- Służy do tworzenia obiektów Session (tworzenie, zarządzanie i pobieranie Session) 
+- Jedna na kontekst (singleton pattern)
+- thread-safe (immutable)
+- ciężka i kosztowna do stworzenia
+- konfigurowalna programowo lub poprzez konfiguracją xml
+
+
+[source,java]
+----
+----
+SessionFactory factory = configuration.buildSessionFactory(serviceRegistry);
+
+[source,xml]
+----
+<hibernate-configuration>
+<session-factory>
+<!-- H2 Configuration -->
+<property name="connection.driver_class">org.h2.Driver</property>
+<property name="connection.url">jdbc:h2:file:./chapter1</property>
+<property name="connection.username">sa</property>
+<property name="connection.password"></property>
+ 
+<property name="hibernate.dialect">org.hibernate.dialect.H2Dialect</property>
+<property name="hibernate.show_sql">true</property>
+<property name="hibernate.hbm2ddl.auto">create</property>
+<mapping resource="Book.hbm.xml"/>
+<mapping resource="Publisher.hbm.xml"/>
+</session-factory>
+</hibernate-configuration>
+----
+ 
+
+ 
+== Session 
+- 'Unit of work'
+-  Obsługuje transakcje
+-  Lekka i szybka do stworzenia
+-  można ją traktować jako fizyczne buforowalne połączenie z bazą danych  
+    
+Otwieranie nowej sesji : 
+[source,java]
+----
+Session session = sessionFactory.openSession();
+----
+
+ 
+== Tworzenie i zamykanie sesji
+
+Otwieranie nowej sesji dla każdej transakcji bazowanowej jest dobrą praktyką (wielowątkowość)
+
+
+
+SessionFactory sessionFactory =
+HibernateUtil.getSessionFactory();
+Session session = sessionFactory.getCurrentSession();
+It may seem easy to get the current session, but the twist here is that you have to provide
+more configuration to the Configuration object if you plan to reuse the Session , as
+shown in the following code:
+<property name="hibernate.current_session_context_class">
+Thread
+</property>
+
+A Hibernate Session object represents a unit of work and is bound to the current thread. It also represents a
+transaction in a database. A session begins when getCurrentSession() is first called on the current thread.
+The Session object is then bound to the current thread. When the trans
+[source,java]
+----
+Session session = factory.openSession();
+try {
+// Using the session to retrieve objects
+}catch(Exception e)
+{
+e.printStackTrace();
+} finally {
+session.close();
+}
+----
+
+== Opening a stateless session
+
+== Tożsamość obiektu : Equals & hashcode
+  - brak (Object) - (oparte na nie odłączanych encjach)
+  - ID tożsamość bazodanowa
+  - klucz biznesowy 
+  - application managed id - (z bazy danych na aplikacje) (moment poczęcia lub urodzenia) 
+
+== Użycie annotacji Hibernate i JPA (podstawy)
+
+@Entity - annotation is defined by the JPA 2.0 specification to annotate an entity bean. An entity
+represents a lightweight persistent domain object or a Plain Old Java Object (POJO).
+ The entities can be accessed
+through the JPA javax.persistence.EntityManager or the Hibernate org.hibernate.Session object.
+ An entity class must have a public or protected no-arg constructor, and it can have other constructors
+as well. It should be a top-level class and must not be final. If the entity is to be passed by value (that is,
+through a remote interface), it must implement a Serializable interface.
+Every entity must have a
+primary key that must be declared only once in the entity hierarchy.
+
+@Id -  primary key
+
+•	 Database sequence
+•	 Native generator
+•	 Increment generator
+•	 Hilo generator
+
+@Column
+
+@Transient
+
+
+@UniqueConstraint(columnNames = { "id" , "empCode"}))
+
+Komponenty zagnieżdzone 
+
+
+composite primary key column – @Id and @IdClass
+
+
+@ElementCollection(fetch=FetchType.LAZY)
+@CollectionTable(name = "email")
+@IndexColumn(name="email_index")
+private List<String> emails;
+
+@CollectionTable : This annotation indicates that the current field is of the
+Collection type, and hibernate creates a separate table for it. It also creates a
+reference between them. In this case, hibernate creates a table named email with
+email and employee_id . The employee_id column is made by joining the persisted
+class name and the primary key column of the employee class with an underscore ( _ ).
+f f @ElementCollection : This annotation is used to define the relationship with the
+embedded or basic type.
+
+ 
+== Identyfikatory
+[source,xml]
+----
+@Id
+public Long id;
+----
+
+== Relacje
+
+@JoinColumn + @JoinTable
+
+* One-To-One 1:1
+[source,xml]
+----
+@Entity
+public class Message {
+@Id
+Long id;
+
+@Column
+String content;
+ 
+@OneToOne
+Email email;
+
+}
+//ommit mutators and accessors 
+}
+----
+* One-To-Many 1:N
+Za pomoca kluczu obcego
+
+Za pomoca kluczu głównego
+
+* Many-To-One N:1
+* Many-To-Many N:M
+
+== Object Equality and Identity
+   
+== Pobieranie encji
+* load()
+
+Na podstawie danego Id metoda load próbuje pobrać obiekt z bazy danych. Jeśli obiekt nie istnieje wyrzucany jest wyjątek org.hibernate.ObjectNotFoundException
+Metoda load() zwraca też proxy, oznacza to tyle, że nie nastąpi uderzenie do bazy danych do czasu kiedy faktycznie będziemy potrzebować danego obiektu.
+Proxy zwraca dummy object zamiast uderzyć do db. Jeśli obiekt jest w first-level cache zwróci obiekt.
+Jeśli obiektu nie ma w first-level-cache uderzy do bazy.
+
+
+
+[source,java]
+----
+public Object load(Class theClass, Serializable id) throws HibernateException
+public Object load(String entityName, Serializable id) throws HibernateException
+public void load(Object object, Serializable id) throws HibernateException
+----
+
+* Lock
+
+* NONE: Uses no row-level locking, and uses a cached object if available; this is the Hibernate default.
+* READ: Prevents other SELECT queries from reading data that is in the middle of a transaction (and thus possibly invalid) until it is committed.
+As usual, there’s more to this than we’re discussing here. We’ll add more methods to this list as we keep going through Hibernate’s
+capabilities. We’re keeping the list small for simplicity’s sake.
+* UPGRADE: Uses the SELECT FOR UPDATE SQL syntax to lock the data until the transaction is finished.
+* UPGRADE_NOWAIT: Uses the NOWAIT keyword (for Oracle), which returns an error immediately if there is another thread using that row; otherwise this is similar to UPGRADE.
+* FORCE: Similar to UPGRADE but increments the version for objects with automatic versioning when loaded.
+
+[source,java]
+----
+public Object load(Class theClass, Serializable id, LockMode lockMode) throws HibernateException 
+public Object load(String entityName, Serializable id, LockMode lockMode) throws HibernateException
+----
+ 
+ 
+ You should not use a load() method unless you are sure that the object exists. If you are not certain, then use
+one of the get() methods. The load() methods will throw an exception if the unique ID is not found in the database,
+whereas the get() methods will merely return a null reference.
+ 
+
+* get()   
+
+Na podstawie danego Id metoda get() próbuje pobrać obiekt z bazy danych. Jeśli obiekt nie istnieje zwraca null.
+Metoda get() w przeciwieństwie do metody load() uderza do bazy bezpośrednio.
+ 
+[source,java]
+----
+public Object get(Class clazz, Serializable id) throws HibernateException
+public Object get(String entityName, Serializable id) throws HibernateException
+public Object get(Class clazz, Serializable id, LockMode lockMode) throws HibernateException
+public Object get(String entityName, Serializable id, LockMode lockMode) throws HibernateException
+----
+
+
+przykład : 
+[source,java]
+----
+Book book = (Book) session.load(Book.class, isbn);
+
+Book book = (Book) session.get(Book.class, isbn);
+----
+
+== Zapytania
+[source,java]
+----
+Query query = session.createQuery("from Book");
+List books = query.list();
+
+Query query = session.createQuery("from Book where isbn = ?");
+query.setString(0, isbn);
+Book book = (Book) query.uniqueResult();
+----
+
+== Usuwanie obiektów z bazy
+DELETE FROM employee WHERE id=1;
+[source,java]
+----
+Book book = (Book) session.get(Book.class,new Long(1));
+session.delete(book);
+----
+Metoda ta wyrzuci wyjątek jeśli obiekt o podanym identyfikatorze nie istnieje w bazie (java.lang.IllegalArgumentException)
+
+
+If the record does not exist in the database, you will face the Exception in thread
+"main" java.lang.IllegalArgumentException: attempt to create delete
+event with null entity exception because get() returns the null object while you try
+to delete that object.
+However, if you use the following code to delete the record, you will face another type of error:
+Employee employee = new Employee();
+employee.setId(1);
+session.delete(employee);
+When the preceding code is executed, you will face the Exception in thread "main"
+org.hibernate.StaleStateException: Batch update returned unexpected
+row count from update [0]; actual row count: 0; expected: 1 " exception.
+This is because we are trying to delete Employee#1 from the database (which does not
+exist), and the employee object is also not null; so, it throws an error.
+
+== Aktualizacja 
+UPDATE book SET title='jpa book' WHERE id=2;
+
+In the preceding section, we used the update() method for updating a particular
+record. Apart from this method, hibernate will provide one more useful method called
+saveOrUpdate() .
+This particular method is used to save or update records. Hibernate updates the records for a
+given object if the identifier field is given. If an identifier is not given, then hibernate will insert
+a new record.
+
+
+
+== Merge
+
+Merge jest odwrotną operacją do operacji refresh()
+Nadpisuje encje w bazie danych wartościami encji odłączonych.
+
+== Odświeżanie encji (Refreshing Entities)
+
+Metoda reload odświeża wartości dla encji wartościami z bazy danych. (odwrotność do merge)
+
+[source,java]
+----
+public void refresh(Object object)  throws HibernateException
+ 
+public void refresh(Object object, LockMode lockMode)  throws HibernateException
+----
+
+* Hibernate
+[source,java]
+----
+Object merge(Object object)
+ 
+Object merge(String entityName, Object object)
+----
+
+* JPA
+
+== Użycie EntityManager'a [JPA]
+
+* Zależności 
+[source,xml]
+----
+<dependency>
+  <groupId>org.hibernate</groupId>
+  <artifactId>hibernate-entitymanager</artifactId>
+  <version>4.3.5.Final</version>
+</dependency>
+----
+
+EntityManagerFactory(JPA) = SessionFactory(Hibernate)
+Może być programowalny manualnie lub przy pomocy pliku persistence.xml, który to musi znajdować się w classpath projektu.
+
+Plik persistence.xml jest unikalny dla danego kontekstu persistence unit.
+
+Przykładowy plik persistence.xml
+[source,xml]
+----
+<persistence xmlns="http://java.sun.com/xml/ns/persistence"
+xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+xsi:schemaLocation="http://java.sun.com/xml/ns/persistence http://java.sun.com/xml/ns/persistence/persistence_2_0.xsd" version="2.0">
+<persistence-unit name="myPu" transaction-type="RESOURCE_LOCAL">
+<mapping-file>Author.hbm.xml</mapping-file>
+<mapping-file>Book.hbm.xml</mapping-file>
+ 
+<class>domain.Author</class>
+<class>domain.Book</class>
+ 
+<properties>
+<property name="javax.persistence.jdbc.driver" value="org.h2.Driver"/>
+<property name="javax.persistence.jdbc.user" value="sa"/>
+<property name="javax.persistence.jdbc.password" value=""/>
+<property name="javax.persistence.jdbc.url" value="jdbc:h2:file:~/testjpa"/>
+<property name="hibernate.dialect" value="org.hibernate.dialect.HSQLDialect"/>
+<property name="hibernate.hbm2ddl.auto" value="create"/>
+<property name="hibernate.show_sql" value="true"/>
+</properties>
+</persistence-unit>
+</persistence>
+----   
+
+RESOURCE_LOCAL transaction - sama aplikacja zarządza transakcjami .
+
+JTA transaction - transakcjami zarządza kontener na serwerze aplikacyjnym
+
+Zestawienie EntityManagera
+[source,java]
+----
+public static EntityManager getEntityManager() {
+ EntityManagerFactory managerFactory = Persistence.createEntityManagerFactory("myPu");
+ EntityManager manager = managerFactory.createEntityManager(); 
+return manager;
+}
+----
+
+== Dziedziczenie
+* Tabela na klasę konkretną
+* Tabela na każdą hierarchię klas
+* Tabela na każdą podklasę
+
+== Trwałość przez osiągalność
+
+Ma miejsce wtedy, gdy z obiektu trwałego jest referencja do
+innego obiektu
+wtedy ten inny obiekt realizuje trwałość przez osiągalność
+Jest rekurencyjna
+Zapewnia integralność więzów referencyjnych
+graf obiektów można odtworzyć wczytując jego korzeń
+Teoretycznie istnieje obiekt korzenia, z którego da przejść do
+dowolnego innego obiektu trwałego
+w szczególności nieosiągalne obiekty powinny być z bazy
+usunięte (niewydajne)
+Hibernate nie implementuje tego modelu
+
+
+== Trwałość kaskadowa
+Trwałość przechodnia w Hibernate
+Trwałość kaskadowa
+Model realizowany w Hibernate
+Koncepcja podobna do trwałości przez osiągalność
+Powiązania są odtwarzane na podstawie asocjacji
+domyślnie, hibernate nie dokonuje analizy asocjacji
+Kaskady zwykle używa się do relacji jeden-do-jednego i
+jeden-do-wielu
+używanie kaskady w przypadkach wiele-do-jednego i
+wiele-do-wielu jest raczej bez sensu
+Wartości kaskady można łączyć, np.
+cascade="save-update, delete
+
+== Criteria
+
+
+
+== Logowanie zdarzeń
+[source,xml]
+----
+<property name="show_sql">true</property>
+----
+
+* Włączenie  Live Statistics
+[source,xml]
+----
+<property name="hibernate.generate_statistics">true</property>
+----
+
+== Kaskadowość
+
+== Cache level One
+Activated by default
+
+Linked to the Hibernate session
+
+Stores all entities that were used within a session
+
+== Cache level two
+
+Session independent entity store
+Needs to be activated
+persistence.xml or EntityManagerFactory
+Transparent usage
+PersistenceProvider doesn‘t need to provide it Not always portable
+
+
+Cache configuration
+
+Cache Retrieve Mode
+How to read entities from the cache
+
+Cache Store Mode
+How to write entities to the cache
+
+Concurrency Strategy
+How to handle concurrent access
+
+
+Stores query results for a query and its parameters
+
+[„FROM Author WHERE id=?“, 1]     [1]
+
+Stores only entity references or scalars
+
+Always use together with 2nd Level Cache
+
+
+Hibernate specific
+
+Stores query result session independent
+
+Needs to be activated
+persistence.xml: hibernate.cache.use_query_cache = true
+
+Activate caching for a specific query
+org.hibernate.Query.setCacheable(true)
+@NamedQuery(… hints = @QueryHint(name="org.hibernate.cacheable", value="true"))
+
+
+== FetchType
+* Lazy
+* Eager
+* Fetch all required entities with one query
+ - Fetch Join
+[source,java]
+----
+List<Author> authors = this.em.createQuery(
+		"SELECT DISTINCT a FROM Author a JOIN FETCH a.books b", 
+		Author.class).getResultList();
+----
+
++ Relationships gets loaded in same query
+- Requires a special query for each use case
+- Creates cartesian product
+
+		 
+ - @NamedEntityGraph
+ Declaratively defines a graph of entities which will be loaded
+[source,java]
+----
+@NamedEntityGraph(
+	name = "graph.AuthorBooksReviews", 
+
+	attributeNodes = 
+@NamedAttributeNode(value = "books")
+)
+----
+
+
+
+Graph is query independent
+
+ 
+ - EntityGraph
+
+== Zapytania natywne  
+
+SqlResultSetMapping
+
+@SqlResultSetMapping(
+	name		= "myResultMapping ",
+	entities		= {@EntityResult(...), …},
+	classes	= {@ConstructorResult (…), …},
+	columns	= {@ColumnResult(…), …}
+)
+
+this.em.createNativeQuery(“Select …", "myResultMapping")
+
+
+== Orphal Removal
+
+== Walidacja
+
+== Problemy wydajnościowe
+
+* N+1
+* Paginacja
+* 
+
+
+
+== Rozwiązywanie problemów
+A common mistake when designing entity models is to try to make all associations bidirectional
+
+* kłopoty z pamięcią
+
+* Problemy z wydajnością mechnika : 
+ - sprawdź wygenerowane SQL
+ - sprawdź execution plan 
+ - sprawdź poprawność indeksów bazodanowych
+ - próba optymalizacji zapytania
+ - próba rozważenia zapytania natywnego
+     - jpql wspiera tylko niektóre podzbiory features z bazy danych 
+     - SQL dla danej bazy może być wysoce wyspecjalizowany
+
+@Basic(lazy)      
+Lazy attribute fetching: an attribute or single valued association is fetched when the instance variable is accessed.
+ This approach requires buildtime bytecode instrumentation and is rarely necessary.
+Emmanuel Bernard wrote  @Lob are lazy by default
+@Lob
+@Fetch(FetchMode.SELECT)
+@Type(type="org.hibernate.type.PrimitiveByteArrayBlobType")
+byte[] myBlob;
+
+
+== Dobre praktyki
+
+ - zachowanie właściwych poziomów abstrakcji podczas modelowania relacji
+ - unikanie jawnych opercji save() - wzorzec 'unit of work'
+ - load vs get
+  Lepiej na początku jest sprawdzić czy obiekt jest null czy nie jeśli chcemy użyć metody get(). (NullPointerException problem)
+
+ -unikaj relacji dwukierunkowych
+ - tight coupling
+ - cykliczność
+ - utrzymanie spójności (musimy pamiętać aby obsłużyć dwie strony relacji)
+ - paginacja
+ - DDD agregacja
+ - unikaj merge 
+ - unikaj obiektów odłączonych
+
+== O mnie
+* programista
+* blog link:http://przewidywalna-java.blogspot.com[]
+* image:{image-link} [role='img-circle']
+
+
+http://undermineddeveloper.com/2013/09/11/hibernating/
+

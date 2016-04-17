@@ -12,11 +12,10 @@ import org.springframework.context.annotation.PropertySource;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 
 @Configuration
-
 @ComponentScan(basePackages = { "pl.java.scalatech.repository" })
 @EnableJpaRepositories(basePackages = "pl.java.scalatech.repository")
 @EntityScan(basePackages = "pl.java.scalatech.domain")
-@PropertySource(value = "classpath:application-test.properties")
+@PropertySource(value = "classpath:application-test-fast.properties")
 @Import({ DataSourceAutoConfiguration.class, HibernateJpaAutoConfiguration.class, PersistenceExceptionTranslationAutoConfiguration.class,
         PropertyPlaceholderAutoConfiguration.class })
 public class TestJpaConfig {
