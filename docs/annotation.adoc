@@ -667,6 +667,10 @@ Komponenty zagnieżdzone
 composite primary key column – @Id and @IdClass
 
 
+**@ElementCollection**  - dla typów prostych lub klas osadzonych
+
+
+
 @ElementCollection(fetch=FetchType.LAZY)
 @CollectionTable(name = "email")
 @IndexColumn(name="email_index")

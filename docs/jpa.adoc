@@ -25,6 +25,27 @@ ifndef::sourcedir[:sourcedir: ./src/main/java/]
 </dependency>
 ----
 
+== EntityManager
+ Pozwala wykonywać operacje CRUD na encjach.
+ Pozwala też na wykonanie zapytań.
+ 
+* uzyskanie EntityManager'a
+[source,java]
+----
+@PersistenceContext
+EntityManager em;
+---- 
+* uzyskanie EntityManager'a wersja druga
+[source,java]
+----
+@PersistenceUnit
+EntityManagerFactory emf;
+EntityManager em = emf.createEntityManager();
+
+----
+
+  
+
 * Persistence Context
 [source,xml]
 ----

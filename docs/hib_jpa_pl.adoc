@@ -200,6 +200,16 @@ private EntityManagerFactory emf;
 EntityManager entityManager;
 
 ----
+
+== Terminy związane z Hibernate
+- przezroczyste utrwalanie danych
+- mapowania obiektów na tabele
+- sprawdzanie zabrudzeń (dirty-checking) 
+- przechodność utrwalania (transitive persistence)
+- przechodność utrwalania (lazy loading/fetching)
+- generowanie schematu danych 
+- symulacja dziedziczenia modelu relacyjnego
+ 
   
 == Nowości w JPA 2.1
 Querying Stored Procedure
@@ -456,6 +466,39 @@ session.close();
 
 
 == Object Equality and Identity
+
+== Klucz główny
+ klasa klucza głównego spełnia wymagania :
+* public class
+* klasa musi posiadać domyślny publiczny konstruktor
+* musi implementować metody equals i hasCode
+* musi być serializowalna
+* klucz złożony musi być reprezentowany i mapowany do wielu pól właściwości klasy encji. Musi być też reprezentowany i mapowany jako klasa osadzona.     
+   
+== Relacje jedno i dwukierunkowe
+
+* dwukierunkowa :
+** obie encje posiadają wzajemnie do siebie relacje 
+** strona przynależna związku dwukierunkowego musi odnosić się do swojego właściciela za poprzez użycie elementu **mappedBy** , należącego do adnotacji @OneToMany, @ManyToOne , lub @ManyToMany
+** strona wielokrotna dwukierunkowego związku wiele do jednego nie może definiować **mappedBy** - jest zawsze 'posiadającą stroną relacji'
+** w relacji jeden do jeden strona posiadająca pokazuje stronie przynależnej odpowiedni klucz obcy.
+** w relacji wiele do wielu każda ze stron może być posiadająca.
+
+
+* jednokierunkowe
+ Tylko jedna strona posiada relację do innej encji   
+   
+== Kaskadowość 
+* ALL (agreguje wszystkie poniższe)
+* DETACH (jeśli encja macieżysta została odłączona od kontekstu wtedy również encja związna jest także odłączana)
+* MERGE (jeśli encja macieżysta została przyłączona do kontekstu również encje powiązane zostaną przyłączone)
+* PERSIST (jeśli encja macieżysta została utrwalona to samo stanie się z encjami przynależnymi)
+* REFRESH (jeśli encja macieżysta została odświeżona w kontekście trwałości również encje powiązane zostaną odświeżone)
+* REMOVE  (jeśli encja macieżysta została usunięta z kontekstu trwałości to również encje powiazane zostaną usunięte)
+
+== Usuwanie sierot - orphanRemoval
+ 
+
    
 == Pobieranie encji
 * load()
@@ -796,7 +839,8 @@ byte[] myBlob;
  - unikaj merge 
  - unikaj obiektów odłączonych
  - pobieranie zbyt dużych ilości danych powoduje marnowanie pamięci w warstwie aplikacji
- - 
+ - identyczność obiektów a ich tożsamość w bazie
+  
 
 == O mnie
 * programista
