@@ -15,6 +15,20 @@ ifndef::sourcedir[:sourcedir: ./src/main/java/]
 
 == Topic
 
+Możliwe formy zapytań : 
+*  zapytania HQL
+**  Odpowiednik SQL, zamiast tabel i pól operuje na obiektach i jego właściwościach.
+[source,java]
+----
+
+Query query = session.createQuery(sql);
+
+----
+
+– Criteria API
+– native SQL
+
+
 == Hibernate Criteria
 
 [source,java]

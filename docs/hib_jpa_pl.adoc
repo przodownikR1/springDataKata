@@ -348,6 +348,9 @@ W ten sposób Hibernate wyłączy wewnętrzną pulę połączeń i przestawi si�
    
    
 == Cykl życia   
+
+[pictures]
+
 * Transient - obiekt istnie w pamięci i jest rozłączony od kontekstu Hibernate. Taki obiekt nie może być zarządzany przez Hibernate
   ** Tworzony za pomocą operatora new. Nie skojarzony z sesją.
    
@@ -374,12 +377,18 @@ W ten sposób Hibernate wyłączy wewnętrzną pulę połączeń i przestawi si�
 - thread-safe (immutable)
 - ciężka i kosztowna do stworzenia
 - konfigurowalna programowo lub poprzez konfiguracją xml
+- współdzielony przez wiele wątków udostępniający egzemplarze Session
 
 
 [source,java]
 ----
-----
+
 SessionFactory factory = configuration.buildSessionFactory(serviceRegistry);
+//
+SessionFactory factory = new AnnotationConfiguration().configure().buildSessionFactory();
+
+----
+
 
 [source,xml]
 ----
@@ -403,12 +412,13 @@ SessionFactory factory = configuration.buildSessionFactory(serviceRegistry);
 
  
 == Session 
-- [ ] 'Unit of work'
-- [ ]  Obsługuje transakcje
-- [ ]  Lekka i szybka do stworzenia
-- [ ] można ją traktować jako fizyczne buforowalne połączenie z bazą danych
-- [ ]  jedno wątkowy
-- [ ] krótki okres życia  
+-  'Unit of work'
+-   Obsługuje transakcje
+-   Lekka i szybka do stworzenia
+-   można ją traktować jako fizyczne buforowalne połączenie z bazą danych
+-   jedno wątkowy
+-   krótki okres życia
+-   zapewnia dostęp do podstawowych operacji CRUD  
  
     
 Otwieranie nowej sesji : 
@@ -416,6 +426,25 @@ Otwieranie nowej sesji :
 ----
 Session session = sessionFactory.openSession();
 ----
+
+== Transaction 
+-   abstrakcyjna warstwa obsługi transakcji bez względu na jej implementację (JDBC, JTA)
+
+[source,java]
+----
+
+Company company = new Company(1, "Scalatech");
+Transaction tx = session.beginTransaction();
+session.save(company);
+tx.commit();
+session.flush();
+session.close();
+
+----
+
+
+== Query, Criteria
+- umożliwia dostęp do danych w bazie za pomocą wyspecjalizowanych zapytań czy API
 
  
 == Tworzenie i zamykanie sesji
@@ -497,7 +526,7 @@ session.close();
 * REMOVE  (jeśli encja macieżysta została usunięta z kontekstu trwałości to również encje powiazane zostaną usunięte)
 
 == Usuwanie sierot - orphanRemoval
- 
+
 
    
 == Pobieranie encji
@@ -564,7 +593,13 @@ Book book = (Book) session.get(Book.class, isbn);
 == Zapytania
 include::retrieve.adoc
 
-== Usuwanie obiektów z bazy
+== Usuwanie obiektów z bazy 
+
+Poprzez wywołanie metody remove lub kaskadowej operacji remove
+Jeśli metoda remove jest wywołana na encji odłączonej zostanie wygenerowany wyjątek IllegalArgumentException lub zatwierdzenie transakcji się nie powiedzie.
+Dane fizycznie zostaną usunięte w momencie zakończenia transakcji lub wykonania metody flush()
+
+
 DELETE FROM employee WHERE id=1;
 [source,java]
 ----
@@ -605,6 +640,20 @@ a new record.
 Merge jest odwrotną operacją do operacji refresh()
 Nadpisuje encje w bazie danych wartościami encji odłączonych.
 
+[source,java]
+----
+
+Session session = factory.openSession();
+tx = session.beginTransaction();
+Company company = (Company)session.get(Company.class, 1);
+company.setName("Scalatech S.p z.o.o");
+tx.commit();
+session.flush();
+session.close();
+
+----
+
+
 == Odświeżanie encji (Refreshing Entities)
 
 Metoda reload odświeża wartości dla encji wartościami z bazy danych. (odwrotność do merge)
@@ -626,6 +675,26 @@ Object merge(String entityName, Object object)
 [square]
 * JPA
 include::jpa.adoc
+
+
+== Autoreferencja
+* relacja jaka zachodzi pomiędzy polami relacji tej samej encji
+
+[source,java]
+----
+@Entity
+class Category{
+
+@ManyToOne
+private Category parent;
+
+@OneToMany(mappedBy="parent")
+private List<Category> child;
+
+}
+
+----
+
 
 == Dziedziczenie
 include::inheritence.adoc[]

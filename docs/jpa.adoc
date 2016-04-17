@@ -32,16 +32,63 @@ ifndef::sourcedir[:sourcedir: ./src/main/java/]
 * uzyskanie EntityManager'a
 [source,java]
 ----
+
 @PersistenceContext
 EntityManager em;
 ---- 
 * uzyskanie EntityManager'a wersja druga
 [source,java]
 ----
+
 @PersistenceUnit
 EntityManagerFactory emf;
 EntityManager em = emf.createEntityManager();
 
+----
+
+[warning]
+Menadżery encji zarządzane przez aplikację nie propagują automatycznie kontekstu transakcji JTA.
+Musimy to robić manualnie
+[source,java]
+----
+
+        EntityManagerFactory entityManagerFactory = Persistence.createEntityManagerFactory("pu");
+        EntityManager em = entityManagerFactory.createEntityManager();
+        EntityTransaction userTransaction = em.getTransaction();
+        userTransaction.begin();
+        
+        User user = new User("przodownik", "slawek");
+        em.persist(user);        
+        userTransaction.commit();
+        em.close();
+        entityManagerFactory.close();
+        
+----
+
+[source,java]
+----
+
+    @PersistenceUnit(unitName = "pu")
+    private EntityManagerFactory entityManagerFactory;
+    @Resource
+    private UserTransaction userTransaction;
+    private Book book;
+    
+    public String saveBook() {
+        String returnValue = "BookAdded";
+        try {
+            userTransaction.begin();
+            EntityManager em = entityManagerFactory.createEntityManager();            
+            em.persist(book);
+            userTransaction.commit();
+            em.close();
+            returnValue = "BookAddedConfirmation";
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return returnValue;
+    }
+        
 ----
 
   

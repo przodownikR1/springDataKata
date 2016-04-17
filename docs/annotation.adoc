@@ -15,6 +15,31 @@ ifndef::sourcedir[:sourcedir: ./src/main/java/]
 
 == Topic
 
+@Entity 
+Klasy, które mają brać udział w procesie utrwalania
+
+@Id 
+Każda klasa encyjna musi posiadać unikalny identyfikator.
+
+@Table(name="PERSONS")
+Domyślnie nazwa tabeli jest taka sama jak nazwa klasy. Jeśli domyślne ustawienie jest nie wystarczające z różnych powodów możemy użyć @Table 
+
+
+@Column(name="USER_NAME")
+Analogiczne zachowanie do adnotacji @Table
+
+
+@Transient
+Pole nie podlega procesowi utrwalania
+
+@Basic
+Określa czy pole ma być opcjonalne (przydatne podczas generowania schematu przez Hibernate).
+Określa również sposób pobierania danych, czy pole ma być wypełniane od razu przy odczycie obiektu czy dopiero przy pierwszym odwołaniu.
+
+
+@Embeddable i @Embedded
+Umożliwia osadzanie nieencyjnych obiektów Java w objektach encyjnych
+
 @Enumerated
 [source,java]
 ----
