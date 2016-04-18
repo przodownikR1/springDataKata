@@ -162,5 +162,12 @@ hibernate {
 ----
 
 
+== Inne
+    using too many SQL queries to fetch the required entities from the database, aka the so called n+1 query problem
+    updating entities one by one instead of doing it in using a single statement
+    doing data heavy processing on the Java side, rather than the database side
+
+
+
 
 
