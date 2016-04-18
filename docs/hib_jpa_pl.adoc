@@ -3,7 +3,7 @@
 :numbered:
 :icons: font
 :pagenums:
-:imagesdir: ./img
+:imagesdir: img
 :iconsdir: ./icons
 :stylesdir: ./styles
 :scriptsdir: ./js
@@ -11,14 +11,27 @@
 :image-link: https://pbs.twimg.com/profile_images/425289501980639233/tUWf7KiC.jpeg
 ifndef::sourcedir[:sourcedir: ./src/main/java/]
 ifndef::resourcedir[:resourcedir: ./src/main/resources/]
-
+ifndef::imgsdir[:imgsdir: ./../img]
 :source-highlighter: coderay
+
+INFO
+== info adoc
+
+.Built-in
+asciidoctor-version:: {asciidoctor-version}
+safe-mode-name:: {safe-mode-name}
+docdir:: {docdir}
+docfile:: {docfile}
+imagesdir:: {imagesdir}
+
+.Custom
+sourcedir:: {sourcedir}
 
 
 
 == Topic
 
-image::hibernate.png
+image::data_access_layers.svg[]
 
 **Zalety**
 
@@ -80,6 +93,10 @@ Standardowe podejście oparte na JDBC wymaga od programisty następujących czyn
 * w pewnych przypadkach powoduje spadek wydajności z stosunku do zwykłych zapytania JDBC
 * wraz ze wzrostem złożoności modelu domenowego występują trudności z mapowaniem, wydajnością. Skutkuje to często wprowadzaniem 'haków' 
  
+== Architektura
+
+image::data_access_layers.svg[]
+
 
 == Moduły
 [square]
@@ -113,6 +130,32 @@ Standardowe podejście oparte na JDBC wymaga od programisty następujących czyn
 **DataSourcePool**
  
 - hibernate-c3p0  Integrates the C3P0 connection pooling library into Hibernate 
+
+[source,java]
+----
+<property name="hibernate.c3p0.min_size">5</property>
+<property name="hibernate.c3p0.max_size">10</property>
+<property name="hibernate.c3p0.timeout">300</property>
+<property name="hibernate.c3p0.max_statements">50</property>
+<property name="hibernate.c3p0.acquire_increment">1</property>
+<property name="hibernate.c3p0.idle_test_period">3000</property>
+ 
+Here’s an explanation for each of the parameters you set:
+•	 min_size is the minimum number of connections that are ready at all times.
+•	 max_size is the maximum number of connections in the pool. This is the only
+property that is required for c3p0 to be enabled.
+•	 timeout is the maximum idle time for a connection, after which the connection is
+removed from the pool.
+•	 max_statements is the maximum number of prepared statements that can be
+cached.
+•	 idle_test_period is the time in seconds before which a connection is automatically
+validated.
+•	 acquire_increment is the number of connections acquired when the pool is
+exhausted.
+----
+
+
+
 - hibernate-hikaricp  Integrates the HikariCP connection pooling library into Hibernate
 - hibernate-proxool   Integrates the Proxool connection pooling library into Hibernate
  
@@ -349,7 +392,7 @@ W ten sposób Hibernate wyłączy wewnętrzną pulę połączeń i przestawi si�
    
 == Cykl życia   
 
-[pictures]
+image::lifecycle.jpg[]
 
 * Transient - obiekt istnie w pamięci i jest rozłączony od kontekstu Hibernate. Taki obiekt nie może być zarządzany przez Hibernate
   ** Tworzony za pomocą operatora new. Nie skojarzony z sesją.
@@ -891,6 +934,12 @@ Emmanuel Bernard wrote  @Lob are lazy by default
 @Type(type="org.hibernate.type.PrimitiveByteArrayBlobType")
 byte[] myBlob;
 
+
+* OutOfMemoryException
+- czyszczenie cache
+- flush dla kontekstu
+- dla przetwarzania wsadowego : hibernate.jdbc.batch.size = 50
+- wyłączenie cache drugiego poziomu hibernate.cache.use_second_level_cache = false
 
 == Dobre praktyki
 

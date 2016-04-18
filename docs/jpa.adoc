@@ -25,9 +25,31 @@ ifndef::sourcedir[:sourcedir: ./src/main/java/]
 </dependency>
 ----
 
+== persistence.xml 
+Powinnien znajdować się w classpath w katalogu META-INF
+
+
+
+== Persistence Unit
+Jednostka trwałości - sposób na komunikowanie się z bazą
+Jest skonfigurowany w pliku persistence.xml
+
+
+== EntityManagerFactory
+Każdemu EntityManagerFactory odpowiada jedna jednostka trwałości (Persistence Unit)
+
+
+
 == EntityManager
+
+image::entityManager.jpg[]
+
  Pozwala wykonywać operacje CRUD na encjach.
  Pozwala też na wykonanie zapytań.
+ Odpowiada mu jeden kontekst trwałości - czyli zbiór obiektów zarządzanych przez EntityManagera w danej chwili
+ Unikaly obiekt w ramach kontekstu trwałości to taki który posiada unikalny identyfikator
+ 
+ 
  
 * uzyskanie EntityManager'a
 [source,java]
@@ -172,4 +194,21 @@ public static EntityManager getEntityManager() {
  EntityManager manager = managerFactory.createEntityManager(); 
 return manager;
 }
+
 ----
+
+== Accessing Hibernate APIs from JPA
+
+[source,java]
+----
+
+
+Session session = entityManager.unwrap( Session.class );
+SessionImplementor sessionImplementor = entityManager.unwrap( SessionImplementor.class );
+
+SessionFactory sessionFactory = entityManager.getEntityManagerFactory().unwrap( SessionFactory.class );
+
+
+----
+
+

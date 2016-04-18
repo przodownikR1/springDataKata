@@ -28,6 +28,9 @@ Domyślnie nazwa tabeli jest taka sama jak nazwa klasy. Jeśli domyślne ustawie
 @Column(name="USER_NAME")
 Analogiczne zachowanie do adnotacji @Table
 
+insertable and updatable = Both these attributes accept a Boolean value. This denotes whether the column takes part in
+the insert and update operations or not.
+
 
 @Transient
 Pole nie podlega procesowi utrwalania
@@ -418,6 +421,9 @@ public class Simple {
 ----
 
 == @Table
+
+
+
 [source,java]
 ----
 @Entity
@@ -425,6 +431,14 @@ public class Simple {
 public class Simple {
     ...
 }
+
+@Entity
+@Table(name = "my_emploee", uniqueConstraints = @UniqueConstraint(columnNames = { "id" , "snn"}))
+class Employee{
+
+}
+
+
 ----
 
 == @AttributeOverride
@@ -748,6 +762,85 @@ Za pomoca kluczu głównego
 * Many-To-Many N:M
 
 
+== Callbacks
+
+=== @PrePersist
+	
+Executed before the entity manager persist operation is actually executed or cascaded. This call is synchronous with the persist operation.
+
+=== @PreRemove
+	
+
+Executed before the entity manager remove operation is actually executed or cascaded. This call is synchronous with the remove operation.
+
+=== @PostPersist
+	
+
+Executed after the entity manager persist operation is actually executed or cascaded. This call is invoked after the database INSERT is executed.
+
+===  @PostRemove
+	
+
+Executed after the entity manager remove operation is actually executed or cascaded. This call is synchronous with the remove operation.
+
+=== @PreUpdate
+	
+
+Executed before the database UPDATE operation.
+
+=== @PostUpdate
+	
+
+Executed after the database UPDATE operation.
+
+=== @PostLoad
+	
+
+Executed after an entity has been loaded into the current persistence context or an entity has been refreshed.
+
+
+== EventListener
+
+[source,java]
+----
+@Entity
+@EntityListeners( LastUpdateListener.class )
+public static class Person {
+
+    @Id
+    private Long id;
+
+    private String name;
+
+    private Date dateOfBirth;
+
+    @Transient
+    private long age;
+
+    private Date lastUpdate;
+
+    @PostLoad
+    public void calculateAge() {
+        age = ChronoUnit.YEARS.between( LocalDateTime.ofInstant(
+                Instant.ofEpochMilli( dateOfBirth.getTime()), ZoneOffset.UTC),
+            LocalDateTime.now()
+        );
+    }
+}
+
+public static class LastUpdateListener {
+
+    @PreUpdate
+    @PrePersist
+    public void setLastUpdate( Person p ) {
+        p.setLastUpdate( new Date() );
+    }
+}
+----
+
+== TODO
+
+=== MAPKEY
 
 
 == O mnie

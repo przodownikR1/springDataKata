@@ -14,6 +14,52 @@ ifndef::sourcedir[:sourcedir: ./src/main/java/]
 
 == Topic
 
+* MappedSuperclass
+
+image::inheritance_class_diagram_mappedSuperClass.svg[]
+
+[source,java]
+----
+
+@MappedSuperclass
+public static class Account {
+
+    @Id
+    private Long id;
+
+    private String owner;
+
+    private BigDecimal balance;
+
+    private BigDecimal interestRate;
+    
+----
+
+[source,sql]
+----
+
+CREATE TABLE DebitAccount (
+    id BIGINT NOT NULL ,
+    balance NUMERIC(19, 2) ,
+    interestRate NUMERIC(19, 2) ,
+    owner VARCHAR(255) ,
+    overdraftFee NUMERIC(19, 2) ,
+    PRIMARY KEY ( id )
+)
+
+CREATE TABLE CreditAccount (
+    id BIGINT NOT NULL ,
+    balance NUMERIC(19, 2) ,
+    interestRate NUMERIC(19, 2) ,
+    owner VARCHAR(255) ,
+    creditLimit NUMERIC(19, 2) ,
+    PRIMARY KEY ( id )
+)
+
+----
+
+
+
 * Tabela na klasę konkretną
 * Tabela na każdą hierarchię klas
 * Tabela na każdą podklasę
@@ -43,14 +89,97 @@ discriminator column for the SINGLE_TABLE and JOINED mapping strategies.
 *@DiscriminatorValue(value="E")* - This annotation defines the value of the discriminator column for this particular class. If the value is not provided, hibernate
 uses a class name in DiscriminatorType.STRING , and the provided specific functions will be used otherwise.
 
+ ** String, char, int, byte, short, boolean(including yes_no, true_false).
+
+WARNING: Each subclass in a hierarchy must define a unique discriminator value, which is used to differentiate between rows belonging to separate subclass types. If this is not specified, the DTYPE column is used as a discriminator, storing the associated subclass name.
+
+*** Discriminator formula
+- The @DiscriminatorFormula defines a custom SQL clause that can be used to identify a certain subclass type. 
+
+[source,java]
+----
+
+@Entity(name = "Account")
+@Inheritance(strategy = InheritanceType.SINGLE_TABLE)
+@DiscriminatorFormula(
+    "case when debitKey is not null " +
+    "then 'Debit' " +
+    "else ( " +
+    "   case when creditKey is not null " +
+    "   then 'Credit' " +
+    "   else 'Unknown' " +
+    "   end ) " +
+    "end "
+)
+public static class Account {
+
+    @Id
+    private Long id;
+    private String owner;
+    private BigDecimal balance;
+    private BigDecimal interestRate;
+    
+@Entity(name = "DebitAccount")
+@DiscriminatorValue(value = "Debit")
+public static class DebitAccount extends Account {
+
+    private String debitKey;
+    private BigDecimal overdraftFee;
+            
+}
+
+@Entity(name = "CreditAccount")
+@DiscriminatorValue(value = "Credit")
+public static class CreditAccount extends Account {
+
+    private String creditKey;
+    private BigDecimal creditLimit;
+ }   
+ 
+----
+
+[source,sql]
+----
+
+
+CREATE TABLE Account (
+    id int8 NOT NULL ,
+    balance NUMERIC(19, 2) ,
+    interestRate NUMERIC(19, 2) ,
+    owner VARCHAR(255) ,
+    debitKey VARCHAR(255) ,
+    overdraftFee NUMERIC(19, 2) ,
+    creditKey VARCHAR(255) ,
+    creditLimit NUMERIC(19, 2) ,
+    PRIMARY KEY ( id )
+)
+
+
+----
+
+
+
+
+
 
 
 Table per class hierarchy stores all the rows in a single table and the discriminator column
 is used to uniquely identify the records. Sometimes, the tables become very large if the
 hierarchy is deep.
 
+Table per class hierarchy: The class hierarchy is represented in one table.
+A discriminator column identifies the type and the subclass.
+
+
 == Table per subclass 
  table-per-subclass strategy, hibernate creates separate tables for each class
+ 
+ Table per subclass: The superclass has a table, and each subclass has a table that
+contains only uninherited properties; the subclass tables have a primary key that is a
+foreign key of the superclass.
+
+
+ 
 [source,java]
 ----
 @Entity
@@ -71,8 +200,18 @@ subclasses, we used @PrimaryKeyJoinColumn(name="emp_id") . Hibernate will create
 a foreign key column in all the subtables with the value of the name attribute of the @
 PrimaryKeyJoinColumn annotation.
 
+=== @PrimaryKeyJoinColumns
+
+
+
 
 == Table per concrete class
+
+Table per concrete class with unions: The superclass can be an abstract class or even
+an interface. If the superclass is concrete, an additional table is required to map the
+properties of that class.
+
+
 [source,java]
 ----
 @Entity
@@ -98,6 +237,13 @@ The disadvantage of this strategy is that if we add, delete, or update a field i
 causes major changes in the subtable as well. This is because in this strategy, the parent class
 is scattered into the other subclasses and the subclasses use the field of the parent class.
 
+
+== Table per concrete class with implicit polymorphism:
+
+
+Each table contains all the
+properties of the concrete class and the properties that are inherited from its
+superclasses. Here, all the subclasses are mapped as separate entities.
 
 == O mnie
 * programista

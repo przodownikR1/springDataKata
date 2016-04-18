@@ -96,6 +96,70 @@ this.em.createQuery(update).executeUpdate();
 
 * Query cache
 
+== Performing enhancement
+
+=== Run-time enhancement
+
+
+
+==== enableLazyInitialization Whether enhancement for lazy attribute loading should be done.
+==== enableDirtyTracking Whether enhancement for self-dirty tracking should be done.
+==== enableAssociationManagement Whether enhancement for bi-directional association management should be done.
+
+
+=== Gradle
+
+[source,groovy]
+----
+ext {
+    hibernateVersion = 'hibernate-version-you-want'
+}
+
+buildscript {
+    dependencies {
+        classpath "org.hibernate:hibernate-gradle-plugin:$hibernateVersion"
+    }
+}
+
+hibernate {
+    enhance {
+        enableLazyInitialization= false
+        enableDirtyTracking = false
+        enableAssociationManagement = false
+    }
+}
+}
+----
+
+=== Maven
+
+[source,xml]
+----
+<build>
+    <plugins>
+        [...]
+        <plugin>
+            <groupId>org.hibernate.orm.tooling</groupId>
+            <artifactId>hibernate-enhance-maven-plugin</artifactId>
+            <version>$currentHibernateVersion</version>
+            <executions>
+                <execution>
+                    <configuration>
+                        <failOnError>true</failOnError>
+                        <enableLazyInitialization>true</enableLazyInitialization>
+                        <enableDirtyTracking>true</enableDirtyTracking>
+                        <enableAssociationManagement>true</enableAssociationManagement>
+                    </configuration>
+                    <goals>
+                        <goal>enhance</goal>
+                    </goals>
+                </execution>
+            </executions>
+        </plugin>
+        [...]
+    </plugins>
+</build>
+----
 
 
 

@@ -1,0 +1,276 @@
+= JPA/Hibernate camp
+:docInfo1
+:numbered:
+:icons: font
+:pagenums:
+:imagesdir: images
+:source-highlighter: coderay
+
+:image-link: https://pbs.twimg.com/profile_images/425289501980639233/tUWf7KiC.jpeg
+
+ifndef::sourcedir[:sourcedir: ./src/main/java/]
+
+#Sample demo to show how jpa work in effiecient way
+
+== CRITERIA API 
+
+=== CriteriaBuilder
+=== CriteriaQuery<T>
+=== Root<T>
+
+[source,java]
+----
+
+
+<X> Root<X> from( Class<X> );
+
+<X> Root<X> from( EntityType<X> );
+
+//example 
+
+CriteriaBuilder builder = entityManager.getCriteriaBuilder();
+
+CriteriaQuery<Person> criteria = builder.createQuery( Person.class );
+Root<Person> root = criteria.from( Person.class );
+
+
+----
+
+=== TypedQuery<T>
+
+== SELECT
+
+=== NORMAL
+
+[source,java]
+----
+
+CriteriaBuilder builder = entityManager.getCriteriaBuilder();
+
+CriteriaQuery<Person> criteria = builder.createQuery( Person.class );
+Root<Person> root = criteria.from( Person.class );
+criteria.select( root );
+criteria.where( builder.equal( root.get( Person_.name ), "Przodownik" ) );
+
+List<Person> persons = entityManager.createQuery( criteria ).getResultList();
+
+----
+
+=== Expression
+
+[source,java]
+----
+
+
+CriteriaBuilder builder = entityManager.getCriteriaBuilder();
+
+CriteriaQuery<String> criteria = builder.createQuery( String.class );
+Root<Person> root = criteria.from( Person.class );
+criteria.select( root.get( Person_.nickName ) );
+criteria.where( builder.equal( root.get( Person_.name ), "John Doe" ) );
+
+List<String> nickNames = entityManager.createQuery( criteria ).getResultList();
+
+
+----
+
+===  multiple values
+
+[source,java]
+----
+
+
+CriteriaBuilder builder = entityManager.getCriteriaBuilder();
+
+CriteriaQuery<Object[]> criteria = builder.createQuery( Object[].class );
+Root<Person> root = criteria.from( Person.class );
+
+Path<Long> idPath = root.get( Person_.id );
+Path<String> nickNamePath = root.get( Person_.nickName);
+
+criteria.select( builder.array( idPath, nickNamePath ) );
+criteria.where( builder.equal( root.get( Person_.name ), "przodownik" ) );
+
+List<Object[]> idAndNickNames = entityManager.createQuery( criteria ).getResultList();
+
+
+----
+
+=== array using multiselect
+
+[source,java]
+----
+
+
+CriteriaBuilder builder = entityManager.getCriteriaBuilder();
+
+CriteriaQuery<Object[]> criteria = builder.createQuery( Object[].class );
+Root<Person> root = criteria.from( Person.class );
+
+Path<Long> idPath = root.get( Person_.id );
+Path<String> nickNamePath = root.get( Person_.nickName);
+
+criteria.multiselect( idPath, nickNamePath );
+criteria.where( builder.equal( root.get( Person_.name ), "przodownik" ) );
+
+List<Object[]> idAndNickNames = entityManager.createQuery( criteria ).getResultList();
+
+
+----
+
+=== Wrapper
+
+[source,java]
+----
+
+
+public class PersonWrapper {
+
+    private final Long id;
+
+    private final String nickName;
+
+    public PersonWrapper(Long id, String nickName) {
+        this.id = id;
+        this.nickName = nickName;
+    }
+}
+
+
+CriteriaBuilder builder = entityManager.getCriteriaBuilder();
+
+CriteriaQuery<PersonWrapper> criteria = builder.createQuery( PersonWrapper.class );
+Root<Person> root = criteria.from( Person.class );
+
+Path<Long> idPath = root.get( Person_.id );
+Path<String> nickNamePath = root.get( Person_.nickName);
+
+criteria.select( builder.construct( PersonWrapper.class, idPath, nickNamePath ) );
+criteria.where( builder.equal( root.get( Person_.name ), "przodownik" ) );
+
+List<PersonWrapper> wrappers = entityManager.createQuery( criteria ).getResultList();
+
+
+----
+
+=== Tuple
+
+[source,java]
+----
+
+
+CriteriaBuilder builder = entityManager.getCriteriaBuilder();
+
+CriteriaQuery<Tuple> criteria = builder.createQuery( Tuple.class );
+Root<Person> root = criteria.from( Person.class );
+
+Path<Long> idPath = root.get( Person_.id );
+Path<String> nickNamePath = root.get( Person_.nickName);
+
+criteria.multiselect( idPath, nickNamePath );
+criteria.where( builder.equal( root.get( Person_.name ), "John Doe" ) );
+
+List<Tuple> tuples = entityManager.createQuery( criteria ).getResultList();
+
+for ( Tuple tuple : tuples ) {
+    Long id = tuple.get( idPath );
+    String nickName = tuple.get( nickNamePath );
+}
+
+//or using indices
+for ( Tuple tuple : tuples ) {
+    Long id = (Long) tuple.get( 0 );
+    String nickName = (String) tuple.get( 1 );
+}
+
+
+----
+
+== JOIN
+
+[source,java]
+----
+
+
+CriteriaBuilder builder = entityManager.getCriteriaBuilder();
+
+CriteriaQuery<Phone> criteria = builder.createQuery( Phone.class );
+Root<Phone> root = criteria.from( Phone.class );
+
+// Phone.person is a @ManyToOne
+Join<Phone, Person> personJoin = root.join( Phone_.person );
+// Person.addresses is an @ElementCollection
+Join<Person, String> addressesJoin = personJoin.join( Person_.addresses );
+
+criteria.where( builder.isNotEmpty( root.get( Phone_.calls ) ) );
+
+List<Phone> phones = entityManager.createQuery( criteria ).getResultList();
+
+
+----
+
+== FETCH
+
+[source,java]
+----
+CriteriaBuilder builder = entityManager.getCriteriaBuilder();
+
+CriteriaQuery<Phone> criteria = builder.createQuery( Phone.class );
+Root<Phone> root = criteria.from( Phone.class );
+
+// Phone.person is a @ManyToOne
+Fetch<Phone, Person> personFetch = root.fetch( Phone_.person );
+// Person.addresses is an @ElementCollection
+Fetch<Person, String> addressesJoin = personFetch.fetch( Person_.addresses );
+
+criteria.where( builder.isNotEmpty( root.get( Phone_.calls ) ) );
+
+List<Phone> phones = entityManager.createQuery( criteria ).getResultList();
+----
+
+== Using parameters
+
+[source,java]
+----
+CriteriaBuilder builder = entityManager.getCriteriaBuilder();
+
+CriteriaQuery<Person> criteria = builder.createQuery( Person.class );
+Root<Person> root = criteria.from( Person.class );
+
+ParameterExpression<String> nickNameParameter = builder.parameter( String.class );
+criteria.where( builder.equal( root.get( Person_.nickName ), nickNameParameter ) );
+
+TypedQuery<Person> query = entityManager.createQuery( criteria );
+query.setParameter( nickNameParameter, "JD" );
+List<Person> persons = query.getResultList();
+----
+
+==  Using group by
+
+[source,java]
+----
+
+
+
+CriteriaBuilder builder = entityManager.getCriteriaBuilder();
+
+CriteriaQuery<Tuple> criteria = builder.createQuery( Tuple.class );
+Root<Person> root = criteria.from( Person.class );
+
+criteria.groupBy(root.get("address"));
+criteria.multiselect(root.get("address"), builder.count(root));
+
+List<Tuple> tuples = entityManager.createQuery( criteria ).getResultList();
+
+for ( Tuple tuple : tuples ) {
+    String name = (String) tuple.get( 0 );
+    Long count = (Long) tuple.get( 1 );
+}
+
+
+----
+
+== O mnie
+* programista
+* blog link:http://przewidywalna-java.blogspot.com[]
+* image:{image-link} [role='img-circle']
