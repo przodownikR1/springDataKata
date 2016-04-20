@@ -33,6 +33,11 @@ sourcedir:: {sourcedir}
 
 image::data_access_layers.svg[]
 
+
+== Zasada działania
+
+image::ORM-jdbc.jpg[]
+
 **Zalety**
 
 Standardowe podejście oparte na JDBC wymaga od programisty następujących czynności:
