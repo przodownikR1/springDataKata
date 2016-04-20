@@ -109,3 +109,12 @@ equivalent to LockModeType.Write in Java Persistence.
 •	 LockMode.WRITE: A WRITE lock is obtained when an object is updated or inserted.
 This lock mode is for internal use only and isn’t a valid mode for load() or lock().
 
+
+NONE Reads from the database only if the object is not available from the caches.
+READ Reads from the database regardless of the contents of the caches.
+UPGRADE Obtains a dialect-specific upgrade lock for the data to be accessed (if this is available from
+your database).
+UPGRADE_NOWAIT Behaves like UPGRADE, but when support is available from the database and dialect, the method
+will fail with a locking exception immediately. Without this option, or on databases for which it
+is not supported, the query must wait for a lock to be granted (or for a timeout to occur).
+

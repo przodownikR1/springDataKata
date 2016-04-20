@@ -245,6 +245,25 @@ Each table contains all the
 properties of the concrete class and the properties that are inherited from its
 superclasses. Here, all the subclasses are mapped as separate entities.
 
+
+== teraz to 
+Each of these different inheritance types has tradeoffs. When you create a database schema that models a class
+hierarchy, you have to weigh performance and database maintainability to decide which inheritance type to use.
+It is easiest to maintain your database when using the joined-table approach. If fields are added or removed from
+any class in the class hierarchy, only one database table needs to be altered to reflect the changes. In addition, adding
+new classes to the class hierarchy only requires that a new table be added, eliminating the performance problems of
+adding database columns to large data sets. With the table-per-class approach, a change to a column in a parent class
+requires that the column change be made in all child tables. The single-table approach can be messy, leading to many
+columns in the table that aren’t used in every row, as well as a rapidly horizontally growing table.
+Read performance will be best with the single-table approach. A select query for any class in the hierarchy will
+only read from one table, with no joins necessary. The table-per-class type has great performance if you only work
+with the leaf nodes in the class hierarchy. Any queries related to the parent classes will require joins on a number
+of tables to get results. The joined-table approach will also require joins for any select query, so this will affect
+performance. The number of joins will be related to the size of the class hierarchy—large, deep class hierarchies may
+not be good candidates for the joined-table approach.
+We recommend using the joined-table approach unless performance could be a problem because of the size of
+the data set and the depth of the class hierarchy.
+
 == O mnie
 * programista
 * blog link:http://przewidywalna-java.blogspot.com[]

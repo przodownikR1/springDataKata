@@ -39,8 +39,50 @@ ifndef::sourcedir[:sourcedir: ./src/main/java/]
    Bardzo możliwe są konflikty.
   
 
+0 None Anything is permitted; the database or driver does not support transactions.
+1 Read Uncommitted Dirty, nonrepeatable, and phantom reads are permitted.
+2 Read Committed Nonrepeatable reads and phantom reads are permitted.
+4 Repeatable Read Phantom reads are permitted.
+8 Serializable The rule must be obeyed absolutely.
 
 
+[source,java]
+----
+
+public static void createUser(String username)
+throws HibernateException
+{
+Session session = factory.openSession();
+int isolation = -1;
+try {
+isolation = session.connection().getTransactionIsolation();
+session.connection().setTransactionIsolation(
+Connection.TRANSACTION_SERIALIZABLE);
+session.beginTransaction();
+ 
+// Normal usage of the Session here...
+Publisher p = new Publisher(username);
+Subscriber s = new Subscriber(username);
+session.saveOrUpdate(p);
+session.saveOrUpdate(s);
+ 
+// Commit the transaction
+session.getTransaction().commit();
+} catch (SQLException e1) {
+rollback(session);
+throw new HibernateException(e1);
+} catch (HibernateException e1) {
+rollback(session);
+throw e1;
+} finally {
+// reset isolation
+reset(session,isolation);
+ 
+// Close the session
+close(session);
+}
+}
+----
 
 
 == O mnie

@@ -574,7 +574,54 @@ session.close();
 * REMOVE  (jeśli encja macieżysta została usunięta z kontekstu trwałości to również encje powiazane zostaną usunięte)
 
 == Usuwanie sierot - orphanRemoval
+There’s one more cascading operation that’s not part of the normal set, called orphan removal, which removes an
+owned object from the database when it’s removed from its owning relationship.
 
+[source,java]
+----
+@Test
+public void orphanRemovalTest() {
+Long id = createLibrary();
+ 
+Session session = SessionUtil.getSession();
+Transaction tx = session.beginTransaction();
+ 
+Library library = (Library) session.load(Library.class, id);
+assertEquals(library.getBooks().size(), 3);
+ 
+library.getBooks().remove(0);
+assertEquals(library.getBooks().size(), 2);
+ 
+tx.commit();
+session.close();
+ 
+session = SessionUtil.getSession();
+tx = session.beginTransaction();
+ 
+Library l2 = (Library) session.load(Library.class, id);
+assertEquals(l2.getBooks().size(), 2);
+Query query = session.createQuery("from Book b");
+List books = query.list();
+assertEquals(books.size(), 2);
+ 
+tx.commit();
+session.close();
+}
+
+@Entity
+public class Library {
+
+@OneToMany(orphanRemoval = true, mappedBy = "library")
+List<Book> books = new ArrayList<>();
+}
+
+@Entity
+public class Book {
+
+@ManyToOne
+Library library;
+}
+----
 
    
 == Pobieranie encji
@@ -638,6 +685,33 @@ Book book = (Book) session.load(Book.class, isbn);
 Book book = (Book) session.get(Book.class, isbn);
 ----
 
+== SAVE/PERSIST
+
+public Serializable save(Object object) throws HibernateException
+ 
+public Serializable save(String entityName,Object object) throws HibernateException
+ 
+Both save() methods take a transient object reference (which must not be null) as an argument
+The save() methods all create a new org.hibernate.event.SaveOrUpdateEvent event.
+
+
+== MERGE vs UPDATE
+
+Merge Does Following
+
+Merge has intelligence. It has lot of pre-checks before it go actual merge(if required)
+
+    if Object is transient, It simply fires INSERT query makes object persistent(attached to session)
+    if Object is detached, fires select query to check whether data modified or not if modified, fires UPDATE query otherwise just ignore merge task.
+
+where as session.update
+
+    throws exception if object is transient.
+    if Object is detached, it simply fires UPDATE query irrespective of data changes to object.
+
+session.merge is expensive than update
+
+
 == Zapytania
 include::retrieve.adoc
 
@@ -688,6 +762,17 @@ a new record.
 Merge jest odwrotną operacją do operacji refresh()
 Nadpisuje encje w bazie danych wartościami encji odłączonych.
 
+
+Merging is performed when you desire to have a detached entity changed to persistent state again, with the detached
+entity’s changes migrated to (or overriding) the database. The method signatures for the merge operations are:
+
+Object merge(Object object)
+ 
+Object merge(String entityName, Object object)
+ 
+Merging is the inverse of refresh(), which overrides the detached entity’s values with the values from the
+database
+
 [source,java]
 ----
 
@@ -705,6 +790,11 @@ session.close();
 == Odświeżanie encji (Refreshing Entities)
 
 Metoda reload odświeża wartości dla encji wartościami z bazy danych. (odwrotność do merge)
+
+These methods will reload the properties of the object from the database, overwriting them; thus, as stated,
+refresh() is the inverse of merge(). Merging overrides the database with the values held by the previously transient
+object, and refresh() overrides the values in the transient object with the values in the database.
+
 
 [source,java]
 ----
@@ -742,6 +832,15 @@ private List<Category> child;
 }
 
 ----
+
+
+== Updating Entities
+Hibernate automatically persists changes made to persistent objects into the database. 6 If a property changes on a
+persistent object, the associated Hibernate session will queue the change for persistence to the database using SQL.
+From a developer’s perspective, you do not have to do any work to store these changes, unless you would like to force
+Hibernate to commit all of its changes in the queue. You can also determine whether the session is dirty and changes
+need to be committed. When you commit a Hibernate transaction, Hibernate will take care of these details for you.
+
 
 
 == Dziedziczenie
