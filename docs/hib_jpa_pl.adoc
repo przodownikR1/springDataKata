@@ -475,6 +475,47 @@ Otwieranie nowej sesji :
 Session session = sessionFactory.openSession();
 ----
 
+=== reuse an already created session
+
+SessionFactory sessionFactory =
+HibernateUtil.getSessionFactory();
+Session session = sessionFactory.getCurrentSession();
+
+It may seem easy to get the current session, but the twist here is that you have to provide
+more configuration to the Configuration object if you plan to reuse the Session , as
+shown in the following code:
+<property name="hibernate.current_session_context_class">
+Thread
+</property>
+In the preceding code, we set a thread value for the hibernate.current_session_
+context_class key, meaning that the context of the current Session is limited to the life of
+the current thread only.
+For example, in a non-multithreaded environment, a Session is created when the main
+thread is started. It will close automatically once the SessionFactory is closed.
+This will help us more in a non-multithreaded environment because
+it's faster than creating a new session each time.
+
+
+
+=== Opening a stateless session
+Basically, a stateless session is used to perform only one task. It does not take place in any
+type of cache. A cache is used to store the frequently used objects in the current context.
+There are some cases where a stateless session is very useful; for example, if we are reading
+data from a file and inserting it into the database, we don't need to cache that data further
+because this is a one-time operation.
+Apart from this, a stateless session does not use dirty checking while performing a
+transactional operation. The collections, as well as hibernate's event model and interceptors,
+are ignored by a stateless session.
+
+How to do it...
+Now, let's look at how to create a stateless session. It's the same as creating a session, but
+the method is different:
+1.	 Enter the following code to open a stateless session:
+SessionFactory sessionFactory =
+HibernateUtil.getSessionFactory();
+Session session = sessionFactory.openStatelessSession();
+
+
 == Transaction 
 -   abstrakcyjna warstwa obsługi transakcji bez względu na jej implementację (JDBC, JTA)
 
@@ -712,6 +753,14 @@ where as session.update
 session.merge is expensive than update
 
 
+saveOrUpdate() .
+This particular method is used to save or update records. Hibernate updates the records for a
+given object if the identifier field is given. If an identifier is not given, then hibernate will insert
+a new record.
+
+
+
+
 == Zapytania
 include::retrieve.adoc
 
@@ -720,6 +769,26 @@ include::retrieve.adoc
 Poprzez wywołanie metody remove lub kaskadowej operacji remove
 Jeśli metoda remove jest wywołana na encji odłączonej zostanie wygenerowany wyjątek IllegalArgumentException lub zatwierdzenie transakcji się nie powiedzie.
 Dane fizycznie zostaną usunięte w momencie zakończenia transakcji lub wykonania metody flush()
+
+
+If the record does not exist in the database, you will face the Exception in thread
+"main" java.lang.IllegalArgumentException: attempt to create delete
+event with null entity exception because get() returns the null object while you try
+to delete that object.
+
+However, if you use the following code to delete the record, you will face another type of error:
+Employee employee = new Employee();
+employee.setId(1);
+session.delete(employee);
+When the preceding code is executed, you will face the Exception in thread "main"
+org.hibernate.StaleStateException: Batch update returned unexpected
+row count from update [0]; actual row count: 0; expected: 1 " exception.
+This is because we are trying to delete Employee#1 from the database (which does not
+exist), and the employee object is also not null; so, it throws an error.
+
+There are many cases where you may face an exception; for example, when you try to remove
+a parent object that is referred to by the child object. In such cases, you will get a foreign
+key constraint violated exception.
 
 
 DELETE FROM employee WHERE id=1;
