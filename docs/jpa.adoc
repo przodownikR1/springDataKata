@@ -38,6 +38,15 @@ Jest skonfigurowany w pliku persistence.xml
 == EntityManagerFactory
 Każdemu EntityManagerFactory odpowiada jedna jednostka trwałości (Persistence Unit)
 
+=== Bootstraping
+[source,java]
+----
+EntityManagerFactory emf = Persistence.createEntityManagerFactory("manager1");
+//or
+Map<String, Object> configOverrides = new HashMap<String, Object>();
+configOverrides.put("hibernate.hbm2ddl.auto", "create-drop");
+EntityManagerFactory programmaticEmf = Persistence.createEntityManagerFactory("manager1", configOverrides);
+----
 
 
 == EntityManager

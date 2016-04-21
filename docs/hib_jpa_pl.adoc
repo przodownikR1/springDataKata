@@ -1085,11 +1085,11 @@ include::performance.adoc[]
 
 
 == Rozwiązywanie problemów
-A common mistake when designing entity models is to try to make all associations bidirectional
+=== A common mistake when designing entity models is to try to make all associations bidirectional
 
-* kłopoty z pamięcią
+=== kłopoty z pamięcią
 
-* Problemy z wydajnością mechnika : 
+=== Problemy z wydajnością mechnika : 
  - sprawdź wygenerowane SQL
  - sprawdź execution plan 
  - sprawdź poprawność indeksów bazodanowych
@@ -1108,11 +1108,30 @@ Emmanuel Bernard wrote  @Lob are lazy by default
 byte[] myBlob;
 
 
-* OutOfMemoryException
+=== OutOfMemoryException
 - czyszczenie cache
 - flush dla kontekstu
 - dla przetwarzania wsadowego : hibernate.jdbc.batch.size = 50
 - wyłączenie cache drugiego poziomu hibernate.cache.use_second_level_cache = false
+
+
+=== With Hibernate you can load your Entity classes as:
+[source,java]
+----
+sessionFactory = new AnnotationConfiguration()
+                    .addPackage("test.animals")
+                    .addAnnotatedClass(Flight.class)
+                    .addAnnotatedClass(Sky.class)
+                    .addAnnotatedClass(Person.class)
+                    .addAnnotatedClass(Dog.class);
+----
+
+Is there a way to do the same thing - programmatically loading your Entity classes - in a JPA 2.0 compliant way?
+
+- NO !
+
+
+
 
 == Dobre praktyki
 
