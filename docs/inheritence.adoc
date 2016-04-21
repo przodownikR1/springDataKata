@@ -191,6 +191,12 @@ contains only uninherited properties; the subclass tables have a primary key tha
 foreign key of the superclass.
 
 
+
+joined strategy.
+
+Wykorzystanie relacji do emulacji dziedziczenia.
+ 
+
  
 [source,java]
 ----

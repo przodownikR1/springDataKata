@@ -41,6 +41,41 @@ the session.
 
 
 == Second level cache
+
+=== javax.persistence.sharedCache.mode
+
+
+    ALL: For this persistence unit, all entity data is stored in the 2nd level cache
+    NONE: No data is cached
+    ENABLE_SELECTIVE: Entities marked with @Cachable are cached (see examples below)
+    DISABLE_SELECTIVE: All entities are cached, excepting entities marked with @Cachable(false) (see examples below)
+    UNSPECIFIED: The caching behaviour is not specified, the persistence provider’s default caching behaviour is used
+<shared-cache-element>ENABLE_SELECTIVE</shared-cache-element>
+
+
+=== Retrieval Mode
+
+This mode defines how data is read from the cache when using queries or calling the entitymanager’s find method.
+
+We may modify the mode by setting the property javax.persistence.retrieveMode to a value of the enum javax.persistence.CacheRetrieveMode:
+
+    BYPASS: The cache is bypassed and a call to the database is used to retrieve the data.
+    USE: If the data is available in the cache, it is read from this location, else it is fetched from the database
+
+=== Store Mode
+
+This mode defines how data is stored in the cache.
+
+We may modify the mode by setting the property javax.persistence.storeMode to a value of the enum javax.persistence.CacheStoreMode:
+
+    BYPASS: Don’t put anything into the cache
+    REFRESH: Data is put/updated in the cache when read and committed into the database a refresh enforced
+    USE: Data is put/updated in the cache when read and committed into the database
+
+
+
+
+
 Opcjonalny
 Cache na poziomie sessionFactory
 

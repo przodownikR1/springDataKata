@@ -44,6 +44,9 @@ Określa również sposób pobierania danych, czy pole ma być wypełniane od ra
 Umożliwia osadzanie nieencyjnych obiektów Java w objektach encyjnych
 
 @Enumerated
+
+Mapowanie enum
+
 [source,java]
 ----
 @Entity
