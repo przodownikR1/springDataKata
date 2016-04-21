@@ -1073,8 +1073,16 @@ this.em.createNativeQuery(“Select …", "myResultMapping")
 include::performance.adoc[] 
 
 * N+1
-* Paginacja
-* 
+== Paginacja
+*[source,java]
+----
+public List<Employee> findEmployees(int offset, int limit) {
+    TypedQuery<Employee> query = entityManager.createQuery("SELECT e FROM Employee e ORDER BY e.name", Employee.class);
+    query.setFirstResult(offset);
+    query.setMaxResults(limit);
+    return query.getResultList();
+}
+----
 
 == Blokowanie
 

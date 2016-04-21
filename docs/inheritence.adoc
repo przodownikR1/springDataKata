@@ -14,7 +14,15 @@ ifndef::sourcedir[:sourcedir: ./src/main/java/]
 
 == Topic
 
-* MappedSuperclass
+=== MappedSuperclass
+
+Właściwości klasy oznaczonej tą adnotacją będą propagowane na klasy pochodne. W relacji bazodanowej oznacza to, że kolumny będą propagowane do tabel pośredniczących tej strategii.
+Taka klasa nie będzie miała odwzorowania w bazie danych.
+
+NOTE: Abstract class
+
+WARNING: Klasy z adnotacją @MappedSuperclass nie mogą być używane do wyszukiwania oraz w zapytaniach JPQL.
+
 
 image::inheritance_class_diagram_mappedSuperClass.svg[]
 
@@ -64,7 +72,11 @@ CREATE TABLE CreditAccount (
 * Tabela na każdą hierarchię klas
 * Tabela na każdą podklasę
 
-== Table per class hierarchy
+=== Table per class hierarchy / Single-Table Strategy 
+
+Symulacja dziedziczenia oparta jest na jednej tabeli.
+
+
 [source,java]
 ----
 @Entity
