@@ -584,6 +584,44 @@ session.close();
 
 
 == Object Equality and Identity
+There are two options to get around this problem:
+• Don’t use a generated identifier strategy (and instead assign an entity identifier
+when the domain object is first instantiated)
+• Base equals() and hashCode() on business equality, rather than row equality
+Using an assigned identifier strategy isn’t too difficult, but can impose some limitations on your application.
+Generally, the recommended approach is to generate equals() and hashCode() using the values of key
+properties of a domain object—specifically, properties that define an object’s uniqueness from a business
+logic perspective.
+Here is an example of a customized equals and hashCode for the Category domain object:
+@Override
+public boolean equals(Object o) {
+if (this == o) return true;
+if (!(o instanceof Category)) return false;
+Category category = (Category) o;
+if (categoryName != null ?
+!categoryName.equals(category.categoryName) : category.categoryName != null) {
+return false;
+} else {
+return true;
+}
+}
+@Override
+public int hashCode() {
+
+Hibernate is able to maintain entity equivalence only within a single EntityManager scope. If you attempt to
+reattach a detached entity, Hibernate is no longer able to make the same guarantees. The way to resolve
+this problem is to override equals() and hashCode() for each of your domain objects, providing equality
+rules that are reflective of its identity within the database.
+The simplest approach is to use an entity’s identifier to determine equality and generate its hash code.
+However, if you are planning to use a generated identifier strategy, this can have negative implications.
+When an object is first created, it will have a default null identifier. If you attempt to add this newly created
+entity to a java.util.Set and then later save this instance, the invocation of EntityManager.save() will
+trigger an identifier to be generated for the entity in question. However, because you have based equals
+and hashCode on the object’s identifier, you will run into a situation where the hashCode for the object
+suddenly changes. This change breaks the contract for many of the Java collection types, such as Set , and
+could lead to unexpected behavior in your application.
+
+
 
 == Klucz główny
  klasa klucza głównego spełnia wymagania :

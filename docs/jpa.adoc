@@ -263,3 +263,4 @@ EntityManager em = ...;
 Metamodel m = em.getMetamodel();
 EntityType<Pet> Pet_ = m.entity(Pet.class);
 ----
+

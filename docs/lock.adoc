@@ -118,3 +118,44 @@ UPGRADE_NOWAIT Behaves like UPGRADE, but when support is available from the data
 will fail with a locking exception immediately. Without this option, or on databases for which it
 is not supported, the query must wait for a lock to be granted (or for a timeout to occur).
 
+=== optimistic lock
+
+Optimistic Locking
+For applications in which the likelihood that two simultaneous transactions should conflict is fairly
+remote, Hibernate and JPA offer support for Optimistic Locking. Optimistic Locking does not pose any
+constraints on accessing or writing data. Instead, the version field of the relevant domain entity is
+verified before the current transaction is committed. If the value of the version field does not match the
+value of the row (representing this particular domain entity) in the database, this implies that a
+concurrent transaction has modified the domain entity.
+When a version field is added to a domain class (by annotating a field with @Version), Hibernate will
+automatically increment the value of this field on a particular domain entity whenever it is updated. We
+can then leverage this feature to help prevent entities that were modified in a concurrent transaction
+from having their state reverted. In other words, a typical update operation is enhanced with a SQL
+condition to check the version field, such that updating the name property of an ArtEntity domain
+entity would become:
+UPDATE artentity SET name = ‘foo’, version = 8 where id = 4 and version = 7;
+Optimistic Locking is beneficial in that it does not pose any significant constraints that could limit
+scalability, such as database locks. However, this strategy will throw an exception if a version mismatch
+is detected, which means that application developers must re-attempt the transaction, while trying to
+reconcile the conflicting data.
+
+=== pessimistic lock 
+
+When the potential for simultaneous modifications are more likely, you may want to consider leveraging
+Pessimistic Locking instead. Pessimistic Locking uses database locks, and therefore poses greater risk for
+scalability and database deadlock. The chief advantage of Pessimistic Locking is that it limits concurrent
+access or modification of domain entities, which can help maintain data consistency without
+
+complicating application code. Keep in mind, however, that the longer a pessimistic lock is held, the
+greater the impact to scalability.
+Locking an entity is relatively simple in JPA 2.0. You can acquire a pessimistic lock when loading a
+particular entity. You can also explicitly lock an entity after it has already been loaded, by calling lock or
+refresh on the entityManager instance.
+For example, to acquire a pessimistic write lock (which is an exclusive lock) while loading a
+particular ArtEntity instance, we could do the following:
+ArtEntity artEntity = entityManager.find(ArtEntity.class, 7, LockModeType.PESSIMISTIC_WRITE)
+If we had previously loaded an ArtEntity instance, and now wanted to acquire a pessimistic read
+lock (which represents a shared lock), we could use the following approach:
+entityManager.lock(artEntity, LockModeType.PESSIMISTIC_READ)
+While it is possible to obtain multiple, concurrent read locks, there can only be a single pessimistic
+write lock

@@ -14,6 +14,72 @@ ifndef::sourcedir[:sourcedir: ./src/main/java/]
 
 == Topic
 
+== Lazy
+
+Lazy loading has long been regarded as one of Hibernate’s most valuable features, especially with
+respect to improving performance. By declaring a domain object’s association or property to be lazy, an
+application can avoid undue overhead on the underlying database, which can often lead to faster
+response times and smaller datasets—both favorable qualities.
+
+The problem is that lazy loading is a double-edged sword. It is vital for maintaining decent loading
+performance, but is also a significant risk for major performance problems. While lazy loading reduces
+the amount of data (as well as the potential for table joins) loaded from the database, this laziness can be
+very problematic for data that might need to be loaded from the database anyway.
+This is not to imply that lazy loading is a bad feature or that it should be disabled. It is a
+misunderstood problem that is very dependent on the context.
+Let’s begin by looking at one of the most common and significant issues related to lazy loading that
+affects persistence-based applications.
+
+=== less lazy loading
+
+@ManyToMany
+@Fetch(FetchMode.JOIN)
+public Set<ArtEntity> getArtEntities() {
+return artEntities;
+}
+
+=== Batching for Performance
+@ManyToMany
+@BatchSize(size = 10)
+public Set<ArtEntity> getArtEntities() {
+return artEntities;
+}
+
+Now, even though our artEntities association is still lazy by default, Hibernate will get ahead of us
+and attempt to initialize more than just a single artEntities collection at a time. It accomplishes this by
+using a SQL in condition, passing in ten identifiers of a Category instance when loading from the
+ArtEntity table.
+In other words, batching works similarly to the default lazy configuration. First a Category is loaded,
+then its artEntities association is loaded in a separate query (when the artEntities property is
+accessed, of course). However, with batching enabled, Hibernate will attempt to load more than one
+artEntities association, querying for the number of associations specified in the size attribute of the
+@BatchSize annotation.
+Keep in mind that @BatchSize doesn’t attempt to load multiple items within a collection. A
+collection is normally initialized in entirety via a separate select. Rather, @BatchSize will load multiple
+associations, to preclude initialization of other associations in our other Category instances (using our
+example).
+
+=== OpenInView
+
+[source,xml]
+----
+<bean name="openEntityManagerInViewInterceptor" class="org.springframework.orm.jpa.support.OpenEntityManagerInViewInterceptor" />
+----
+
+[source,xml]
+----
+<filter>
+<filter-name>OpenEntityManagerInViewFilter</filter-name>
+<filter-class>org.springframework.orm.jpa.support.OpenEntityManagerInViewFilter</filter-
+class>
+</filter>
+<!—Map the EntityManager Filter to all requests -->
+<filter-mapping>
+<filter-name>OpenEntityManagerInViewFilter</filter-name>
+<url-pattern>/*</url-pattern>
+</filter-mapping>
+----
+
 * Analiza logów Hibernate - poprawa wolnych zapytań
 
 * Analiza statystyk
