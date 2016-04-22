@@ -211,6 +211,17 @@ List<Phone> phones = entityManager.createQuery( criteria ).getResultList();
 
 ----
 
+[source,java]
+----
+CriteriaQuery<Pet> cq = cb.createQuery(Pet.class);
+Root<Pet> pet = cq.from(Pet.class);
+Join<Pet, Owner> owner = pet.join(Pet_.owners);
+
+CriteriaQuery<Pet> cq = cb.createQuery(Pet.class);
+Root<Pet> pet = cq.from(Pet.class);
+Join<Owner, Address> address = cq.join(Pet_.owners).join(Owner_.addresses);
+----
+
 == FETCH
 
 [source,java]
