@@ -12,7 +12,12 @@ ifndef::sourcedir[:sourcedir: ./src/main/java/]
 
 #Sample demo to show how jpa work in effiecient way
 
-== Topic
+== Geneza
+
+**Java Persistence API (JPA)** jest specyfikacją wydaną dla ujednolicenia różnych dostawców trwałości.
+- start odbył się w 2006 roku (wersja **1.0**)
+- w 2013 roku podstała wersja aktualna t.j **2.1**
+
 
 
 * Wymagane min 

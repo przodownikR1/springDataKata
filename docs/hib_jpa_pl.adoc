@@ -14,31 +14,39 @@ ifndef::resourcedir[:resourcedir: ./src/main/resources/]
 ifndef::imgsdir[:imgsdir: ./../img]
 :source-highlighter: coderay
 
-INFO
-== info adoc
 
-.Built-in
-asciidoctor-version:: {asciidoctor-version}
-safe-mode-name:: {safe-mode-name}
-docdir:: {docdir}
-docfile:: {docfile}
-imagesdir:: {imagesdir}
+== O mnie
+* Architect Solution - RiscoSoftware 
+* JavaTech trener : Spring ekosystem, JPA , EIP Camel 
+* Sages trener : JPA , EIP - Apache Camel 
+* blog link:http://przewidywalna-java.blogspot.com[]
+* twitter przodownikR1
 
-.Custom
-sourcedir:: {sourcedir}
+= image:{image-link} [role='img-circle']
+
+== Hibernate / JPA
+
+== Co to jest w ogóle jest :) ? 
+ 
+ - najpopularniejsza implementacja odwzorowania
+ - jedna z implemetacji standardu **JPA**
+ - obsługa asociacji, kompozycji, dziedziczenia, polimorfizmu
+ - wysoka wydajność i skalowalność (dwuwarstwowy cache i wparcie dla clusteringu ) (**Hibernate Shards**)
+ - wiele sposobów tworzenia i wydawania zapytań
+ - nakładka na **JDBC** 
 
 
 
-== Topic
+== Architektura
 
 image::data_access_layers.svg[]
 
 
-== Zasada działania
+=== Zasada działania
 
 image::ORM-jdbc.jpg[]
 
-**Zalety**
+==== Zalety
 
 Standardowe podejście oparte na JDBC wymaga od programisty następujących czynności:
  
@@ -90,7 +98,7 @@ Standardowe podejście oparte na JDBC wymaga od programisty następujących czyn
 * wbudowany mechanizm cache'u
 * wprowadza obiektowe techniki do świata relacyjnych baz danych
  
-**Wady:**
+==== Wady
 
 
 * krzywa nauki 
@@ -98,9 +106,6 @@ Standardowe podejście oparte na JDBC wymaga od programisty następujących czyn
 * w pewnych przypadkach powoduje spadek wydajności z stosunku do zwykłych zapytania JDBC
 * wraz ze wzrostem złożoności modelu domenowego występują trudności z mapowaniem, wydajnością. Skutkuje to często wprowadzaniem 'haków' 
  
-== Architektura
-
-image::data_access_layers.svg[]
 
 
 == Moduły
@@ -179,7 +184,7 @@ exhausted.
 == Minimalna konfiguracja projektu :
 
 == Hibernate
-- [ ] Maven
+-  **Maven**
 
 [source, xml]
 -----
@@ -192,10 +197,7 @@ exhausted.
 	</dependencies>
 -----
  
-- [ ] Gradle
- 
- * Konfiguracja bazy 
-- [ ] maven
+- **Konfiguracja bazy** 
 
 [source,xml]
 ----
@@ -260,7 +262,7 @@ EntityManager entityManager;
  
   
 == Nowości w JPA 2.1
-Querying Stored Procedure
+- **Querying Stored Procedure**
 
 [source,java]
 ----
@@ -281,7 +283,7 @@ Querying Stored Procedure
     
 ----
 
-Attribute Converter
+- **Attribute Converter**
  
 [source,java]
 ----
@@ -317,7 +319,7 @@ public class Person {
     @Convert(converter=PasswordConverter.class)
     String password;
 ----
-Constructor Result Mapping
+- **Constructor Result Mapping**
  @ConstructorResult annotation is a handy addition to the already existing @SqlResultSetMapping and can be used to map the result of a query to a constructor call. 
 [source,java]
 ----
@@ -336,7 +338,7 @@ public class Todo {
 	
 ---- 
 
-Programmatic Named Queries
+- **Programmatic Named Queries**
 addNamedQuery(String name, Query query) 
 [source,java]
 ----
@@ -350,13 +352,13 @@ List<Author> authors = nq.getResultList();
 
 ----
 
-Named Entity Graph
+- **Named Entity Graph**
 
-Java 8 Date Time API
+- **Java 8 Date Time API**
 The Hibernate support for Java 8 Date Time API is provided in a separate module called hibernate-java8
 
 
-* Connection pooling
+== Connection pooling
 
 Tworzenie  połączeń do bazy danych  jest kosztowne.
 Hibernate dostarcza gotowe rozwiązanie do poolingu. Jednak rozwiązanie nie jest zalecane w produkcyjnym środowisku.
@@ -387,38 +389,78 @@ Aby użyć powyższą konfigurację c3p0 wszystko co musimy zrobić to dodać wp
 ----
 W ten sposób Hibernate wyłączy wewnętrzną pulę połączeń i przestawi się na zewnętrzną.
 
-* Inne rozwiązania to : 
-   http://proxool.sourceforge.net/
-   boneCp
-   Apache poll connection
-   hikarii
+ Inne rozwiązania to : 
+ 
+ 
+-   **proxool** http://proxool.sourceforge.net/
+   
+-   **boneCp** http://www.jolbox.com/
+   
+-   **Apache poll** https://commons.apache.org/proper/commons-dbcp/
+   
+-   **hikarii** https://brettwooldridge.github.io/HikariCP/
+
    Spring poll connection
+   
+   
+image::HikariCP-bench-2.4.0.png   
+   
+=== Przykład zestawienia puli połączeń dla Springa
+   
+[source,xml]
+----
+<bean id="employeeDataSource" class="com.mchange.v2.c3p0.ComboPooledDataSource"
+        destroy-method="close">
+        <property name="driverClass" value="${jdbc.driverClassName}" />
+        <property name="jdbcUrl" value="${jdbc.employee_db_url}" />
+        <property name="user" value="${jdbc.username}" />
+        <property name="password" value="${jdbc.password}" />
+        <property name="maxPoolSize" value="${jdbc.maxPoolSize}" />
+        <property name="minPoolSize" value="${jdbc.minPoolSize}" />
+        <property name="maxStatements" value="${jdbc.maxStatements}" />
+        <property name="testConnectionOnCheckout" value="${jdbc.testConnection}" />
+    </bean>
+----
+
+- przykładowy plik ustawień
+
+[source,txt]
+----
+jdbc.driverClassName=com.mysql.jdbc.Driver
+jdbc.employee_db_url=jdbc:mysql://localhost:3306/testdb
+jdbc.username=root
+jdbc.password=root
+jdbc.maxPoolSize=50
+jdbc.minPoolSize=10
+jdbc.maxStatements=100
+jdbc.testConnection=true
+---- 
    
    
 == Cykl życia   
 
-image::lifecycle.jpg[]
+image::lifecycle.jpeg[]
 
-* Transient - obiekt istnie w pamięci i jest rozłączony od kontekstu Hibernate. Taki obiekt nie może być zarządzany przez Hibernate
+* **Transient** - obiekt istnie w pamięci i jest rozłączony od kontekstu Hibernate. Taki obiekt nie może być zarządzany przez Hibernate
   ** Tworzony za pomocą operatora new. Nie skojarzony z sesją.
    
    Utrwalenie:  save(), persist(), saveOrUpdate()
    save() i persist() -> Insert
    update() i merge() -> Update
    
-* Persistence - obiekt istnieje w bazie danych. Obiekt jest zarządzany przez Hibernate czyli jest związany z sesją.
+*  **Persistence** - obiekt istnieje w bazie danych. Obiekt jest zarządzany przez Hibernate czyli jest związany z sesją.
  
    Usunięcie : delete()
  
-* Detached - obiekt ma reprezentacje w bazie danych, ale zmiana wartości obiektu nie ma wpływu na reprezentacje bazodanową i odwrotnie.
+*  **Detached** - obiekt ma reprezentacje w bazie danych, ale zmiana wartości obiektu nie ma wpływu na reprezentacje bazodanową i odwrotnie.
 
    Był trwały ale został odłączony od sesji.
    Możliwy do modyfikacji poza kontekstem.
    Przyłączenie do sesji jest możliwe
    
-*  Removed - obiekty były zarządzane przez Hibernate, ale w wyniku operacji remove() zostały skasowane z bazy danych.
+*  **Removed** - obiekty były zarządzane przez Hibernate, ale w wyniku operacji remove() zostały skasowane z bazy danych.
 
-==Session Factory
+== Session Factory ~ EntityManagerFactory
 
 - Służy do tworzenia obiektów Session (tworzenie, zarządzanie i pobieranie Session) 
 - Jedna na kontekst (singleton pattern)
@@ -459,8 +501,8 @@ SessionFactory factory = new AnnotationConfiguration().configure().buildSessionF
  
 
  
-== Session 
--  'Unit of work'
+== Session ~ EntityManager
+-  'Unit of work' http://martinfowler.com/eaaCatalog/unitOfWork.html
 -   Obsługuje transakcje
 -   Lekka i szybka do stworzenia
 -   można ją traktować jako fizyczne buforowalne połączenie z bazą danych
@@ -516,26 +558,6 @@ HibernateUtil.getSessionFactory();
 Session session = sessionFactory.openStatelessSession();
 
 
-== Transaction 
--   abstrakcyjna warstwa obsługi transakcji bez względu na jej implementację (JDBC, JTA)
-
-[source,java]
-----
-
-Company company = new Company(1, "Scalatech");
-Transaction tx = session.beginTransaction();
-session.save(company);
-tx.commit();
-session.flush();
-session.close();
-
-----
-
-
-== Query, Criteria
-- umożliwia dostęp do danych w bazie za pomocą wyspecjalizowanych zapytań czy API
-
- 
 == Tworzenie i zamykanie sesji
 
 Otwieranie nowej sesji dla każdej transakcji bazowanowej jest dobrą praktyką (wielowątkowość)
@@ -568,12 +590,30 @@ session.close();
 }
 ----
 
-== Transaction 
- - jedno wątkowy
- - określa granice jednej transakcji
- - 
-
 == Opening a stateless session
+
+== Transaction 
+-   abstrakcyjna warstwa obsługi transakcji bez względu na jej implementację (JDBC, JTA)
+-  jedno wątkowy
+-  określa granice jednej transakcji
+
+[source,java]
+----
+
+Company company = new Company(1, "Scalatech");
+Transaction tx = session.beginTransaction();
+session.save(company);
+tx.commit();
+session.flush();
+session.close();
+
+----
+
+
+== Query, Criteria
+- umożliwia dostęp do danych w bazie za pomocą wyspecjalizowanych zapytań czy API
+
+ 
 
 == Tożsamość obiektu : Equals & hashcode
   - brak (Object) - (oparte na nie odłączanych encjach)
@@ -583,7 +623,36 @@ session.close();
 
 
 
-== Object Equality and Identity
+== Identyczność obiektów
+
+=== Identyczność obiektów
+ 
+ - Są identyczne jeśli zajmują tą samą referencje w VM. 
+  Sprawdzamy ją za pomocą operatora '=='
+  
+=== Równość obiektów
+ 
+ - Są równe jeśli operacja equals daje wynik pozytywny
+ 
+=== Tożsamość bazodanowa
+
+ - Są identyczne z poziomu DB , tzn jeśli dotyczą tego samego wiersza w tabeli i mają ten sam klucz główny
+ 
+==== Klucz główny musi spełniać następujące warunki
+
+- jego wartość nigdy nie może być równa null
+- każdy wiersz posiada inną wartość
+- wartość dla konkretnego wiersza nigdy się nie zmienia
+
+==== Klucz naturalny
+
+- ma znaczenie biznesowe
+- odpowiedni dobór kandydatów / stały w ciągu całego życia 
+
+NOTE: Interfejs IdentifierGeneretor do generowania własnych strategii kluczy identyfikujących
+  
+
+
 There are two options to get around this problem:
 • Don’t use a generated identifier strategy (and instead assign an entity identifier
 when the domain object is first instantiated)
@@ -639,6 +708,18 @@ could lead to unexpected behavior in your application.
 ** strona wielokrotna dwukierunkowego związku wiele do jednego nie może definiować **mappedBy** - jest zawsze 'posiadającą stroną relacji'
 ** w relacji jeden do jeden strona posiadająca pokazuje stronie przynależnej odpowiedni klucz obcy.
 ** w relacji wiele do wielu każda ze stron może być posiadająca.
+
+=== Charakterystyka
+ - owning side - strona włacicielska
+ - inverse side - strona przeciwna
+ - możliwość nawigacji między powiązanymi encjami. Asocjacja dwukierunkowa jest definiowana jako para asocjacji jednokierunkowych, ze wskazaniem jednej z nich jako głównej.
+
+ 
+CAUTION: Wiążemy ze sobą obie strony relacji 
+
+przykład kodu : 
+
+NOTE: Stosować tylko gdy są uzasadnione biznesowo -Enkapsulacja. Są tworzone przez generatory JPA. Mogą ułatwiać pisanie zapytań ale nie muszą :)
 
 
 * jednokierunkowe
@@ -1198,11 +1279,38 @@ Is there a way to do the same thing - programmatically loading your Entity class
  - identyczność obiektów a ich tożsamość w bazie
   
 
-== O mnie
-* programista
-* blog link:http://przewidywalna-java.blogspot.com[]
-* image:{image-link} [role='img-circle']
+=== Top down (dobre dla już istniejącego kodu)
+  - implementujemy model obiektowy
+  - tworzymy encję i generujemy schemat danych
+
+===  Bottom up (gdy istnieje baza)
+ - zaczynamy pracę z istniejącym modelem danych w bazie
+ - generujemy encje i relację dzięki **reverse enginnering**
+
+=== Middle out (dobre przy nowym wytwarzaniu)
+ - startujemy od strony modelu encyjnego. Tworzymy encje i relacje między nimi od podstaw
+
+=== Meet in the middle (z JDBC na Hibernate’a)
+ - startujemy z istniejącym modelem danych i gotowymi w pewnym stopniu plikami POJO po czym przekształcamy je na pełnoprawne encje.
+
+
+
 
 
 http://undermineddeveloper.com/2013/09/11/hibernating/
+
+INFO
+== info adoc
+
+.Built-in
+asciidoctor-version:: {asciidoctor-version}
+safe-mode-name:: {safe-mode-name}
+docdir:: {docdir}
+docfile:: {docfile}
+imagesdir:: {imagesdir}
+
+.Custom
+sourcedir:: {sourcedir}
+
+
 

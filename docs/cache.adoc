@@ -3,44 +3,58 @@
 :numbered:
 :icons: font
 :pagenums:
-:imagesdir: images
-:source-highlighter: coderay
+:imagesdir: img
+:iconsdir: ./icons
+:stylesdir: ./styles
+:scriptsdir: ./js
 
 :image-link: https://pbs.twimg.com/profile_images/425289501980639233/tUWf7KiC.jpeg
-
 ifndef::sourcedir[:sourcedir: ./src/main/java/]
+ifndef::resourcedir[:resourcedir: ./src/main/resources/]
+ifndef::imgsdir[:imgsdir: ./../img]
+:source-highlighter: coderay
 
-#Sample demo to show how jpa work in effiecient way
 
-== Topic
 
-Cache - zwiększenie wydajności zapytań poprzez eliminacje ponownego zapytania w bazie
+**Cache** - zwiększenie wydajności zapytań poprzez eliminacje ponownego zapytania w bazie
 
+
+image::cache1.png[]
+
+
+== Architektura 
+
+image::cache.jpg[]
+
+- source : https://powerdream5.wordpress.com
 
 == First level cache
- właczone domyślnie. Nie można go wyłączyć
- Dane są umieszczane w konteksie sesji
- Ograniczony w ramach Session
- niszczony wraz z Session
- jeśli hibernate szuka obiektu to najpierw w cache first level jeśli go tam nie ma uderza do bazy
- Session.evict(Object object) -usuwa pojedyńczy obiekt z cache
- Session.clear() - czyści wszystkie obiekty znajdujace się aktualnie w cache
- Operacja jak Save Update Get  Load  List wstawiają obiekt do first-cache
+   Pierwsza czynność wykonywana przez Hibernate to sprawdzenie tego obszaru pod kątem optymalizacji 
 
-
-It is enabled by default. We cannot disable it even if we want to.
-f f The scope of the first-level cache is limited to a particular Session object only; the
-other Session objects cannot access it.
-f f All cached objects are destroyed once the session is closed.
-f f If we request for an object, hibernate returns the object from the cache only if the
-requested object is found in the cache; otherwise, a database call is initiated.
-f f We can use Session.evict(Object object) to remove single objects from the
-session cache.
-f f The Session.clear() method is used to clear all the cached objects from
-the session.
+ - właczone domyślnie. Nie można go wyłączyć
+ - dane są umieszczane w konteksie sesji
+ - ograniczony w ramach **Session**
+ - niszczony wraz z **Session**
+ - jeśli hibernate szuka obiektu to najpierw w cache first level jeśli go tam nie ma uderza do bazy
+ - **_Session.evict(Object object)_** -usuwa pojedyńczy obiekt z cache
+ - **_Session.clear()_** - czyści wszystkie obiekty znajdujace się aktualnie w cache
+ - operacja jak **Save** **Update** **Get**  **Load**  List wstawiają obiekt do first-cache
+ - optymalizuje operacje **EntityManager** - w obrębie **unit of work**
+ - wielokrotna operacja **find()** → jedna operacja **SELECT**
+ - wielokrotne operacja **merge()** → jedna operacja  **UPDATE** 
+ 
+ 
 
 
 == Second level cache
+ - skojarzony z **EntityManagerFactory** lub **SessionFactory**
+ - optymalizuje dostęp do encji lub kolekcji na poziomie całego kontekstu entityManagerFactory. Co sprawia, że operacja find() uderza do bazy tylko jeden raz
+ 
+WARNING: Dla bardzo dużych woluminów danych: Wyjątkowo nieefektywne ->  **Out of memory exception** 
+
+CAUTION: Wyjątkowo słabe skalowanie dla równoległych lub częstych uaktualnień danych
+ 
+  
 
 === javax.persistence.sharedCache.mode
 
@@ -136,6 +150,12 @@ public static class Person {
 
 ----
 
+=== Strategie 
+
+* **Read-only** - Najbardziej wydajna -  Encje są często czytane ale nigdy modyfikowane (**CacheConcurrencyStrategy.READ_ONLY**)
+* **Nonstrict** read-write - Encje są rzadko modyfikowane (**CacheConcurrencyStrategy.NONSTRICT_READ_WRITE**)
+* **Read-write** - Większy narzut Encje są modyfikowane (**CacheConcurrencyStrategy.READ_WRITE**)
+* **Transactional**  : Dostępna jedynie w środowisku zarządzanym. Gwarantuje pełną izolację transakcyjną aż do trybu powtarzalnego odczytu. Cache wspierany przez transakcyjne cache'e jak JBOSS TreeCache (**CacheConcurrencyStrategy.TRNSACTIONAL**) 
 
 [source,java]
 ----
@@ -146,17 +166,6 @@ public class Employee {
 
 }
 ----
-
-
-
-
-*CacheConcurrencyStrategy.READ_ONLY* : This strategy is suitable where the data never changes but is required frequently.
-
-*CacheConcurrencyStrategy.NONSTRICT_READ_WRITE* : This strategy is  suitable for the applications that only rarely need to modify data.
-
-*CacheConcurrencyStrategy.READ_WRITE* : This strategy is suitable for the applications that regularly need to modify data.
-
-*CacheConcurrencyStrategy.TRNSACTIONAL* : The transactional cache strategy provides support to transactional cache providers such as JBoss TreeCache.
 
 
 === TEst
@@ -343,6 +352,21 @@ assertEquals(stats.getSecondLevelCachePutCount(), 4);
 ----
 
 === Cache query test
+
+
+- Cache dla  kwerend
+
+===  Konfiguracja
+
+[source,xml]
+----
+<property name="hibernate.cache.use_query_cache" value="true"/>
+----
+
+
+NOTE:  Należy zawsze stosować z L2 cache : Query cache nie przechowuje wartości a przechowuje jedynie **id**
+
+NOTE: Włączenie **Query cache** ma sens dla zapytań często wykonywalnych, tak samo sparametryzowanych  
 
 [source.java]
 ----
