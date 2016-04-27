@@ -12,13 +12,39 @@ ifndef::sourcedir[:sourcedir: ./src/main/java/]
 
 
 == **@Entity** 
- - klasy, które mają brać udział w procesie utrwalania
+- klasy,  które mają brać udział w procesie utrwalania
+
+[source,java]
+----
+@Entity
+public class Simple {
+    ...
+}
+----
+
 
 == **@Id** 
- - każda klasa encyjna musi posiadać unikalny identyfikator.
+- każda klasa encyjna musi posiadać unikalny identyfikator.
 
 == **@Table(name="PERSONS")**
-- domyślnie nazwa tabeli jest taka sama jak nazwa klasy. Jeśli domyślne ustawienie jest nie wystarczające z różnych powodów możemy użyć @Table 
+- domyślnie nazwa tabeli jest taka sama jak nazwa klasy. Jeśli domyślne ustawienie jest nie wystarczające z różnych powodów możemy użyć @Table
+
+[source,java]
+----
+@Entity
+@Table( catalog = "CRM", schema = "purchasing", name = "t_simple" )
+public class Simple {
+    ...
+}
+
+@Entity
+@Table(name = "my_emploee", uniqueConstraints = @UniqueConstraint(columnNames = { "id" , "snn"}))
+class Employee{
+
+}
+
+
+---- 
 
 
 == **@Column(name="USER_NAME")**
@@ -37,7 +63,7 @@ the insert and update operations or not.
 
 
 == @Embeddable i @Embedded**
-Umożliwia osadzanie nieencyjnych obiektów Java w objektach encyjnych
+- umożliwia osadzanie nieencyjnych obiektów Java w objektach encyjnych
 
 == **@Enumerated**
 
@@ -120,7 +146,7 @@ public class GenderConverter implements AttributeConverter<Character, Gender> {
 
 == **@Lob**
 
-java.sql.Blob
+=== java.sql.Blob
   
 [source,java]
 ----
@@ -134,7 +160,7 @@ public class Step {
 }
 ----    
 
-java.sql.Clob
+=== java.sql.Clob
 
 [source,java]
 ----
@@ -148,7 +174,7 @@ public class Product {
 }
 ----    
 
-java.sql.NClob - Mapping Nationalized Character Data
+=== java.sql.NClob - Mapping Nationalized Character Data
     
 [source,java]
 ----
@@ -161,16 +187,45 @@ public class Product {
 }
 ----    
 
+[source,java]
+----
+@Entity
+public class Product {
+    ...
+
+    @Lob
+    @Basic
+    public Clob description;
+    ...
+    
+    @Lob
+    @Basic
+    public char[] description;
+    
+    
+    @Lob
+    @Basic
+    public Blob instructions;
+    
+     @Lob
+    @Basic
+    public byte[] instructions;
+}
+----
+
 == **Date & time**
 
-**DATE**
-    Represents a calendar date by storing years, months and days. The JDBC equivalent is java.sql.Date
+=== DATE  
+
+ java.sql.Date
     
-**TIME**
-    Represents the time of a day and it stores hours, minutes and seconds. The JDBC equivalent is java.sql.Time
+=== TIME  
+
+ java.sql.Time
     
-**TIMESTAMP**
-   It stores both a DATE and a TIME plus nanoseconds. The JDBC equivalent is java.sql.Timestamp
+=== TIMESTAMP  
+
+ java.sql.Timestamp
    
 == Mapping Java 8 Date/Time Values
 
@@ -183,14 +238,32 @@ public class Product {
 </dependency>
 ----
 
-**DATE**
-    java.time.LocalDate
+=== DATE
+
+ java.time.LocalDate
+ 
+[source,sql]
+----
+INSERT INTO DateEvent( timestamp, id ) VALUES ( '2015-12-29', 1 )
+----
     
-**TIME**
-    java.time.LocalTime, java.time.OffsetTime
+=== TIME 
+
+ java.time.LocalTime, java.time.OffsetTime
+ 
+[source,sql]
+----
+INSERT INTO DateEvent( timestamp, id ) VALUES ( '16:51:58', 1 )
+----
     
-**TIMESTAMP**
-    java.time.Instant, java.time.LocalDateTime, java.time.OffsetDateTime and java.time.ZonedDateTime
+=== TIMESTAMP
+
+ java.time.Instant, java.time.LocalDateTime, java.time.OffsetDateTime and java.time.ZonedDateTime
+
+[source,sql]
+----
+INSERT INTO DateEvent  ( timestamp, id ) VALUES ( '2015-12-29 16:54:04.544', 1
+----
     
 
 == AttributeConverters
@@ -237,7 +310,7 @@ class CreditCard {
     private String creditCardNumber;
 }
 ----
-==   **@Formula**
+==  @Formula
 
 [source,java]
 ----
@@ -395,7 +468,6 @@ public class Contact {
     ...
 }
 
-
 ----
  
  
@@ -404,10 +476,12 @@ public class Contact {
 
 == @Id
 
--	Database sequence
--	Native generator
--	Increment generator
--	Hilo generator
+-	**Database sequence** - wykorzystuje sekwencje
+-	**Native generator** - wybiera jedną ze strategii generowania identyfikatorów : identity, sequence, hilo w zależności od możliwości bazy 
+-	**Increment generator** (Identity)
+-	**Hilo generator** - identyfikatory są unikalne w ramach całej bazy
+-   **UUID** - generuje Stringi (unikalny w sieci adres ip + znacznik czasu). Jest to  kosztowne rozwiązanie.
+
 
 [source,java]
 ----
@@ -415,35 +489,7 @@ public class Contact {
 private Integer id;
 ----
 
-== @Entity
-[source,java]
-----
-@Entity
-public class Simple {
-    ...
-}
-----
 
-== @Table
-
-
-
-[source,java]
-----
-@Entity
-@Table( catalog = "CRM", schema = "purchasing", name = "t_simple" )
-public class Simple {
-    ...
-}
-
-@Entity
-@Table(name = "my_emploee", uniqueConstraints = @UniqueConstraint(columnNames = { "id" , "snn"}))
-class Employee{
-
-}
-
-
-----
 
 == @AttributeOverride
 
@@ -528,8 +574,6 @@ Every bidirectional association must have one owning side only (the child side),
 ----
 
 
-
-
 == @Type (Hibernate only) 
 [source,java]
 ----
@@ -540,151 +584,6 @@ private String name;
 private String description;
 ----
 
-
-== @Transient
-
-
-== @Enumerated
-[source,java]
-----
-@Entity
-public class Person {
-    ...
-
-    @Enumerated
-    public Gender gender;
-
-    public static enum Gender {
-        MALE,
-        FEMALE
-    }
-}
-----
- 
-@AttributeConverter
-[source,java]
-----
-public enum Gender {
-
-    MALE('M'),
-    FEMALE('F');
-
-    private final char code;
-
-    private Gender( char code ) {
-        this.code = code;
-    }
-
-    public static Gender fromCode( char code ) {
-        if ( code == 'M' || code == 'm' ) {
-            return MALE;
-        }
-        if ( code == 'F' || code == 'f' ) {
-            return FEMALE;
-        }
-        throw...
-    }
-
-    public char getCode() {
-        return code;
-    }
-}
-
-@Entity
-public class Person {
-    ...
-
-    @Basic
-    @Convert( converter = GenderConverter.class )
-    public Gender gender;
-}
-
-@Converter
-public class GenderConverter implements AttributeConverter<Character, Gender> {
-
-    public Character convertToDatabaseColumn( Gender value ) {
-        if ( value == null ) {
-            return null;
-        }
-
-        return value.getCode();
-    }
-
-    public Gender convertToEntityAttribute( Character value ) {
-        if ( value == null ) {
-            return null;
-        }
-
-        return Gender.fromCode( value );
-    }
-}
----- 
- 
-== @Mapping LOBs
-[source,java]
-----
-@Entity
-public class Product {
-    ...
-
-    @Lob
-    @Basic
-    public Clob description;
-    ...
-    
-    @Lob
-    @Basic
-    public char[] description;
-    
-    
-    @Lob
-    @Basic
-    public Blob instructions;
-    
-     @Lob
-    @Basic
-    public byte[] instructions;
-}
-----
- 
-@Mapping Nationalized Character Data
-[source,java]
-----
-@Entity
-public class Product {
-    ...
-
-    @Basic
-    @Nationalized
-    public String description;
-
-    ...
-}
----- 
-hibernate.use_nationalized_character_data
-
-
-@Mapping Date/Time Values
-@Temporal
-
-DATE  Represents a calendar date by storing years, months and days. The JDBC equivalent is java.sql.Date
-DATE java8   java.time.LocalDate
-[source,sql]
-----
-INSERT INTO DateEvent( timestamp, id ) VALUES ( '2015-12-29', 1 )
-----
-TIME     Represents the time of a day and it stores hours, minutes and seconds. The JDBC equivalent is java.sql.Time
-java8 - java.time.LocalTime, java.time.OffsetTime
-[source,sql]
-----
-INSERT INTO DateEvent( timestamp, id ) VALUES ( '16:51:58', 1 )
-----
-TIMESTAMP It stores both a DATE and a TIME plus nanoseconds. The JDBC equivalent is java.sql.Timestamp
-java 8  java.time.Instant, java.time.LocalDateTime, java.time.OffsetDateTime and java.time.ZonedDateTime
-[source,sql]
-----
-INSERT INTO DateEvent  ( timestamp, id ) VALUES ( '2015-12-29 16:54:04.544', 1
-----
 
 @UniqueConstraint(columnNames = { "id" , "empCode"}))
 
@@ -726,7 +625,10 @@ protected List<User> children;
 ----  
 
 == **@JoinTable**
- 
+  -  name to  nazwa tabeli
+  - joinColumns – kolumna tabeli złączenia, stanowiąca klucz dla encji
+  - inverseJoinColumns – kolumna tabel złączenia, stanowiąca klucz dla encji po drugiej stronie relacji
+  
  
 == Identyfikatory
 [source,xml]
@@ -770,37 +672,31 @@ Za pomoca kluczu głównego
 
 === @PrePersist
 	
-Executed before the entity manager persist operation is actually executed or cascaded. This call is synchronous with the persist operation.
+	Wykonanie operacji przed operacją zapisu
 
 === @PreRemove
 	
-
-Executed before the entity manager remove operation is actually executed or cascaded. This call is synchronous with the remove operation.
+    Wykonanie operacji przez operacją usunięcia
 
 === @PostPersist
 	
-
-Executed after the entity manager persist operation is actually executed or cascaded. This call is invoked after the database INSERT is executed.
+    Wykonanie operacji po operacji zapisu
 
 ===  @PostRemove
 	
-
-Executed after the entity manager remove operation is actually executed or cascaded. This call is synchronous with the remove operation.
+    Wykonanie operacji po operacji usunięcia
 
 === @PreUpdate
 	
-
-Executed before the database UPDATE operation.
+    Wykonanie kodu przed operacją aktualizacji
 
 === @PostUpdate
 	
-
-Executed after the database UPDATE operation.
+   Wykonanie kodu po operacji aktualizacji
 
 === @PostLoad
 	
-
-Executed after an entity has been loaded into the current persistence context or an entity has been refreshed.
+   Wykonanie akcji po załadowaniu encji z kontekstu trwałości
 
 
 == EventListener
@@ -841,10 +737,6 @@ public static class LastUpdateListener {
     }
 }
 ----
-
-== TODO
-
-=== MAPKEY
 
 
 == O mnie

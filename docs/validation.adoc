@@ -62,3 +62,30 @@ validation-mode
 
 przyklad z password
 
+
+== @DecimalMax Numeric     Decimal value less-than or equal to specified value
+
+== @Min    Numeric     Minumum allowed integer value
+
+== @Max    Numeric     Maximum allowed integer value
+
+== @Null   Object  Value must be null
+
+== @NotNull    Object  Value must not be null
+
+== @DecimalMin     Numeric     Decimal value greater-than or equal to specified value
+
+== @Digits     Numeric     Max. number of integer and fraction digits
+
+== @Past   Date    Date must be in the past.
+
+== @Future     Date    Date must be the future
+
+== @AssertFalse    boolean     Value must be false
+
+== @Size   String||Collection||Map||Arrray     Min. and Max. length/size
+
+== @AssertTrue     boolean     Value must be true
+
+== @Pattern    String  Value must match the regular expression 
+

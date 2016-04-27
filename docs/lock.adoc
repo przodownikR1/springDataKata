@@ -1,16 +1,61 @@
+= JPA/Hibernate camp
+:docInfo1
+:numbered:
+:icons: font
+:pagenums:
+:imagesdir: img
+:iconsdir: ./icons
+:stylesdir: ./styles
+:scriptsdir: ./js
 
-=Lock
+:image-link: https://pbs.twimg.com/profile_images/425289501980639233/tUWf7KiC.jpeg
+ifndef::sourcedir[:sourcedir: ./src/main/java/]
+ifndef::resourcedir[:resourcedir: ./src/main/resources/]
+ifndef::imgsdir[:imgsdir: ./../img]
+:source-highlighter: coderay
 
-== Enabling Optimistic Concurrency Control
+= Lock/Blokowanie
+
+== Enabling Optimistic Concurrency Control (Blokowanie optymistyczne)/Blokowanie  optymistyczne z  wersjonowaniem
+
+- zakładamy, żę obecnie wykonywana transakcja na jakimś zasobie jest jedyną, która dokonuje zmian.
+ 
+- hibernate tworzy dodatkową kolumnę **@Version** możliwe typy : 
+ 
+-- int
+ 
+-- Integer
+
+-- short
+
+-- Short
+
+-- long
+
+-- Long
+
+-- java.sql.Timestamp
+
+  - podczas zatwierdzania zmian porównywalny jest orginalny numer wersji z bieżącą wartością. W razie różnicy, zatwierdzenie transakcji jest wycofane i wyrzucany jest wyjątek
+ **OptimisticLockException**
+ 
+  - nie chroni przed  **phantom read**
+
+NOTE: Wydajność 
+
+=== LockMode
+
+==== OPTIMISTIC – w czasie zatwierdzania wykonywane jest zapytanie SELECT ….. FOR UPDATE. 
+     Tylko jedna transakcja ma chwilowy dostęp do zasobu. Jeśli druga transakcja chciałby zmodyfikować obiekt zostanie wyrzucony wyjątek
+
+====  OPTIMISTIC_FORCE_INCREMENT – to samo co wyżej. Działa nawet dla nie zmienionej wersji.
+
 
 [source,java]
 ----
 
-@Entity (name="bkch2")
-@org.hibernate.annotations.Entity(dynamicInsert = true, dynamicUpdate = true)
-@Table
-(name="BOOK")
-public class BookCh2 {
+@Entity 
+public class Book {
  
 @Id
 @GeneratedValue (strategy=GenerationType.TABLE)
@@ -23,46 +68,48 @@ private Integer version;
  
 @Column (name="book_Name")
 private String bookName;
- 
-/*@Column (name="publisher_code")
-String publisherCode;*/
- 
-@Column (name="publish_date")
-private Date publishDate;
- 
-@Column (name="price")
-private Long price;
-// getters and setters
+
 }
 
 ----
 
 
-[source,java]
-----
-@Entity (name="bkch2")
-@org.hibernate.annotations.Entity
-(dynamicInsert = true, dynamicUpdate = true,
-optimisticLock=org.hibernate.annotations.OptimisticLockType.ALL)
-@Table
-(name="BOOK")
-public class BookCh2 {
- 
-@Id
-@GeneratedValue (strategy=GenerationType.TABLE)
-@Column (name="ISBN")
-private long isbn;
- 
-@Version
-@Column (name="version")
-private Integer version;
- 
-@Column (name="book_Name")
-private String bookName;
-----
+== Using Pessimistic Concurrency Control / Blokowanie pesymistyczne
 
+- mechanizm umiemożliwiający współbieżny dostęp do konkretnego zasobu.
+- zakładana w momencie odczytu danych aż do zakończenia transakcji
 
-== Using Pessimistic Concurrency Control
+CAUTION: Nie jest to najlepszy wybór dla wysoce współbieżnej aplikacji. Powoduje istotny spadek wydajności.
+
+    **READ** - blokowanie na odczyt (ochrona przed dirty reads i  unrepeatable reads)
+    **WRITE** - blokowanie na zapis (ochrona przed dirty reads i  unrepeatable reads)
+
+=== LockMode - blokada dla konkretnego elementu
+
+==== LockMode.NONE
+ 
+-  nie wykonuj zapytania chyba, że obiektu nie ma w buforze. Pominięcie poziomów buforowania i przejście do bazy danych.
+
+==== LockMode.READ
+
+- pomiń oba poziomy buforowania i dokonaj sprawdzenia wersji , aby sprawdzić czy dane w pamięci są takie same jak bazie  
+
+==== LockMode.WRITE
+
+ - uzyskiwany automatycznie , gdy zarządca trwałości zapisał dane do wiersza aktualnej transakcji
+ 
+ 
+==== LockMode.UPGRADE
+
+ - pomija poziomy buforowania, dokonuje sprawdzenia wersji i uzyskuje blokadę pesymistyczną na poziomie bazy
+ 
+ 
+==== LockMode.UPGRADE_NOWAIT
+
+ - do samo co przy **UPGRADE** ale stosuje zapytanie SELECT ... FOR UPDATE NOWAIT . Wyłącza to czekanie na zwolnienie blokad dotyczących wpółbieżności i natychmiastowe 
+ zgłoszenie wyjątku , jeśli blokady nie udało się uzyskać.
+ 
+ 
 
 [source,java]
 ----
@@ -76,9 +123,7 @@ String name = (String) session.createQuery("select b.name from bkch2 b where b.i
 System.out.println("BOOk's Name- "+name);
 tx.commit();
 session.close();
- 
-229Chapter 13 ■ Transactions and Concurrency
-You can use session.lock() to upgrade the isolation level. The previous code is updated as follows:
+
  
 Session session = getSession();
 Transaction tx = null;

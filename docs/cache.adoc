@@ -44,8 +44,6 @@ image::cache.jpg[]
  - wielokrotne operacja **merge()** → jedna operacja  **UPDATE** 
  
  
-
-
 == Second level cache
  - skojarzony z **EntityManagerFactory** lub **SessionFactory**
  - optymalizuje dostęp do encji lub kolekcji na poziomie całego kontekstu entityManagerFactory. Co sprawia, że operacja find() uderza do bazy tylko jeden raz
@@ -54,17 +52,20 @@ WARNING: Dla bardzo dużych woluminów danych: Wyjątkowo nieefektywne ->  **Out
 
 CAUTION: Wyjątkowo słabe skalowanie dla równoległych lub częstych uaktualnień danych
  
-  
+ 
 
 === javax.persistence.sharedCache.mode
 
-
-    ALL: For this persistence unit, all entity data is stored in the 2nd level cache
-    NONE: No data is cached
-    ENABLE_SELECTIVE: Entities marked with @Cachable are cached (see examples below)
-    DISABLE_SELECTIVE: All entities are cached, excepting entities marked with @Cachable(false) (see examples below)
-    UNSPECIFIED: The caching behaviour is not specified, the persistence provider’s default caching behaviour is used
-<shared-cache-element>ENABLE_SELECTIVE</shared-cache-element>
+*    **ALL:** wszystkie encje są cachowane
+    
+*    **NONE:** odwrotność do **ALL**
+    
+*    **ENABLE_SELECTIVE:** Buforowaniem objęte są tylko encje oznaczone **@Cacheable(true)**
+    
+*    **DISABLE_SELECTIVE:** Buforowaniem objęte są wszystkie encje z wyjątkiem tych oznaczonych **@Cacheable(false)**
+    
+*    **UNSPECIFIED:** zależna od dostawcy JPA.
+    
 
 
 === Retrieval Mode

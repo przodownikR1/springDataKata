@@ -24,6 +24,12 @@ ifndef::imgsdir[:imgsdir: ./../img]
 
 = image:{image-link} [role='img-circle']
 
+== Źródła wiedzy 
+ - Hibernate in Action
+ - Java Persistence with Hibernate
+ - Java JEE 6
+ - Hibernate from Novice to Professional 
+
 == Hibernate / JPA
 
 == Co to jest w ogóle jest :) ? 
@@ -435,24 +441,35 @@ jdbc.minPoolSize=10
 jdbc.maxStatements=100
 jdbc.testConnection=true
 ---- 
+
+
+== Encja - Trwała klasa
+
+- klasa nie może być finalna
+- klasa musi zawierać bezargumentowy konstruktor
+- metody get/set dla trwałych pól
+- klasa oznaczona jest adnotacją @Entity
+- klasa zawiera unikalny identyfikator @Id
+
+
    
    
 == Cykl życia   
 
 image::lifecycle.jpeg[]
 
-* **Transient** - obiekt istnie w pamięci i jest rozłączony od kontekstu Hibernate. Taki obiekt nie może być zarządzany przez Hibernate
+* **Transient** (ulotny)  - obiekt istnie w pamięci i jest rozłączony od kontekstu Hibernate. Taki obiekt nie może być zarządzany przez Hibernate
   ** Tworzony za pomocą operatora new. Nie skojarzony z sesją.
    
    Utrwalenie:  save(), persist(), saveOrUpdate()
    save() i persist() -> Insert
    update() i merge() -> Update
    
-*  **Persistence** - obiekt istnieje w bazie danych. Obiekt jest zarządzany przez Hibernate czyli jest związany z sesją.
+*  **Persistence** (trwały) - obiekt istnieje w bazie danych. Obiekt jest zarządzany przez Hibernate czyli jest związany z sesją.
  
    Usunięcie : delete()
  
-*  **Detached** - obiekt ma reprezentacje w bazie danych, ale zmiana wartości obiektu nie ma wpływu na reprezentacje bazodanową i odwrotnie.
+*  **Detached** (odłączony) - obiekt ma reprezentacje w bazie danych, ale zmiana wartości obiektu nie ma wpływu na reprezentacje bazodanową i odwrotnie.
 
    Był trwały ale został odłączony od sesji.
    Możliwy do modyfikacji poza kontekstem.
@@ -501,7 +518,7 @@ SessionFactory factory = new AnnotationConfiguration().configure().buildSessionF
  
 
  
-== Session ~ EntityManager
+== Session ~ EntityManager (zarząda trwałości obiektów (persistence manager))
 -  'Unit of work' http://martinfowler.com/eaaCatalog/unitOfWork.html
 -   Obsługuje transakcje
 -   Lekka i szybka do stworzenia
@@ -608,6 +625,20 @@ session.flush();
 session.close();
 
 ----
+
+== Odświeżanie encji
+
+ - operacja refresh();
+
+== Opróżnianie sesji
+
+  - operacja flush();
+  
+  - Hibernate zatwierdza wszystkie zmiany będące w kolejce.
+  
+== Czy sesja jest zanieczyszczona ? 
+
+- isDirty() 
 
 
 == Query, Criteria
@@ -724,19 +755,35 @@ NOTE: Stosować tylko gdy są uzasadnione biznesowo -Enkapsulacja. Są tworzone 
 
 * jednokierunkowe
  Tylko jedna strona posiada relację do innej encji   
+ 
+== @OneToOne
+  - każda ze stron możę być właścicielem relacji. Musimy określić stronę bo doprowadzimy do powstania zależności cyklicznej
+
+== @OneToMany
+  - strona 'wiele' musi być właścicielem relacji
+
+== @ManyToOne
+  - strona 'wiele' musi być właścicielem relacji. Odwrotność relacji @OneToMany
+  
+
+== @ManyToMany 
+  - dowolna strona może być właścicelem relacji
    
 == Kaskadowość 
-* ALL (agreguje wszystkie poniższe)
-* DETACH (jeśli encja macieżysta została odłączona od kontekstu wtedy również encja związna jest także odłączana)
-* MERGE (jeśli encja macieżysta została przyłączona do kontekstu również encje powiązane zostaną przyłączone)
-* PERSIST (jeśli encja macieżysta została utrwalona to samo stanie się z encjami przynależnymi)
-* REFRESH (jeśli encja macieżysta została odświeżona w kontekście trwałości również encje powiązane zostaną odświeżone)
-* REMOVE  (jeśli encja macieżysta została usunięta z kontekstu trwałości to również encje powiazane zostaną usunięte)
+
+ - korzystamy z adnotacji **@CascadeType**
+
+===  ALL (agreguje wszystkie poniższe)
+=== DETACH (jeśli encja macieżysta została odłączona od kontekstu wtedy również encja związna jest także odłączana)
+=== MERGE (jeśli encja macieżysta została przyłączona do kontekstu również encje powiązane zostaną przyłączone)
+=== PERSIST (jeśli encja macieżysta została utrwalona to samo stanie się z encjami przynależnymi)
+=== REFRESH (jeśli encja macieżysta została odświeżona w kontekście trwałości również encje powiązane zostaną odświeżone)
+=== REMOVE  (jeśli encja macieżysta została usunięta z kontekstu trwałości to również encje powiazane zostaną usunięte)
 
 == Usuwanie sierot - orphanRemoval
-There’s one more cascading operation that’s not part of the normal set, called orphan removal, which removes an
-owned object from the database when it’s removed from its owning relationship.
 
+ Kaskadowe usunięcie tych encji składowych, które usunięto z kolekcji encji głównej
+ 
 [source,java]
 ----
 @Test
@@ -1034,34 +1081,26 @@ need to be committed. When you commit a Hibernate transaction, Hibernate will ta
 == Dziedziczenie
 include::inheritence.adoc[]
 
+== Trwałość przechodnia
+
+Technika umożliwiająca automatyczną propagację trwałości na podgrafy ulotne i odłączone.
+
 == Trwałość przez osiągalność
 
-Ma miejsce wtedy, gdy z obiektu trwałego jest referencja do
-innego obiektu
-wtedy ten inny obiekt realizuje trwałość przez osiągalność
-Jest rekurencyjna
-Zapewnia integralność więzów referencyjnych
-graf obiektów można odtworzyć wczytując jego korzeń
-Teoretycznie istnieje obiekt korzenia, z którego da przejść do
-dowolnego innego obiektu trwałego
-w szczególności nieosiągalne obiekty powinny być z bazy
-usunięte (niewydajne)
-Hibernate nie implementuje tego modelu
+Jeśli z obiektu trwałego dostajemy się do innego obiektu poprzez referencje. Działanie jest rekurencyjne.
+Dowolny graf obiektów można odtworzyć w całości wczytując jego korzeń.
+
+NOTE: Pomaga uzyskać trwałość obiektom ulotnym i propagować je do bazy danych bez potrzeby wywołań zarządcy trwałości 
 
 
 == Trwałość kaskadowa
-Trwałość przechodnia w Hibernate
-Trwałość kaskadowa
-Model realizowany w Hibernate
+
 Koncepcja podobna do trwałości przez osiągalność
-Powiązania są odtwarzane na podstawie asocjacji
-domyślnie, hibernate nie dokonuje analizy asocjacji
-Kaskady zwykle używa się do relacji jeden-do-jednego i
-jeden-do-wielu
-używanie kaskady w przypadkach wiele-do-jednego i
-wiele-do-wielu jest raczej bez sensu
-Wartości kaskady można łączyć, np.
-cascade="save-update, delete
+Powiązania są odtwarzane na podstawie asocjacji.
+Sprawdza asocjacje by określić stan trwałości obiektów.
+
+NOTE: Do sterowania trwałością kaskadową używamy adnotacji **@CascadeType** na kolekcji lub relacji
+
 
 == Criteria
 
@@ -1080,37 +1119,10 @@ include::transactions.adoc[]
 <property name="hibernate.generate_statistics">true</property>
 ----
 
-== Kaskadowość
 
 
 include::cache.adoc[]
 
-== Cache level One
-Activated by default
-
-Linked to the Hibernate session
-
-Stores all entities that were used within a session
-
-== Cache level two
-
-Session independent entity store
-Needs to be activated
-persistence.xml or EntityManagerFactory
-Transparent usage
-PersistenceProvider doesn‘t need to provide it Not always portable
-
-
-Cache configuration
-
-Cache Retrieve Mode
-How to read entities from the cache
-
-Cache Store Mode
-How to write entities to the cache
-
-Concurrency Strategy
-How to handle concurrent access
 
 
 Stores query results for a query and its parameters
@@ -1134,41 +1146,7 @@ org.hibernate.Query.setCacheable(true)
 @NamedQuery(… hints = @QueryHint(name="org.hibernate.cacheable", value="true"))
 
 
-== FetchType
-* Lazy
-* Eager
-* Fetch all required entities with one query
- - Fetch Join
-[source,java]
-----
-List<Author> authors = this.em.createQuery(
-		"SELECT DISTINCT a FROM Author a JOIN FETCH a.books b", 
-		Author.class).getResultList();
-----
 
-+ Relationships gets loaded in same query
-- Requires a special query for each use case
-- Creates cartesian product
-
-		 
- - @NamedEntityGraph
- Declaratively defines a graph of entities which will be loaded
-[source,java]
-----
-@NamedEntityGraph(
-	name = "graph.AuthorBooksReviews", 
-
-	attributeNodes = 
-@NamedAttributeNode(value = "books")
-)
-----
-
-
-
-Graph is query independent
-
- 
- - EntityGraph
 
 == Zapytania natywne  
 
@@ -1285,7 +1263,7 @@ Is there a way to do the same thing - programmatically loading your Entity class
 
 ===  Bottom up (gdy istnieje baza)
  - zaczynamy pracę z istniejącym modelem danych w bazie
- - generujemy encje i relację dzięki **reverse enginnering**
+ - generujemy encje i relację dzięki **reverse engineering**
 
 === Middle out (dobre przy nowym wytwarzaniu)
  - startujemy od strony modelu encyjnego. Tworzymy encje i relacje między nimi od podstaw

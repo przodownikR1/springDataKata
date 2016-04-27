@@ -14,7 +14,8 @@ ifndef::sourcedir[:sourcedir: ./src/main/java/]
 
 == CRITERIA API 
 
-Using the new criteria API prevents some  disadvantages of JPQL .. one the one hand it is not type safe (getResultList() returns an untyped list ) on the other hand you are able to create invalid queries because you construct them by passing a string to the createQuery method. For more detailed information about the criteria API I recommend reading chapter 6 in the JSR-317 blueprints :)
+Criteria API ma działanie analogiczne do JPQL z tą różnicą że działamy na obiektach i bytach mocno typowalnych.
+
 
 === CriteriaBuilder
 === CriteriaQuery<T>
@@ -35,10 +36,19 @@ CriteriaBuilder builder = entityManager.getCriteriaBuilder();
 CriteriaQuery<Person> criteria = builder.createQuery( Person.class );
 Root<Person> root = criteria.from( Person.class );
 
-
 ----
 
+
+
 === TypedQuery<T>
+
+== MetaModel
+
+ - klasa metamodelu jest tworzona przez generator metamodelu dla każdej klasy encyjnej.
+ - nazwa takiej klasy jest zakończona '_'
+ - wszystkie atrybuty odpowiadające polom i właściwościom trwałości klasy encji
+ - pozwala uzyskać bezpieczeństwo typologiczne i refaktoryzacyjne modelu Criteria API
+  
 
 == SELECT
 

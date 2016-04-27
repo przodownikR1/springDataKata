@@ -1187,8 +1187,8 @@ List<String> nickNames = entityManager.createQuery(
     "from Person p", String.class )
 .getResultList();
 
-
 ----
+
 
 == O mnie
 * programista
