@@ -1,0 +1,320 @@
+
+
+Integracja
+
+
+Konfiguracja : 
+
+[source,java]
+----
+@EnableJpaRepositories(basePackages = "pl.java.scalatech.repository")
+@PropertySource("classpath:spring-data.properties")
+@Slf4j
+@Import(Metrics2Config.class)
+public abstract class JpaConfig {
+    
+    
+    @Autowired
+    Optional<MetricRegistry> metricRegistry;
+    
+    @Autowired
+    private Environment env;
+
+    @Value("${dataSource.driverClassName}")
+    protected String driver;
+
+    @Value("${dataSource.url}")
+    protected String url;
+
+    @Value("${dataSource.username}")
+    protected String username;
+
+    @Value("${dataSource.password}")
+    protected String password;
+
+    @Value("${hibernate.dialect}")
+    protected String dialect;
+
+    @Value("${hibernate.hbm2ddl.auto}")
+    protected Boolean hbm2ddlAuto;
+
+    @Value("${hibernate.show.sql}")
+    protected Boolean showSql;
+
+    @Value("${jpa.package}")
+    protected String jpaPackage;
+    
+    @Value("${jpa.hikariMaxPoolSize}")
+    protected int maxPoolSize;
+    
+    @Value("${jpa.hikariConnectionTimeoutMs}")
+    protected long connectionTimeoutMs;
+    
+    @Value("${jpa.hikariIdleTimeoutMs}")
+    protected long idleTimeoutMs;
+    
+    @Value("${jpa.hikariMaxLifetimeMs}")
+    protected long maxLifetimeMs;
+    
+    @Value("${jpa.hikariRegisterMbeans}")
+    protected boolean registerMbeans;
+    
+  
+
+    public abstract void dataSourceConfigure(HikariConfig hikariConfig) throws SQLException;
+    public abstract Database dataBase();
+    
+   
+  
+    @Bean
+    public DataSource datasource() throws SQLException{
+        HikariConfig config = new HikariConfig();
+        dataSourceConfigure(config);
+        config.setMaximumPoolSize(maxPoolSize);
+       // config.setConnectionTimeout(connectionTimeoutMs);
+        config.setIdleTimeout(idleTimeoutMs);
+        config.setMaxLifetime(maxLifetimeMs);
+        config.setRegisterMbeans(registerMbeans);
+        config.setPoolName("pool");
+        if(metricRegistry.isPresent()){
+         config.setMetricRegistry(metricRegistry.get());
+        }
+        HikariDataSource dataSource = new HikariDataSource(config);
+        return dataSource;
+}
+    
+    @Bean
+    public PlatformTransactionManager transactionManager() {
+        return new JpaTransactionManager();
+    }
+
+    @Bean
+    public PersistenceExceptionTranslationPostProcessor exceptionTranslation() {
+        return new PersistenceExceptionTranslationPostProcessor();
+    }
+
+    public Map<String, Object> jpaProperties() {
+        Map<String, Object> props = new HashMap<>();
+        /*
+         * props.put("hibernate.cache.use_query_cache", "true");
+         * props.put("hibernate.cache.region.factory_class", "org.hibernate.cache.ehcache.EhCacheRegionFactory");
+         * props.put("hibernate.cache.provider_class", "org.hibernate.cache.ehcache.EhCacheRegionFactory");
+         * props.put("hibernate.cache.use_second_level_cache", "true");
+         */
+        return props;
+    }
+
+    @Bean
+    public LocalContainerEntityManagerFactoryBean entityManagerFactory() throws SQLException {
+        log.info("+++ entityManagerFactory started ...");
+        LocalContainerEntityManagerFactoryBean lef = new LocalContainerEntityManagerFactoryBean();
+        lef.setJpaDialect(customJpaDialect());
+        lef.setDataSource(datasource());
+        lef.setJpaVendorAdapter(jpaVendorAdapter());
+        lef.setJpaPropertyMap(jpaProperties());
+        lef.setPackagesToScan(jpaPackage); // eliminate persistence.xml
+        return lef;
+    }
+
+    @Bean
+    public JpaVendorAdapter jpaVendorAdapter() {
+        HibernateJpaVendorAdapter hibernateJpaVendorAdapter = new HibernateJpaVendorAdapter();
+        hibernateJpaVendorAdapter.setShowSql(showSql);
+        hibernateJpaVendorAdapter.setGenerateDdl(hbm2ddlAuto);
+        hibernateJpaVendorAdapter.setDatabase(dataBase());
+        hibernateJpaVendorAdapter.setDatabasePlatform(dialect);
+        return hibernateJpaVendorAdapter;
+    }
+
+    @Bean
+    public Log4JdbcCustomFormatter logFormater() {
+        Log4JdbcCustomFormatter formatter = new Log4JdbcCustomFormatter();
+        formatter.setLoggingType(LoggingType.SINGLE_LINE);
+        formatter.setSqlPrefix("SQL:\r");
+        return formatter;
+    }
+
+    public JpaDialect customJpaDialect() {
+        return new CustomHibernateJpaDialect();
+    }
+}
+
+----
+
+Strategia dla bazy wbudowanej : 
+
+[source,java]
+----
+@Configuration
+@Slf4j
+@Profile(value = "test")
+@Order(10001)
+public class JpaEmbeddedConfig extends JpaConfig {
+
+
+    @Override
+    public Database dataBase() {
+        return Database.H2;
+    }
+
+    @Override
+    public void dataSourceConfigure(HikariConfig config) throws SQLException {
+        config.setDataSourceClassName("org.h2.jdbcx.JdbcDataSource");
+        config.setConnectionTestQuery("VALUES 1");
+        config.addDataSourceProperty("URL", "jdbc:h2:~/test");
+        config.addDataSourceProperty("user", "sa");
+        config.addDataSourceProperty("password", "");
+
+       
+    }
+
+}
+----
+
+
+== H2 w konsoli WEB
+
+[source,java]
+----
+@Configuration
+@Profile(value="h2")
+@Order(10001)
+public class H2Database extends JpaConfig{
+   
+    @Bean(destroyMethod = "close")
+    @DependsOn(value = "h2Server")
+    DataSource dataSource(Server h2Server) throws SQLException {
+        HikariConfig hikariConfig = new HikariConfig();
+        dataSourceConfigure(hikariConfig);
+        hikariConfig.setMaximumPoolSize(maxPoolSize);
+        hikariConfig.setConnectionTimeout(connectionTimeoutMs);
+        hikariConfig.setIdleTimeout(idleTimeoutMs);
+        hikariConfig.setMaxLifetime(maxLifetimeMs);
+        hikariConfig.setRegisterMbeans(registerMbeans);
+        hikariConfig.setConnectionTestQuery("VALUES 1");
+        hikariConfig.addDataSourceProperty("useServerPrepStmts", username);
+        HikariDataSource dataSource = new HikariDataSource(hikariConfig);
+        
+        createTcpServer();
+       // CodaHaleMetricsTracker cmt = new CodaHaleMetricsTracker(pool, dataSource.getMetricRegistry());
+        return dataSource;
+        
+    }
+
+    @Bean(name = "h2Server", initMethod = "start", destroyMethod = "stop")
+    @DependsOn(value = "h2WebServer")
+    public org.h2.tools.Server createTcpServer() throws SQLException {
+        return org.h2.tools.Server.createTcpServer("-tcp,-tcpAllowOthers,-tcpPort,9092".split(","));
+    }
+
+    @Bean(name = "h2WebServer", initMethod = "start", destroyMethod = "stop")
+    public org.h2.tools.Server createWebServer() throws SQLException {
+        return org.h2.tools.Server.createWebServer("-web,-webAllowOthers,-webPort,8082".split(","));
+    }
+
+   
+    @Override
+    public Database dataBase() {
+        return Database.H2;
+    }
+
+    @Override
+    public void dataSourceConfigure(HikariConfig hikariConfig) throws SQLException {
+        hikariConfig.addDataSourceProperty("url", url);
+        hikariConfig.setUsername(username);
+        hikariConfig.setPassword(password);
+        hikariConfig.setDataSourceClassName(driver);
+    }
+}
+
+---- 
+
+== Custom JPA = rozwiązanie problemów z izolacją transakcji
+
+[source,java]
+----
+public class CustomHibernateJpaDialect extends HibernateJpaDialect {
+
+    private static final long serialVersionUID = 1L;
+
+    /* 
+     * This method is overridden to set custom isolation levels on the connection
+     * (non-Javadoc)
+     * @see org.springframework.orm.jpa.vendor.HibernateJpaDialect#beginTransaction(javax.persistence.EntityManager, org.springframework.transaction.TransactionDefinition)
+     */
+    @Override
+    public Object beginTransaction(final EntityManager entityManager,
+            final TransactionDefinition definition)
+            throws PersistenceException, SQLException, TransactionException {
+
+        Session session = (Session) entityManager.getDelegate();
+        if (definition.getTimeout() != TransactionDefinition.TIMEOUT_DEFAULT) {
+            getSession(entityManager).getTransaction().setTimeout(
+                    definition.getTimeout());
+        }
+
+        final TransactionData data = new TransactionData();
+
+        session.doWork(new Work() {
+            @Override
+            public void execute(Connection connection) throws SQLException {
+                Integer previousIsolationLevel = DataSourceUtils
+                        .prepareConnectionForTransaction(connection, definition);
+                data.setPreviousIsolationLevel(previousIsolationLevel);
+                data.setConnection(connection);
+            }
+        });
+
+        entityManager.getTransaction().begin();
+
+        Object springTransactionData = prepareTransaction(entityManager,
+                definition.isReadOnly(), definition.getName());
+
+        data.setSpringTransactionData(springTransactionData);
+
+        return data;
+    }
+
+    @Override
+    public void cleanupTransaction(Object transactionData) {
+        super.cleanupTransaction(((TransactionData) transactionData)
+                .getSpringTransactionData());
+        ((TransactionData) transactionData).resetIsolationLevel();
+    }
+
+    private static class TransactionData {
+
+        private Object springTransactionData;
+        private Integer previousIsolationLevel;
+        private Connection connection;
+
+        public TransactionData() {
+        }
+
+        public void resetIsolationLevel() {
+            if (this.previousIsolationLevel != null) {
+                DataSourceUtils.resetConnectionAfterTransaction(connection,
+                        previousIsolationLevel);
+            }
+        }
+
+        public Object getSpringTransactionData() {
+            return this.springTransactionData;
+        }
+
+        public void setSpringTransactionData(Object springTransactionData) {
+            this.springTransactionData = springTransactionData;
+        }
+
+        public void setPreviousIsolationLevel(Integer previousIsolationLevel) {
+            this.previousIsolationLevel = previousIsolationLevel;
+        }
+
+        public void setConnection(Connection connection) {
+            this.connection = connection;
+        }
+
+    }
+}
+----
+

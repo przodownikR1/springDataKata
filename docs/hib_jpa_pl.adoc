@@ -1257,7 +1257,85 @@ Is there a way to do the same thing - programmatically loading your Entity class
 
 - NO !
 
+=== Jak pokazać parametryzacje zapytań SQL ?
+==== Log4jdbc
 
+Zależność :
+
+[source,groovy]
+----
+ compile 'org.lazyluke:log4jdbc-remix:????'
+----
+
+
+Konfiguracja : 
+
+[source,java]
+----
+
+  @Bean
+    public Log4JdbcCustomFormatter logFormater() {
+        Log4JdbcCustomFormatter formatter = new Log4JdbcCustomFormatter();
+        formatter.setLoggingType(LoggingType.SINGLE_LINE);
+        formatter.setSqlPrefix("SQL:\r");
+        return formatter;
+    }
+----
+
+[source,txt]
+----
+log4jdbc.sqltiming.warn.threshold=1000
+log4jdbc.dump.sql.maxlinelength=0
+log4jdbc.dump.sql.addsemicolon=true
+log4jdbc.trim.sql=true
+log4jdbc.trim.sql.extrablanklines=false
+----
+ 
+==== P6Spy 
+
+Link do biblioteki : https://sourceforge.net/projects/p6spy/
+
+Dodajemy zależność : 
+
+[source,xml]
+----
+  <dependency>
+		<groupId>p6spy</groupId>
+		<artifactId>p6spy</artifactId>
+		<version>???</version>
+	</dependency>
+----
+
+
+[source,xml]
+----
+<session-factory>
+  <property name="hibernate.connection.driver_class">com.p6spy.engine.spy.P6SpyDriver
+  </property>
+  <property name="hibernate.connection.password">password</property>
+  <property name="hibernate.connection.url">jdbc:mysql://localhost:3306/test</property>
+  <property name="hibernate.connection.username">test</property>
+  <property name="hibernate.dialect">org.hibernate.dialect.MySQLDialect</property>
+</session-factory>
+
+----
+
+Konfigurujemy właściwości : spy.properties
+
+[source,txt]
+----
+realdriver=com.mysql.jdbc.Driver
+
+#specifies another driver to use
+realdriver2=
+----
+     
+==== Log4J, Sl4j
+
+[source,xml]
+----
+log4j.logger.org.hibernate.type=trace
+----
 
 
 == Dobre praktyki
