@@ -579,6 +579,50 @@ List<Customer> customers = customerRepository.findAll(isLongTermCustomer());
 
 ----
 
+Przykład drugi : 
+
+[source,java]
+----
+public class UserSpecifications {
+
+    public static Specification<User> getUserByLogin(final String str) {
+        return new Specification<User>() {
+            @Override
+            public Predicate toPredicate(Root<User> personRoot, CriteriaQuery<?> query, CriteriaBuilder cb) {
+                return cb.equal(personRoot.<String> get(User_.login), str);
+            }
+        };
+    }
+
+    public static Specification<User> getUsersWhoEarMoreThan(final BigDecimal salary) {
+        return new Specification<User>() {
+            @Override
+            public Predicate toPredicate(Root<User> personRoot, CriteriaQuery<?> query, CriteriaBuilder cb) {
+                return cb.greaterThan(personRoot.<BigDecimal> get(User_.salary), salary);
+            }
+        };
+    }
+}
+
+//
+
+
+----
+
+[source,java]
+----
+
+@Test
+    public void shouldSpecificationsPredicateWork() {
+        assertThat(userRepository.findAll(getUserByLogin("przodownik"))).hasSize(1)
+            .containsOnly(User.builder().login("przodownik").name("borowiec").salary(new BigDecimal(120)).build());
+        assertThat(userRepository.findAll(getUsersWhoEarMoreThan(new BigDecimal(300)))).hasSize(2);
+    }
+----
+
+
+
+
 === Query by Example
 
 

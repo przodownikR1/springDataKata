@@ -226,6 +226,57 @@ SessionFactory sessionFactory = entityManager.getEntityManagerFactory().unwrap( 
 ----
 
 == MetaModel
+
+=== Generacja
+
+Konfiguracja w Gradle : 
+
+[source,groovy]
+----
+
+sourceSets {
+    intTest
+    generated.java.srcDirs=['src/main/generated']
+    main {
+        java { srcDir 'src/main/java' }
+        resources { srcDir 'src/main/resources' }
+    }
+    test {
+        java { srcDir 'src/test/java' }
+        resources { srcDir 'src/test/resources' }
+    }
+}
+
+repositories {
+    mavenCentral()   
+}
+
+configurations {
+    providedRuntime
+    jpametamodel
+}
+
+dependencies {
+    jpametamodel ("org.hibernate:hibernate-jpamodelgen:4.3.1.Final")
+ }
+
+task generateMetaModel(type: JavaCompile, group: 'build', description: 'metamodel generate') {
+
+    source = sourceSets.main.java
+    classpath = configurations.compile + configurations.jpametamodel
+    options.compilerArgs = ["-proc:only"]
+    destinationDir = sourceSets.generated.java.srcDirs.iterator().next()
+
+    doFirst {
+        logger.warn("Prepare dictionary structures  " +sourceSets.generated.java.srcDirs)
+        //delete(sourceSets.generated.java.srcDirs)
+        //sourceSets.generated.java.srcDirs.mkdirs()
+    }
+}
+compileJava.dependsOn generateMetaModel
+compileJava.source sourceSets.generated.java, sourceSets.main.java
+----
+
 [source,java]
 ----
 
