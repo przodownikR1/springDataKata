@@ -1,20 +1,48 @@
- new in Spring Data JPA 1.10
+= JPA/Hibernate camp
+:docInfo1
+:numbered:
+:icons: font
+:pagenums:
+:imagesdir: img
+:iconsdir: ./icons
+:stylesdir: ./styles
+:scriptsdir: ./js
 
+:image-link: https://pbs.twimg.com/profile_images/425289501980639233/tUWf7KiC.jpeg
+ifndef::sourcedir[:sourcedir: ./src/main/java/]
+ifndef::resourcedir[:resourcedir: ./src/main/resources/]
+ifndef::imgsdir[:imgsdir: ./../img]
+:source-highlighter: coderay
 
+= Spring Data
 
-    Support for Projections in repository query methods.
+== Najnowsze features:)
 
-    Support for Query by Example.
+**    Support for Projections in repository query methods.
 
-    The following annotations have been enabled to build own, composed annotations: @EntityGraph, @Lock, @Modifying, @Query, @QueryHints and @Procedure.
+**    Support for Query by Example.
 
-    Support for Contains keyword on collection expressions.
+**    The following annotations have been enabled to build own, composed annotations: @EntityGraph, @Lock, @Modifying, @Query, @QueryHints and @Procedure.
 
-    AttributeConverters for ZoneId of JSR-310 and ThreeTenBP.
+**    Support for Contains keyword on collection expressions.
 
-    Upgrade to Querydsl 4, Hibernate 5, OpenJPA 2.4 and EclipseLink 2.6.1.
+**    AttributeConverters for ZoneId of JSR-310 and ThreeTenBP.
 
-== Start
+**    Upgrade to Querydsl 4, Hibernate 5, OpenJPA 2.4 and EclipseLink 2.6.1.
+
+== Geneza
+
+ Powstał 2010 podczas sesji Roda Jonsona z Emilem Eifrem (Neo Technologies), jako próba integracji Spring z Neo4j
+ 
+== Charakretystyka
+
+** generyczna impl DAO
+** postawowa impl CRUD
+** kod dao generowany poprzez definicję metody np findByName , findByAgeBetween
+** paging i sortowanie w standardzie
+** wsparcie dla JPA, Mongo, Neo4j, Redis itd
+** wsparcie dla QueryDSL 
+ 
 
 === Przykład całej minimalnej konfiguracji 
 

@@ -18,45 +18,13 @@ ifndef::sourcedir[:sourcedir: ./src/main/java/]
  - Java JEE 6
  - Hibernate from Novice to Professional 
 
+
 == Izolacja
    Stopień uniezależnienia od siebie poszczególnych transackcji
    Wyższy poziom zapewnia lepszą separację - kosztem wydajności
    Poprzez separacje rozumiemy, że jedna niezależna transakcja nie będzie wpływała na inną równoległą w systemie.
    
-=== Problemy związane z izolacją
 
-==== Utrata aktualizacji
-
-==== Brudny odczyt
-
-==== Niepowtarzalny odczyt
-
-==== Problem utraty wcześniejszego zapisu
-
-==== Otrzymanie fantomu
-
-== Odczyt niezatwierdzych (Read uncommited)
-   - brak izolacji
-    Jedna transakcja ma dostęp do danych modyfikowanych przez inne transakcji
-    Dopuszcza brudne odczyty, ale uniemożliwia utratę aktualizacji
-   
-== Odczyt zatwierdzonych (Read commited)
-   Bieżąca transakcja widzi tylko dane zatwierdzone.
-   - problem z długi transakcjami, gdyż bieżąca transakcja będzie odczytywała dane zatwierdzone chwilowo przez inne.
-   - transakcja odczytują dwa razy te same dane może zwrócić inne wyniki
-   - nie zapewnia powtarzalnego odczytu ale zapobiega  brudnym odczytom
-   
-== Odczyt powtarzalny (Repeatable read)
-   Bieżąca transakcja widzi zmiany zatwierdzone już po jej rozpoczęciu przez inne równoległe transakcje.
-   Ma zapewnioną powtarzalność odczytów
-   Rozwiązuje problemy brudnego i niepowtarzalnego odczytu
-   Mogą wystąpić fantomy
-   
-== Szeregowalność (Serializable)
-   Transakcja szeregowana. Możemy te sposób izolacji traktować synchroniczne wykonywane krok po kroku zamiast opcji zrównoleglenia.
-   Bardzo możliwe są konflikty.
-   
-  
 
 0 None Anything is permitted; the database or driver does not support transactions.
 1 Read Uncommitted Dirty, nonrepeatable, and phantom reads are permitted.
@@ -65,12 +33,6 @@ ifndef::sourcedir[:sourcedir: ./src/main/java/]
 8 Serializable The rule must be obeyed absolutely.
 
 
-== Wybór poziomu
-- odrzucamy poziom odczytu niezatwierdzonego.(niezatwierdzone zmiany z innych transakcji są bardzo groźne)
-- odrzucamy również górny poziom serializable. Najtrudniej poddaje sie współbieżności.
-
-- powtarzalny - eliminacja nadpisywania przez inną transakcję. Zwiększa powtarzalność wyników zapytań.
-- zatwierdzony + wersjonowanie wydajne się być w większości przypadków najlepszą praktyką.
 
 
 [source,java]

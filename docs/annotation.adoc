@@ -3,16 +3,62 @@
 :numbered:
 :icons: font
 :pagenums:
-:imagesdir: images
-:source-highlighter: coderay
+:imagesdir: img
+:iconsdir: ./icons
+:stylesdir: ./styles
+:scriptsdir: ./js
 
 :image-link: https://pbs.twimg.com/profile_images/425289501980639233/tUWf7KiC.jpeg
-
 ifndef::sourcedir[:sourcedir: ./src/main/java/]
+ifndef::resourcedir[:resourcedir: ./src/main/resources/]
+ifndef::imgsdir[:imgsdir: ./../img]
+:source-highlighter: coderay
+
+
+== Mapowania
+
+=== Pola
+
+Ten rodzaj mapowania  oparty jest na typach i nazwach pól.
+
+=== Metody
+
+Na poziomie właściwości klasy. Adnotację umieszcza się przy @Getter.
+
+=== Mieszany @Access
+
+[source,java]
+----
+
+@Entity
+@Access(AccessType.FIELD)
+public class Book{
+@Id
+@Setter
+@Getter
+private Long id;
+
+private String name;
+
+@Access(AccessType.PROPERTY)
+public String getName()...
+public void setName(String name)...
+}
+----
+
 
 
 == **@Entity** 
 - klasy,  które mają brać udział w procesie utrwalania
+  
+- może być abstract
+- nie może być final
+- nie może zawierać pola i metody final
+- musi posiadać bezargumentowy konstruktor
+- musi posiadać klucz główny **@Id**
+- dla komunikacji (distributed/web/session/serializable) powinna implementować Serializable
+- posiada wyróżnioną tożsamość
+
 
 [source,java]
 ----
@@ -23,10 +69,110 @@ public class Simple {
 ----
 
 
-== **@Id** 
+== Klucze **@Id** 
+
+=== Prosty
+
+
+=== Ustawianie wartości
+
+==== ręczne
+
+==== automatyczne
+
+
 - każda klasa encyjna musi posiadać unikalny identyfikator.
 
-== **@Table(name="PERSONS")**
+[source,java]
+----
+@Id
+public Long id;
+----
+
+-   **Database sequence** - wykorzystuje sekwencje
+-   **Native generator** - wybiera jedną ze strategii generowania identyfikatorów : identity, sequence, hilo w zależności od możliwości bazy 
+-   **Increment generator** (Identity)
+-   **Hilo generator** - identyfikatory są unikalne w ramach całej bazy
+-   **UUID** - generuje Stringi (unikalny w sieci adres ip + znacznik czasu). Jest to  kosztowne rozwiązanie.
+
+
+==== @TableGenerator
+
+[source,java]
+----
+@TableGenerator(name="Book_Gen", table="ID_GEN",pkColumnName="GEN_NAME", valueColumnName="GEN_VAL", initialValue=10000, allocationSize=100)
+
+@Id
+@GeneratedValue(generator="Book_Gen")
+private Long id;
+----
+
+
+==== @SequenceGenerator
+
+[source,java]
+----
+@SequenceGenerator(name="Book_Gen", sequenceName="Book_Seq",initialValue=10000,allocationSize=100)
+
+@Id
+@GeneratedValue(generator="Book_Gen")
+private Long id;
+----
+
+
+=== Klucz złożony 
+
+==== Primary key column – @Id and @IdClass
+
+[source,java]
+----
+public class BookPK implements Serializable{
+
+private String name;
+private String isbn;
+public int hashCode() {
+return ...;
+}
+public boolean equals(Object obj) {
+return ...;
+}
+}
+----
+
+[source,java]
+----
+@IdClass(BookPK.class)
+@Entity
+public class Book{
+@Id
+private String id;
+@Id
+private String isbn;
+}
+----
+
+
+
+==== @Embeddable & @EmbeddedId
+
+[source,java]
+----
+@Embeddable
+public class BookPK implements Serializable{
+}
+----
+
+[source,java]
+----
+@Entity
+public class Book{
+@EmbeddedId
+private BookPk bookPk;
+}
+----
+
+
+== **@Table**
 - domyślnie nazwa tabeli jest taka sama jak nazwa klasy. Jeśli domyślne ustawienie jest nie wystarczające z różnych powodów możemy użyć @Table
 
 [source,java]
@@ -47,11 +193,30 @@ class Employee{
 ---- 
 
 
-== **@Column(name="USER_NAME")**
+== **@Column**
  - analogiczne zachowanie do adnotacji @Table
 
 insertable and updatable = Both these attributes accept a Boolean value. This denotes whether the column takes part in
 the insert and update operations or not.
+
+
+[source,java]
+----
+
+    @Column(name = "retryattempt", columnDefinition = "numeric", nullable = true)
+    private int retryAttempt = 0;
+
+    @Column(name = "messageerror", columnDefinition = "nvarchar")
+    private String messageError;
+
+    @Column(name = "messagebody", length = Integer.MAX_VALUE, columnDefinition = "nvarchar")
+    private String body;
+
+    @Column(name = "detailstatus", columnDefinition = "nvarchar")
+    @Enumerated(EnumType.STRING)
+    private DetailStatus status;
+----
+
 
 
 == **@Transient**
@@ -174,7 +339,6 @@ public class Product {
 }
 ----    
 
-=== java.sql.NClob - Mapping Nationalized Character Data
     
 [source,java]
 ----
@@ -217,15 +381,15 @@ public class Product {
 
 === DATE  
 
- java.sql.Date
+-  java.sql.Date
     
 === TIME  
 
- java.sql.Time
+-  java.sql.Time
     
 === TIMESTAMP  
 
- java.sql.Timestamp
+- java.sql.Timestamp
    
 == Mapping Java 8 Date/Time Values
 
@@ -240,7 +404,7 @@ public class Product {
 
 === DATE
 
- java.time.LocalDate
+-  java.time.LocalDate
  
 [source,sql]
 ----
@@ -249,7 +413,8 @@ INSERT INTO DateEvent( timestamp, id ) VALUES ( '2015-12-29', 1 )
     
 === TIME 
 
- java.time.LocalTime, java.time.OffsetTime
+-  java.time.LocalTime
+-  java.time.OffsetTime
  
 [source,sql]
 ----
@@ -258,7 +423,10 @@ INSERT INTO DateEvent( timestamp, id ) VALUES ( '16:51:58', 1 )
     
 === TIMESTAMP
 
- java.time.Instant, java.time.LocalDateTime, java.time.OffsetDateTime and java.time.ZonedDateTime
+-  java.time.Instant,
+-  java.time.LocalDateTime
+-  java.time.OffsetDateTime
+-  java.time.ZonedDateTime
 
 [source,sql]
 ----
@@ -474,22 +642,6 @@ public class Contact {
 == **@SecondaryTable** 
 
 
-== @Id
-
--	**Database sequence** - wykorzystuje sekwencje
--	**Native generator** - wybiera jedną ze strategii generowania identyfikatorów : identity, sequence, hilo w zależności od możliwości bazy 
--	**Increment generator** (Identity)
--	**Hilo generator** - identyfikatory są unikalne w ramach całej bazy
--   **UUID** - generuje Stringi (unikalny w sieci adres ip + znacznik czasu). Jest to  kosztowne rozwiązanie.
-
-
-[source,java]
-----
-@Id
-private Integer id;
-----
-
-
 
 == @AttributeOverride
 
@@ -548,30 +700,7 @@ The bidirectional @OneToMany association also requires a @ManyToOne association 
 Every bidirectional association must have one owning side only (the child side), the other one being referred to as the inverse (or the mappedBy) side.
 
 
-@Id -  primary key
 
-•	 Database sequence
-•	 Native generator
-•	 Increment generator
-•	 Hilo generator
-
-@Column
-[source,java]
-----
-
-    @Column(name = "retryattempt", columnDefinition = "numeric", nullable = true)
-    private int retryAttempt = 0;
-
-    @Column(name = "messageerror", columnDefinition = "nvarchar")
-    private String messageError;
-
-    @Column(name = "messagebody", length = Integer.MAX_VALUE, columnDefinition = "nvarchar")
-    private String body;
-
-    @Column(name = "detailstatus", columnDefinition = "nvarchar")
-    @Enumerated(EnumType.STRING)
-    private DetailStatus status;
-----
 
 
 == @Type (Hibernate only) 
@@ -590,7 +719,6 @@ private String description;
 == Komponenty zagnieżdzone 
 
 
-composite primary key column – @Id and @IdClass
 
 
 == @ElementCollection**  - dla typów prostych lub klas osadzonych
@@ -629,13 +757,7 @@ protected List<User> children;
   - joinColumns – kolumna tabeli złączenia, stanowiąca klucz dla encji
   - inverseJoinColumns – kolumna tabel złączenia, stanowiąca klucz dla encji po drugiej stronie relacji
   
- 
-== Identyfikatory
-[source,xml]
-----
-@Id
-public Long id;
-----
+
 
 == Relacje
 

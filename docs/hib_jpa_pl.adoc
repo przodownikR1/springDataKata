@@ -68,13 +68,14 @@ Standardowe podejście oparte na JDBC wymaga od programisty następujących czyn
 **Czyli ORM :**
 [options=interactive]
 
-*    redukuje znaczenie ilość kodu potrzebnego to stworzenia i wykonania zapytania 
-*    redukuje koszt i czas deploymentu
-*    redukcja boilerplate JDBC 
-*    skupienie na problemach biznesowych 
-*    mniej synchronizacji kodu z relacyjną bazą danych
-*    zwiększa szybkość wytwarzania (produktywność - metaDane, query data)
-*    dostarcza mechanizmy przenośności na inne bazy (nie musimy ograniczać się do danego typu bazy )  (portability)
+**    redukuje znaczenie ilość kodu potrzebnego to stworzenia i wykonania zapytania
+**    ochrona programisty przed czasochłonnym SQLem 
+**    redukuje koszt i czas deploymentu
+**    redukcja boilerplate JDBC 
+**    skupienie na problemach biznesowych 
+**    mniej synchronizacji kodu z relacyjną bazą danych
+**    zwiększa szybkość wytwarzania (produktywność - metaDane, query data)
+**    dostarcza mechanizmy przenośności na inne bazy (nie musimy ograniczać się do danego typu bazy )  (portability)
 
 **   **Dostępne dialekty :** 
    
@@ -366,9 +367,11 @@ The Hibernate support for Java 8 Date Time API is provided in a separate module 
 
 == Connection pooling
 
-Tworzenie  połączeń do bazy danych  jest kosztowne.
-Hibernate dostarcza gotowe rozwiązanie do poolingu. Jednak rozwiązanie nie jest zalecane w produkcyjnym środowisku.
-Zalecane w środowiskach produkcyjnych jest wykorzystanie zewnętrzych poll poprzez odwołania z JNDI lub konfigurowane zewnętrznie poprzez classpath czy odpowienie pliki properties.
+** Tworzenie  połączeń do bazy danych  jest kosztowne.
+** Utrzymywanie wielu niewykorzystywanych połączeń jest kosztowne
+** Hibernate dostarcza gotowe rozwiązanie do poolingu. Jednak rozwiązanie nie jest zalecane w produkcyjnym środowisku.
+** Tworzenie kostrukcji przygotowawczych dla niektórych sterowników jest również kosztowne
+** Zalecane w środowiskach produkcyjnych jest wykorzystanie zewnętrzych poll poprzez odwołania z JNDI lub konfigurowane zewnętrznie poprzez classpath czy odpowienie pliki properties.
 
 Przykład zewnętrznej puli połączeń c3p0: 
 

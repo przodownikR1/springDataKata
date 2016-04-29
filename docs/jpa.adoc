@@ -3,47 +3,66 @@
 :numbered:
 :icons: font
 :pagenums:
-:imagesdir: images
-:source-highlighter: coderay
+:imagesdir: img
+:iconsdir: ./icons
+:stylesdir: ./styles
+:scriptsdir: ./js
 
 :image-link: https://pbs.twimg.com/profile_images/425289501980639233/tUWf7KiC.jpeg
-
 ifndef::sourcedir[:sourcedir: ./src/main/java/]
+ifndef::resourcedir[:resourcedir: ./src/main/resources/]
+ifndef::imgsdir[:imgsdir: ./../img]
+:source-highlighter: coderay
 
-#Sample demo to show how jpa work in effiecient way
+
 
 == Geneza
+
+image:jpa.png[]
 
 **Java Persistence API (JPA)** jest specyfikacją wydaną dla ujednolicenia różnych dostawców trwałości.
 - start odbył się w 2006 roku (wersja **1.0**)
 - w 2013 roku podstała wersja aktualna t.j **2.1**
 
+== Dostawcy trwałości 
 
+- **Hibernate** http://hibernate.org/orm/
+- **EclipseLink** http://www.eclipse.org/eclipselink/
+- **Open JPA** http://openjpa.apache.org/
+- **TopLink** http://www.oracle.com/technetwork/middleware/toplink/overview/index.html
+- **Kodo** http://docs.oracle.com/html/E13946_01/toc.htm
 
-* Wymagane min 
+image::jpaProviders.png[]
+
+== Utrwalanie
+
+- **@Encje**
+- **@MappedSuperClass**
+- **@Embeddable**
+- **@CollectionElement (dla typów prostych lub klas osadzonych)**
+
+== Użycie EntityManager'a [JPA]
+
+=== Zależności 
 [source,xml]
 ----
 <dependency>
-<groupId>org.hibernate</groupId>
-<artifactId>hibernate-entitymanager</artifactId>
-<version>5+.Final</version>
+  <groupId>org.hibernate</groupId>
+  <artifactId>hibernate-entitymanager</artifactId>
+  <version>4.3.5.Final</version>
 </dependency>
 ----
 
-== persistence.xml 
-Powinnien znajdować się w classpath w katalogu META-INF
+=== Schemat zależności
 
+image::entityManager.jpg[]
 
+=== EntityManagerFactory(JPA) = SessionFactory(Hibernate)
 
-== Persistence Unit
-Jednostka trwałości - sposób na komunikowanie się z bazą
-Jest skonfigurowany w pliku persistence.xml
-
-
-== EntityManagerFactory
-Każdemu EntityManagerFactory odpowiada jedna jednostka trwałości (Persistence Unit)
-
-=== Bootstraping
+  Może być programowalny manualnie lub przy pomocy pliku persistence.xml, który to musi znajdować się w classpath projektu.
+  Każdemu EntityManagerFactory odpowiada jedna jednostka trwałości (Persistence Unit)
+  
+==== Bootstraping
 [source,java]
 ----
 EntityManagerFactory emf = Persistence.createEntityManagerFactory("manager1");
@@ -54,25 +73,34 @@ EntityManagerFactory programmaticEmf = Persistence.createEntityManagerFactory("m
 ----
 
 
-== EntityManager
+  
+=== EntityManager
 
-image::entityManager.jpg[]
+==== Cechy
+-  pozwala wykonywać operacje CRUD na encjach.
+-  pozwala też na wykonanie zapytań.
+-  odpowiada mu jeden kontekst trwałości - czyli zbiór obiektów zarządzanych przez EntityManagera w danej chwili
+-  unikaly obiekt w ramach kontekstu trwałości to taki który posiada unikalny identyfikator
 
- Pozwala wykonywać operacje CRUD na encjach.
- Pozwala też na wykonanie zapytań.
- Odpowiada mu jeden kontekst trwałości - czyli zbiór obiektów zarządzanych przez EntityManagera w danej chwili
- Unikaly obiekt w ramach kontekstu trwałości to taki który posiada unikalny identyfikator
- 
- 
- 
-* uzyskanie EntityManager'a
+[source,java]
+----
+public static EntityManager getEntityManager() {
+ EntityManagerFactory managerFactory = Persistence.createEntityManagerFactory("myPu");
+ EntityManager manager = managerFactory.createEntityManager(); 
+return manager;
+}
+
+----
+==== Uzyskiwanie EnitityManagera wersja numer 1
+
+
 [source,java]
 ----
 
 @PersistenceContext
 EntityManager em;
 ---- 
-* uzyskanie EntityManager'a wersja druga
+==== Uzyskiwanie EntityManagera wersja numer 2 
 [source,java]
 ----
 
@@ -127,50 +155,31 @@ Musimy to robić manualnie
         
 ----
 
-  
 
-* Persistence Context
-[source,xml]
-----
-include::{resourcedir}META-INF/persistence.xml[]
-----
-[[entityManager picture]]
-image::entityManager.jpg
+==== EnitityManager Lokalnie
 
 [source,java]
 ----
-EntityManagerFactory emf = Persistence.createEntityManagerFactory("HelloWorldPU");
-
-UserTransaction tx = TM.getUserTransaction();
-tx.begin();
-EntityManager em = emf.createEntityManager();
-Message message = new Message()
-message.setText("Hello World!");
-em.persist(message);
-tx.commit();
-// INSERT into MESSAGE (ID, TEXT) values (1, 'Hello World!')
-em.close();
+EntityManagerFactory entityManagerFactory = Persistence.createEntityManagerFactory("pu");
+EntityManager entityManager = entityManagerFactory.createEntityManager();
 ----
 
+=== EnitityManager Zdalnie
 
-== Użycie EntityManager'a [JPA]
-
-* Zależności 
-[source,xml]
+[source,java]
 ----
-<dependency>
-  <groupId>org.hibernate</groupId>
-  <artifactId>hibernate-entitymanager</artifactId>
-  <version>4.3.5.Final</version>
-</dependency>
+@PersistenceContext(unitName = "pu")
+EntityManager manager;
+
 ----
+  
 
-EntityManagerFactory(JPA) = SessionFactory(Hibernate)
-Może być programowalny manualnie lub przy pomocy pliku persistence.xml, który to musi znajdować się w classpath projektu.
+=== persistence.xml
+ 
+Powinnien znajdować się w classpath w katalogu **META-INF**
+Plik **persistence.xml** jest unikalny dla danego kontekstu **persistence unit**.
 
-Plik persistence.xml jest unikalny dla danego kontekstu persistence unit.
-
-Przykładowy plik persistence.xml
+Przykładowy plik **persistence.xml**
 [source,xml]
 ----
 <persistence xmlns="http://java.sun.com/xml/ns/persistence"
@@ -196,22 +205,46 @@ xsi:schemaLocation="http://java.sun.com/xml/ns/persistence http://java.sun.com/x
 </persistence>
 ----   
 
-RESOURCE_LOCAL transaction - sama aplikacja zarządza transakcjami .
+- **RESOURCE_LOCAL transaction** - sama aplikacja zarządza transakcjami .
 
-JTA transaction - transakcjami zarządza kontener na serwerze aplikacyjnym
+- **JTA transaction** - transakcjami zarządza kontener na serwerze aplikacyjnym
 
-Zestawienie EntityManagera
+== Persistence Unit
+Jednostka trwałości - sposób na komunikowanie się z bazą
+Jest skonfigurowany w pliku persistence.xml
+
+ 
+
+
+  
+
+== Persistence Context
+
+- służy do tworzenia obiektów klasy EntityManagerFactory
+- zbiór obiektów zarządzanych przez entityManagera w danej chwili   
+
+[source,xml]
+----
+include::{resourcedir}META-INF/persistence.xml[]
+----
+
 [source,java]
 ----
-public static EntityManager getEntityManager() {
- EntityManagerFactory managerFactory = Persistence.createEntityManagerFactory("myPu");
- EntityManager manager = managerFactory.createEntityManager(); 
-return manager;
-}
+EntityManagerFactory emf = Persistence.createEntityManagerFactory("HelloWorldPU");
 
+UserTransaction tx = TM.getUserTransaction();
+tx.begin();
+EntityManager em = emf.createEntityManager();
+Message message = new Message()
+message.setText("Hello World!");
+em.persist(message);
+tx.commit();
+// INSERT into MESSAGE (ID, TEXT) values (1, 'Hello World!')
+em.close();
 ----
 
-== Accessing Hibernate APIs from JPA
+
+== Dostęp do Hibernate API z poziomu JPA
 
 [source,java]
 ----
@@ -303,7 +336,7 @@ public class Pet_ {
 
 ----
 
-Using
+=== Przykładowe użycie
 
 [source,java]
 ----

@@ -15,9 +15,9 @@ ifndef::sourcedir[:sourcedir: ./src/main/java/]
 
 == Topic
 
-Możliwe formy zapytań : 
-*  zapytania HQL
-**  Odpowiednik SQL, zamiast tabel i pól operuje na obiektach i jego właściwościach.
+== Możliwe formy zapytań : 
+===  zapytania HQL
+-  Odpowiednik SQL, zamiast tabel i pól operuje na obiektach i jego właściwościach.
 [source,java]
 ----
 
@@ -25,17 +25,63 @@ Query query = session.createQuery(sql);
 
 ----
 
-– Criteria API
-– native SQL
+=== Criteria API
 
 
-== Hibernate Criteria
+=== native SQL
+
+
+=== Hibernate Criteria
 
 [source,java]
 ----
 Criteria criteria = session.createCriteria(Employee.class);
 criteria.add(Restrictions.eq("department.name", "account"));
 List list = criteria.list();
+----
+
+
+
+== Projekcja / Projection
+
+ - zwracanie tylko interesujących użytkownika zapytań
+ - redukcja użycia pamięci 
+ - zwiększona szybkość wykonania
+ - zwiększona szybkość przetwarzania
+ 
+[source,java]
+----
+String sql = "select b.name from Book b";
+
+sql = "select b.id, b.name , b.isbn from Book c";
+
+Query query = entityManager.createQuery(sql);
+List<Object[]> books = query.getResultList();
+
+----
+
+=== Projekcja z użyciem konstruktora
+ 
+[source,java]
+----
+
+String sql = "select pl.java.scalatech.BookDTO(b.name, b.id, b.isbn) from Book b";
+Query query = entityManager.createQuery(sql);
+List<BookDTO> books = query.getResultgetResultList();
+
+---- 
+ 
+== Restriction /  where –  zawężamy
+
+[source,java]
+----
+String sql = "from Book where name="Qua vadis";
+sql = "from Book where name like '%Qu'";
+sql = "from Book where price > 40";
+
+Query query = session.createQuery(sql);
+List<Book> books = query.getResultList();
+
 ----
 
 
@@ -163,7 +209,14 @@ List<Object> entities = session.createSQLQuery(
 ----
 
 
-== Working with NamedQuery
+== Zapytania nazywane / NamedQuery
+
+W celu wygodniejszego używania oraz większej wydajności korzysta się tzw nazwanych zapytań.
+
+- prekompilacja
+- powiązanie z encją 
+- model programowy
+
 
  *@NamedQuery* : This annotation is used to define a single named query
  *@NamedQueries* : This annotation is used to define multiple queries
@@ -461,12 +514,7 @@ List<Object[]> phonePayments = entityManager.createQuery(
 
 ----
 
-== Projekcja
-Umożliwia pobranie tylko interesujących nas danych. 
-Zmniejsza zużycie pamięci i zwiększa szybkość przetwarzania.
 
-[source,java]
-----
 
 === Like
 
@@ -511,16 +559,7 @@ List<Person> persons = entityManager.createQuery(
 
 ----
 
-== Projekcja dzięki konstrukcji z konstruktorem
 
-[source,java]
-----
-
-String sql = "select pl.java.scalatech.BookDTO(b.name, b.id, b.isbn) from Book b";
-Query query = entityManager.createQuery(sql);
-List<BookDTO> books = query.getResultgetResultList();
-
-----
 
 
 [source,java]
@@ -742,11 +781,36 @@ List<Person> persons = entityManager.createQuery(
 
 == Podzapytania
 
+[source,java]
+----
+SELECT b FROM Book b WHERE b.price = (SELECT MAX(emp.salary) FROM Employee emp)
+----
 
 == IN
 
+[source,java]
+----
+SELECT  FROM Person p WHERE p.sex IN ('MALE', 'FEMALE')
+----
+
 == Operacje na kolekcjach
 
+[source,java]
+----
+SELECT e FROM Company c  WHERE c.products IS NOT EMPTY
+SELECT e FROM Company c WHERE :project MEMBER OF c.products
+
+----
+
+== Sortowanie
+
+[source,java]
+----
+String sql = "from Book b order by b.name asc";
+Query query = entityManager.createQuery(sql);
+List<Book> books = query.getResultList();
+
+----
 
 == Agregacje
 
@@ -862,8 +926,30 @@ List<Object[]> personTotalCallDurations = entityManager.createQuery(
 
 == Stronicowanie
 
+
+[source,java]
+----
+String sql = "from Book";
+Query query = entityManager.createQuery(sql);
+query.setFirstResult(10);
+query.setMaxResults(25);
+List<Book> books = query.getResultList();
+----
+
 == Pobieranie pojedyńczego wyniku
 
+[source,java]
+----
+String sql = "from Book b where b.id=:id";
+Query query = entityManager.createQuery(sql);
+query.setLong("id", 1);
+Book book = (Book)query.getSingleResult();
+----
+
+WARNING:  **org.hibernate.NonUniqueResultException** gdy metoda zwróci więcej niż jedne obiekt
+
+NOTE: Zwraca pojedyńczy obiekt lub **null** jeśli takiego obiektu nie ma w bazie
+ 
 
 == JOIN
 
