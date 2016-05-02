@@ -1321,6 +1321,19 @@ log4j.logger.org.hibernate.type=trace
 
 == Dobre praktyki
 
+- Ochrona przed SQL Injection
+
+WARNING:
+
+[source,java]
+----
+String searchString = getValueEnteredByUser();
+
+Query query = em.createQuery(
+"select i from Item i where i.name = '" + searchString + "'"
+);
+----
+
  - zachowanie właściwych poziomów abstrakcji podczas modelowania relacji
  - unikanie jawnych opercji save() - wzorzec 'unit of work'
  - load vs get

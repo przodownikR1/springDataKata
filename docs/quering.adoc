@@ -711,6 +711,13 @@ int deletedEntities = entityManager.createQuery("delete Person p where p.name = 
 
 ----
 
+[source,java]
+----
+Query query=session.createQuery("delete from Employee where status=:status");
+query.setString("status", "fired");
+int rowsDeleted=query.executeUpdate();
+----
+
 == Between
 
 [source,java]
@@ -949,6 +956,14 @@ Book book = (Book)query.getSingleResult();
 WARNING:  **org.hibernate.NonUniqueResultException** gdy metoda zwróci więcej niż jedne obiekt
 
 NOTE: Zwraca pojedyńczy obiekt lub **null** jeśli takiego obiektu nie ma w bazie
+ 
+[source,java]
+----
+String hql = "from Product where price > 21.0";
+Query query = session.createQuery(hql);
+query.setMaxResults(1);
+Product product = (Product) query.uniqueResult();
+----
  
 
 == JOIN
