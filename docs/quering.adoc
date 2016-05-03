@@ -16,8 +16,12 @@ ifndef::sourcedir[:sourcedir: ./src/main/java/]
 == Topic
 
 == Możliwe formy zapytań : 
-===  zapytania HQL
--  Odpowiednik SQL, zamiast tabel i pól operuje na obiektach i jego właściwościach.
+===  zapytania HQL, JPQL
+**  Odpowiednik SQL
+** zamiast tabel i pól operuje na obiektach i jego właściwościach.
+** przenośny zależny od dostawcy
+** 
+
 [source,java]
 ----
 

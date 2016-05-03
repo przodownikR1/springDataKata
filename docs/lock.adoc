@@ -79,7 +79,7 @@ private String bookName;
 - mechanizm umiemożliwiający współbieżny dostęp do konkretnego zasobu.
 - zakładana w momencie odczytu danych aż do zakończenia transakcji
 
-CAUTION: Nie jest to najlepszy wybór dla wysoce współbieżnej aplikacji. Powoduje istotny spadek wydajności.
+CAUTION: Nie jest to najlepszy wybór dla wysoce współbieżnej aplikacji. Powoduje istotny spadek wydajności. Możemy liczyć się z zakleszczeniami (deadlock).
 
     **READ** - blokowanie na odczyt (ochrona przed dirty reads i  unrepeatable reads)
     **WRITE** - blokowanie na zapis (ochrona przed dirty reads i  unrepeatable reads)

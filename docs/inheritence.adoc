@@ -71,7 +71,10 @@ image::singleTable.jpg[]
 NOTE: Najbardziej wydajna oraz najprostsza ze wszystkich strategii
 Jeśli potrzebujemy korzystać z zapytań polimorficznych do klasy bazowej i podklasy zawierają niewiele własnych właściowości - wybierz tą strategię
 
-CAUTION: Dopuszczanie wartości **NULL** może stanowić zagrożenie integralności danych
+CAUTION: Dopuszczanie wartości **NULL** może stanowić zagrożenie integralności danych. Straty miejsca w bazie. Brak normalizacji danych.
+
+CAUTION: Zbyt wiele kolumn w tabeli może mieć impakt na wydajność.
+
 
 
 [source,java]
@@ -173,7 +176,7 @@ CREATE TABLE Account (
 NOTE: główna zaleta tej strategii to pełna normalizacja modelu relacyjnego. Jeśli potrzebujemy korzystać z zapytań polimorficznych do klasy bazowej i podklasy zawierają wiele własnych właściowości - wybierz tą strategię
  
  
-WARNING: W przypadku złożonych hierarchii wydajność nie jest do zaakceptowania. Zapytania wymagaja złączenia wielu tabel, albo wielu sekwencyjnych odczytów
+WARNING: W przypadku złożonych hierarchii wydajność nie jest do zaakceptowania (joins). Zapytania wymagaja złączenia wielu tabel, albo wielu sekwencyjnych odczytów
  
 [source,java]
 ----
