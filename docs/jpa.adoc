@@ -43,6 +43,8 @@ image::jpaProviders.png[]
 
 == Użycie EntityManager'a [JPA]
 
+
+
 === Zależności 
 [source,xml]
 ----
@@ -58,6 +60,10 @@ image::jpaProviders.png[]
 image::entityManager.jpg[]
 
 === EntityManagerFactory(JPA) = SessionFactory(Hibernate)
+
+source : __http://www.java-forums.org/ocpjbcd/53005-tutorial-review-entitymanager-context-component-developer-exam.html__
+
+image::A7-EntityManagerFactory.jpg[]
 
   Może być programowalny manualnie lub przy pomocy pliku persistence.xml, który to musi znajdować się w classpath projektu.
   Każdemu EntityManagerFactory odpowiada jedna jednostka trwałości (Persistence Unit)
@@ -76,6 +82,11 @@ EntityManagerFactory programmaticEmf = Persistence.createEntityManagerFactory("m
   
 === EntityManager
 
+source: __http://www.java-forums.org/ocpjbcd/53005-tutorial-review-entitymanager-context-component-developer-exam.html__
+
+image::A7-EntityManagerFactory.jpg[]
+
+
 ==== Cechy
 -  pozwala wykonywać operacje CRUD na encjach.
 -  pozwala też na wykonanie zapytań.
@@ -91,6 +102,11 @@ return manager;
 }
 
 ----
+
+==== Cykl życia
+image::A7-EntityLifecycle.jpg[]
+
+
 ==== Uzyskiwanie EnitityManagera wersja numer 1
 
 

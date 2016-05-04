@@ -543,6 +543,9 @@ SessionFactory factory = new AnnotationConfiguration().configure().buildSessionF
 </hibernate-configuration>
 ----
  
+source : __http://www.noesispoint.com/jsp/hibernate/HibernateIntro.htm__
+
+image::HibSessionFactory.jpg[]
 
  
 == Session ~ EntityManager (zarząda trwałości obiektów (persistence manager))

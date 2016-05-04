@@ -61,6 +61,10 @@ image:overview-full.png[]
 ** łatwość utrzymania
  
 
+source: __https://aishwaryavaishno.wordpress.com/category/technical-posts/java/__
+
+image::tx-annotation2.png[]
+
 === EntityManager
 - wstrzyknięcie jest zawsze wątkowo bezpieczne
 
