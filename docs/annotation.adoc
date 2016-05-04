@@ -106,8 +106,10 @@ public Long id;
 @TableGenerator(name="Book_Gen", table="ID_GEN",pkColumnName="GEN_NAME", valueColumnName="GEN_VAL", initialValue=10000, allocationSize=100)
 
 @Id
-@GeneratedValue(generator="Book_Gen")
+@GeneratedValue(strategy = GenerationType.TABLE,generator="Book_Gen")
 private Long id;
+
+
 ----
 
 
@@ -118,8 +120,9 @@ private Long id;
 @SequenceGenerator(name="Book_Gen", sequenceName="Book_Seq",initialValue=10000,allocationSize=100)
 
 @Id
-@GeneratedValue(generator="Book_Gen")
+@GeneratedValue(strategy = GenerationType.SEQUENCE,generator="Book_Gen")
 private Long id;
+
 ----
 
 
@@ -838,6 +841,16 @@ private String description;
 @CollectionTable(name = "email")
 @IndexColumn(name="email_index")
 private List<String> emails;
+
+@ElementCollection(targetClass = CarBrands.class)
+@Enumerated(EnumType.STRING)
+private List<CarBrands> brands;
+}
+
+public enum CarBrands {
+SUZUKI, STAR, FERRARI,JAGUAR;
+}
+
 ----
  
 == **@OrderBy**

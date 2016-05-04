@@ -318,10 +318,7 @@ Query q = entityManager.getNamedQuery("Company.findAll");
 ----
 
 
-List<Object[]> tuples = entityManager.createNamedQuery(
-    "find_person_with_phones_by_name" )
-.setParameter("name", "J%")
-.getResultList();
+List<Object[]> tuples = entityManager.createNamedQuery("find_person_with_phones_by_name" ).setParameter("name", "J%").getResultList();
 
 for(Object[] tuple : tuples) {
     Person person = (Person) tuple[0];
@@ -407,34 +404,41 @@ Query query = entityManager.createQuery(
 
 ==== javax.persistence.query.timeout
 
-    Defines the query timeout, in milliseconds.
+** definujemy timeout dla kwerendy
+
+   
 javax.persistence.fetchgraph
 
-    Defines a fetchgraph EntityGraph. Attributes explicitly specified as AttributeNodes are treated as FetchType.EAGER (via join fetch or subsequent select). For details, see the EntityGraph discussions in Fetching.
-==== javax.persistence.loadgraph
+** definujemy EntityGraph
+   
 
-    Defines a loadgraph EntityGraph. Attributes explicitly specified as AttributeNodes are treated as FetchType.EAGER (via join fetch or subsequent select). Attributes that are not specified are treated as FetchType.LAZY or FetchType.EAGER depending on the attribute’s definition in metadata. For details, see the EntityGraph discussions in Fetching.
 ==== org.hibernate.cacheMode
 
-    Defines the CacheMode to use. See org.hibernate.Query#setCacheMode.
+** definujemy rodzaj buforowania
+   
 ==== org.hibernate.cacheable
 
-    Defines whether the query is cacheable. true/false. See org.hibernate.Query#setCacheable.
+** definujemy czy kewrenda ma być buforowana
+   
 ==== org.hibernate.cacheRegion
 
-    For queries that are cacheable, defines a specific cache region to use. See org.hibernate.Query#setCacheRegion.
+** definujemy nazwę regionu bufora
+ 
 ==== org.hibernate.comment
 
-    Defines the comment to apply to the generated SQL. See org.hibernate.Query#setComment.
+** oznaczamy opisowo daną kwerende
+   
 ==== org.hibernate.fetchSize
 
-    Defines the JDBC fetch-size to use. See org.hibernate.Query#setFetchSize
+** definujemy fetchSize
+
 ==== org.hibernate.flushMode
 
-    Defines the Hibernate-specific FlushMode to use. See org.hibernate.Query#setFlushMode. If possible, prefer using javax.persistence.Query#setFlushMode instead.
+** definujemy flushMode dla kwerendy
+    
 ==== org.hibernate.readOnly
 
-    Defines that entities and collections loaded by this query should be marked as read-only. See org.hibernate.Query#setReadOnly
+** definujemy czy interesujący nas obiekt  ma być tylko do odczytu 
 
 
 === Timestamp
@@ -1046,9 +1050,9 @@ List<Person> persons = entityManager.createQuery(
 
 
 
-== JPQL standardized functions
+== JPQL wspieranie standardów
 
-=== CONCAT
+=== CONCAT - łącznie dwóch lub większej ilości stringów
 
 [source,java]
 ----
@@ -1063,7 +1067,7 @@ List<String> callHistory = entityManager.createQuery(
 
 ----
 
-=== SUBSTRING
+=== SUBSTRING - wycinanie cześci stringa z danego ciągu znaków
 
 [source,java]
 ----
@@ -1078,7 +1082,7 @@ List<String> prefixes = entityManager.createQuery(
 
 ----
 
-=== UPPER
+=== UPPER - zamiana na duże litery
 
 [source,java]
 ----
@@ -1088,7 +1092,7 @@ List<String> names = entityManager.createQuery(
 .getResultList();
 ----
 
-=== LOWER
+=== LOWER - zamiana na małe litery
 
 [source,java]
 ----
@@ -1097,7 +1101,7 @@ List<String> names = entityManager.createQuery(
     "from Person p ", String.class )
 .getResultList();
 ----
-=== TRIM
+=== TRIM - usuwanie białych znaków
  
 [source,java]
 ----
@@ -1106,7 +1110,7 @@ List<String> names = entityManager.createQuery(
     "from Person p ", String.class )
 .getResultList();
 ----
-=== LENGTH
+=== LENGTH - obliczanie długości ciągu znaków
  
 [source,java]
 ----
@@ -1119,7 +1123,7 @@ List<Integer> lengths = entityManager.createQuery(
 ----
 
 
-=== ABS
+=== ABS - obliczanie wartości absolutnej
  
 [source,java]
 ----
@@ -1131,7 +1135,7 @@ List<Integer> abs = entityManager.createQuery(
 
 ----
 
-=== MOD
+=== MOD - obliczanie reszty z dzielenia
  
 [source,java]
 ----
@@ -1144,7 +1148,7 @@ List<Integer> mods = entityManager.createQuery(
 ----
 
 
-=== SQRT
+=== SQRT - pierwiastek
  
 [source,java]
 ----
@@ -1157,7 +1161,7 @@ List<Double> sqrts = entityManager.createQuery(
 ----
 
 
-=== CURRENT_DATE
+=== CURRENT_DATE - bieżaca data
  
 [source,java]
 ----
@@ -1173,7 +1177,7 @@ List<Call> calls = entityManager.createQuery(
 ----
 
 
-=== CURRENT_TIME
+=== CURRENT_TIME - bieżacy czas
  
 [source,java]
 ----
@@ -1186,7 +1190,7 @@ List<Call> calls = entityManager.createQuery(
 
 ----
 
-=== CURRENT_TIMESTAMP
+=== CURRENT_TIMESTAMP - bieżaca data i czas z milisek
 
 [source,java]
 ----
@@ -1202,7 +1206,7 @@ List<Call> calls = entityManager.createQuery(
 == HQL functions
 
 
-=== CAST
+=== CAST - rzutowanie 
 
 [source,java]
 ----
@@ -1214,7 +1218,7 @@ List<String> durations = entityManager.createQuery(
 
 ----
 
-=== EXTRACT
+=== EXTRACT 
 
 [source,java]
 ----
@@ -1237,21 +1241,16 @@ List<Integer> years = entityManager.createQuery(
 ----
 
 === MONTH
-
-    Abbreviated extract form for extracting the month.
+** użycie analogiczne jak w przykładzie wyżej
 === DAY
-
-    Abbreviated extract form for extracting the day.
+** użycie analogiczne jak w przykładzie wyżej  
 === HOUR
-
-    Abbreviated extract form for extracting the hour.
+  ** użycie analogiczne jak w przykładzie wyżej
 === MINUTE
-
-    Abbreviated extract form for extracting the minute.
+ ** użycie analogiczne jak w przykładzie wyżej
 ===  SECOND
-
-    Abbreviated extract form for extracting the second.
-
+** użycie analogiczne jak w przykładzie wyżej
+ 
 
 == Entity type
 
@@ -1292,6 +1291,13 @@ List<String> nickNames = entityManager.createQuery(
     "from Person p", String.class )
 .getResultList();
 
+----
+
+== Użycie konstruktora 
+
+[source,java]
+----
+SELECT NEW pl.java.scalatech.EmployeeReport(e.firstName, e.lastName, e.salary) FROM Employee e
 ----
 
 
