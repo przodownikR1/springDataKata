@@ -3,32 +3,27 @@
 :numbered:
 :icons: font
 :pagenums:
-:imagesdir: images
-:source-highlighter: coderay
+:imagesdir: img
+:iconsdir: ./icons
+:stylesdir: ./styles
+:scriptsdir: ./js
 
 :image-link: https://pbs.twimg.com/profile_images/425289501980639233/tUWf7KiC.jpeg
-
 ifndef::sourcedir[:sourcedir: ./src/main/java/]
+ifndef::resourcedir[:resourcedir: ./src/main/resources/]
+ifndef::imgsdir[:imgsdir: ./../img]
+:source-highlighter: coderay
 
-#Sample demo to show how jpa work in effiecient way
-
-== Topic
+== Wydajność (Performance)
 
 == Lazy
 
-Lazy loading has long been regarded as one of Hibernate’s most valuable features, especially with
-respect to improving performance. By declaring a domain object’s association or property to be lazy, an
-application can avoid undue overhead on the underlying database, which can often lead to faster
-response times and smaller datasets—both favorable qualities.
+** leniwe ładowanie to jeden z features Hibernate. Pozwala ładować grafy obiektów w momencie faktycznej potrzeby skorzystania z tych danych.
+** w wielu wypadkach zapewnia znaczny wzrost wydajności poprzez ograniczenie niepotrzebnych strzałów do bazy
+** zmniejsza czas odpowiedzi
+** zapobiega zbyt dużemu zużyciu pamięci
+** problem LazyLoadingException 
 
-The problem is that lazy loading is a double-edged sword. It is vital for maintaining decent loading
-performance, but is also a significant risk for major performance problems. While lazy loading reduces
-the amount of data (as well as the potential for table joins) loaded from the database, this laziness can be
-very problematic for data that might need to be loaded from the database anyway.
-This is not to imply that lazy loading is a bad feature or that it should be disabled. It is a
-misunderstood problem that is very dependent on the context.
-Let’s begin by looking at one of the most common and significant issues related to lazy loading that
-affects persistence-based applications.
 
 === less lazy loading
 
@@ -45,19 +40,7 @@ public Set<ArtEntity> getArtEntities() {
 return artEntities;
 }
 
-Now, even though our artEntities association is still lazy by default, Hibernate will get ahead of us
-and attempt to initialize more than just a single artEntities collection at a time. It accomplishes this by
-using a SQL in condition, passing in ten identifiers of a Category instance when loading from the
-ArtEntity table.
-In other words, batching works similarly to the default lazy configuration. First a Category is loaded,
-then its artEntities association is loaded in a separate query (when the artEntities property is
-accessed, of course). However, with batching enabled, Hibernate will attempt to load more than one
-artEntities association, querying for the number of associations specified in the size attribute of the
-@BatchSize annotation.
-Keep in mind that @BatchSize doesn’t attempt to load multiple items within a collection. A
-collection is normally initialized in entirety via a separate select. Rather, @BatchSize will load multiple
-associations, to preclude initialization of other associations in our other Category instances (using our
-example).
+
 
 === OpenInView
 
@@ -82,11 +65,11 @@ class>
 
 * Analiza logów Hibernate - poprawa wolnych zapytań
 
-* Analiza statystyk
-You can use these information during development and check them against your expectations. 
-By doing this regularly, you can avoid the most common issues caused by slow queries, too many queries and missing cache usage. 
-And keep in mind that you are working with a small test database. 
-5 or 10 additional queries during your test might be several hundreds or thousands, if you switch to the bigger production database.
+** Analiza statystyk
+*** wolne zapytania
+*** zbyt wiele zapytań n+1 problem
+*** trafienia w cache
+
 
 * Wybór strategii pobierania danych : fetchType
 
@@ -104,24 +87,18 @@ And keep in mind that you are working with a small test database.
 ----
  
 * Ciężkie zapytania np raporty powinny być wykonywane po stronie bazy
+
 @NamedStoredProcedureQuery
 
-* Użyj cache 
-The 1st level cache is activated by default and caches all entities that were used within the current session.   
+* Użyj cache
+** pierwszy poziom cache aktywowany jest domyślnie 
+** drugi poziom cache jest włączany świadomie przez programistę. Konfigurowany dla klasy i kolekcji  
+** buforowanie zapytań. Jest użyteczny podczas częstego wykonywania zapytań z takimi samymi parametrami. 
 
-The session independent 2nd level cache also stores entities but needs to be activated by setting the shared-cache-mode property in the persistence.xml. 
-The caching of specific entities can be activated by adding the javax.persistence.
-Cacheable or the org.hibernate.annotations.Cache annotation to the entity.
 
-The query cache is the only one which does not store entities.
- It caches query results and contains only entity references and scalar values.
-  You need to activate the cache by setting the hibernate.cache.use_query_cache property in the persistence.xml file and set the cacheable
-   property on the Query.
 
 * Masowe operacje UPDATE i DELETE
 CriteriaUpdate and CriteriaDelete 
-
-Updating or deleting one entity after the other feels quite natural in Java but it is also very inefficient. Hibernate creates one SQL query for each entity that was updated or deleted. The better approach would be to perform these operations in bulks by creating update or delete statements that affect multiple records at once.
 
 [source,java]
 ----
@@ -144,38 +121,38 @@ this.em.createQuery(update).executeUpdate();
 * Strategie pobierania (Fetching Strategies)
 
 
-
 == FETCH
 
 
 === Eager
-   - natychmiatowe
-   - czasem wygodne do użycia
-   - znaczący przyrost danych pobieranych z bazy
-   - sekwencyjne odczyty z bazy lub bufora danych 
-   - **FetchType.EAGER** -  domyślne dla @OneToOne i @ManyToOne
+**  natychmiatowe
+**  czasem wygodne do użycia
+**  znaczący przyrost danych pobieranych z bazy
+**  sekwencyjne odczyty z bazy lub bufora danych 
+** **FetchType.EAGER** -  domyślne dla @OneToOne i @ManyToOne
    
 === Lazy
-   - opóźniony/odroczony dostęp do danych
-   - proxy
-   - tworzy nowe zapytanie do bazy danych jeśli obiekt nie istnieje w buforze
-   - **FetchType.LAZY** -  domyślne dla @OneToMany i @ManyToMany
-   - jest możliwe jedynie, gdy podstawowa encja jest w stanie managed
-   - pobranie encji w stanie  **Detached** spowoduje wyrzucenie wyjątku - LazyInitializationException
+**  opóźniony/odroczony dostęp do danych
+**  proxy
+**  tworzy nowe zapytanie do bazy danych jeśli obiekt nie istnieje w buforze
+** **FetchType.LAZY** -  domyślne dla @OneToMany i @ManyToMany
+**  jest możliwe jedynie, gdy podstawowa encja jest w stanie managed
+**  pobranie encji w stanie  **Detached** spowoduje wyrzucenie wyjątku - LazyInitializationException
 
 ==== LazyInitializationException
 
-  - ponowne utrwalenie encji
-  - pobieranie przy pomocy Fetch JOIN
-  - wybór Eager zamiast Lazy
-  - openSessionInView pattern
-  - EntityGraph
-  - isInitialized() - sprawdzamy czy pośrednik jest zaincjalizowany
-  - initialize() - programowe wymuszenie inicjalizacji
+**   ponowne utrwalenie encji
+**   pobieranie przy pomocy Fetch JOIN
+**   wybór Eager zamiast Lazy
+**   openSessionInView pattern
+**   EntityGraph
+**   isInitialized() - sprawdzamy czy pośrednik jest zaincjalizowany
+**   initialize() - programowe wymuszenie inicjalizacji
    
    
 === Fetch Join
-   - obiekt czy kolekcja zostaje pobrana razem z obiektem głównym przez zastosowanie złączenia **JOIN FETCH**
+
+**  obiekt czy kolekcja zostaje pobrana razem z obiektem głównym przez zastosowanie złączenia **JOIN FETCH**
    
 ==== INNER JOIN FETCH** - dla pobrania pojedynczych obiektów
  
@@ -190,20 +167,22 @@ NOTE: To tak naprawdę nie strategia a wskazówka mająca na celu zwiększenia w
      
    
 === Extra lazy
-   - tylko dla kolekcji
-   - nie dociąga całej kolekcji
-   -  @LazyCollection(LazyCollectionOption.EXTRA)
-   -  niektóre operacje jak : size(), contains(), get(), etc. nie odpalają pełnej inicjalizacji kolekcji 
+** tylko dla kolekcji
+** nie dociąga całej kolekcji
+**  @LazyCollection(LazyCollectionOption.EXTRA)
+**  niektóre operacje jak : size(), contains(), get(), etc. nie odpalają pełnej inicjalizacji kolekcji 
    
 ==== EXTRA
-   -  .size() , .contains() etc nie inicjalizują pełnej kolekcji
 
-==== TRUE 
-  - inicjalizacja pełnej kolekcji przy pierwszym odwołaniem do niej
+**  .size() , .contains() etc nie inicjalizują pełnej kolekcji
 
-==== FALSE 
+==== TRUE
+ 
+** inicjalizacja pełnej kolekcji przy pierwszym odwołaniem do niej
 
-   - Eager loading
+==== FALSE
+ 
+** Eager loading
    
     
 
@@ -262,19 +241,19 @@ Graph is query independent
 == Kroki optymalizacji 
 
 === Dziennik zdarzeń 
-- trafienia w bufor 
-- koszty złączenia czy może dwa osobne selecty ?
-- czas wykonywania zapytań
+** trafienia w bufor 
+** koszty złączenia czy może dwa osobne selecty 
+** czas wykonywania zapytań
 
 === Analiza przypadków użycia
 
-- próby wykrycia  problemu n+1
-- analiza wywołań zapytań w celu zmniejszenia liczby i złożoności dla danej akcji biznesowej
+** próby wykrycia  problemu n+1
+** analiza wywołań zapytań w celu zmniejszenia liczby i złożoności dla danej akcji biznesowej
 
 === Dostrajanie parametrów
- - hibernate.max_fetch_depth
- - hibernate batch fetch
- - dobór najlepszego stylu kaskadowego dla każdej relacji w celu zmniejszenia wywołania liczby transakcji i zapytań do bazy poprzez zarządce transakcji
+** hibernate.max_fetch_depth
+** hibernate batch fetch
+** dobór najlepszego stylu kaskadowego dla każdej relacji w celu zmniejszenia wywołania liczby transakcji i zapytań do bazy poprzez zarządce transakcji
  
   
   
@@ -334,12 +313,48 @@ hibernate {
 ----
 
 
-== Inne
-    using too many SQL queries to fetch the required entities from the database, aka the so called n+1 query problem
-    updating entities one by one instead of doing it in using a single statement
-    doing data heavy processing on the Java side, rather than the database side
+== readOnly
 
+source : __java persistence with hibernate__
 
+[source,java]
+----
+em.unwrap(Session.class).setDefaultReadOnly(true);
+Item item = em.find(Item.class, ITEM_ID);
+item.setName("New Name");
+em.flush(); // no update
+----
+
+[source,java]
+----
+Item item = em.find(Item.class, ITEM_ID);
+em.unwrap(Session.class).setReadOnly(item, true);
+item.setName("New Name");
+em.flush() //no update 
+----
+
+[source,java]
+----
+org.hibernate.Query query = em.unwrap(Session.class).createQuery("select i from Item i");
+query.setReadOnly(true).list();
+List<Item> result = query.list();
+for (Item item : result)
+  item.setName("New Name");
+em.flush(); // no update
+----
+
+[source,java]
+----
+Query query = em.createQuery(queryString).setHint(org.hibernate.annotations.QueryHints.READ_ONLY,true );
+----
+
+== Inne możliwe problemy i wskazówki:
+
+** aktualizowanie encji jedna-po-drugiej zamiast zrobienie tego w pojedyńczym kwerendzie
+ 
+** ciężkie procesowanie po stronie Javy zamiast bardziej wydajnego procesowania po stronie bazy 
+  
+** dla małych woluminów danych Eager loading zawsze sens.
 
 
 

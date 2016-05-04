@@ -76,7 +76,7 @@ public class Simple {
 
 === Ustawianie wartości
 
-==== ręczne
+==== ręcznie
 
 ==== automatyczne
 
@@ -89,11 +89,14 @@ public class Simple {
 public Long id;
 ----
 
--   **Database sequence** - wykorzystuje sekwencje
--   **Native generator** - wybiera jedną ze strategii generowania identyfikatorów : identity, sequence, hilo w zależności od możliwości bazy 
--   **Increment generator** (Identity)
--   **Hilo generator** - identyfikatory są unikalne w ramach całej bazy
--   **UUID** - generuje Stringi (unikalny w sieci adres ip + znacznik czasu). Jest to  kosztowne rozwiązanie.
+**   **Database sequence** - wykorzystuje sekwencje. Wsparcie dla baz DB2, PostgreSQL, Oracle, SAP DB.
+**   **Native generator** - wybiera jedną ze strategii generowania identyfikatorów : identity, sequence, hilo w zależności od możliwości bazy
+*** wsparcie dla kolumn identity w bazach DB2, MySQL, MS SQL Server, Sybase, HypersonicSQL. 
+**   **Increment generator** (Identity)
+**   **Hilo generator** - identyfikatory są unikalne w ramach całej bazy. 
+**   **UUID** - generuje Stringi (unikalny w sieci adres ip + znacznik czasu). Jest to  kosztowne rozwiązanie.
+**  **assigned** - pozwala aplikacji nadać identyfikator zanim obiekt zostanie zapisany.(persist, save)
+
 
 
 ==== @TableGenerator
@@ -155,22 +158,107 @@ private String isbn;
 
 ==== @Embeddable & @EmbeddedId
 
+source: __https://en.wikibooks.org/wiki/Java_Persistence/Embeddables__
+
+image:Embeddable.PNG[]
+
 [source,java]
 ----
-@Embeddable
-public class BookPK implements Serializable{
+@Embeddable 
+public class EmploymentPeriod {
+  @Column(name="START_DATE")
+  private java.sql.Date startDate;
+
+  @Column(name="END_DATE")
+  private java.sql.Date endDate;
+  ....
 }
+
 ----
 
 [source,java]
 ----
 @Entity
-public class Book{
-@EmbeddedId
-private BookPk bookPk;
+public class Employee {
+  @Id
+  private long id;
+  ...
+  @Embedded
+  private EmploymentPeriod period;
+  ...
 }
 ----
 
+
+NOTE : Może być wykorzystywany przez  @ElementCollection
+
+=== ElementCollection
+
+[source,java]
+----
+@Entity
+public class Employee {
+  @Id
+  @Column(name="EMP_ID")
+  private long id;
+  ...
+  @ElementCollection
+  @CollectionTable(
+        name="PHONE",
+        joinColumns=@JoinColumn(name="OWNER_ID")
+  )
+  private List<Phone> phones;
+  ...
+}
+----
+
+[source,java]
+----
+@Embeddable
+public class Phone {
+  private String type;
+  private String areaCode;
+  @Column(name="P_NUMBER")
+  private String number;
+  ...
+}
+----
+
+=== AttributeOverride
+
+[source,java]
+----
+
+
+@Entity
+public class Employee {
+  @Id
+  private long id;
+  ...
+  @Embedded
+  @AttributeOverrides({
+    @AttributeOverride(name="startDate", column=@Column(name="START_DATE")),
+    @AttributeOverride(name="endDate", column=@Column(name="END_DATE"))
+  })
+  private Period employmentPeriod;
+  ...
+}
+
+@Entity
+public class User {
+  @Id
+  private long id;
+  ...
+  @Embedded
+  @AttributeOverrides({
+    @AttributeOverride(name="startDate", column=@Column(name="SDATE")),
+    @AttributeOverride(name="endDate", column=@Column(name="EDATE"))
+  })
+  private Period period;
+  ...
+}
+
+----
 
 == **@Table**
 - domyślnie nazwa tabeli jest taka sama jak nazwa klasy. Jeśli domyślne ustawienie jest nie wystarczające z różnych powodów możemy użyć @Table
@@ -191,6 +279,18 @@ class Employee{
 
 
 ---- 
+=== Określenie schematu bazy w persistence.xml
+[source,xml]
+----
+<entity-mappings>
+    <persistence-unit-metadata>
+        <persistence-unit-defaults>
+            <schema name="purchasing"/>
+        </persistence-unit-defaults>
+    </persistence-unit-metadata>
+    ....
+</entity-mappings>
+----
 
 
 == **@Column**
@@ -641,6 +741,28 @@ public class Contact {
  
 == **@SecondaryTable** 
 
+source : __https://en.wikibooks.org/wiki/Java_Persistence/Tables__
+
+image::Emp_Tables_(Database).PNG[]
+
+[source,java]
+----
+@Entity
+@Table(name="EMPLOYEE")
+@SecondaryTable(name="EMP_DATA",
+                pkJoinColumns = @PrimaryKeyJoinColumn(name="EMP_ID", referencedColumnName="ID")
+               )
+public class Employee {
+    ...
+    @Column(name="YEAR_OF_SERV", table="EMP_DATA")
+    private int yearsOfService;
+
+    @OneToOne
+    @JoinColumn(name="MGR_ID", table="EMP_DATA", referencedColumnName="ID")
+    private Employee manager;
+    ...
+}
+----
 
 
 == @AttributeOverride
@@ -692,16 +814,6 @@ CREATE TABLE Phone (
 ALTER TABLE Phone ADD CONSTRAINT PERSON_ID_FK FOREIGN KEY (person_id) REFERENCES Person
 ----
 
-== Bidirectional @OneToMany
-
-
-The bidirectional @OneToMany association also requires a @ManyToOne association on the child side. Although the Domain Model exposes two sides to navigate this association, behind the scenes, the relational database has only one foreign key for this relationship.
-
-Every bidirectional association must have one owning side only (the child side), the other one being referred to as the inverse (or the mappedBy) side.
-
-
-
-
 
 == @Type (Hibernate only) 
 [source,java]
@@ -718,26 +830,15 @@ private String description;
 
 == Komponenty zagnieżdzone 
 
-
-
-
 == @ElementCollection**  - dla typów prostych lub klas osadzonych
 
-
-
+[source,java]
+----
 @ElementCollection(fetch=FetchType.LAZY)
 @CollectionTable(name = "email")
 @IndexColumn(name="email_index")
 private List<String> emails;
-
-@CollectionTable : This annotation indicates that the current field is of the
-Collection type, and hibernate creates a separate table for it. It also creates a
-reference between them. In this case, hibernate creates a table named email with
-email and employee_id . The employee_id column is made by joining the persisted
-class name and the primary key column of the employee class with an underscore ( _ ).
-f f @ElementCollection : This annotation is used to define the relationship with the
-embedded or basic type.
-
+----
  
 == **@OrderBy**
  - kolekcja może zostać uporządkowana według określonych kryteriów
@@ -788,6 +889,48 @@ Za pomoca kluczu głównego
 
 * Many-To-One N:1
 * Many-To-Many N:M
+
+
+== @MapKey
+
+source : __https://en.wikibooks.org/wiki/Java_Persistence/Relationships#Nested_Collections.2C_Maps_and_Matrices__
+
+[source,java]
+----
+public class Employee {
+  private long id;
+  private Map<String, List<Project>> projects;
+}
+----
+
+[source,java]
+----
+public class Employee {
+  @Id
+  @GeneratedValue
+  private long id;
+  ...
+  @OneToMany(mappedBy="employee")
+  @MapKey(name="type")
+  private Map<String, ProjectType> projects;
+}
+----
+
+[source,java]
+----
+public class ProjectType {
+  @Id
+  @GeneratedValue
+  private long id;
+  @ManyToOne
+  private Employee employee;
+  @Column(name="PROJ_TYPE")
+  private String type;
+  @ManyToMany
+  private List<Project> projects;
+}
+----
+
 
 
 == Callbacks

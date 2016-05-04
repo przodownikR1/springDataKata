@@ -53,6 +53,18 @@ WARNING: Dla bardzo dużych woluminów danych: Wyjątkowo nieefektywne ->  **Out
 CAUTION: Wyjątkowo słabe skalowanie dla równoległych lub częstych uaktualnień danych
  
  
+=== Włączenie
+
+[source,java]
+----
+@Entity
+@Cacheable
+public class Employee {
+  ...
+}
+
+---- 
+ 
 
 === javax.persistence.sharedCache.mode
 
@@ -66,39 +78,35 @@ CAUTION: Wyjątkowo słabe skalowanie dla równoległych lub częstych uaktualni
     
 *    **UNSPECIFIED:** zależna od dostawcy JPA.
     
+[source,xml]
+----
+<persistence-unit name="ACME">
+  <shared-cache-mode>NONE</shared-cache-mode>
+</persistence-unit>
+----
+
+=== Retrieval Mode -określa jak dane mają być czytane z bufora (odwołania do EntityManagera)
+
+**    BYPASS: ignoruje cache. Buduje obiekt bezpośrednio z bazy danych
+**    USE: Jeśli dane są w cache pobiera je z bufora w przeciwnym wypadku uderza do bazy
+    
+=== Store Mode - określa jak dane mają być składowane w cache
+
+**    BYPASS: nie wstawia nic do bufora
+**    REFRESH: jeśli dane są w buforze wtedy odświeża , zamienia z danymi z bazy
+**    USE: dane pochodzą z cache
 
 
-=== Retrieval Mode
+** Opcjonalny
+** Cache na poziomie sessionFactory
 
-This mode defines how data is read from the cache when using queries or calling the entitymanager’s find method.
-
-We may modify the mode by setting the property javax.persistence.retrieveMode to a value of the enum javax.persistence.CacheRetrieveMode:
-
-    BYPASS: The cache is bypassed and a call to the database is used to retrieve the data.
-    USE: If the data is available in the cache, it is read from this location, else it is fetched from the database
-
-=== Store Mode
-
-This mode defines how data is stored in the cache.
-
-We may modify the mode by setting the property javax.persistence.storeMode to a value of the enum javax.persistence.CacheStoreMode:
-
-    BYPASS: Don’t put anything into the cache
-    REFRESH: Data is put/updated in the cache when read and committed into the database a refresh enforced
-    USE: Data is put/updated in the cache when read and committed into the database
+=== Dostawcy 
+**  Ehcache
+**  OSCache
+**  SwarmCache
+**  JBoss Cache
 
 
-
-
-
-Opcjonalny
-Cache na poziomie sessionFactory
-
- * Dostawcy 
-  Ehcache
-  OSCache
-  SwarmCache
-  JBoss Cache
 [source,xml]
 ----
 <dependency>
@@ -146,7 +154,6 @@ org.hibernate.cache.ehcache.EhCacheRegionFactory
 @org.hibernate.annotations.Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
 public static class Person {
 }
-
 
 
 ----

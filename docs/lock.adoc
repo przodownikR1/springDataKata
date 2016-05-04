@@ -82,7 +82,10 @@ private String bookName;
 CAUTION: Nie jest to najlepszy wybór dla wysoce współbieżnej aplikacji. Powoduje istotny spadek wydajności. Możemy liczyć się z zakleszczeniami (deadlock).
 
     **READ** - blokowanie na odczyt (ochrona przed dirty reads i  unrepeatable reads)
+     Zakładany automatycznie gdy Hibernate odczytuje dane przy poziomie izolacji Repeatable Read or Serializable isolation level.
+     
     **WRITE** - blokowanie na zapis (ochrona przed dirty reads i  unrepeatable reads)
+     Zakładany automatycznie, gdy Hibernate wstawia lub aktualizuje wiersz 
 
 === LockMode - blokada dla konkretnego elementu
 
@@ -112,6 +115,14 @@ CAUTION: Nie jest to najlepszy wybór dla wysoce współbieżnej aplikacji. Powo
  ** do samo co przy **UPGRADE** ale stosuje zapytanie SELECT ... FOR UPDATE NOWAIT . Wyłącza to czekanie na zwolnienie blokad dotyczących wpółbieżności i natychmiastowe 
  zgłoszenie wyjątku , jeśli blokady nie udało się uzyskać.
  ** LockMode.UPGRADE_NOWAIT może być założony, gdy użytkownik użyje SELECT ... FOR UPDATE NOWAIT w bazie Oracle.
+ 
+ 
+[source,java]
+----
+public Object load(Class theClass, Serializable id, LockMode lockMode) throws HibernateException 
+public Object load(String entityName, Serializable id, LockMode lockMode) throws HibernateException
+----
+ 
  
  
 

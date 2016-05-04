@@ -214,10 +214,6 @@ Jednostka trwałości - sposób na komunikowanie się z bazą
 Jest skonfigurowany w pliku persistence.xml
 
  
-
-
-  
-
 == Persistence Context
 
 - służy do tworzenia obiektów klasy EntityManagerFactory
