@@ -651,7 +651,7 @@ List<Map> phoneCallTotalDurations = entityManager.createQuery(
 == Parametryzacja
 
 
-== Insert
+== Insert by query
 
 [source,java]
 ----
@@ -724,6 +724,14 @@ int deletedEntities = entityManager.createQuery("delete Person p where p.name = 
 Query query=session.createQuery("delete from Employee where status=:status");
 query.setString("status", "fired");
 int rowsDeleted=query.executeUpdate();
+----
+
+
+== Distinct
+
+[source,java]
+----
+SELECT DISTINCT mag FROM Magazine AS mag JOIN mag.articles AS art WHERE art.published = FALSE
 ----
 
 == Between

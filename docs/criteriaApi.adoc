@@ -86,7 +86,19 @@ List<String> nickNames = entityManager.createQuery( criteria ).getResultList();
 
 ----
 
-===  multiple values
+=== Pojedyńcze wartości
+
+[source,java]
+----
+CriteriaQuery<String> c = cb.createQuery(String.class);
+Root<Employee> emp = c.from(Employee.class);
+c.select(emp.<String>get("name"));
+----
+
+===  Wielokrotne wartości
+
+
+
 
 [source,java]
 ----
@@ -108,7 +120,7 @@ List<Object[]> idAndNickNames = entityManager.createQuery( criteria ).getResultL
 
 ----
 
-=== array using multiselect
+=== Multiselect
 
 [source,java]
 ----
@@ -129,6 +141,28 @@ List<Object[]> idAndNickNames = entityManager.createQuery( criteria ).getResultL
 
 
 ----
+
+[source,java]
+----
+CriteriaQuery<Tuple> c= cb.createTupleQuery();
+Root<Employee> emp = c.from(Employee.class);
+c.select(cb.tuple(emp.get("id"), emp.get("name")));
+CriteriaQuery<Object[]> c = cb.createQuery(Object[].class);
+Root<Employee> emp = c.from(Employee.class);
+c.multiselect(emp.get("id"), emp.get("name"));
+----
+
+=== Aliasy
+
+[source,java]
+----
+CriteriaQuery<Tuple> c= cb.createTupleQuery();
+Root<Employee> emp = c.from(Employee.class);
+c.multiselect(
+  emp.get("id").alias("id"),
+  emp.get("name").alias("fullName"));
+----
+
 
 === Wrapper
 
@@ -232,6 +266,15 @@ Root<Pet> pet = cq.from(Pet.class);
 Join<Owner, Address> address = cq.join(Pet_.owners).join(Owner_.addresses);
 ----
 
+[source,java]
+----
+Join<Employee,Employee> directs = emp.join("directs");
+Join<Employee,Project> projects = directs.join("projects");
+Join<Employee,Department> dept = directs.join("dept");
+
+Join<Employee,Project> project = dept.join("employees").join("projects");
+----
+
 == FETCH
 
 [source,java]
@@ -251,7 +294,7 @@ criteria.where( builder.isNotEmpty( root.get( Phone_.calls ) ) );
 List<Phone> phones = entityManager.createQuery( criteria ).getResultList();
 ----
 
-== Using parameters
+== Użycie parametrów
 
 [source,java]
 ----
@@ -268,7 +311,7 @@ query.setParameter( nickNameParameter, "JD" );
 List<Person> persons = query.getResultList();
 ----
 
-==  Using group by
+==  GroupBy i Tuple przykład
 
 [source,java]
 ----
@@ -292,6 +335,115 @@ for ( Tuple tuple : tuples ) {
 
 
 ----
+
+== GroupBy
+
+[source,sql]
+----
+SELECT e, COUNT(p) FROM Employee e JOIN e.projects p GROUP BY e HAVING COUNT(p) >= 2
+
+----
+
+[source,java]
+----
+CriteriaQuery<Object[]> c = cb.createQuery(Object[].class);
+Root<Employee> emp = c.from(Employee.class);
+Join<Employee,Project> project = emp.join("projects");
+c.multiselect(emp, cb.count(project)).groupBy(emp).having(cb.ge(cb.count(project),2));
+----
+
+
+== Predykaty
+
+** IS EMPTY  -  **isEmpty()** 
+** IS NOT EMPTY  -  **isNotEmpty()**
+** MEMBER OF -  **isMember()**
+** NOT MEMBER OF -  **isNotMember()**
+** LIKE -  **like()**
+** NOT LIKE -  **notLike()**
+** IN -  **in()**
+** NOT IN -  **not(in())**
+
+
+[source,java]
+----
+Predicate criteria = cb.conjunction();
+if (name != null) {
+  ParameterExpression<String> p = cb.parameter(String.class, "name");
+  criteria = cb.and(criteria, cb.equal(employee.get("name"), p));
+}
+if (deptName != null) {
+  ParameterExpression<String> p = cb.parameter(String.class, "dept");
+  criteria = cb.and(criteria, cb.equal(employee.get("dept").get("name"), p));
+}
+----
+
+== Skalary
+
+**  ALL -  ** all()**
+**  ANY -  ** any()**
+**  SOME -  ** some()**
+**  - -  **neg(), diff()**
+**  + -  **sum()**
+**  * -  **prod()**
+**  / -  **quot()**
+**  COALESCE -  **coalesce()**
+**  NULLIF -  **nullif()**
+**  CASE -  **selectCase()**
+
+== Funkcje
+
+**  ABS -  **abs()**
+**  CONCAT -  **concat()**
+**  CURRENT_DATE -  **currentDate()**
+**  CURRENT_TIME -  **currentTime()**
+**  CURRENT_TIMESTAMP -  **currentTimestamp()**
+**  LENGTH -  **length()** 
+**  LOCATE -  **locate()**
+**  LOWER -  **lower()**
+**  MOD -  **mod()**
+**  SIZE -  **size()**
+**  SQRT -  **sqrt()**
+**  SUBSTRING -  **substring()**
+**  UPPER -  **upper()**
+**  TRIM -  **trim()**
+
+== Agregacje
+
+**  AVG -  **avg()**
+**  SUM -  **sum()**
+**  MIN -  **min(), least()**
+**  MAX -  **max(), greatest()**
+**  COUNT -  **count()**
+**  COUNT DISTINCT -  **countDistinct()**
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 == O mnie
 * programista

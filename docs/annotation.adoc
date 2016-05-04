@@ -264,7 +264,8 @@ public class User {
 ----
 
 == **@Table**
-- domyślnie nazwa tabeli jest taka sama jak nazwa klasy. Jeśli domyślne ustawienie jest nie wystarczające z różnych powodów możemy użyć @Table
+**  domyślnie nazwa tabeli jest taka sama jak nazwa klasy.
+** jeśli domyślne ustawienie jest nie wystarczające z różnych powodów możemy użyć @Table
 
 [source,java]
 ----
@@ -297,10 +298,9 @@ class Employee{
 
 
 == **@Column**
- - analogiczne zachowanie do adnotacji @Table
+** analogiczne zachowanie do adnotacji @Table
 
-insertable and updatable = Both these attributes accept a Boolean value. This denotes whether the column takes part in
-the insert and update operations or not.
+** insertable/updatable - określa czy dana kolumna będzie brała udział w operacjach insert/update 
 
 
 [source,java]
@@ -770,6 +770,8 @@ public class Employee {
 
 == @AttributeOverride
 
+** Patrz wyżej w przykładzie z  @Embedded.
+
 == @Version - optymistic locking
 [source,java]
 ----
@@ -782,8 +784,6 @@ session.saveOrUpdate(employee);
 ----
 Hibernate: update employee set name=?, version=? where id=? and version=?
 ----
-
-
 
 == @OrderColumn
 [source,java]
@@ -863,6 +863,8 @@ SUZUKI, STAR, FERRARI,JAGUAR;
 @OneToMany(mappedBy="user")
 @OrderBy("lastName")
 protected List<User> children;
+
+
 
 ----  
 
