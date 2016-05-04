@@ -196,11 +196,17 @@ EntityManager manager;
   
 === Metody 
 
-==== utrwalenie : em.persist(object);
+==== utrwalenie 
 
-==== wyszukanie : Employee e = em.find(Employee.class, new Long(10)); 
+** em.persist(object);
 
-==== usuwanie : em.remove(object);
+==== wyszukanie
+ 
+** Employee e = em.find(Employee.class, new Long(10)); 
+
+==== usuwanie 
+
+** em.remove(object);
 
 === persistence.xml
  
@@ -419,4 +425,6 @@ EntityManager em = ...;
 Metamodel m = em.getMetamodel();
 EntityType<Pet> Pet_ = m.entity(Pet.class);
 ----
+
+== Przykłady
 

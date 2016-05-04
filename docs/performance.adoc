@@ -27,18 +27,25 @@ ifndef::imgsdir[:imgsdir: ./../img]
 
 === less lazy loading
 
+[source,java]
+----
 @ManyToMany
 @Fetch(FetchMode.JOIN)
 public Set<ArtEntity> getArtEntities() {
 return artEntities;
 }
+----
 
 === Batching for Performance
+
+[source,java]
+----
 @ManyToMany
 @BatchSize(size = 10)
 public Set<ArtEntity> getArtEntities() {
 return artEntities;
 }
+----
 
 
 
@@ -73,7 +80,7 @@ class>
 
 * Wybór strategii pobierania danych : fetchType
 
-  FETCH JOIN
+===  FETCH JOIN
 [source,sql]
 ----
   SELECT DISTINCT a FROM Author a JOIN FETCH a.books b
@@ -139,7 +146,7 @@ this.em.createQuery(update).executeUpdate();
 **  jest możliwe jedynie, gdy podstawowa encja jest w stanie managed
 **  pobranie encji w stanie  **Detached** spowoduje wyrzucenie wyjątku - LazyInitializationException
 
-==== LazyInitializationException
+==== Zapobieganie LazyInitializationException
 
 **   ponowne utrwalenie encji
 **   pobieranie przy pomocy Fetch JOIN
@@ -216,26 +223,6 @@ List<Author> authors = this.em.createQuery(
 ----
 
 
-
-Graph is query independent
-
- 
- - EntityGraph
-      
-
-* Second level cache
-
-* Query cache
-
-== Performing enhancement
-
-=== Run-time enhancement
-
-
-
-==== enableLazyInitialization Whether enhancement for lazy attribute loading should be done.
-==== enableDirtyTracking Whether enhancement for self-dirty tracking should be done.
-==== enableAssociationManagement Whether enhancement for bi-directional association management should be done.
 
 
 == Kroki optymalizacji 

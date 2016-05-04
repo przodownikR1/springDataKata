@@ -13,7 +13,7 @@ ifndef::sourcedir[:sourcedir: ./src/main/java/]
 #Sample demo to show how jpa work in effiecient way
 
 
-== Topic
+== Kwerandy
 
 == Możliwe formy zapytań : 
 ===  zapytania HQL, JPQL
@@ -547,19 +547,12 @@ List<Object[]> phonePayments = entityManager.createQuery(
 [source,java]
 ----
 
-
 Query query = entityManager.createQuery(
     "select p " +
     "from Person p " +
     "where p.name like ?1" )
 .setParameter( 1, "J%" );
 
-
-----
-
-String sql = "select b.id, b.name, b.isbn from Book b";
-Query query = entityManager.createQuery(sql);
-List<Object[]> books = query.getResultList();
 
 ----
 

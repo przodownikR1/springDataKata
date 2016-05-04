@@ -49,15 +49,14 @@ public void setName(String name)...
 
 
 == **@Entity** 
-- klasy,  które mają brać udział w procesie utrwalania
-  
-- może być abstract
-- nie może być final
-- nie może zawierać pola i metody final
-- musi posiadać bezargumentowy konstruktor
-- musi posiadać klucz główny **@Id**
-- dla komunikacji (distributed/web/session/serializable) powinna implementować Serializable
-- posiada wyróżnioną tożsamość
+- oznacza klasy klasy,  które mają brać udział w procesie utrwalania
+- taka klasa może być abstract
+- klasa nie może być final
+- klasa nie może zawierać pola i metody final
+- klasa musi posiadać bezargumentowy konstruktor
+- klasa musi posiadać klucz główny **@Id**
+
+CAUTION:  Dla komunikacji (distributed/web/session/serializable) powinna implementować Serializable. Klasa posiada wyróżnioną tożsamość
 
 
 [source,java]
@@ -112,6 +111,25 @@ private Long id;
 
 ----
 
+[source,java]
+----
+ @Entity public class Employee {
+        ...
+        @TableGenerator(
+            name="empGen",
+            table="ID_GEN",
+            pkColumnName="GEN_KEY",
+            valueColumnName="GEN_VALUE",
+            pkColumnValue="EMP_ID",
+            allocationSize=1)
+        @Id
+        @GeneratedValue(strategy=TABLE, generator="empGen")
+        int id;
+        ...
+    }
+
+----
+
 
 ==== @SequenceGenerator
 
@@ -159,36 +177,26 @@ private String isbn;
 
 
 
-==== @Embeddable & @EmbeddedId
+====  @EmbeddedId
 
-source: __https://en.wikibooks.org/wiki/Java_Persistence/Embeddables__
 
-image:Embeddable.PNG[]
 
 [source,java]
 ----
-@Embeddable 
-public class EmploymentPeriod {
-  @Column(name="START_DATE")
-  private java.sql.Date startDate;
 
-  @Column(name="END_DATE")
-  private java.sql.Date endDate;
-  ....
+@Entity
+class User {
+   @EmbeddedId
+   @AttributeOverride(name="firstName", column=@Column(name="fld_firstname")
+   UserId id;
+
+   Integer age;
 }
 
-----
-
-[source,java]
-----
-@Entity
-public class Employee {
-  @Id
-  private long id;
-  ...
-  @Embedded
-  private EmploymentPeriod period;
-  ...
+@Embeddable
+class UserId implements Serializable {
+   String firstName;
+   String lastName;
 }
 ----
 
@@ -332,6 +340,181 @@ class Employee{
 
 == @Embeddable i @Embedded**
 - umożliwia osadzanie nieencyjnych obiektów Java w objektach encyjnych
+
+source: __https://en.wikibooks.org/wiki/Java_Persistence/Embeddables__
+
+image:Embeddable.PNG[]
+
+[source,java]
+----
+@Embeddable 
+public class EmploymentPeriod {
+  @Column(name="START_DATE")
+  private java.sql.Date startDate;
+
+  @Column(name="END_DATE")
+  private java.sql.Date endDate;
+  ....
+}
+
+----
+
+[source,java]
+----
+@Entity
+public class Employee {
+  @Id
+  private long id;
+  ...
+  @Embedded
+  private EmploymentPeriod period;
+  ...
+}
+----
+
+[source,java]
+----
+@Embeddable
+public class Address {
+
+    private String line1;
+
+    private String line2;
+
+    @Embedded
+    private ZipCode zipCode;
+
+    ...
+
+    @Embeddable
+    public static class Zip {
+
+        private String postalCode;
+
+        private String plus4;
+
+        ...
+    }
+}
+@Entity
+public class Person {
+
+    @Id
+    private Integer id;
+
+    @Embedded
+    private Name name;
+
+    ...
+}
+----
+
+@Multiple embeddable types
+[source,java]
+----
+@Entity
+public class Contact {
+
+    @Id
+    private Integer id;
+
+    @Embedded
+    private Name name;
+
+    @Embedded
+    private Address homeAddress;
+
+    @Embedded
+    private Address mailingAddress;
+
+    @Embedded
+    private Address workAddress;
+
+    ...
+}
+----
+@AttributeOverride
+[source,java]
+----
+
+
+@Entity
+public class Contact {
+
+    @Id
+    private Integer id;
+
+    @Embedded
+    private Name name;
+
+    @Embedded
+    @AttributeOverrides(
+        @AttributeOverride(
+            name = "line1",
+            column = @Column( name = "home_address_line1" ),
+        ),
+        @AttributeOverride(
+            name = "line2",
+            column = @Column( name = "home_address_line2" )
+        ),
+        @AttributeOverride(
+            name = "zipCode.postalCode",
+            column = @Column( name = "home_address_postal_cd" )
+        ),
+        @AttributeOverride(
+            name = "zipCode.plus4",
+            column = @Column( name = "home_address_postal_plus4" )
+        )
+    )
+    private Address homeAddress;
+
+    @Embedded
+    @AttributeOverrides(
+        @AttributeOverride(
+            name = "line1",
+            column = @Column( name = "mailing_address_line1" ),
+        ),
+        @AttributeOverride(
+            name = "line2",
+            column = @Column( name = "mailing_address_line2" )
+        ),
+        @AttributeOverride(
+            name = "zipCode.postalCode",
+            column = @Column( name = "mailing_address_postal_cd" )
+        ),
+        @AttributeOverride(
+            name = "zipCode.plus4",
+            column = @Column( name = "mailing_address_postal_plus4" )
+        )
+    )
+    private Address mailingAddress;
+
+    @Embedded
+    @AttributeOverrides(
+        @AttributeOverride(
+            name = "line1",
+            column = @Column( name = "work_address_line1" ),
+        ),
+        @AttributeOverride(
+            name = "line2",
+            column = @Column( name = "work_address_line2" )
+        ),
+        @AttributeOverride(
+            name = "zipCode.postalCode",
+            column = @Column( name = "work_address_postal_cd" )
+        ),
+        @AttributeOverride(
+            name = "zipCode.plus4",
+            column = @Column( name = "work_address_postal_plus4" )
+        )
+    )
+    private Address workAddress;
+
+    ...
+}
+
+----
+ 
 
 == **@Enumerated**
 
@@ -596,151 +779,6 @@ private String capitalName;
 private String categoryName;
 
 ----
-
-== @Embedded
-[source,java]
-----
-@Embeddable
-public class Address {
-
-    private String line1;
-
-    private String line2;
-
-    @Embedded
-    private ZipCode zipCode;
-
-    ...
-
-    @Embeddable
-    public static class Zip {
-
-        private String postalCode;
-
-        private String plus4;
-
-        ...
-    }
-}
-@Entity
-public class Person {
-
-    @Id
-    private Integer id;
-
-    @Embedded
-    private Name name;
-
-    ...
-}
-----
-
-@Multiple embeddable types
-[source,java]
-----
-@Entity
-public class Contact {
-
-    @Id
-    private Integer id;
-
-    @Embedded
-    private Name name;
-
-    @Embedded
-    private Address homeAddress;
-
-    @Embedded
-    private Address mailingAddress;
-
-    @Embedded
-    private Address workAddress;
-
-    ...
-}
-----
-@AttributeOverride
-[source,java]
-----
-
-
-@Entity
-public class Contact {
-
-    @Id
-    private Integer id;
-
-    @Embedded
-    private Name name;
-
-    @Embedded
-    @AttributeOverrides(
-        @AttributeOverride(
-            name = "line1",
-            column = @Column( name = "home_address_line1" ),
-        ),
-        @AttributeOverride(
-            name = "line2",
-            column = @Column( name = "home_address_line2" )
-        ),
-        @AttributeOverride(
-            name = "zipCode.postalCode",
-            column = @Column( name = "home_address_postal_cd" )
-        ),
-        @AttributeOverride(
-            name = "zipCode.plus4",
-            column = @Column( name = "home_address_postal_plus4" )
-        )
-    )
-    private Address homeAddress;
-
-    @Embedded
-    @AttributeOverrides(
-        @AttributeOverride(
-            name = "line1",
-            column = @Column( name = "mailing_address_line1" ),
-        ),
-        @AttributeOverride(
-            name = "line2",
-            column = @Column( name = "mailing_address_line2" )
-        ),
-        @AttributeOverride(
-            name = "zipCode.postalCode",
-            column = @Column( name = "mailing_address_postal_cd" )
-        ),
-        @AttributeOverride(
-            name = "zipCode.plus4",
-            column = @Column( name = "mailing_address_postal_plus4" )
-        )
-    )
-    private Address mailingAddress;
-
-    @Embedded
-    @AttributeOverrides(
-        @AttributeOverride(
-            name = "line1",
-            column = @Column( name = "work_address_line1" ),
-        ),
-        @AttributeOverride(
-            name = "line2",
-            column = @Column( name = "work_address_line2" )
-        ),
-        @AttributeOverride(
-            name = "zipCode.postalCode",
-            column = @Column( name = "work_address_postal_cd" )
-        ),
-        @AttributeOverride(
-            name = "zipCode.plus4",
-            column = @Column( name = "work_address_postal_plus4" )
-        )
-    )
-    private Address workAddress;
-
-    ...
-}
-
-----
- 
  
 == **@SecondaryTable** 
 
@@ -831,7 +869,7 @@ private String description;
 
 @UniqueConstraint(columnNames = { "id" , "empCode"}))
 
-== Komponenty zagnieżdzone 
+
 
 == @ElementCollection**  - dla typów prostych lub klas osadzonych
 
