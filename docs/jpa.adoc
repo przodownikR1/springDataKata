@@ -107,6 +107,10 @@ return manager;
 image::A7-EntityLifecycle.jpg[]
 
 
+==== Metody 
+
+image::A7-EntityManagerInterfaceMethods.jpg[]
+
 ==== Uzyskiwanie EnitityManagera wersja numer 1
 
 
@@ -229,6 +233,10 @@ xsi:schemaLocation="http://java.sun.com/xml/ns/persistence http://java.sun.com/x
 Jednostka trwałości - sposób na komunikowanie się z bazą
 Jest skonfigurowany w pliku persistence.xml
 
+
+source : eclipse.org
+
+image::otlcg_jd_001.gif[]
  
 == Persistence Context
 
