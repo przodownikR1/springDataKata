@@ -68,6 +68,39 @@ List<Person> persons = entityManager.createQuery( criteria ).getResultList();
 
 ----
 
+==== Bez potrzeby rzutowania 
+
+[source,java]
+----
+CriteriaBuilder cb = em.getCriteriaBuilder();
+CriteriaQuery<Person> criteria = cb.createQuery(Person.class);
+Root<Person> i = criteria.from(Person.class);
+criteria.select(i).where(cb.equal(i.get("id"), PERSON_ID));
+TypedQuery<Person> query = em.createQuery(criteria);
+Person result = query.getSingleResult();
+----
+
+=== Parametryzacja
+
+[source,java]
+----
+CriteriaBuilder cb = em.getCriteriaBuilder();
+CriteriaQuery criteria = cb.createQuery();
+Root<Person> i = criteria.from(Person.class);
+Query query = em.createQuery(
+criteria.select(i).where(cb.equal(i.get("name"),cb.parameter(String.class, "personName")))).setParameter("personName", "slawek");
+----
+
+==== Parametryzacja z mocną kontrolą typów
+
+[source,java]
+----
+CriteriaQuery criteria = cb.createQuery(Person.class);
+Root<Person> i = criteria.from(Item.class);
+ParameterExpression<String> personNameParameter = cb.parameter(String.class);
+Query query = em.createQuery(criteria.select(i).where(cb.equal(i.get("name"),personNameParameter))).setParameter(personNameParameter, "slawek");
+----
+
 === Expression
 
 [source,java]
@@ -95,11 +128,9 @@ Root<Employee> emp = c.from(Employee.class);
 c.select(emp.<String>get("name"));
 ----
 
+
+
 ===  Wielokrotne wartości
-
-
-
-
 [source,java]
 ----
 

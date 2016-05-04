@@ -1407,12 +1407,6 @@ public List<Employee> findEmployees(int offset, int limit) {
 }
 ----
 
-== Blokowanie
-
-* Optymistyczne 
-  OptimisticLockException
-  
-* Pesymistyczne  
 
 == Obsługa wyjątków
 

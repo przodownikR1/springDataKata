@@ -111,6 +111,7 @@ image::A7-EntityLifecycle.jpg[]
 
 image::A7-EntityManagerInterfaceMethods.jpg[]
 
+
 ==== Uzyskiwanie EnitityManagera wersja numer 1
 
 
@@ -193,6 +194,13 @@ EntityManager manager;
 
 ----
   
+=== Metody 
+
+==== utrwalenie : em.persist(object);
+
+==== wyszukanie : Employee e = em.find(Employee.class, new Long(10)); 
+
+==== usuwanie : em.remove(object);
 
 === persistence.xml
  
@@ -237,6 +245,43 @@ Jest skonfigurowany w pliku persistence.xml
 source : eclipse.org
 
 image::otlcg_jd_001.gif[]
+
+
+==== Praca w wieloma jednostkami trwałości 
+
+[source,xml]
+----
+<?xml version="1.0" encoding="UTF-8"?>
+<persistence xmlns="http://java.sun.com/xml/ns/persistence"
+xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+xsi:schemaLocation="http://java.sun.com/xml/ns/persistence
+http://java.sun.com/xml/ns/persistence/persistence_2_0.xsd"
+version="2.0">
+<persistence-unit name="pu1" transaction-type="RESOURCE_LOCAL">
+<!-- details -->
+</persistence-unit>
+<persistence-unit name="pu2" transaction-type="RESOURCE_LOCAL">
+<!-- details -->
+</persistence-unit>
+</persistence>
+// code...
+EntityManagerFactory emf = Persistence.createEntityManagerFactory("pu1");
+EntityManager em = emf.createEntityManager();
+em.persist(entity);
+----
+ 
+==== Mapowanie klas
+
+[source,xml]
+----
+<persistence-unit name="unit1" transaction-type="RESOURCE_LOCAL">
+<provider>org.hibernate.ejb.HibernatePersistence</provider>
+<class>pl.java.scalatech.domain.Employee</class>
+<class>pl.java.scalatech.domain.Department</class>
+<class>pl.java.scalatech.domain.Poject</class>
+....
+
+---- 
  
 == Persistence Context
 
@@ -277,6 +322,8 @@ SessionFactory sessionFactory = entityManager.getEntityManagerFactory().unwrap( 
 
 
 ----
+
+
 
 == MetaModel
 

@@ -64,6 +64,14 @@ List<Object[]> books = query.getResultList();
 
 ----
 
+
+=== SQL result-mapping
+
+[source,java]
+----
+org.hibernate.SQLQuery query = session.createSQLQuery("select {i.*} from ITEM {i}").addEntity("i", Item.class);
+----
+
 === Projekcja z użyciem konstruktora
  
 [source,java]
@@ -311,6 +319,16 @@ Query q = entityManager.getNamedQuery("Company.findAll");
 
 
 ----
+=== Zapytania nazywane podejście programistyczne
+
+[source,java]
+----
+Query findPersonQuery = em.createQuery("select p from Person p");
+em.getEntityManagerFactory().addNamedQuery("personQuery", findPersonQuery);
+Query query =
+em.createNamedQuery("personQuery");
+----
+
 
 === Tuple
 
@@ -650,6 +668,14 @@ List<Map> phoneCallTotalDurations = entityManager.createQuery(
 
 == Parametryzacja
 
+[source,java]
+----
+Query query = em.createQuery("select i from Item i where i.auctionEnd > :endDate").setParameter("endDate", tomorrowDate, TemporalType.TIMESTAMP);
+----
+
+
+
+NOTE: Zabezpiecza przed  SQL injection 
 
 == Insert by query
 

@@ -124,6 +124,26 @@ public Object load(String entityName, Serializable id, LockMode lockMode) throws
 ----
  
  
+=== Blokowanie pojedyńczych encji
+
+[source,java]
+----
+User user = em.find(User.class, 4L);
+em.lock(user, LockModeType.PESSIMISTIC_WRITE);
+//lub
+User user = em.find(User.class, 4L, LockModeType.PESSIMISTIC_WRITE);
+---- 
+
+=== Blokowanie wszystkich encji zwracanych przez kwerende
+
+[source,java]
+----
+String statement = ....
+TypedQuery<User> query = em.createQuery(statement, User.class);
+query.setLockMode(LockModeType.PESSIMISTIC_READ);
+List<User> users = query.getResultList();
+----
+ 
  
 
 [source,java]
