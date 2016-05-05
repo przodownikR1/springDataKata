@@ -126,7 +126,7 @@ WARNING: Domyślnie tylko niesprawdzane wyjątki : RuntimeException + Error prow
 
 
 
-przykład: 
+*** Przykład 
 
 
 [source,java]
@@ -261,6 +261,8 @@ return repository.getOrder(orderId);
 
 === **read only**
 
+*** Przykład
+
 [source,java]
 ----
 @Transactional(readOnly = true)
@@ -271,6 +273,7 @@ return repository.getAccount(accountId);
 
 === **timeout**
 
+*** Przykład
 
 [source,java]
 ----
@@ -283,6 +286,8 @@ public List<Order> getActiveOrders(String from, String to) {
 
 ** wyjątki dla których wyrzucenie przez metodę nie spowoduje wycofanie transakcji
 
+*** Przykład
+
 [source,java]
 ----
  @Transactional(noRollbackFor = MailException.class)
@@ -293,6 +298,8 @@ public List<Order> getActiveOrders(String from, String to) {
 
 ** wyjątki dla których wyrzucenie przez metodę może spowodować wycofanie transakcji
 
+*** Przykład
+
 [source,java]
 ----
 
@@ -302,6 +309,7 @@ public List<Order> getActiveOrders(String from, String to) {
 
 == Konfiguracja :  
  
+*** Przykład
 
 [source,java]
 ----
@@ -441,6 +449,8 @@ public abstract class JpaConfig {
 
 === Strategia dla bazy wbudowanej : 
 
+*** Przykład
+
 [source,java]
 ----
 @Configuration
@@ -471,6 +481,8 @@ public class JpaEmbeddedConfig extends JpaConfig {
 
 === Baza wbudowana / konfiguracja xml
 
+*** Przykład
+
 [source,java]
 ----
 <jdbc:embedded-database id="dataSource" type="HSQL|H2|Derby">
@@ -484,6 +496,8 @@ public class JpaEmbeddedConfig extends JpaConfig {
 ----
 
 == H2 w konsoli WEB
+
+*** Przykład
 
 [source,java]
 ----
@@ -541,6 +555,8 @@ public class H2Database extends JpaConfig{
 ---- 
 
 == Custom JPA = rozwiązanie problemów z izolacją transakcji
+
+*** Przykład
 
 [source,java]
 ----
@@ -631,6 +647,7 @@ public class CustomHibernateJpaDialect extends HibernateJpaDialect {
 
 == TransacionTemplate
 
+*** Przykład
 
 [source,xml]
 ----
@@ -667,6 +684,7 @@ public Object doInTransaction(TransactionStatus status) {
 
 == Tworzenie repozytorium jpa/Hibernate
 
+*** Przykład
 
 [source,java]
 ----
@@ -701,6 +719,8 @@ private EntityManager em;
 
 
 == Praca z wieloma  manadzerami transakcji 
+
+*** Przykład
 
 [source,java]
 ----
@@ -747,6 +767,8 @@ public Book merge(Book book ) {}
 
 
 === Tworzenie repozytorium jdbc
+
+*** Przykład
 
 [source,java]
 ----

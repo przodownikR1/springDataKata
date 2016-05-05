@@ -38,6 +38,8 @@ Reprezentuje wszystkie warunki użyte w zapytaniu
 Zmienna wskazująca na korzeń zapytania
 
 
+*** Przykład
+
 [source,java]
 ----
 
@@ -87,7 +89,7 @@ image::UML-attrs.gif[]
 
 == SELECT
 
-=== NORMAL
+*** Przykład
 
 [source,java]
 ----
@@ -105,6 +107,8 @@ List<Person> persons = entityManager.createQuery( criteria ).getResultList();
 
 ==== Bez potrzeby rzutowania 
 
+*** Przykład
+
 [source,java]
 ----
 CriteriaBuilder cb = em.getCriteriaBuilder();
@@ -117,6 +121,8 @@ Person result = query.getSingleResult();
 
 === Parametryzacja
 
+*** Przykład
+
 [source,java]
 ----
 CriteriaBuilder cb = em.getCriteriaBuilder();
@@ -128,6 +134,8 @@ criteria.select(i).where(cb.equal(i.get("name"),cb.parameter(String.class, "pers
 
 ==== Parametryzacja z mocną kontrolą typów
 
+*** Przykład
+
 [source,java]
 ----
 CriteriaQuery criteria = cb.createQuery(Person.class);
@@ -136,7 +144,9 @@ ParameterExpression<String> personNameParameter = cb.parameter(String.class);
 Query query = em.createQuery(criteria.select(i).where(cb.equal(i.get("name"),personNameParameter))).setParameter(personNameParameter, "slawek");
 ----
 
-=== Expression
+=== Wyrażenie / Expression
+
+*** Przykład
 
 [source,java]
 ----
@@ -151,10 +161,11 @@ criteria.where( builder.equal( root.get( Person_.name ), "John Doe" ) );
 
 List<String> nickNames = entityManager.createQuery( criteria ).getResultList();
 
-
 ----
 
 === Pojedyńcze wartości
+
+*** Przykład
 
 [source,java]
 ----
@@ -166,6 +177,9 @@ c.select(emp.<String>get("name"));
 
 
 ===  Wielokrotne wartości
+
+*** Przykład
+
 [source,java]
 ----
 
@@ -188,6 +202,8 @@ List<Object[]> idAndNickNames = entityManager.createQuery( criteria ).getResultL
 
 === Multiselect
 
+*** Przykład 1
+
 [source,java]
 ----
 
@@ -208,6 +224,8 @@ List<Object[]> idAndNickNames = entityManager.createQuery( criteria ).getResultL
 
 ----
 
+*** Przykład 2
+
 [source,java]
 ----
 CriteriaQuery<Tuple> c= cb.createTupleQuery();
@@ -220,6 +238,8 @@ c.multiselect(emp.get("id"), emp.get("name"));
 
 === Aliasy
 
+*** Przykład
+
 [source,java]
 ----
 CriteriaQuery<Tuple> c= cb.createTupleQuery();
@@ -231,6 +251,8 @@ c.multiselect(
 
 
 === Zapytania dynamiczne
+
+*** Przykład
 
 [source,java]
 ----
@@ -264,6 +286,8 @@ return (List<Employee>)q.getResultList();
 
 
 === Wrapper
+
+*** Przykład
 
 [source,java]
 ----
@@ -303,6 +327,8 @@ List<PersonWrapper> wrappers = entityManager.createQuery( criteria ).getResultLi
 
 === Tuple
 
+*** Przykład
+
 [source,java]
 ----
 
@@ -336,6 +362,8 @@ for ( Tuple tuple : tuples ) {
 
 == JOIN
 
+*** Przykład 1
+
 [source,java]
 ----
 
@@ -356,6 +384,8 @@ List<Phone> phones = entityManager.createQuery( criteria ).getResultList();
 
 
 ----
+
+*** Przykład 2
 
 [source,java]
 ----
@@ -379,6 +409,8 @@ Join<Employee,Project> project = dept.join("employees").join("projects");
 
 == FETCH
 
+*** Przykład 
+
 [source,java]
 ----
 CriteriaBuilder builder = entityManager.getCriteriaBuilder();
@@ -398,6 +430,8 @@ List<Phone> phones = entityManager.createQuery( criteria ).getResultList();
 
 == Użycie parametrów
 
+*** Przykład
+
 [source,java]
 ----
 CriteriaBuilder builder = entityManager.getCriteriaBuilder();
@@ -413,12 +447,12 @@ query.setParameter( nickNameParameter, "JD" );
 List<Person> persons = query.getResultList();
 ----
 
-==  GroupBy i Tuple przykład
+==  GroupBy i Tuple 
+
+*** Przykład 1
 
 [source,java]
 ----
-
-
 
 CriteriaBuilder builder = entityManager.getCriteriaBuilder();
 
@@ -438,13 +472,15 @@ for ( Tuple tuple : tuples ) {
 
 ----
 
-== GroupBy
+*** Przykład 2
 
 [source,sql]
 ----
 SELECT e, COUNT(p) FROM Employee e JOIN e.projects p GROUP BY e HAVING COUNT(p) >= 2
 
 ----
+
+*** Przykład 3
 
 [source,java]
 ----
@@ -466,6 +502,9 @@ c.multiselect(emp, cb.count(project)).groupBy(emp).having(cb.ge(cb.count(project
 ** IN -  **in()**
 ** NOT IN -  **not(in())**
 
+
+
+*** Przykład
 
 [source,java]
 ----
@@ -523,6 +562,8 @@ if (deptName != null) {
 
 == Podzapytania 
 
+*** Przykład
+
 [source,java]
 ----
 public List<Employee> findEmployees(String name, String deptName, String projectName) {
@@ -543,6 +584,8 @@ cb.parameter(String.class, "project")));
 criteria.add(cb.in(emp).value(sq));
 }
 ----
+
+** Analogia do : 
 
 [source,sql]
 ----

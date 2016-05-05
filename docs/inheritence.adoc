@@ -24,7 +24,7 @@ NOTE: Abstract class
 
 WARNING: Klasy z adnotacją **@MappedSuperclass** nie mogą być używane do wyszukiwania oraz w zapytaniach JPQL.
 
-
+*** Przykład
 
 [source,java]
 ----
@@ -75,7 +75,7 @@ CAUTION: Dopuszczanie wartości **NULL** może stanowić zagrożenie integralno�
 
 CAUTION: Zbyt wiele kolumn w tabeli może mieć impakt na wydajność.
 
-
+*** Przykład
 
 [source,java]
 ----
@@ -100,6 +100,8 @@ WARNING: Dla każdej z podklas dyskryminator musi być unikalny. Jeśli go nie o
 
 
 === Discriminator formula
+
+*** Przykład
 
 [source,java]
 ----
@@ -177,6 +179,9 @@ NOTE: główna zaleta tej strategii to pełna normalizacja modelu relacyjnego. J
  
 WARNING: W przypadku złożonych hierarchii wydajność nie jest do zaakceptowania (joins). Zapytania wymagaja złączenia wielu tabel, albo wielu sekwencyjnych odczytów
  
+ 
+ *** Przykład
+ 
 [source,java]
 ----
 @Entity
@@ -219,7 +224,7 @@ WARNING: Zapytania polimorficzne zwracające obiekty wszystkich klas pasujący s
   
 WARNING:  zmiana typu jednej właściwości klasy propaguje się na zmiany kolumny w tabelach pochodnych. Każda operacja **CRUD** na tabeli 'root' pociąga zmianę w sub-tabelach  
 
-
+*** Przykład
 
 [source,java]
 ----

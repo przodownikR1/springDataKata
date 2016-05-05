@@ -69,6 +69,8 @@ image::A7-EntityManagerFactory.jpg[]
   Każdemu EntityManagerFactory odpowiada jedna jednostka trwałości (Persistence Unit)
   
 ==== Bootstraping
+
+
 [source,java]
 ----
 EntityManagerFactory emf = Persistence.createEntityManagerFactory("manager1");
@@ -134,6 +136,9 @@ EntityManager em = emf.createEntityManager();
 [warning]
 Menadżery encji zarządzane przez aplikację nie propagują automatycznie kontekstu transakcji JTA.
 Musimy to robić manualnie
+
+*** Przykład 1
+
 [source,java]
 ----
 
@@ -149,6 +154,8 @@ Musimy to robić manualnie
         entityManagerFactory.close();
         
 ----
+
+*** Przykład 2
 
 [source,java]
 ----
@@ -178,6 +185,8 @@ Musimy to robić manualnie
 
 
 ==== EnitityManager Lokalnie
+
+*** Przykład
 
 [source,java]
 ----
@@ -213,7 +222,8 @@ EntityManager manager;
 Powinnien znajdować się w classpath w katalogu **META-INF**
 Plik **persistence.xml** jest unikalny dla danego kontekstu **persistence unit**.
 
-Przykładowy plik **persistence.xml**
+*** Przykład
+
 [source,xml]
 ----
 <persistence xmlns="http://java.sun.com/xml/ns/persistence"
@@ -255,6 +265,9 @@ image::otlcg_jd_001.gif[]
 
 ==== Praca w wieloma jednostkami trwałości 
 
+
+*** Przykład
+
 [source,xml]
 ----
 <?xml version="1.0" encoding="UTF-8"?>
@@ -279,6 +292,8 @@ em.persist(entity);
 
 ==== Programowy persistence.xml
 
+*** Przykład
+
 [source,java]
 ----
 Map<String, String> prop = Maps.newHashMap();	
@@ -294,6 +309,8 @@ EntityManager em = emf.createEntityManager();
 ----
  
 ==== Mapowanie klas
+
+*** Przykład
 
 [source,xml]
 ----
@@ -316,6 +333,8 @@ EntityManager em = emf.createEntityManager();
 include::{resourcedir}META-INF/persistence.xml[]
 ----
 
+*** Przykład
+
 [source,java]
 ----
 EntityManagerFactory emf = Persistence.createEntityManagerFactory("HelloWorldPU");
@@ -333,6 +352,8 @@ em.close();
 
 
 == Dostęp do Hibernate API z poziomu JPA
+
+*** Przykład
 
 [source,java]
 ----
@@ -353,6 +374,8 @@ SessionFactory sessionFactory = entityManager.getEntityManagerFactory().unwrap( 
 === Generacja
 
 Konfiguracja w Gradle : 
+
+*** Przykład
 
 [source,groovy]
 ----
@@ -400,6 +423,8 @@ compileJava.dependsOn generateMetaModel
 compileJava.source sourceSets.generated.java, sourceSets.main.java
 ----
 
+*** Przykład
+
 [source,java]
 ----
 
@@ -426,7 +451,7 @@ public class Pet_ {
 
 ----
 
-=== Przykładowe użycie
+*** Przykład 2
 
 [source,java]
 ----

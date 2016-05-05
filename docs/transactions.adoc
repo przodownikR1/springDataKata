@@ -26,14 +26,7 @@ ifndef::sourcedir[:sourcedir: ./src/main/java/]
    
 
 
-0 None Anything is permitted; the database or driver does not support transactions.
-1 Read Uncommitted Dirty, nonrepeatable, and phantom reads are permitted.
-2 Read Committed Nonrepeatable reads and phantom reads are permitted.
-4 Repeatable Read Phantom reads are permitted.
-8 Serializable The rule must be obeyed absolutely.
-
-
-
+*** Przykład
 
 [source,java]
 ----

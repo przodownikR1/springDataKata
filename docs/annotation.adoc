@@ -27,6 +27,9 @@ Na poziomie właściwości klasy. Adnotację umieszcza się przy @Getter.
 
 === Mieszany @Access
 
+
+*** Przykład
+
 [source,java]
 ----
 
@@ -58,6 +61,7 @@ public void setName(String name)...
 
 CAUTION:  Dla komunikacji (distributed/web/session/serializable) powinna implementować Serializable. Klasa posiada wyróżnioną tożsamość
 
+*** Przykład
 
 [source,java]
 ----
@@ -82,6 +86,8 @@ public class Simple {
 
 - każda klasa encyjna musi posiadać unikalny identyfikator.
 
+*** Przykład
+
 [source,java]
 ----
 @Id
@@ -99,6 +105,8 @@ public Long id;
 
 
 ==== @TableGenerator
+
+*** Przykład
 
 [source,java]
 ----
@@ -133,6 +141,8 @@ private Long id;
 
 ==== @SequenceGenerator
 
+*** Przykład
+
 [source,java]
 ----
 @SequenceGenerator(name="Book_Gen", sequenceName="Book_Seq",initialValue=10000,allocationSize=100)
@@ -147,6 +157,8 @@ private Long id;
 === Klucz złożony 
 
 ==== Primary key column – @Id and @IdClass
+
+*** Przykład
 
 [source,java]
 ----
@@ -180,6 +192,7 @@ private String isbn;
 ====  @EmbeddedId
 
 
+*** Przykład
 
 [source,java]
 ----
@@ -204,6 +217,8 @@ class UserId implements Serializable {
 NOTE : Może być wykorzystywany przez  @ElementCollection
 
 === ElementCollection
+
+*** Przykład
 
 [source,java]
 ----
@@ -235,7 +250,11 @@ public class Phone {
 }
 ----
 
+
+
 === AttributeOverride
+
+*** Przykład
 
 [source,java]
 ----
@@ -275,7 +294,7 @@ public class User {
 **  domyślnie nazwa tabeli jest taka sama jak nazwa klasy.
 ** jeśli domyślne ustawienie jest nie wystarczające z różnych powodów możemy użyć @Table
 
-** Przykład 
+*** Przykład
 
 [source,java]
 ----
@@ -315,6 +334,9 @@ public class Item extends AbstractEntity {
 
 === @Index
 
+
+*** Przykład
+
 [source,java]
 ----
 @Table(name = "ITEMS",
@@ -342,6 +364,8 @@ public class Item extends AbstractEntity {
 
 ** insertable/updatable - określa czy dana kolumna będzie brała udział w operacjach insert/update 
 
+*** Przykład
+
 [source,java]
 ----
 
@@ -359,7 +383,7 @@ public class Item extends AbstractEntity {
     private DetailStatus status;
 ----
 
-** Przykład 1
+*** Przykład 1
 
 [source,java]
 ----
@@ -372,7 +396,7 @@ public class Item extends AbstractEntity {
  price decimal(2,2) not null
 ----
 
-** Przykład 2
+*** Przykład 2
 
 [source,java]
 ----
@@ -385,7 +409,7 @@ public class Item extends AbstractEntity {
  price decimal(19,2)
 ----
 
-** Przykład 3
+*** Przykład 3
 
 [source,java]
 ----
@@ -404,7 +428,7 @@ create table Item (
      alter table Item  add constraint UK_bjye5lp3xnccmg4ovtumigp3v unique (ITEM_NAME)
 ----
 
-** Przykład 4
+*** Przykład 4
 
 [source,java]
 ----
@@ -425,6 +449,8 @@ create table Item (
 ----
 
 == @Check
+
+*** Przykład
 
 [source,java]
 ----
@@ -469,6 +495,8 @@ protected Date auctionEnd;
 source: __https://en.wikibooks.org/wiki/Java_Persistence/Embeddables__
 
 image:Embeddable.PNG[]
+
+*** Przykład
 
 [source,java]
 ----
@@ -559,6 +587,9 @@ public class Contact {
 }
 ----
 @AttributeOverride
+
+*** Przykład
+
 [source,java]
 ----
 
@@ -645,6 +676,8 @@ public class Contact {
 
 - mapowanie enum
 
+*** Przykład
+
 [source,java]
 ----
 @Entity
@@ -659,6 +692,8 @@ public class Person {
 ----
 
 * **@AttribureConverter**
+
+*** Przykład
 
 [source,java]
 ----
@@ -749,18 +784,9 @@ public class Product {
     ...
 }
 ----    
+ 
 
-    
-[source,java]
-----
-@Entity
-public class Product {
-    @Basic
-    @Nationalized
-    public String description;
-    ...
-}
-----    
+*** Przykład
 
 [source,java]
 ----
@@ -846,6 +872,10 @@ INSERT INTO DateEvent  ( timestamp, id ) VALUES ( '2015-12-29 16:54:04.544', 1
     
 
 == AttributeConverters
+
+*** Przykład
+
+
 [source,java]
 ----
 @Converter
@@ -870,26 +900,10 @@ public class Event  {
 }
 ----    
 
-== Column transformers: read and write expressions
-[source,java]
-----
 
-
-@Entity
-class CreditCard {
-
-    @Id
-    private Integer id;
-
-    @Column(name="credit_card_num")
-    @ColumnTransformer(
-        read="decrypt(credit_card_num)",
-        write="encrypt(?)"
-    )
-    private String creditCardNumber;
-}
-----
 ==  @Formula
+
+*** Przykład
 
 [source,java]
 ----
@@ -935,7 +949,10 @@ public class Employee {
 
 ** Patrz wyżej w przykładzie z  @Embedded.
 
-== @Version - optymistic locking
+== @Version - blokowanie optymistyczne
+
+*** Przykład
+
 [source,java]
 ----
 Employee employee = new Employee();
@@ -949,6 +966,9 @@ Hibernate: update employee set name=?, version=? where id=? and version=?
 ----
 
 == @OrderColumn
+
+*** Przykład
+
 [source,java]
 ----
 @OrderColumn(name = "index_id")
@@ -957,6 +977,9 @@ Hibernate: update employee set name=?, version=? where id=? and version=?
 
 
 == @ForeignKey
+
+*** Przykład
+
 [source,java]
 ----
 @Entity
@@ -982,6 +1005,9 @@ ALTER TABLE Phone ADD CONSTRAINT PERSON_ID_FK FOREIGN KEY (person_id) REFERENCES
 
 
 == @Type (Hibernate only) 
+
+*** Przykład
+
 [source,java]
 ----
 @org.hibernate.annotations.Type( type = "nstring" )
@@ -997,6 +1023,8 @@ private String description;
 
 
 == @ElementCollection**  - dla typów prostych lub klas osadzonych
+
+*** Przykład
 
 [source,java]
 ----
@@ -1019,6 +1047,8 @@ SUZUKI, STAR, FERRARI,JAGUAR;
 == **@OrderBy**
  - kolekcja może zostać uporządkowana według określonych kryteriów
  - w przypadku kolekcji uporządkowanej wykorzystać należy typ **List**
+ 
+ *** Przykład
  
 [source,java]
 ----
@@ -1063,6 +1093,8 @@ Email email;
 * One-To-Many 1:N
 Za pomoca kluczu obcego
 
+*** Przykład
+
 [source,java]
 ----
 @Entity
@@ -1077,6 +1109,8 @@ public class Item extends AbstractEntity {
 
 }
 ----
+
+*** Przykład
 
 [source,java]
 ----
@@ -1117,6 +1151,8 @@ public class Offer extends AbstractEntity{
 Za pomoca kluczu głównego
 
 * Many-To-One N:1
+
+*** Przykład
 
 [source,java]
 ----
@@ -1166,6 +1202,9 @@ public class Offer extends AbstractEntity{
 == @MapKey
 
 source : __https://en.wikibooks.org/wiki/Java_Persistence/Relationships#Nested_Collections.2C_Maps_and_Matrices__
+
+
+*** Przykład
 
 [source,java]
 ----
@@ -1237,6 +1276,8 @@ public class ProjectType {
 
 
 == EventListener
+
+*** Przykład
 
 [source,java]
 ----

@@ -50,6 +50,7 @@ NOTE: Wydajność
 
 ====  OPTIMISTIC_FORCE_INCREMENT – to samo co wyżej. Działa nawet dla nie zmienionej wersji.
 
+*** Przykład
 
 [source,java]
 ----
@@ -126,6 +127,8 @@ public Object load(String entityName, Serializable id, LockMode lockMode) throws
  
 === Blokowanie pojedyńczych encji
 
+*** Przykład
+
 [source,java]
 ----
 User user = em.find(User.class, 4L);
@@ -136,6 +139,8 @@ User user = em.find(User.class, 4L, LockModeType.PESSIMISTIC_WRITE);
 
 === Blokowanie wszystkich encji zwracanych przez kwerende
 
+*** Przykład
+
 [source,java]
 ----
 String statement = ....
@@ -144,98 +149,4 @@ query.setLockMode(LockModeType.PESSIMISTIC_READ);
 List<User> users = query.getResultList();
 ----
  
- 
 
-[source,java]
-----
-
-Session session = getSession();
-Transaction tx = null;
-tx = session.beginTransaction();
-BookCh2 book = (BookCh2)session.get(BookCh2.class, new Long(32769));
-String name = (String) session.createQuery("select b.name from bkch2 b where b.isbn = :isbn")
-.setParameter("isbn", book.getIsbn()).uniqueResult();
-System.out.println("BOOk's Name- "+name);
-tx.commit();
-session.close();
-
- 
-Session session = getSession();
-Transaction tx = null;
-tx = session.beginTransaction();
-BookCh2 book = (BookCh2)session.get(BookCh2.class, new Long(32769));
-session.lock(book, LockMode.UPGRADE);
-String name = (String) session.createQuery("select b.name from bkch2 b where b.isbn = :isbn")
-.setParameter("isbn", book.getIsbn()).uniqueResult();
-System.out.println("BOOk's Name- "+name);
-tx.commit();
-session.close();
-
-BookCh2 book = (BookCh2)session.get(BookCh2.class, new Long(32769),LockMode.UPGRADE);
-----
-
-LockMode.NONE: This is the default lock mode. If an object is requested with this lock
-mode, a READ lock is obtained if it is necessary to read the state from the database
-instead of pulling it from a cache.
-•	 LockMode.READ: In this lock mode, an object is read from the database. The object’s
-version is checked, just as in memory.
-•	 LockMode.UPGRADE: Objects loaded in this lock mode are materialized using an SQL
-select ... for update. It is equivalent to LockModeType.READ in Java Persistence.
-•	 LockMode.UPGRADE_NOWAIT: This lock mode attempts to obtain an upgrade lock using
-an Oracle-style select for update nowait. Once obtained, the semantics of this
-lock mode are the same as UPGRADE.
-•	 LockMode.FORCE: This lock mode results in a forced version increment. It is
-equivalent to LockModeType.Write in Java Persistence.
-•	 LockMode.WRITE: A WRITE lock is obtained when an object is updated or inserted.
-This lock mode is for internal use only and isn’t a valid mode for load() or lock().
-
-
-NONE Reads from the database only if the object is not available from the caches.
-READ Reads from the database regardless of the contents of the caches.
-UPGRADE Obtains a dialect-specific upgrade lock for the data to be accessed (if this is available from
-your database).
-UPGRADE_NOWAIT Behaves like UPGRADE, but when support is available from the database and dialect, the method
-will fail with a locking exception immediately. Without this option, or on databases for which it
-is not supported, the query must wait for a lock to be granted (or for a timeout to occur).
-
-=== optimistic lock
-
-Optimistic Locking
-For applications in which the likelihood that two simultaneous transactions should conflict is fairly
-remote, Hibernate and JPA offer support for Optimistic Locking. Optimistic Locking does not pose any
-constraints on accessing or writing data. Instead, the version field of the relevant domain entity is
-verified before the current transaction is committed. If the value of the version field does not match the
-value of the row (representing this particular domain entity) in the database, this implies that a
-concurrent transaction has modified the domain entity.
-When a version field is added to a domain class (by annotating a field with @Version), Hibernate will
-automatically increment the value of this field on a particular domain entity whenever it is updated. We
-can then leverage this feature to help prevent entities that were modified in a concurrent transaction
-from having their state reverted. In other words, a typical update operation is enhanced with a SQL
-condition to check the version field, such that updating the name property of an ArtEntity domain
-entity would become:
-UPDATE artentity SET name = ‘foo’, version = 8 where id = 4 and version = 7;
-Optimistic Locking is beneficial in that it does not pose any significant constraints that could limit
-scalability, such as database locks. However, this strategy will throw an exception if a version mismatch
-is detected, which means that application developers must re-attempt the transaction, while trying to
-reconcile the conflicting data.
-
-=== pessimistic lock 
-
-When the potential for simultaneous modifications are more likely, you may want to consider leveraging
-Pessimistic Locking instead. Pessimistic Locking uses database locks, and therefore poses greater risk for
-scalability and database deadlock. The chief advantage of Pessimistic Locking is that it limits concurrent
-access or modification of domain entities, which can help maintain data consistency without
-
-complicating application code. Keep in mind, however, that the longer a pessimistic lock is held, the
-greater the impact to scalability.
-Locking an entity is relatively simple in JPA 2.0. You can acquire a pessimistic lock when loading a
-particular entity. You can also explicitly lock an entity after it has already been loaded, by calling lock or
-refresh on the entityManager instance.
-For example, to acquire a pessimistic write lock (which is an exclusive lock) while loading a
-particular ArtEntity instance, we could do the following:
-ArtEntity artEntity = entityManager.find(ArtEntity.class, 7, LockModeType.PESSIMISTIC_WRITE)
-If we had previously loaded an ArtEntity instance, and now wanted to acquire a pessimistic read
-lock (which represents a shared lock), we could use the following approach:
-entityManager.lock(artEntity, LockModeType.PESSIMISTIC_READ)
-While it is possible to obtain multiple, concurrent read locks, there can only be a single pessimistic
-write lock

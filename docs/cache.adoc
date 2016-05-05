@@ -55,6 +55,8 @@ CAUTION: Wyjątkowo słabe skalowanie dla równoległych lub częstych uaktualni
  
 === Włączenie
 
+*** Przykład
+
 [source,java]
 ----
 @Entity
@@ -107,6 +109,8 @@ public class Employee {
 **  JBoss Cache
 
 
+*** Przykład
+
 [source,xml]
 ----
 <dependency>
@@ -119,7 +123,12 @@ public class Employee {
 </dependency>
 ----
 
+
+
 Włączenie cache
+
+*** Przykład
+
 [source,xml]
 ----
 <property name="hibernate.cache.use_second_level_cache">true </property>
@@ -146,6 +155,7 @@ org.hibernate.cache.ehcache.EhCacheRegionFactory
 
 ----
 
+*** Przykład
 
 [source,java]
 ----
@@ -165,6 +175,8 @@ public static class Person {
 * **Read-write** - Większy narzut Encje są modyfikowane (**CacheConcurrencyStrategy.READ_WRITE**)
 * **Transactional**  : Dostępna jedynie w środowisku zarządzanym. Gwarantuje pełną izolację transakcyjną aż do trybu powtarzalnego odczytu. Cache wspierany przez transakcyjne cache'e jak JBOSS TreeCache (**CacheConcurrencyStrategy.TRNSACTIONAL**) 
 
+*** Przykład
+
 [source,java]
 ----
 @Entity
@@ -180,6 +192,8 @@ public class Employee {
 
 ===  Konfiguracja
 
+*** Przykład
+
 [source,xml]
 ----
 <property name="hibernate.cache.use_query_cache" value="true"/>
@@ -189,6 +203,8 @@ public class Employee {
 NOTE:  Należy zawsze stosować z L2 cache : Query cache nie przechowuje wartości a przechowuje jedynie **id**
 
 NOTE: Włączenie **Query cache** ma sens dla zapytań często wykonywalnych, tak samo sparametryzowanych  
+
+*** Przykład
 
 [source.java]
 ----
@@ -245,6 +261,8 @@ Enabling a query cache:
 <property name="hibernate.cache.use_query_cache">true</property>
 ----
 
+*** Przykład
+
 [source,java]
 ----
 Session session = sessionFactory.openSession();
@@ -255,17 +273,11 @@ System.out.println("Employees found: " + employees.size());
 }
 session.close();
 ----
-[NOTE]
-The query cache checks whether a particular query is cached or
-not and the first-level cache checks the object in this particular cache. An invocation of the
-list() method always hits the database even if the first-level cache is enabled
 
-[WARNING]
-it's clear that if we don't set setcachable to true , hibernate will not
-cache our query, and the query will hit the database every time the loop iterates. This is not a
-feasible option as it may downgrade the performance.
 
 == Collection cache
+
+*** Przykład
 
 [source,java]
 ----
@@ -286,6 +298,7 @@ aktywowany poprzez dyrektywę : hibernate.cache.use_query_cache = true
 przetrzymuje całkowite wyniki zapytania w pamieci cache.
 
 === aktywacja
+
 [source,xml]
 ----
 
@@ -293,21 +306,10 @@ przetrzymuje całkowite wyniki zapytania w pamieci cache.
 
 ----
 
-
-A query’s result set can be configured to be cached. By default, caching is disabled; and every HQL, JPA QL,
-and Criteria query hits the database. You enable the query cache as follows:
- 
-hibernate.cache.use_query_cache = true
- 
-In addition to setting this configuration property, you should use the org.hibernate.Query interface:
- 
-Query bookQuery = session.createQuery("from Book book where book.name < ?");
-bookQuery.setString("name","HibernateRecipes");
-bookQuery.setCacheable(true);
- 
-The setCacheable() method enables the result to be cached.
-
 === JPA
+
+*** Przykład
+
 [source,java]
 ----
 
@@ -325,6 +327,8 @@ List<Person> persons = entityManager.createQuery(
 
 === Hibernate native API
 
+*** Przykład
+
 [source,java]
 ----
 
@@ -334,6 +338,9 @@ List<Person> persons = session.createQuery(
 ----
 
 === Używając JPA
+
+*** Przykład
+
 [source,java]
 ----
 List<Person> persons = entityManager.createQuery(
@@ -347,6 +354,9 @@ List<Person> persons = entityManager.createQuery(
 ----
 
 == Natywny Hibernate API
+
+*** Przykład
+
 [source,java]
 ----
 List<Person> persons = session.createQuery(
@@ -362,6 +372,8 @@ List<Person> persons = session.createQuery(
 ----
 
 == Statystyki 
+
+*** Przykład
 
 [source,java]
 ----
@@ -406,39 +418,6 @@ IMPORTANT: Konfigurujemy CacheManager współdzielony na wielu instancji Session
     
 ----
 
-== TODO
-
-
-uzycie cache przykłady junit
-
-[source,java]
-----
-Session session = factory.openSession();
-try {
-Book book1 = (Book) session.get(Book.class, id);
-Book book2 = (Book) session.get(Book.class, id);
-} finally {
-session.close();
-}
- 
-If you inspect the SQL statements executed by Hibernate, you find that only one database query is
-made. That means Hibernate is caching your objects in the same session. This kind of caching is called
-first-level caching, and its caching scope is a session.
-But how about getting an object with same identifier more than once in two different sessions?
- 
-Session session1 = factory.openSession();
-try {
-Book book1 = (Book) session1.get(Book.class, id);
-} finally {
-session1.close();
-}
-Session session2 = factory.openSession();
-try {
-Book book2 = (Book) session2.get(Book.class, id);
-} finally {
-session2.close();
-}
----- 
 
 == Przykłady
 

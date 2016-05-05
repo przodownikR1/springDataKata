@@ -46,6 +46,8 @@ ifndef::imgsdir[:imgsdir: ./../img]
 
 === Przykład całej minimalnej konfiguracji 
 
+*** Przykład
+
 [source,java]
 ----
 
@@ -91,6 +93,8 @@ class ApplicationConfig {
 
 === Tworzenie proxy
 
+*** Przykład
+
 [source,java]
 ----
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
@@ -99,7 +103,11 @@ import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 class Config {}
 ----
 
+
+
 ===  Annotation-driven configuration 
+
+*** Przykład
 
 [source,java]
 ----
@@ -114,6 +122,8 @@ interface Configuration { }
 
 === Standalone 
 
+*** Przykład
+
 [source,java]
 ----
 
@@ -124,7 +134,10 @@ UserRepository repository = factory.getRepository(UserRepository.class);
 
 ----
 
-=== Wybór metod CRUD 
+=== Wybór metod CRUD
+
+*** Przykład
+ 
 [source,java]
 ----
 
@@ -146,6 +159,8 @@ interface UserRepository extends MyBaseRepository<User, Long> {
 
 === Wykorzystanie Pageable, Slice, Sort  
 
+*** Przykład
+
 [source,java]
 ----
 Page<User> findByLastname(String lastname, Pageable pageable);
@@ -159,6 +174,8 @@ List<User> findByLastname(String lastname, Pageable pageable);
 ----
 
 === Ograniczenie wyników zapytań
+
+*** Przykład
 
 [source,java]
 ----
@@ -181,6 +198,8 @@ List<User> findTop10ByLastname(String lastname, Pageable pageable);
 ----
 
 === Streaming
+
+*** Przykład
 
 [source,java]
 ----
@@ -207,6 +226,8 @@ try (Stream<User> stream = repository.findAllByCustomQueryAndStream()) {
 
 === Asynchroniczność
 
+*** Przykład
+
 [source,java]
 ----
 
@@ -220,7 +241,10 @@ CompletableFuture<User> findOneByFirstname(String firstname);
 ListenableFuture<User> findOneByLastname(String lastname); 
 ----
 
-=== Cusomizing
+=== Dostrajanie do swoich potrzeb
+
+*** Przykład
+
 [source,java]
 ----
 
@@ -249,7 +273,10 @@ interface UserRepository extends CrudRepository<User, Long>, UserRepositoryCusto
 
 ----
 
-=== DQL
+=== DSL
+
+*** Przykład
+
 [soruce,java]
 ----
  
@@ -279,6 +306,8 @@ interface UserRepository extends CrudRepository<User, Long>, QueryDslPredicateEx
  
 ----
 
+*** Przykład
+
 [source,java]
 ----
 Predicate predicate = user.firstname.equalsIgnoreCase("dave")
@@ -287,7 +316,9 @@ Predicate predicate = user.firstname.equalsIgnoreCase("dave")
 userRepository.findAll(predicate);
 ----
 
-=== Named queries
+=== Nazwane zapytania
+
+*** Przykład
 
 [source,java]
 ----
@@ -312,6 +343,8 @@ public interface UserRepository extends JpaRepository<User, Long> {
 
 ===  @Query
 
+*** Przykład
+
 [source,java]
 ----
 
@@ -334,7 +367,9 @@ public interface UserRepository extends JpaRepository<User, Long> {
 
 ----
 
-=== Native queries
+=== Natywne zapytania
+
+*** Przykład
 
 [source,java]
 ----
@@ -357,6 +392,8 @@ public interface UserRepository extends JpaRepository<User, Long> {
 
 
 ===  SpEL expressions
+
+*** Przykład
 
 [source,java]
 ----
@@ -396,6 +433,8 @@ int setFixedFirstnameFor(String firstname, String lastname);
 
 === Hint
 
+*** Przykład
+
 [source,java]
 ----
 
@@ -411,6 +450,8 @@ public interface UserRepository extends Repository<User, Long> {
 ----
 
 === Fetch load EntityGraph
+
+*** Przykład
 
 [source,java]
 ----
@@ -451,6 +492,8 @@ public interface GroupRepository extends CrudRepository<GroupInfo, String> {
 ----
 
 === Projection
+
+*** Przykład
 
 [source,java]
 ----
@@ -500,7 +543,10 @@ interface NoAddresses {
 
 
 ----
-=== Stored procedures
+=== Procedury składowane
+
+*** Przykład
+
 [source,sql]
 ----
 
@@ -552,6 +598,8 @@ Integer plus1(@Param("arg") Integer arg);
 
 
 === Specifications
+
+*** Przykład
 
 [source,java]
 ----
@@ -607,7 +655,7 @@ List<Customer> customers = customerRepository.findAll(isLongTermCustomer());
 
 ----
 
-Przykład drugi : 
+*** Przykład 2
 
 [source,java]
 ----
@@ -637,6 +685,8 @@ public class UserSpecifications {
 
 ----
 
+*** Przykład 
+
 [source,java]
 ----
 
@@ -655,36 +705,10 @@ public class UserSpecifications {
 
 
 
-The Query by Example API consists of three parts:
-
-    Probe: That is the actual example of a domain object with populated fields.
-
-    ExampleMatcher: The ExampleMatcher carries details on how to match particular fields. It can be reused across multiple Examples.
-
-    Example: An Example consists of the probe and the ExampleMatcher. It is used to create the query.
-
-Query by Example is suited for several use-cases but also comes with limitations:
-
-When to use
-
-    Querying your data store with a set of static or dynamic constraints
-
-    Frequent refactoring of the domain objects without worrying about breaking existing queries
-
-    Works independently from the underlying data store API
-
-Limitations
-
-    Query predicates are combined using the AND keyword
-
-    No support for nested/grouped property constraints like firstname = ?0 or (firstname = ?1 and lastname = ?2)
-
-    Only supports starts/contains/ends/regex matching for strings and exact matching for other property types
-
-Before getting started with Query by Example, you need to have a domain object. To get started, simply create an interface for your repository:
-
 
 [source,java]
+*** Przykład
+
 ----
 public class Person {
 
@@ -728,7 +752,9 @@ Example<Person> example = Example.of(person, matcher);
 
 ----
 
-=== Transactionality
+=== Transakcyjność
+
+*** Przykład
 
 [source,java]
 ----
@@ -776,7 +802,9 @@ interface UserRepository extends Repository<User, Long> {
 
 ----
 
-=== Audit
+=== Audyt / Audit
+
+*** Przykład
 
 [source,java]
 ----
@@ -797,6 +825,8 @@ class Customer {
 ----
 
 === AuditorAware
+
+*** Przykład
 
 [source,java]
 ----
@@ -845,6 +875,8 @@ class Config {
 
 === Konfiguracja
 
+*** Przykład
+
 [source,java]
 ----
 
@@ -860,7 +892,9 @@ class WebConfiguration { }
 
 
 
-====    A DomainClassConverter to enable Spring MVC to resolve instances of repository managed domain classes from request parameters or path variables.
+====  DomainClassConverter 
+
+*** Przykład
 
 [source,java]
 ----
@@ -877,7 +911,9 @@ public class UserController {
 }
 ----
 
-====    HandlerMethodArgumentResolver implementations to let Spring MVC resolve Pageable and Sort instances from request parameters.
+====    HandlerMethodArgumentResolver  dostęp do  Pageable i  Sort z poziomu parametrów requesta
+
+*** Przykład
 
 [source,java]
 ----
@@ -900,7 +936,9 @@ public class UserController {
 
 ----
 
-==== Hypermedia support for Pageables
+==== Hypermedia wsparcie dla  Pageables
+
+*** Przykład
 
 [source,java]
 ----
@@ -925,16 +963,19 @@ class PersonController {
 
 ==== Querydsl web support  / QuerydslPredicateArgumentResolver.
 
+*** Przykład
 
-
-This means that given the User object from previous samples a query string
-
+[source,txt]
+----
 ?firstname=Dave&lastname=Matthews
 
-can be resolved to
+=> 
 
 QUser.user.firstname.eq("Dave").and(QUser.user.lastname.eq("Matthews"))
 
+----
+
+*** Przykład
 
 [source,java]
 ----

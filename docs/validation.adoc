@@ -60,8 +60,6 @@ validation-mode
 
 == Własny walidator
 
-przyklad z password
-
 
 == @DecimalMax Numeric     Decimal value less-than or equal to specified value
 
