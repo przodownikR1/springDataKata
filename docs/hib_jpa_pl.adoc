@@ -146,7 +146,7 @@ Standardowe podejście oparte na JDBC wymaga od programisty następujących czyn
  
 **DataSourcePool**
  
-- hibernate-c3p0  Integrates the C3P0 connection pooling library into Hibernate 
+** **hibernate-c3p0** -   Integracja C3P0 z Hibernate  
 
 [source,java]
 ----
@@ -157,30 +157,24 @@ Standardowe podejście oparte na JDBC wymaga od programisty następujących czyn
 <property name="hibernate.c3p0.acquire_increment">1</property>
 <property name="hibernate.c3p0.idle_test_period">3000</property>
  
-Here’s an explanation for each of the parameters you set:
-•	 min_size is the minimum number of connections that are ready at all times.
-•	 max_size is the maximum number of connections in the pool. This is the only
-property that is required for c3p0 to be enabled.
-•	 timeout is the maximum idle time for a connection, after which the connection is
-removed from the pool.
-•	 max_statements is the maximum number of prepared statements that can be
-cached.
-•	 idle_test_period is the time in seconds before which a connection is automatically
-validated.
-•	 acquire_increment is the number of connections acquired when the pool is
-exhausted.
 ----
 
+** min_size = minimalna liczba połączeń dostępna zawsze kiedy jest taka potrzeba
+** max_size = max liczba połączeń dostępnych w ramach puli
+** timeout = max czas bezczynności po którym połączenie jest usuwane z puli
+** idle_test_period = czas w sekundach przed którym połączenie jest automatycznie walidowane
+** max_statements = max liczba kwerend które mogą być buforowane w ramach puli
+** acquire_increment = liczba nowych połączeń jeśli pula jest wyczerpana
 
 
-- hibernate-hikaricp  Integrates the HikariCP connection pooling library into Hibernate
-- hibernate-proxool   Integrates the Proxool connection pooling library into Hibernate
+** **hibernate-hikaricp**  
+** **hibernate-proxool**   
  
 **Cache**
 
-*hibernate-ehcache*  Integrates the Ehcache caching library into Hibernate as a second-level cache provider.
+** **hibernate-ehcache**  
     
-*hibernate-infinispan* Integrates the Infinispan caching library into Hibernate as a second-level cache provider.
+** **hibernate-infinispan** 
  
  
  
@@ -266,6 +260,43 @@ EntityManager entityManager;
 - przechodność utrwalania (lazy loading/fetching)
 - generowanie schematu danych 
 - symulacja dziedziczenia modelu relacyjnego
+ 
+ 
+== Symbioza
+
+=== Lombok
+
+[source,java]
+----
+@Entity
+@Data
+@AllArgsConstructor
+@Builder
+@NoArgsConstructor
+public class Person implements Serializable{
+----
+
+=== JAXB
+
+[source,java]
+----
+@XmlTransient
+@XmlJavaTypeAdapter
+
+
+----
+
+=== JSON
+
+
+=== Bean Validation
+
+- @Pattern
+- @Size
+- @Max
+-@Min
+
+- etc
  
   
 == Nowości w JPA 2.1
@@ -493,8 +524,10 @@ image::lifecycle.jpeg[]
    update() i merge() -> Update
    
 *  **Persistence** (trwały) - obiekt istnieje w bazie danych. Obiekt jest zarządzany przez Hibernate czyli jest związany z sesją.
+
+    EntityManager#persist()
  
-   Usunięcie : delete()
+ 
  
 *  **Detached** (odłączony) - obiekt ma reprezentacje w bazie danych, ale zmiana wartości obiektu nie ma wpływu na reprezentacje bazodanową i odwrotnie.
 
@@ -502,7 +535,9 @@ image::lifecycle.jpeg[]
    Możliwy do modyfikacji poza kontekstem.
    Przyłączenie do sesji jest możliwe
    
-*  **Removed** - obiekty były zarządzane przez Hibernate, ale w wyniku operacji remove() zostały skasowane z bazy danych.
+*  **Removed** / Usunięcie  - obiekty były zarządzane przez Hibernate, ale w wyniku operacji remove() zostały skasowane z bazy danych.
+
+**     delete() , EntityManager#remove()**
 
 == Session Factory ~ EntityManagerFactory
 
@@ -1420,6 +1455,10 @@ public List<Employee> findEmployees(int offset, int limit) {
 ** EntityNotFoundException - wyrzucany przez metodę refresh lub lock jeśli encja po odświeżeniu kontekstu nie istnieje w bazie
 
 
+source :: __www.bhaveshthaker.com__
+
+image::JPAEclipseLinkDemo_Project_Img002.JPG[]
+
 == Rozwiązywanie problemów
 === A common mistake when designing entity models is to try to make all associations bidirectional
 
@@ -1545,6 +1584,8 @@ realdriver2=
 ----
 log4j.logger.org.hibernate.type=trace
 ----
+
+
 
 
 == Dobre praktyki

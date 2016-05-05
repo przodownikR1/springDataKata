@@ -275,6 +275,23 @@ EntityManagerFactory emf = Persistence.createEntityManagerFactory("pu1");
 EntityManager em = emf.createEntityManager();
 em.persist(entity);
 ----
+
+
+==== Programowy persistence.xml
+
+[source,java]
+----
+Map<String, String> prop = Maps.newHashMap();	
+
+prop.put("javax.persistence.transactionType","RESOURCE_LOCAL");	
+prop.put("javax.persistence.jtaDataSource", "");	
+prop.put("javax.persistence.jdbc.driver", "org.h2.Driver");	
+prop.put("javax.persistence.jdbc.url", "jdbc:h2:mem:");
+
+EntityManagerFactory emf = Persistence.createEntityManagerFactory("pu",prop);
+EntityManager em = emf.createEntityManager();
+	
+----
  
 ==== Mapowanie klas
 

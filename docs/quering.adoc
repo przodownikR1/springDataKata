@@ -95,14 +95,25 @@ Query query = session.createQuery(sql);
 List<Book> books = query.getResultList();
 
 ----
+=== Like
 
+[source,java]
+----
+try {
+Query query = em.createQuery(
+"select p from Person p where firstName like '%a%'"
+);
+Person person = (Person) query.getSingleResult();
+// ...
+} catch (NonUniqueResultException ex) {
+// ...
+}
+----
 
-== Performing aggregate operations
+== Zwiększanie wydajności poprzez agregacje po stronie bazy
 
-== Executing a native SQL query
-We can use Session.createSQLQuery(String query)
+== Natywna kwerenda SQL
 
-Scalar queries
 [source,java]
 ----
 SQLQuery sqlQuery = session.createSQLQuery("SELECT * FROM product");
@@ -124,20 +135,16 @@ org.hibernate.type.LongType());
 sqlQuery.setResultTransformer(Transformers.ALIAS_TO_ENTITY_MAP);
 List list = sqlQuery.list();
 
-
-
 List<Object[]> persons = entityManager.createNativeQuery(
     "SELECT * FROM person" )
 .getResultList();
 
-
-
 ----
-Entity queries
+
 [source,java]
 ----
 SQLQuery sqlQuery = session.createSQLQuery("SELECT * FROM category");
-/* Line 2 */ sqlQuery.addEntity(Category.class);
+sqlQuery.addEntity(Category.class);
 List<Category> list = sqlQuery.list();
 for(Category category: list){
 System.out.println("\nCategory id: " + category.getId());
@@ -145,7 +152,15 @@ System.out.println("Category name: " + category.getName());
 }
 ----
 
-=== NATIVE
+[source,java]
+----
+  List<String> lastNames = session.createQuery("SELECT e.firstName FROM "+Employee.class.getSimpleName()
+  + " e join e.company c join c.depts d WHERE d.name = :name")
+  .setParameter("name", "JAVA").list();
+  og.info("lastNames {}",lastNames);
+----
+
+=== Natywne / NATIVE
 
 [source,java]
 ----
@@ -159,27 +174,9 @@ for(Object[] person : persons) {
 }
 ----
 
-=== Hibernate NATIVE
-
-[source,java]
-----
 
 
-List<Object[]> persons = session.createSQLQuery(
-    "SELECT * FROM person" )
-.addScalar( "id", LongType.INSTANCE )
-.addScalar( "name", StringType.INSTANCE )
-.list();
-
-for(Object[] person : persons) {
-    Long id = (Long) person[0];
-    String name = (String) person[1];
-}
-
-
-----
-
-== Executing a query using HQL
+== HQL kwerendy
 [source,java]
 ----
 Query query = session.createQuery("FROM Category");
@@ -196,18 +193,16 @@ System.out.println("Result size: " + list.size());
 
 ----
 
-=== JPA native query selecting entities
+=== JPA natywne kwerendy
 
 [source,java]
 ----
 
-List<Person> persons = entityManager.createNativeQuery(
-    "SELECT * FROM person", Person.class )
-.getResultList();
+List<Person> persons = entityManager.createNativeQuery("SELECT * FROM person", Person.class ).getResultList();
 
 ----
 
-=== Hibernate native query selecting entities with the same column names and aliases
+=== Natywne kwerendy z aliasami
 
 [source,java]
 ----
@@ -225,13 +220,13 @@ List<Object> entities = session.createSQLQuery(
 
 W celu wygodniejszego używania oraz większej wydajności korzysta się tzw nazwanych zapytań.
 
-- prekompilacja
-- powiązanie z encją 
-- model programowy
+** prekompilacja
+** powiązanie z encją 
+(( model programowy
 
 
- *@NamedQuery* : This annotation is used to define a single named query
- *@NamedQueries* : This annotation is used to define multiple queries
+ *@NamedQuery* : pojedyńcze natywne zapytanie
+ *@NamedQueries* : agregacja kilku natywnych zapytań
 
 [source,java]
 ----
@@ -266,7 +261,7 @@ Query q = entityManager.getNamedQuery("Company.findAll");
 
 ----
 
-===  Joined-entities NamedNativeQuery
+===  Natywne w konfiguracja z JOIN
 
 [source,java]
 ----
@@ -556,7 +551,7 @@ Query query = entityManager.createQuery(
 
 ----
 
-== Simple query using multiple root entity references
+== Kwerenda z wielu podmiotów
 
 [source,java]
 ----
@@ -618,7 +613,7 @@ CallStatistics callStatistics = entityManager.createQuery(
 
 ----
 
-== Dynamic instantiation example - list
+== Dynamiczna instancja - przykład 
 
 [source,java]
 ----
@@ -636,7 +631,7 @@ List<List> phoneCallDurations = entityManager.createQuery(
 
 ----
 
-==  Dynamic instantiation example - map
+== Dynamiczna mapa - przykład
 
 [source,java]
 ----
@@ -684,7 +679,7 @@ int insertedEntities = session.createQuery(
 
 ----
 
-=== Custom Insert, Update , Delete
+=== Dopasowane operacje : Insert, Update , Delete
 
 [source,java]
 ----
@@ -708,7 +703,7 @@ public class Chaos {
 
 ----
 
-=== Overriding SQL statements for collections using annotations
+=== Przykrywanie operacji na kolecjach przez adnotacje
 
 [source,java]
 ----

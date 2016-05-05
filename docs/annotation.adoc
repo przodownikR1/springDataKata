@@ -275,22 +275,31 @@ public class User {
 **  domyślnie nazwa tabeli jest taka sama jak nazwa klasy.
 ** jeśli domyślne ustawienie jest nie wystarczające z różnych powodów możemy użyć @Table
 
+** Przykład 
+
 [source,java]
 ----
-@Entity
-@Table( catalog = "CRM", schema = "purchasing", name = "t_simple" )
-public class Simple {
-    ...
-}
+@Table(name = "ITEMS",uniqueConstraints =@UniqueConstraint(name = "UNQ_NAME",columnNames = { "ITEM_NAME" })
+)
+public class Item extends AbstractEntity {
 
-@Entity
-@Table(name = "my_emploee", uniqueConstraints = @UniqueConstraint(columnNames = { "id" , "snn"}))
-class Employee{
+    private static final long serialVersionUID = 5474170031394030929L;
+    @Column(name="ITEM_NAME")
+    private String name;
+    }
+----
 
-}
+[source,sql]
+----
+    create table ITEMS (
+        id bigint not null,
+        ITEM_NAME varchar(255),      
+        primary key (id)
+    )
+    alter table ITEMS  add constraint UNQ_NAME unique (ITEM_NAME)
+----
 
-
----- 
+ 
 === Określenie schematu bazy w persistence.xml
 [source,xml]
 ----
@@ -304,12 +313,34 @@ class Employee{
 </entity-mappings>
 ----
 
+=== @Index
+
+[source,java]
+----
+@Table(name = "ITEMS",
+indexes = {@Index(name = "IDX_USERNAME", columnList = "ITEM_NAME")}
+public class Item extends AbstractEntity {
+  
+    @Column(name="ITEM_NAME")
+    private String name;
+    }
+----
+
+[source,sql]
+----
+ create table ITEMS (
+        id bigint not null,     
+        ITEM_NAME varchar(255),      
+        primary key (id)
+    )
+     create index IDX_USERNAME on ITEMS (ITEM_NAME)
+----
+
 
 == **@Column**
 ** analogiczne zachowanie do adnotacji @Table
 
 ** insertable/updatable - określa czy dana kolumna będzie brała udział w operacjach insert/update 
-
 
 [source,java]
 ----
@@ -326,6 +357,100 @@ class Employee{
     @Column(name = "detailstatus", columnDefinition = "nvarchar")
     @Enumerated(EnumType.STRING)
     private DetailStatus status;
+----
+
+** Przykład 1
+
+[source,java]
+----
+ @Column(nullable=false,scale=2,precision=2)
+ private BigDecimal price;
+----
+
+[source,sql]
+----
+ price decimal(2,2) not null
+----
+
+** Przykład 2
+
+[source,java]
+----
+ @Column
+ private BigDecimal price;
+----
+
+[source,sql]
+----
+ price decimal(19,2)
+----
+
+** Przykład 3
+
+[source,java]
+----
+@Column(name="ITEM_NAME",length=20,unique=true)
+----
+
+[source,sql]
+----
+create table Item (
+        id bigint not null,
+        version bigint,
+        ITEM_NAME varchar(20),
+        price decimal(2,2) not null,
+        primary key (id)
+    )
+     alter table Item  add constraint UK_bjye5lp3xnccmg4ovtumigp3v unique (ITEM_NAME)
+----
+
+** Przykład 4
+
+[source,java]
+----
+ @Column(columnDefinition ="varchar(15) not null unique check (not substring(lower(OWNER), 0, 5) = 'admin')")
+ private String owner;
+
+----
+
+[source,sql]
+----
+ create table Item (
+        id bigint not null,
+        version bigint,
+        ITEM_NAME varchar(20),
+        owner varchar(15) not null unique check (not substring(lower(OWNER), 0, 5) = 'admin'),
+        price decimal(2,2) not null,
+        primary key (id)
+----
+
+== @Check
+
+[source,java]
+----
+@org.hibernate.annotations.Check(
+constraints = "AUCTIONSTART < AUCTIONEND"
+)
+public class Offer extends AbstractEntity{
+@NotNull
+protected Date auctionStart;
+@NotNull
+protected Date auctionEnd;
+}
+----
+
+[source,sql]
+----
+  create table Offer (
+        id bigint not null,
+        version bigint,
+        auctionEnd binary(255) not null,
+        auctionStart binary(255) not null,
+        offer_value decimal(19,2),
+        ITEM_ID bigint not null,
+        primary key (id),
+        check (AUCTIONSTART < AUCTIONEND)
+    )
 ----
 
 
@@ -938,9 +1063,103 @@ Email email;
 * One-To-Many 1:N
 Za pomoca kluczu obcego
 
+[source,java]
+----
+@Entity
+public class Item extends AbstractEntity {
+    private String name;
+    private BigDecimal price;
+
+    @OneToMany(fetch = FetchType.LAZY) // Defaults to EAGER
+    @JoinColumn(name = "ITEM_ID")
+    private List<Offer> offers;
+
+
+}
+----
+
+[source,java]
+----
+@Entity
+public class Offer extends AbstractEntity{
+    @Column(name="offer_value")
+    private BigDecimal value;
+}
+----
+
+** Generowany SQL : 
+
+[source,sql]
+----
+  create table Item (
+        id bigint not null,
+        version bigint,
+        name varchar(255),
+        price decimal(19,2),
+        primary key (id)
+    )
+    
+     create table Offer (
+        id bigint not null,
+        version bigint,
+        offer_value decimal(19,2),
+        ITEM_ID bigint,
+        primary key (id)
+    )
+    
+     alter table Offer 
+        add constraint FKp6fm8wffictppkc0m3ufurbpy 
+        foreign key (ITEM_ID) 
+        references Item
+    
+----
+
 Za pomoca kluczu głównego
 
 * Many-To-One N:1
+
+[source,java]
+----
+@Entity
+public class Item  extends AbstractEntity{
+    private String name;
+    private BigDecimal price;
+}
+@Entity
+public class Offer extends AbstractEntity{
+    @ManyToOne(fetch = FetchType.LAZY) // Defaults to EAGER
+    @JoinColumn(name = "ITEM_ID", nullable = false,
+    foreignKey = @ForeignKey(name = "FK_ITEM_ID") )
+    private Item item;
+
+    @Column(name="offer_value")
+    private BigDecimal value;
+ }
+----
+
+[source,sql]
+----
+ create table Item (
+        id bigint not null,
+        version bigint,
+        name varchar(255),
+        price decimal(19,2),
+        primary key (id)
+    )
+      create table Offer (
+        id bigint not null,
+        version bigint,
+        offer_value decimal(19,2),
+        ITEM_ID bigint not null,
+        primary key (id)
+    )
+    alter table Offer 
+        add constraint FK_ITEM_ID 
+        foreign key (ITEM_ID) 
+        references Item
+    
+----
+
 * Many-To-Many N:M
 
 

@@ -65,6 +65,22 @@ source: __https://aishwaryavaishno.wordpress.com/category/technical-posts/java/_
 
 image::tx-annotation2.png[]
 
+
+=== Architektura
+
+source : __https://sites.google.com/site/telosystutorial/springmvc-jpa-springdatajpa__
+
+image::bundles_schema_springmvc-springdatajpa.png[]
+
+
+source : __https://fndong.wordpress.com/category/spring-framework/__
+
+image::architecture_springmvc_hibernate_jpa_mysql.jpg[]
+
+==== Przykładowy podglądowy diagram klas w projekcie
+
+image::diagram-springmvc-springdatajpa.png[]
+
 === EntityManager
 - wstrzyknięcie jest zawsze wątkowo bezpieczne
 

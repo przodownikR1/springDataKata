@@ -3,14 +3,16 @@
 :numbered:
 :icons: font
 :pagenums:
-:imagesdir: images
-:source-highlighter: coderay
+:imagesdir: img
+:iconsdir: ./icons
+:stylesdir: ./styles
+:scriptsdir: ./js
 
 :image-link: https://pbs.twimg.com/profile_images/425289501980639233/tUWf7KiC.jpeg
-
 ifndef::sourcedir[:sourcedir: ./src/main/java/]
-
-#Sample demo to show how jpa work in effiecient way
+ifndef::resourcedir[:resourcedir: ./src/main/resources/]
+ifndef::imgsdir[:imgsdir: ./../img]
+:source-highlighter: coderay
 
 == CRITERIA API 
 
@@ -18,8 +20,17 @@ Criteria API ma działanie analogiczne do JPQL z tą różnicą że działamy na
 
 
 === CriteriaBuilder
+
+Tworzony z EntityManagera. Punkt wyjściowy do funkcjonowania interfejsu Criteria API.
+
 === CriteriaQuery<T>
+
+Reprezentuje wszystkie warunki użyte w zapytaniu
+
 === Root<T>
+
+Zmienna wskazująca na korzeń zapytania
+
 
 [source,java]
 ----
@@ -41,6 +52,24 @@ Root<Person> root = criteria.from( Person.class );
 
 
 === TypedQuery<T>
+
+
+== Wyrażenia / Expression
+
+image::UML-expressions.gif[]
+
+
+== Typy / Types
+
+image::UML-types.gif[]
+
+== Kwerendy / guery
+
+image::UML-query.gif[]
+
+== Atrybuty / Attributes
+
+image::UML-attrs.gif[]
 
 == MetaModel
 
