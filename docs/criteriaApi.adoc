@@ -16,7 +16,11 @@ ifndef::imgsdir[:imgsdir: ./../img]
 
 == CRITERIA API 
 
-Criteria API ma działanie analogiczne do JPQL z tą różnicą że działamy na obiektach i bytach mocno typowalnych.
+** Criteria API ma działanie analogiczne do JPQL z tą różnicą że działamy na obiektach i bytach mocno typowalnych.
+** Silnie generyczny
+** Wsparcie MetaModelu
+
+
 
 
 === CriteriaBuilder
