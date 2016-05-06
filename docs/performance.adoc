@@ -25,6 +25,76 @@ ifndef::imgsdir[:imgsdir: ./../img]
 ** problem LazyLoadingException 
 
 
+
+=== Sposoby inicjalizacji 
+
+==== Fizyczne 'dotknięcie' kolekcji
+
+[source,java]
+----
+Person person = this.em.find(Person.class, id);
+person.getPhones().size();
+----
+
+==== Fetch Join
+
+[source,java]
+----
+Query q = this.em.createQuery("SELECT p FROM Person p JOIN FETCH p.phones ph WHERE p.id = :id");
+q.setParameter("id", id);
+person = (Person) q.getSingleResult();
+----
+
+==== Fetch Join z Criteria
+
+[source,java]
+----
+CriteriaBuilder cb = em.getCriteriaBuilder();
+CriteriaQuery q = cb.createQuery(Person.class);
+Root p = q.from(Person.class);
+p.fetch("phones", JoinType.INNER);
+q.select(p);
+q.where(cb.equal(p.get("id"), personId));
+
+Person person = (Person)this.em.createQuery(q).getSingleResult();
+----
+
+==== Named Entity Graph
+
+
+[source,java]
+----
+@Entity
+@NamedEntityGraph(name = "graph.Person.phones", 
+      attributeNodes = @NamedAttributeNode("phones"))
+public class Person implements Serializable {
+
+----
+
+[source,java]
+----
+EntityGraph graph = this.em.getEntityGraph("graph.Person.phones");
+  
+Map hints = new HashMap();
+hints.put("javax.persistence.fetchgraph", graph);
+  
+Person person = this.em.find(Person.class, personId, hints);
+----
+
+
+==== Dynamiczny graf
+
+[source,java]
+----
+EntityGraph graph = this.em.createEntityGraph(Person.class);
+Subgraph phonesGraph = graph.addSubgraph("phones");
+    
+Map hints = new HashMap();
+hints.put("javax.persistence.loadgraph", graph);
+  
+Person person = this.em.find(Person.class, personId, hints);
+----
+
 === less lazy loading
 
 *** Przykład
