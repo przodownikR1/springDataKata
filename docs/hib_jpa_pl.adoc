@@ -22,7 +22,7 @@ ifndef::imgsdir[:imgsdir: ./../img]
 * blog link:http://przewidywalna-java.blogspot.com[]
 * twitter przodownikR1
 
-= image:{image-link} [role='img-circle']
+image:{image-link} [role='img-circle']
 
 == Źródła wiedzy 
  - Hibernate in Action
@@ -695,6 +695,10 @@ WARNING: Anti-pattern -> System.gc()
 - isDirty() 
 
 
+== Adnotacje
+
+include::annotation.adoc[]
+
 == Query, Criteria
 - umożliwia dostęp do danych w bazie za pomocą wyspecjalizowanych zapytań czy API
 
@@ -1095,12 +1099,9 @@ Library library;
 
    
 == Pobieranie encji
-* load()
+** load()
 
-Na podstawie danego Id metoda load próbuje pobrać obiekt z bazy danych. Jeśli obiekt nie istnieje wyrzucany jest wyjątek org.hibernate.ObjectNotFoundException
-Metoda load() zwraca też proxy, oznacza to tyle, że nie nastąpi uderzenie do bazy danych do czasu kiedy faktycznie będziemy potrzebować danego obiektu.
-Proxy zwraca dummy object zamiast uderzyć do db. Jeśli obiekt jest w first-level cache zwróci obiekt.
-Jeśli obiektu nie ma w first-level-cache uderzy do bazy.
+*** Na podstawie danego Id metoda load próbuje pobrać obiekt z bazy danych. Jeśli obiekt nie istnieje wyrzucany jest wyjątek org.hibernate.ObjectNotFoundExceptionMetoda load() zwraca też proxy, oznacza to tyle, że nie nastąpi uderzenie do bazy danych do czasu kiedy faktycznie będziemy potrzebować danego obiektu. Proxy zwraca dummy object zamiast uderzyć do db. Jeśli obiekt jest w first-level cache zwróci obiekt. Jeśli obiektu nie ma w first-level-cache uderzy do bazy.
 
 [source,java]
 ----
@@ -1110,10 +1111,9 @@ public void load(Object object, Serializable id) throws HibernateException
 ----
  
 
-* get()   
+** get()   
 
-Na podstawie danego Id metoda get() próbuje pobrać obiekt z bazy danych. Jeśli obiekt nie istnieje zwraca null.
-Metoda get() w przeciwieństwie do metody load() uderza do bazy bezpośrednio.
+*** Na podstawie danego Id metoda get() próbuje pobrać obiekt z bazy danych. Jeśli obiekt nie istnieje zwraca null. Metoda get() w przeciwieństwie do metody load() uderza do bazy bezpośrednio.
  
 [source,java]
 ----

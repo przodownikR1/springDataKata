@@ -3,7 +3,7 @@
 == Transakcje + Integracja JPA/Hibernate z frameworkiem Spring
 
 
-==== Historia
+=== Historia
 
 ** Spring 1.0 - Marzec 2004
 ** Spring 2.0 - Październik 2006
@@ -22,7 +22,7 @@ image:springarchitecture.png[]
 image:overview-full.png[]
 
 
-==== Cechy
+=== Cechy
 
 ** testowalność
 ** loose coupling

@@ -1,7 +1,7 @@
 
-= Spring Data
+== Spring Data
 
-== Najnowsze features:)
+=== Najnowsze features:)
 
 **    Support for Projections in repository query methods.
 
@@ -15,11 +15,11 @@
 
 **    Upgrade to Querydsl 4, Hibernate 5, OpenJPA 2.4 and EclipseLink 2.6.1.
 
-== Geneza
+=== Geneza
 
  Powstał 2010 podczas sesji Roda Jonsona z Emilem Eifrem (Neo Technologies), jako próba integracji Spring z Neo4j
  
-== Charakretystyka
+=== Charakretystyka
 
 ** generyczna impl DAO
 ** postawowa impl CRUD
@@ -29,7 +29,7 @@
 ** wsparcie dla QueryDSL 
  
 
-=== Przykład całej minimalnej konfiguracji 
+==== Przykład całej minimalnej konfiguracji 
 
 *** Przykład
 
@@ -76,7 +76,7 @@ class ApplicationConfig {
 
 ----
 
-=== Tworzenie proxy
+==== Tworzenie proxy
 
 *** Przykład
 
@@ -90,7 +90,7 @@ class Config {}
 
 
 
-===  Annotation-driven configuration 
+====  Annotation-driven configuration 
 
 *** Przykład
 
@@ -105,7 +105,7 @@ interface Configuration { }
 
 ----
 
-=== Standalone 
+==== Standalone 
 
 *** Przykład
 
@@ -119,7 +119,7 @@ UserRepository repository = factory.getRepository(UserRepository.class);
 
 ----
 
-=== Wybór metod CRUD
+==== Wybór metod CRUD
 
 *** Przykład
  
@@ -142,7 +142,7 @@ interface UserRepository extends MyBaseRepository<User, Long> {
 
 ----
 
-=== Wykorzystanie Pageable, Slice, Sort  
+==== Wykorzystanie Pageable, Slice, Sort  
 
 *** Przykład
 
@@ -158,7 +158,7 @@ List<User> findByLastname(String lastname, Pageable pageable);
 
 ----
 
-=== Ograniczenie wyników zapytań
+==== Ograniczenie wyników zapytań
 
 *** Przykład
 
@@ -182,7 +182,7 @@ List<User> findTop10ByLastname(String lastname, Pageable pageable);
 
 ----
 
-=== Streaming
+==== Streaming
 
 *** Przykład
 
@@ -209,7 +209,7 @@ try (Stream<User> stream = repository.findAllByCustomQueryAndStream()) {
 ----
 
 
-=== Asynchroniczność
+==== Asynchroniczność
 
 *** Przykład
 
@@ -226,7 +226,7 @@ CompletableFuture<User> findOneByFirstname(String firstname);
 ListenableFuture<User> findOneByLastname(String lastname); 
 ----
 
-=== Dostrajanie do swoich potrzeb
+==== Dostrajanie do swoich potrzeb
 
 *** Przykład
 
@@ -258,11 +258,11 @@ interface UserRepository extends CrudRepository<User, Long>, UserRepositoryCusto
 
 ----
 
-=== DSL
+==== DSL
 
 *** Przykład
 
-[soruce,java]
+[source,java]
 ----
  
 
@@ -326,7 +326,7 @@ public interface UserRepository extends JpaRepository<User, Long> {
 
 ----
 
-===  @Query
+====  @Query
 
 *** Przykład
 
@@ -352,7 +352,7 @@ public interface UserRepository extends JpaRepository<User, Long> {
 
 ----
 
-=== Natywne zapytania
+==== Natywne zapytania
 
 *** Przykład
 
@@ -376,7 +376,7 @@ public interface UserRepository extends JpaRepository<User, Long> {
 
 
 
-===  SpEL expressions
+====  SpEL expressions
 
 *** Przykład
 
@@ -403,7 +403,7 @@ public interface UserRepository extends JpaRepository<User,Long> {
 
 ----
 
-=== Modyfikacja danych 
+==== Modyfikacja danych 
 
 [source,java]
 ----
@@ -416,7 +416,7 @@ int setFixedFirstnameFor(String firstname, String lastname);
 
 ----
 
-=== Hint
+==== Hint
 
 *** Przykład
 
@@ -434,7 +434,7 @@ public interface UserRepository extends Repository<User, Long> {
 
 ----
 
-=== Fetch load EntityGraph
+==== Fetch load EntityGraph
 
 *** Przykład
 
@@ -476,7 +476,7 @@ public interface GroupRepository extends CrudRepository<GroupInfo, String> {
 
 ----
 
-=== Projection
+==== Projection
 
 *** Przykład
 
@@ -528,7 +528,7 @@ interface NoAddresses {
 
 
 ----
-=== Procedury składowane
+==== Procedury składowane
 
 *** Przykład
 
@@ -582,7 +582,7 @@ Integer plus1(@Param("arg") Integer arg);
 ----
 
 
-=== Specifications
+==== Specifications
 
 *** Przykład
 
@@ -686,7 +686,7 @@ public class UserSpecifications {
 
 
 
-=== Query by Example
+==== Query by Example
 
 
 
@@ -737,7 +737,7 @@ Example<Person> example = Example.of(person, matcher);
 
 ----
 
-=== Transakcyjność
+==== Transakcyjność
 
 *** Przykład
 
@@ -770,7 +770,7 @@ public interface UserRepository extends JpaRepository<User, Long> {
 
 ----
 
-=== Locking
+==== Locking
 
 [source,java]
 ----
@@ -787,7 +787,7 @@ interface UserRepository extends Repository<User, Long> {
 
 ----
 
-=== Audyt / Audit
+==== Audyt / Audit
 
 *** Przykład
 
@@ -809,7 +809,7 @@ class Customer {
 
 ----
 
-=== AuditorAware
+==== AuditorAware
 
 *** Przykład
 
@@ -856,9 +856,9 @@ class Config {
 
 ----
 
-== Web support
+=== Web support
 
-=== Konfiguracja
+==== Konfiguracja
 
 *** Przykład
 
@@ -877,7 +877,7 @@ class WebConfiguration { }
 
 
 
-====  DomainClassConverter 
+=====  DomainClassConverter 
 
 *** Przykład
 
@@ -896,7 +896,7 @@ public class UserController {
 }
 ----
 
-====    HandlerMethodArgumentResolver  dostęp do  Pageable i  Sort z poziomu parametrów requesta
+=====    HandlerMethodArgumentResolver  dostęp do  Pageable i  Sort z poziomu parametrów requesta
 
 *** Przykład
 
@@ -921,7 +921,7 @@ public class UserController {
 
 ----
 
-==== Hypermedia wsparcie dla  Pageables
+===== Hypermedia wsparcie dla  Pageables
 
 *** Przykład
 
@@ -946,7 +946,7 @@ class PersonController {
 
 ----
 
-==== Querydsl web support  / QuerydslPredicateArgumentResolver.
+===== Querydsl web support  / QuerydslPredicateArgumentResolver.
 
 *** Przykład
 

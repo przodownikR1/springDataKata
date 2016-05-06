@@ -1,7 +1,7 @@
 
-= Lock/Blokowanie
+== Lock/Blokowanie
 
-== Enabling Optimistic Concurrency Control (Blokowanie optymistyczne)/Blokowanie  optymistyczne z  wersjonowaniem
+=== Enabling Optimistic Concurrency Control (Blokowanie optymistyczne)/Blokowanie  optymistyczne z  wersjonowaniem
 
 - zakładamy, żę obecnie wykonywana transakcja na jakimś zasobie jest jedyną, która dokonuje zmian.
  
@@ -28,12 +28,12 @@
 
 NOTE: Wydajność 
 
-=== LockMode
+==== LockMode
 
-==== OPTIMISTIC – w czasie zatwierdzania wykonywane jest zapytanie SELECT ….. FOR UPDATE. 
+===== OPTIMISTIC – w czasie zatwierdzania wykonywane jest zapytanie SELECT ….. FOR UPDATE. 
      Tylko jedna transakcja ma chwilowy dostęp do zasobu. Jeśli druga transakcja chciałby zmodyfikować obiekt zostanie wyrzucony wyjątek
 
-====  OPTIMISTIC_FORCE_INCREMENT – to samo co wyżej. Działa nawet dla nie zmienionej wersji.
+=====  OPTIMISTIC_FORCE_INCREMENT – to samo co wyżej. Działa nawet dla nie zmienionej wersji.
 
 *** Przykład
 
@@ -60,7 +60,7 @@ private String bookName;
 ----
 
 
-== Using Pessimistic Concurrency Control / Blokowanie pesymistyczne
+=== Using Pessimistic Concurrency Control / Blokowanie pesymistyczne
 
 - mechanizm umiemożliwiający współbieżny dostęp do konkretnego zasobu.
 - zakładana w momencie odczytu danych aż do zakończenia transakcji
@@ -73,30 +73,30 @@ CAUTION: Nie jest to najlepszy wybór dla wysoce współbieżnej aplikacji. Powo
     **WRITE** - blokowanie na zapis (ochrona przed dirty reads i  unrepeatable reads)
      Zakładany automatycznie, gdy Hibernate wstawia lub aktualizuje wiersz 
 
-=== LockMode - blokada dla konkretnego elementu
+==== LockMode - blokada dla konkretnego elementu
 
-==== LockMode.NONE
+===== LockMode.NONE
  
 **  nie wykonuj zapytania chyba, że obiektu nie ma w buforze. Pominięcie poziomów buforowania i przejście do bazy danych.
 **    Czytaj z bazy danych tylko wtedy gdy obiekt nie istnieje w buforze
 
-==== LockMode.READ
+===== LockMode.READ
 
 ** pomiń oba poziomy buforowania i dokonaj sprawdzenia wersji , aby sprawdzić czy dane w pamięci są takie same jak bazie
 **   Czytaj z bazy niezależnie od zawartości bufora  
 
-==== LockMode.WRITE
+===== LockMode.WRITE
 
  ** uzyskiwany automatycznie , gdy zarządca trwałości zapisał dane do wiersza aktualnej transakcji
  ** **LockMode.WRITE** jest zakładany automatycznie, gdy Hibernate wstawia lub aktualizuje wiersz
  
-==== LockMode.UPGRADE
+===== LockMode.UPGRADE
 
  ** pomija poziomy buforowania, dokonuje sprawdzenia wersji i uzyskuje blokadę pesymistyczną na poziomie bazy
  ** **LockMode.UPGRADE** może być założony, gdy użytkownik użyje SELECT ... FOR UPDATE w bazie wspierającej tą składnie.
  
  
-==== LockMode.UPGRADE_NOWAIT
+===== LockMode.UPGRADE_NOWAIT
 
  ** do samo co przy **UPGRADE** ale stosuje zapytanie SELECT ... FOR UPDATE NOWAIT . Wyłącza to czekanie na zwolnienie blokad dotyczących wpółbieżności i natychmiastowe 
  zgłoszenie wyjątku , jeśli blokady nie udało się uzyskać.
@@ -110,7 +110,7 @@ public Object load(String entityName, Serializable id, LockMode lockMode) throws
 ----
  
  
-=== Blokowanie pojedyńczych encji
+==== Blokowanie pojedyńczych encji
 
 *** Przykład
 
@@ -122,7 +122,7 @@ em.lock(user, LockModeType.PESSIMISTIC_WRITE);
 User user = em.find(User.class, 4L, LockModeType.PESSIMISTIC_WRITE);
 ---- 
 
-=== Blokowanie wszystkich encji zwracanych przez kwerende
+==== Blokowanie wszystkich encji zwracanych przez kwerende
 
 *** Przykład
 

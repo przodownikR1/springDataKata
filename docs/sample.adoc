@@ -1,17 +1,3 @@
-= JPA/Hibernate camp
-:docInfo1
-:numbered:
-:icons: font
-:pagenums:
-:imagesdir: images
-:source-highlighter: coderay
-
-:image-link: https://pbs.twimg.com/profile_images/425289501980639233/tUWf7KiC.jpeg
-
-ifndef::sourcedir[:sourcedir: ./src/main/java/]
-
-#Sample demo to show how jpa work in effiecient way
-
 
 == Topic
 
@@ -370,12 +356,6 @@ object, and refresh() overrides the values in the transient object with the valu
  https://blog.srcclr.com/jpa-query-performance/
  http://www.developerfusion.com/article/84945/flush-and-clear-or-mapping-antipatterns/
  http://lorenzo-dee.blogspot.com/2016/01/jpa-pitfalls-mistakes.html
-
-
-== O mnie
-* programista
-* blog link:http://przewidywalna-java.blogspot.com[]
-* image:{image-link} [role='img-circle']
 
 
 

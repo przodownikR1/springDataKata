@@ -89,7 +89,7 @@ List<Person> persons = entityManager.createQuery( criteria ).getResultList();
 
 ----
 
-==== Bez potrzeby rzutowania 
+=== Bez potrzeby rzutowania 
 
 *** Przykład
 
