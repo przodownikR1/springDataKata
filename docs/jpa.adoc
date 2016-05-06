@@ -16,7 +16,7 @@ ifndef::imgsdir[:imgsdir: ./../img]
 
 
 
-== Geneza
+== Geneza JPA
 
 image:jpa.png[]
 
@@ -468,5 +468,4 @@ Metamodel m = em.getMetamodel();
 EntityType<Pet> Pet_ = m.entity(Pet.class);
 ----
 
-== Przykłady
 

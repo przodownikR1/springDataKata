@@ -28,7 +28,15 @@ ifndef::imgsdir[:imgsdir: ./../img]
  - Hibernate in Action
  - Java Persistence with Hibernate
  - Java JEE 6
+ - Pro JPA 2
+ - Pro JPA 2: Mastering the Java(TM) Persistence API (Expert's Voice in Java Technology)
  - Hibernate from Novice to Professional 
+ - Spring Data Modern Data Access for Enterprise Java
+ - Spring Data
+ - Spring Boot
+ - Spring Essentials
+ - Spring in Action
+ - etc 
 
 == Hibernate / JPA
 
@@ -99,11 +107,11 @@ Standardowe podejście oparte na JDBC wymaga od programisty następujących czyn
  
 **Dodatkowo otwiera możliwości :** 
 
-* reużywalności kodu
-* zarządzania transakcjami
-* wydajnego operowania na kolekcjach relacji
-* wbudowany mechanizm cache'u
-* wprowadza obiektowe techniki do świata relacyjnych baz danych
+*** reużywalności kodu
+*** zarządzania transakcjami
+*** wydajnego operowania na kolekcjach relacji
+*** wbudowany mechanizm cache'u
+*** wprowadza obiektowe techniki do świata relacyjnych baz danych
  
 ==== Wady
 
@@ -117,36 +125,38 @@ Standardowe podejście oparte na JDBC wymaga od programisty następujących czyn
 
 == Moduły
 [square]
-**Hibernate Core**
+** **Hibernate Core**
 
--  odpowiada za generowanie natywnych kwerent SQL
--  dostarcza dialekty 
--  dostarcza mechanizmy obsługi i translacji zapytań jak : HQL, Criteria Query czy QBE
--  odpowiada za buforowanie i efektywne pobieranie danych - czyli optymalizuje zapytania 
+***  odpowiada za generowanie natywnych kwerent SQL
+***  dostarcza dialekty 
+***  dostarcza mechanizmy obsługi i translacji zapytań jak : HQL, Criteria Query czy QBE
+***  odpowiada za buforowanie i efektywne pobieranie danych - czyli optymalizuje zapytania 
  
-**Hibernate Annotation**
+** **Hibernate Annotation**
 
--  dostarcza znacziki metadanych równorzędne do konfiguracji mapować w XML
+***  dostarcza znacziki metadanych równorzędne do konfiguracji mapować w XML
 
-**Hibernate EntityManager**
+** **Hibernate EntityManager**
 
-- jest implementacją interfejsu JPA
+*** jest implementacją interfejsu JPA
  
-**Hibernate Search**
+** **Hibernate Search**
 
--  dostarcza rozwiązań użycia indeksów Lucene
+***  dostarcza rozwiązań użycia indeksów Lucene
  
-**Hibernate Validator**
+** **Hibernate Validator**
 
--  obsługa walidacji danych
+***  obsługa walidacji danych
  
-**Hibernate OGM**
+** **Hibernate OGM**
 
--  rozwiazania NoSql
+***  rozwiazania NoSql
  
-**DataSourcePool**
+** **DataSourcePool**
  
-** **hibernate-c3p0** -   Integracja C3P0 z Hibernate  
+*** **hibernate-c3p0** -   Integracja C3P0 z Hibernate  
+
+** Przykład
 
 [source,java]
 ----
@@ -167,20 +177,18 @@ Standardowe podejście oparte na JDBC wymaga od programisty następujących czyn
 ** acquire_increment = liczba nowych połączeń jeśli pula jest wyczerpana
 
 
-** **hibernate-hikaricp**  
-** **hibernate-proxool**   
+*** hibernate-hikaricp  
+*** hibernate-proxool   
  
-**Cache**
+** Cache
 
-** **hibernate-ehcache**  
+*** hibernate-ehcache  
     
-** **hibernate-infinispan** 
+*** hibernate-infinispan 
  
  
  
-   
 
-* Problem on granularity
 
 == Minimalna konfiguracja projektu :
 
@@ -464,10 +472,12 @@ W ten sposób Hibernate wyłączy wewnętrzną pulę połączeń i przestawi si�
    
 -   **hikarii** https://brettwooldridge.github.io/HikariCP/
 
-   Spring poll connection
+-    Spring pool connection
+
+-   Server/Container connection pool
    
    
-image::HikariCP-bench-2.4.0.png   
+image::HikariCP-bench-2.4.0.png[]   
    
 === Przykład zestawienia puli połączeń dla Springa
    
@@ -689,6 +699,8 @@ WARNING: Anti-pattern -> System.gc()
 - umożliwia dostęp do danych w bazie za pomocą wyspecjalizowanych zapytań czy API
 
 
+
+
 == Tożsamość obiektu : Equals & hashcode
   - brak (Object) - (oparte na nie odłączanych encjach)
   - ID tożsamość bazodanowa
@@ -726,52 +738,16 @@ NOTE: Interfejs IdentifierGeneretor do generowania własnych strategii kluczy id
   
 
 
-There are two options to get around this problem:
-• Don’t use a generated identifier strategy (and instead assign an entity identifier
-when the domain object is first instantiated)
-• Base equals() and hashCode() on business equality, rather than row equality
-Using an assigned identifier strategy isn’t too difficult, but can impose some limitations on your application.
-Generally, the recommended approach is to generate equals() and hashCode() using the values of key
-properties of a domain object—specifically, properties that define an object’s uniqueness from a business
-logic perspective.
-Here is an example of a customized equals and hashCode for the Category domain object:
-@Override
-public boolean equals(Object o) {
-if (this == o) return true;
-if (!(o instanceof Category)) return false;
-Category category = (Category) o;
-if (categoryName != null ?
-!categoryName.equals(category.categoryName) : category.categoryName != null) {
-return false;
-} else {
-return true;
-}
-}
-@Override
-public int hashCode() {
-
-Hibernate is able to maintain entity equivalence only within a single EntityManager scope. If you attempt to
-reattach a detached entity, Hibernate is no longer able to make the same guarantees. The way to resolve
-this problem is to override equals() and hashCode() for each of your domain objects, providing equality
-rules that are reflective of its identity within the database.
-The simplest approach is to use an entity’s identifier to determine equality and generate its hash code.
-However, if you are planning to use a generated identifier strategy, this can have negative implications.
-When an object is first created, it will have a default null identifier. If you attempt to add this newly created
-entity to a java.util.Set and then later save this instance, the invocation of EntityManager.save() will
-trigger an identifier to be generated for the entity in question. However, because you have based equals
-and hashCode on the object’s identifier, you will run into a situation where the hashCode for the object
-suddenly changes. This change breaks the contract for many of the Java collection types, such as Set , and
-could lead to unexpected behavior in your application.
 
 
 
 == Klucz główny
- klasa klucza głównego spełnia wymagania :
-* public class
-* klasa musi posiadać domyślny publiczny konstruktor
-* musi implementować metody equals i hasCode
-* musi być serializowalna
-* klucz złożony musi być reprezentowany i mapowany do wielu pól właściwości klasy encji. Musi być też reprezentowany i mapowany jako klasa osadzona.     
+** klasa klucza głównego spełnia wymagania :
+*** public class
+*** klasa musi posiadać domyślny publiczny konstruktor
+*** musi implementować metody equals i hasCode
+*** musi być serializowalna
+*** klucz złożony musi być reprezentowany i mapowany do wielu pól właściwości klasy encji. Musi być też reprezentowany i mapowany jako klasa osadzona.     
    
 == Relacje jedno i dwukierunkowe
 
@@ -1056,18 +1032,20 @@ public class ProjectAssociationId implements Serializable {
    
 == Kaskadowość 
 
- - korzystamy z adnotacji **@CascadeType**
+** korzystamy z adnotacji **@CascadeType**
 
-===  ALL (agreguje wszystkie poniższe)
-=== DETACH (jeśli encja macieżysta została odłączona od kontekstu wtedy również encja związna jest także odłączana)
-=== MERGE (jeśli encja macieżysta została przyłączona do kontekstu również encje powiązane zostaną przyłączone)
-=== PERSIST (jeśli encja macieżysta została utrwalona to samo stanie się z encjami przynależnymi)
-=== REFRESH (jeśli encja macieżysta została odświeżona w kontekście trwałości również encje powiązane zostaną odświeżone)
-=== REMOVE  (jeśli encja macieżysta została usunięta z kontekstu trwałości to również encje powiazane zostaną usunięte)
+***  ALL (agreguje wszystkie poniższe)
+*** DETACH (jeśli encja macieżysta została odłączona od kontekstu wtedy również encja związna jest także odłączana)
+*** MERGE (jeśli encja macieżysta została przyłączona do kontekstu również encje powiązane zostaną przyłączone)
+*** PERSIST (jeśli encja macieżysta została utrwalona to samo stanie się z encjami przynależnymi)
+*** REFRESH (jeśli encja macieżysta została odświeżona w kontekście trwałości również encje powiązane zostaną odświeżone)
+*** REMOVE  (jeśli encja macieżysta została usunięta z kontekstu trwałości to również encje powiazane zostaną usunięte)
 
 == Usuwanie sierot - orphanRemoval
 
  Kaskadowe usunięcie tych encji składowych, które usunięto z kolekcji encji głównej
+ 
+** Przykład 
  
 [source,java]
 ----
@@ -1160,8 +1138,6 @@ public Serializable save(Object object) throws HibernateException
  
 public Serializable save(String entityName,Object object) throws HibernateException
  
-Both save() methods take a transient object reference (which must not be null) as an argument
-The save() methods all create a new org.hibernate.event.SaveOrUpdateEvent event.
 
 
 == MERGE vs UPDATE
@@ -1186,163 +1162,6 @@ This particular method is used to save or update records. Hibernate updates the 
 given object if the identifier field is given. If an identifier is not given, then hibernate will insert
 a new record.
 
-
-
-
-== Zapytania
-include::retrieve.adoc
-
-== Usuwanie obiektów z bazy 
-
-Poprzez wywołanie metody remove lub kaskadowej operacji remove
-Jeśli metoda remove jest wywołana na encji odłączonej zostanie wygenerowany wyjątek IllegalArgumentException lub zatwierdzenie transakcji się nie powiedzie.
-Dane fizycznie zostaną usunięte w momencie zakończenia transakcji lub wykonania metody flush()
-
-
-If the record does not exist in the database, you will face the Exception in thread
-"main" java.lang.IllegalArgumentException: attempt to create delete
-event with null entity exception because get() returns the null object while you try
-to delete that object.
-
-However, if you use the following code to delete the record, you will face another type of error:
-Employee employee = new Employee();
-employee.setId(1);
-session.delete(employee);
-When the preceding code is executed, you will face the Exception in thread "main"
-org.hibernate.StaleStateException: Batch update returned unexpected
-row count from update [0]; actual row count: 0; expected: 1 " exception.
-This is because we are trying to delete Employee#1 from the database (which does not
-exist), and the employee object is also not null; so, it throws an error.
-
-There are many cases where you may face an exception; for example, when you try to remove
-a parent object that is referred to by the child object. In such cases, you will get a foreign
-key constraint violated exception.
-
-
-DELETE FROM employee WHERE id=1;
-[source,java]
-----
-Book book = (Book) session.get(Book.class,new Long(1));
-session.delete(book);
-----
-Metoda ta wyrzuci wyjątek jeśli obiekt o podanym identyfikatorze nie istnieje w bazie (java.lang.IllegalArgumentException)
-
-
-If the record does not exist in the database, you will face the Exception in thread
-"main" java.lang.IllegalArgumentException: attempt to create delete
-event with null entity exception because get() returns the null object while you try
-to delete that object.
-However, if you use the following code to delete the record, you will face another type of error:
-Employee employee = new Employee();
-employee.setId(1);
-session.delete(employee);
-When the preceding code is executed, you will face the Exception in thread "main"
-org.hibernate.StaleStateException: Batch update returned unexpected
-row count from update [0]; actual row count: 0; expected: 1 " exception.
-This is because we are trying to delete Employee#1 from the database (which does not
-exist), and the employee object is also not null; so, it throws an error.
-
-== Aktualizacja 
-UPDATE book SET title='jpa book' WHERE id=2;
-
-In the preceding section, we used the update() method for updating a particular
-record. Apart from this method, hibernate will provide one more useful method called
-saveOrUpdate() .
-This particular method is used to save or update records. Hibernate updates the records for a
-given object if the identifier field is given. If an identifier is not given, then hibernate will insert
-a new record.
-
-
-
-== Merge
-
-Merge jest odwrotną operacją do operacji refresh()
-Nadpisuje encje w bazie danych wartościami encji odłączonych.
-
-
-Merging is performed when you desire to have a detached entity changed to persistent state again, with the detached
-entity’s changes migrated to (or overriding) the database. The method signatures for the merge operations are:
-
-Object merge(Object object)
- 
-Object merge(String entityName, Object object)
- 
-Merging is the inverse of refresh(), which overrides the detached entity’s values with the values from the
-database
-
-[source,java]
-----
-
-Session session = factory.openSession();
-tx = session.beginTransaction();
-Company company = (Company)session.get(Company.class, 1);
-company.setName("Scalatech S.p z.o.o");
-tx.commit();
-session.flush();
-session.close();
-
-----
-
-
-== Odświeżanie encji (Refreshing Entities)
-
-Metoda **reload** odświeża wartości dla encji wartościami z bazy danych. (odwrotność do merge)
-
-These methods will reload the properties of the object from the database, overwriting them; thus, as stated,
-refresh() is the inverse of merge(). Merging overrides the database with the values held by the previously transient
-object, and refresh() overrides the values in the transient object with the values in the database.
-
-
-[source,java]
-----
-public void refresh(Object object)  throws HibernateException
- 
-public void refresh(Object object, LockMode lockMode)  throws HibernateException
-----
-
-* Hibernate
-[source,java]
-----
-Object merge(Object object)
- 
-Object merge(String entityName, Object object)
-----
-[square]
-* JPA
-include::jpa.adoc
-
-
-== Autoreferencja
-* relacja jaka zachodzi pomiędzy polami relacji tej samej encji
-
-[source,java]
-----
-@Entity
-class Category{
-
-@ManyToOne
-private Category parent;
-
-@OneToMany(mappedBy="parent")
-private List<Category> child;
-
-}
-
-----
-
-
-== Updating Entities
-Hibernate automatically persists changes made to persistent objects into the database. 6 If a property changes on a
-persistent object, the associated Hibernate session will queue the change for persistence to the database using SQL.
-From a developer’s perspective, you do not have to do any work to store these changes, unless you would like to force
-Hibernate to commit all of its changes in the queue. You can also determine whether the session is dirty and changes
-need to be committed. When you commit a Hibernate transaction, Hibernate will take care of these details for you.
-
-
-
-== Dziedziczenie
-include::inheritence.adoc[]
-
 == Trwałość przechodnia
 
 Technika umożliwiająca automatyczną propagację trwałości na podgrafy ulotne i odłączone.
@@ -1363,10 +1182,101 @@ Sprawdza asocjacje by określić stan trwałości obiektów.
 
 NOTE: Do sterowania trwałością kaskadową używamy adnotacji **@CascadeType** na kolekcji lub relacji
 
+
+== Zapytania
+
+include::quering.adoc[]
+
+== Usuwanie obiektów z bazy 
+
+Poprzez wywołanie metody remove lub kaskadowej operacji remove
+Jeśli metoda remove jest wywołana na encji odłączonej zostanie wygenerowany wyjątek IllegalArgumentException lub zatwierdzenie transakcji się nie powiedzie.
+Dane fizycznie zostaną usunięte w momencie zakończenia transakcji lub wykonania metody flush()
+
+
+DELETE FROM employee WHERE id=1;
+[source,java]
+----
+Book book = (Book) session.get(Book.class,new Long(1));
+session.delete(book);
+----
+Metoda ta wyrzuci wyjątek jeśli obiekt o podanym identyfikatorze nie istnieje w bazie (java.lang.IllegalArgumentException)
+
+== Aktualizacja 
+UPDATE book SET title='jpa book' WHERE id=2;
+
+
+== Merge
+
+** Merge jest odwrotną operacją do operacji refresh()
+** Nadpisuje encje w bazie danych wartościami encji odłączonych.
+
+*** Object merge(Object object)
+*** Object merge(String entityName, Object object)
+
+** Przykład
+
+[source,java]
+----
+
+Session session = factory.openSession();
+tx = session.beginTransaction();
+Company company = (Company)session.get(Company.class, 1);
+company.setName("Scalatech S.p z.o.o");
+tx.commit();
+session.flush();
+session.close();
+
+----
+
+
+== Odświeżanie encji (Refreshing Entities)
+
+Metoda **reload** odświeża wartości dla encji wartościami z bazy danych. (odwrotność do merge)
+
+
+[source,java]
+----
+public void refresh(Object object)  throws HibernateException
+ 
+public void refresh(Object object, LockMode lockMode)  throws HibernateException
+----
+
+* Hibernate
+[source,java]
+----
+Object merge(Object object)
+ 
+Object merge(String entityName, Object object)
+----
+
+include::jpa.adoc[]
+
+
+== Autoreferencja
+* relacja jaka zachodzi pomiędzy polami relacji tej samej encji
+
+[source,java]
+----
+@Entity
+class Category{
+
+@ManyToOne
+private Category parent;
+
+@OneToMany(mappedBy="parent")
+private List<Category> child;
+
+}
+
+----
+include::inheritence.adoc[]
+
+
+
 == Criteria
 
-== Transakcyjność
-include::transactions.adoc[]
+include::criteriaApi.adoc[]
 
 == Logowanie zdarzeń
 [source,xml]
@@ -1380,10 +1290,7 @@ include::transactions.adoc[]
 <property name="hibernate.generate_statistics">true</property>
 ----
 
-
-
 include::cache.adoc[]
-
 
 
 Stores query results for a query and its parameters
@@ -1460,7 +1367,7 @@ source :: __www.bhaveshthaker.com__
 image::JPAEclipseLinkDemo_Project_Img002.JPG[]
 
 == Rozwiązywanie problemów
-=== A common mistake when designing entity models is to try to make all associations bidirectional
+=== Problemy z asocjacjami dwukierunkowymi
 
 === kłopoty z pamięcią
 
@@ -1473,14 +1380,9 @@ image::JPAEclipseLinkDemo_Project_Img002.JPG[]
      - jpql wspiera tylko niektóre podzbiory features z bazy danych 
      - SQL dla danej bazy może być wysoce wyspecjalizowany
 
-@Basic(lazy)      
-Lazy attribute fetching: an attribute or single valued association is fetched when the instance variable is accessed.
- This approach requires buildtime bytecode instrumentation and is rarely necessary.
-Emmanuel Bernard wrote  @Lob are lazy by default
-@Lob
-@Fetch(FetchMode.SELECT)
-@Type(type="org.hibernate.type.PrimitiveByteArrayBlobType")
-byte[] myBlob;
+=== @Basic(lazy) 
+
+- Wymagane narzędzie do instrumentalizacji bytecodu
 
 
 === OutOfMemoryException
@@ -1490,7 +1392,7 @@ byte[] myBlob;
 - wyłączenie cache drugiego poziomu hibernate.cache.use_second_level_cache = false
 
 
-=== With Hibernate you can load your Entity classes as:
+=== Ładowanie klas do kontekstu z poziomu SessionFactory
 [source,java]
 ----
 sessionFactory = new AnnotationConfiguration()
@@ -1501,9 +1403,7 @@ sessionFactory = new AnnotationConfiguration()
                     .addAnnotatedClass(Dog.class);
 ----
 
-Is there a way to do the same thing - programmatically loading your Entity classes - in a JPA 2.0 compliant way?
-
-- NO !
+WARNING: JPA to nie zadziała 
 
 === Jak pokazać parametryzacje zapytań SQL ?
 ==== Log4jdbc
@@ -1514,7 +1414,6 @@ Zależność :
 ----
  compile 'org.lazyluke:log4jdbc-remix:????'
 ----
-
 
 Konfiguracja : 
 
@@ -1554,7 +1453,7 @@ Dodajemy zależność :
 	</dependency>
 ----
 
-
+*** Przykład
 [source,xml]
 ----
 <session-factory>
@@ -1584,9 +1483,6 @@ realdriver2=
 ----
 log4j.logger.org.hibernate.type=trace
 ----
-
-
-
 
 == Dobre praktyki
 
@@ -1634,9 +1530,17 @@ Query query = em.createQuery(
 === Meet in the middle (z JDBC na Hibernate’a)
  - startujemy z istniejącym modelem danych i gotowymi w pewnym stopniu plikami POJO po czym przekształcamy je na pełnoprawne encje.
 
+include::lock.adoc[]
 
+include::spring_jpa_integration.adoc[]
 
+include::springData.adoc[]
 
+include::envers.adoc[]
+
+== Ćwiczenia
+
+include::exercices.adoc[]
 
 http://undermineddeveloper.com/2013/09/11/hibernating/
 
@@ -1652,6 +1556,3 @@ imagesdir:: {imagesdir}
 
 .Custom
 sourcedir:: {sourcedir}
-
-
-

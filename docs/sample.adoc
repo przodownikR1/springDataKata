@@ -258,6 +258,111 @@ String title;
 
 
 
+==klucz naturalny
+
+There are two options to get around this problem:
+• Don’t use a generated identifier strategy (and instead assign an entity identifier
+when the domain object is first instantiated)
+• Base equals() and hashCode() on business equality, rather than row equality
+Using an assigned identifier strategy isn’t too difficult, but can impose some limitations on your application.
+Generally, the recommended approach is to generate equals() and hashCode() using the values of key
+properties of a domain object—specifically, properties that define an object’s uniqueness from a business
+logic perspective.
+Here is an example of a customized equals and hashCode for the Category domain object:
+@Override
+public boolean equals(Object o) {
+if (this == o) return true;
+if (!(o instanceof Category)) return false;
+Category category = (Category) o;
+if (categoryName != null ?
+!categoryName.equals(category.categoryName) : category.categoryName != null) {
+return false;
+} else {
+return true;
+}
+}
+@Override
+public int hashCode() {
+
+Hibernate is able to maintain entity equivalence only within a single EntityManager scope. If you attempt to
+reattach a detached entity, Hibernate is no longer able to make the same guarantees. The way to resolve
+this problem is to override equals() and hashCode() for each of your domain objects, providing equality
+rules that are reflective of its identity within the database.
+The simplest approach is to use an entity’s identifier to determine equality and generate its hash code.
+However, if you are planning to use a generated identifier strategy, this can have negative implications.
+When an object is first created, it will have a default null identifier. If you attempt to add this newly created
+entity to a java.util.Set and then later save this instance, the invocation of EntityManager.save() will
+trigger an identifier to be generated for the entity in question. However, because you have based equals
+and hashCode on the object’s identifier, you will run into a situation where the hashCode for the object
+suddenly changes. This change breaks the contract for many of the Java collection types, such as Set , and
+could lead to unexpected behavior in your application.
+
+
+== Usuwanie
+
+If the record does not exist in the database, you will face the Exception in thread
+"main" java.lang.IllegalArgumentException: attempt to create delete
+event with null entity exception because get() returns the null object while you try
+to delete that object.
+
+However, if you use the following code to delete the record, you will face another type of error:
+Employee employee = new Employee();
+employee.setId(1);
+session.delete(employee);
+When the preceding code is executed, you will face the Exception in thread "main"
+org.hibernate.StaleStateException: Batch update returned unexpected
+row count from update [0]; actual row count: 0; expected: 1 " exception.
+This is because we are trying to delete Employee#1 from the database (which does not
+exist), and the employee object is also not null; so, it throws an error.
+
+There are many cases where you may face an exception; for example, when you try to remove
+a parent object that is referred to by the child object. In such cases, you will get a foreign
+key constraint violated exception.
+
+If the record does not exist in the database, you will face the Exception in thread
+"main" java.lang.IllegalArgumentException: attempt to create delete
+event with null entity exception because get() returns the null object while you try
+to delete that object.
+However, if you use the following code to delete the record, you will face another type of error:
+Employee employee = new Employee();
+employee.setId(1);
+session.delete(employee);
+When the preceding code is executed, you will face the Exception in thread "main"
+org.hibernate.StaleStateException: Batch update returned unexpected
+row count from update [0]; actual row count: 0; expected: 1 " exception.
+This is because we are trying to delete Employee#1 from the database (which does not
+exist), and the employee object is also not null; so, it throws an error.
+
+
+== aktualizacja
+
+
+In the preceding section, we used the update() method for updating a particular
+record. Apart from this method, hibernate will provide one more useful method called
+saveOrUpdate() .
+This particular method is used to save or update records. Hibernate updates the records for a
+given object if the identifier field is given. If an identifier is not given, then hibernate will insert
+a new record.
+
+
+== merge
+
+Merging is performed when you desire to have a detached entity changed to persistent state again, with the detached
+entity’s changes migrated to (or overriding) the database. The method signatures for the merge operations are:
+
+ 
+Merging is the inverse of refresh(), which overrides the detached entity’s values with the values from the
+database
+
+== reload
+
+
+These methods will reload the properties of the object from the database, overwriting them; thus, as stated,
+refresh() is the inverse of merge(). Merging overrides the database with the values held by the previously transient
+object, and refresh() overrides the values in the transient object with the values in the database.
+
+
+
 
 == Pitfalls
  n+1 selects problem

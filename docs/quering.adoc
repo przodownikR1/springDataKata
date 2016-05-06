@@ -1,14 +1,3 @@
-= JPA/Hibernate camp
-:docInfo1
-:numbered:
-:icons: font
-:pagenums:
-:imagesdir: images
-:source-highlighter: coderay
-
-:image-link: https://pbs.twimg.com/profile_images/425289501980639233/tUWf7KiC.jpeg
-
-ifndef::sourcedir[:sourcedir: ./src/main/java/]
 
 == Kwerandy
 
@@ -1624,9 +1613,3 @@ List<String> nickNames = entityManager.createQuery(
 ----
 SELECT NEW pl.java.scalatech.EmployeeReport(e.firstName, e.lastName, e.salary) FROM Employee e
 ----
-
-
-== O mnie
-* programista
-* blog link:http://przewidywalna-java.blogspot.com[]
-* image:{image-link} [role='img-circle']

@@ -1,22 +1,10 @@
-= JPA/Hibernate camp
-:docInfo1
-:numbered:
-:icons: font
-:pagenums:
-:imagesdir: images
-:source-highlighter: coderay
 
-:image-link: https://pbs.twimg.com/profile_images/425289501980639233/tUWf7KiC.jpeg
+== Envers
 
-ifndef::sourcedir[:sourcedir: ./src/main/java/]
-
-#Sample demo to show how jpa work in effiecient way
+Pozwala na zarządzanie historią zmian w bazie. Możemy traktować to jako narzędzie podobne do SVN'a czy Git'a
 
 
-== Topic
-
-Envers helps us maintain the history of the database and it keeps track of the modifications
-in the database table rows
+=== Konfiguracja
 
 [source,xml]
 ----
@@ -41,9 +29,3 @@ Jeśli obiekt encyjny będzie się zmieniał spowoduje to również zmiany w tab
 *NotAudited* != @Audited
 
  
-
-== O mnie
-* programista
-* blog link:http://przewidywalna-java.blogspot.com[]
-* image:{image-link} [role='img-circle']
-

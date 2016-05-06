@@ -1,20 +1,5 @@
-= JPA/Hibernate camp
-:docInfo1
-:numbered:
-:icons: font
-:pagenums:
-:imagesdir: img
-:iconsdir: ./icons
-:stylesdir: ./styles
-:scriptsdir: ./js
 
-:image-link: https://pbs.twimg.com/profile_images/425289501980639233/tUWf7KiC.jpeg
-ifndef::sourcedir[:sourcedir: ./src/main/java/]
-ifndef::resourcedir[:resourcedir: ./src/main/resources/]
-ifndef::imgsdir[:imgsdir: ./../img]
-:source-highlighter: coderay
-
-
+== Dziedziczenie / Polimorfizm
 
 == MappedSuperclass Table per concrete class with implicit polymorphism 
 
@@ -248,10 +233,3 @@ public class CreditCard extends BillingDetails {
 
 image:tablePerConcreteClass.jpg[]
 
-== Przykłady
-
-
-== O mnie
-* programista
-* blog link:http://przewidywalna-java.blogspot.com[]
-* image:{image-link} [role='img-circle']

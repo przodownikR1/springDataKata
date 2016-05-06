@@ -1,42 +1,29 @@
-= JPA/Hibernate camp
-:docInfo1
-:numbered:
-:icons: font
-:pagenums:
-:imagesdir: images
-:source-highlighter: coderay
-
-:image-link: https://pbs.twimg.com/profile_images/425289501980639233/tUWf7KiC.jpeg
-
-ifndef::sourcedir[:sourcedir: ./src/main/java/]
 
 
-
-
-== Topic
-
-== Tworzenie prostego szablonu projektu : Hibernate only
+=== Tworzenie prostego szablonu projektu : Hibernate only
    operowanie na obiektach  Session i SessionFactory oraz persistence.xml 
 
-== Tworzenie prostego szablonu projektu : JPA 
+=== Tworzenie prostego szablonu projektu : JPA 
    operowanie na obiektach  EntityManager i EntityManagerFactory oraz persistence.xml
    
-== Tworzenie prostego szablonu projektu : Spring + Spring Data
+=== Tworzenie prostego szablonu projektu : Spring + Spring Data
    integracja Hibernate po JPA w Spring
    
-== Stworzenie i zapisanie prostej encji oraz jej odczyt 
+=== Stworzenie i zapisanie prostej encji oraz jej odczyt 
 
-== Mapowania
+=== Mapowania
 
-== MetaModel
+=== MetaModel
 
-== JPQL
+=== JPQL
 
-== Pobieranie danch : Fetches
+=== Pobieranie danch : Fetches
 
-== Cache
+=== Cache
 
-== Criteria API
+=== Criteria API
+
+== Koniec :)
 
    
 
