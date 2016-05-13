@@ -10,7 +10,7 @@ asciidoctor {
      attributes 'build-gradle': file('build.gradle'),
     'endpoint-url': 'https:/my.gitlab',
     'source-highlighter' : 'coderay',
-    'imagesdir': './images',
+    'imagesdir': './img',
     'toc':'left',
     'icons': 'font',
     'setanchors':'true',
