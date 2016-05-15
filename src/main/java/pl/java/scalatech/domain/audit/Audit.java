@@ -1,13 +1,8 @@
-package pl.java.scalatech.domain;
+package pl.java.scalatech.domain.audit;
 
-import java.io.Serializable;
-import java.time.LocalDate;
 import java.time.ZonedDateTime;
 
 import javax.persistence.EntityListeners;
-import javax.persistence.FetchType;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
 import javax.persistence.MappedSuperclass;
 
 import org.springframework.data.annotation.CreatedBy;
@@ -17,12 +12,14 @@ import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import lombok.Data;
-import lombok.EqualsAndHashCode;
+import lombok.ToString;
+import pl.java.scalatech.domain.AbstractEntity;
 
 @MappedSuperclass
 @EntityListeners(AuditingEntityListener.class)
 @Data
-public abstract class Audit implements Serializable{
+@ToString
+public abstract class Audit  extends AbstractEntity {
     private static final long serialVersionUID = 2663518387056045900L;
 
     @CreatedDate
@@ -30,15 +27,12 @@ public abstract class Audit implements Serializable{
 
     @LastModifiedDate
     private ZonedDateTime lastModifiedDate = ZonedDateTime.now();
-    
+
     @CreatedBy
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn
-    private Person createdBy;
+    private String createdBy;
 
     @LastModifiedBy
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn
-    private Person lastModifiedBy;
+
+    private String lastModifiedBy;
 
 }
