@@ -2,6 +2,7 @@ package pl.java.scalatech.domain.oneToOneBi;
 
 import java.time.LocalDateTime;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.OneToOne;
@@ -31,7 +32,7 @@ public class Email_BI extends AbstractEntity{
     private String topic;
     private LocalDateTime time;
 
-    @OneToOne(mappedBy = "email")
+    @OneToOne(mappedBy = "email",cascade=CascadeType.ALL)
     EmailMessage_BI email;
 
 }

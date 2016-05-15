@@ -55,7 +55,7 @@ public class SpringDataRepositoryTest {
     @Test
     public void shouldAsyncWork() throws Exception {
 
-        createTestSimple(100000);
+        createTestSimple(1000);
 
         final CompletableFuture<Void> future = simpleRepository.findByVersion(0l).thenAccept(s -> {
             log.info(" Complete!! {}", s.size());

@@ -30,4 +30,6 @@ public class EmailMessage_BI extends AbstractEntity{
     @OneToOne(cascade=CascadeType.ALL)
     private Email_BI email;
 
+
+
 }
