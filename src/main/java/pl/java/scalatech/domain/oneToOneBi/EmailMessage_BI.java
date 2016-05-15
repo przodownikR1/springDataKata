@@ -10,6 +10,7 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import lombok.ToString;
 import pl.java.scalatech.domain.AbstractEntity;
 
 @Entity
@@ -18,6 +19,7 @@ import pl.java.scalatech.domain.AbstractEntity;
 @NoArgsConstructor
 @Builder
 @Table(name="BI_EMAIL_MESSAGES")
+@ToString(exclude="email")
 public class EmailMessage_BI extends AbstractEntity{
 
     private static final long serialVersionUID = 4833517106774781504L;

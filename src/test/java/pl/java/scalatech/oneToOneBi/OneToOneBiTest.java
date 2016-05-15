@@ -29,7 +29,8 @@ public class OneToOneBiTest extends TestJpaConfig{
         Email_BI email = Email_BI.builder().from("przodownik").to("slawek").time(LocalDateTime.now()).build();
         EmailMessage_BI em = EmailMessage_BI.builder().content("this is text").email(email).build();
         emailMessageRepo.save(em);
-        log.info("{}",emailMessageRepo.findAll());
+        log.info("emailMessage : {}",emailMessageRepo.findOne(1l));
+        log.info("email : {}",emailMessageRepo.findOne(1l).getEmail());
     }
 
     @Test
