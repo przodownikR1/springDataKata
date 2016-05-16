@@ -13749,3 +13749,690 @@ Database is already closed (to disable automatic closing at VM shutdown, add ";D
 Database is already closed (to disable automatic closing at VM shutdown, add ";DB_CLOSE_ON_EXIT=FALSE" to the db URL) [90121-191]
 [INFO] 2016-05-15 18:40:11.461 [Thread-7] o.s.o.j.LocalContainerEntityManagerFactoryBean - [requestID: ] Closing JPA EntityManagerFactory for persistence unit 'default'
 [INFO] 2016-05-15 18:40:11.472 [Thread-10] o.s.o.j.LocalContainerEntityManagerFactoryBean - [requestID: ] Closing JPA EntityManagerFactory for persistence unit 'default'
+[INFO] 2016-05-16 22:24:56.521 [Test worker] o.s.t.c.s.DefaultTestContextBootstrapper - [requestID: ] Loaded default TestExecutionListener class names from location [META-INF/spring.factories]: [org.springframework.test.context.web.ServletTestExecutionListener, org.springframework.test.context.support.DirtiesContextBeforeModesTestExecutionListener, org.springframework.test.context.support.DependencyInjectionTestExecutionListener, org.springframework.test.context.support.DirtiesContextTestExecutionListener, org.springframework.test.context.transaction.TransactionalTestExecutionListener, org.springframework.test.context.jdbc.SqlScriptsTestExecutionListener]
+[INFO] 2016-05-16 22:24:56.572 [Test worker] o.s.t.c.s.DefaultTestContextBootstrapper - [requestID: ] Using TestExecutionListeners: [org.springframework.test.context.web.ServletTestExecutionListener@711828aa, org.springframework.test.context.support.DirtiesContextBeforeModesTestExecutionListener@7cea5a4b, org.springframework.test.context.support.DependencyInjectionTestExecutionListener@44186579, org.springframework.test.context.support.DirtiesContextTestExecutionListener@101ddf8, org.springframework.test.context.transaction.TransactionalTestExecutionListener@31ecf80a, org.springframework.test.context.jdbc.SqlScriptsTestExecutionListener@1f7ad47e]
+[INFO] 2016-05-16 22:24:56.960 [Test worker] o.s.c.s.GenericApplicationContext - [requestID: ] Refreshing org.springframework.context.support.GenericApplicationContext@47a21fa5: startup date [Mon May 16 22:24:56 CEST 2016]; root of context hierarchy
+[INFO] 2016-05-16 22:24:58.154 [Test worker] o.h.validator.internal.util.Version - [requestID: ] HV000001: Hibernate Validator 5.3.0.Alpha1
+[INFO] 2016-05-16 22:24:58.979 [Test worker] o.s.o.j.LocalContainerEntityManagerFactoryBean - [requestID: ] Building JPA container EntityManagerFactory for persistence unit 'default'
+[INFO] 2016-05-16 22:24:59.028 [Test worker] o.h.jpa.internal.util.LogHelper - [requestID: ] HHH000204: Processing PersistenceUnitInfo [
+	name: default
+	...]
+[INFO] 2016-05-16 22:24:59.194 [Test worker] org.hibernate.Version - [requestID: ] HHH000412: Hibernate Core {5.1.0.Final}
+[INFO] 2016-05-16 22:24:59.197 [Test worker] org.hibernate.cfg.Environment - [requestID: ] HHH000206: hibernate.properties not found
+[INFO] 2016-05-16 22:24:59.201 [Test worker] org.hibernate.cfg.Environment - [requestID: ] HHH000021: Bytecode provider name : javassist
+[INFO] 2016-05-16 22:24:59.292 [Test worker] o.h.annotations.common.Version - [requestID: ] HCANN000001: Hibernate Commons Annotations {5.0.1.Final}
+[WARN] 2016-05-16 22:24:59.311 [Test worker] org.hibernate.orm.deprecation - [requestID: ] HHH90000006: Attempted to specify unsupported NamingStrategy via setting [hibernate.ejb.naming_strategy]; NamingStrategy has been removed in favor of the split ImplicitNamingStrategy and PhysicalNamingStrategy; use [hibernate.implicit_naming_strategy] or [hibernate.physical_naming_strategy], respectively, instead.
+[INFO] 2016-05-16 22:25:00.000 [Test worker] org.hibernate.dialect.Dialect - [requestID: ] HHH000400: Using dialect: org.hibernate.dialect.H2Dialect
+[INFO] 2016-05-16 22:25:01.925 [Test worker] o.h.t.s.e.i.InformationExtractorJdbcDatabaseMetaDataImpl - [requestID: ] HHH000262: Table not found: BI_EMAIL_MESSAGES
+[INFO] 2016-05-16 22:25:01.928 [Test worker] o.h.t.s.e.i.InformationExtractorJdbcDatabaseMetaDataImpl - [requestID: ] HHH000262: Table not found: BI_EMAIL_MESSAGES
+[INFO] 2016-05-16 22:25:01.943 [Test worker] o.h.t.s.e.i.InformationExtractorJdbcDatabaseMetaDataImpl - [requestID: ] HHH000262: Table not found: BI_EMAILS
+[INFO] 2016-05-16 22:25:01.945 [Test worker] o.h.t.s.e.i.InformationExtractorJdbcDatabaseMetaDataImpl - [requestID: ] HHH000262: Table not found: BI_EMAILS
+[INFO] 2016-05-16 22:25:01.949 [Test worker] o.h.t.s.e.i.InformationExtractorJdbcDatabaseMetaDataImpl - [requestID: ] HHH000262: Table not found: Cart
+[INFO] 2016-05-16 22:25:01.950 [Test worker] o.h.t.s.e.i.InformationExtractorJdbcDatabaseMetaDataImpl - [requestID: ] HHH000262: Table not found: Cart
+[INFO] 2016-05-16 22:25:01.955 [Test worker] o.h.t.s.e.i.InformationExtractorJdbcDatabaseMetaDataImpl - [requestID: ] HHH000262: Table not found: City
+[INFO] 2016-05-16 22:25:01.957 [Test worker] o.h.t.s.e.i.InformationExtractorJdbcDatabaseMetaDataImpl - [requestID: ] HHH000262: Table not found: City
+[INFO] 2016-05-16 22:25:01.961 [Test worker] o.h.t.s.e.i.InformationExtractorJdbcDatabaseMetaDataImpl - [requestID: ] HHH000262: Table not found: EMAIL_MESSAGES
+[INFO] 2016-05-16 22:25:01.963 [Test worker] o.h.t.s.e.i.InformationExtractorJdbcDatabaseMetaDataImpl - [requestID: ] HHH000262: Table not found: EMAIL_MESSAGES
+[INFO] 2016-05-16 22:25:01.966 [Test worker] o.h.t.s.e.i.InformationExtractorJdbcDatabaseMetaDataImpl - [requestID: ] HHH000262: Table not found: EMAILS
+[INFO] 2016-05-16 22:25:01.967 [Test worker] o.h.t.s.e.i.InformationExtractorJdbcDatabaseMetaDataImpl - [requestID: ] HHH000262: Table not found: EMAILS
+[INFO] 2016-05-16 22:25:01.972 [Test worker] o.h.t.s.e.i.InformationExtractorJdbcDatabaseMetaDataImpl - [requestID: ] HHH000262: Table not found: Hotel
+[INFO] 2016-05-16 22:25:01.973 [Test worker] o.h.t.s.e.i.InformationExtractorJdbcDatabaseMetaDataImpl - [requestID: ] HHH000262: Table not found: Hotel
+[INFO] 2016-05-16 22:25:01.976 [Test worker] o.h.t.s.e.i.InformationExtractorJdbcDatabaseMetaDataImpl - [requestID: ] HHH000262: Table not found: Item
+[INFO] 2016-05-16 22:25:01.978 [Test worker] o.h.t.s.e.i.InformationExtractorJdbcDatabaseMetaDataImpl - [requestID: ] HHH000262: Table not found: Item
+[INFO] 2016-05-16 22:25:01.982 [Test worker] o.h.t.s.e.i.InformationExtractorJdbcDatabaseMetaDataImpl - [requestID: ] HHH000262: Table not found: Option
+[INFO] 2016-05-16 22:25:01.983 [Test worker] o.h.t.s.e.i.InformationExtractorJdbcDatabaseMetaDataImpl - [requestID: ] HHH000262: Table not found: Option
+[INFO] 2016-05-16 22:25:01.987 [Test worker] o.h.t.s.e.i.InformationExtractorJdbcDatabaseMetaDataImpl - [requestID: ] HHH000262: Table not found: Person
+[INFO] 2016-05-16 22:25:01.989 [Test worker] o.h.t.s.e.i.InformationExtractorJdbcDatabaseMetaDataImpl - [requestID: ] HHH000262: Table not found: Person
+[INFO] 2016-05-16 22:25:01.993 [Test worker] o.h.t.s.e.i.InformationExtractorJdbcDatabaseMetaDataImpl - [requestID: ] HHH000262: Table not found: Role
+[INFO] 2016-05-16 22:25:01.995 [Test worker] o.h.t.s.e.i.InformationExtractorJdbcDatabaseMetaDataImpl - [requestID: ] HHH000262: Table not found: Role
+[INFO] 2016-05-16 22:25:01.999 [Test worker] o.h.t.s.e.i.InformationExtractorJdbcDatabaseMetaDataImpl - [requestID: ] HHH000262: Table not found: Simple
+[INFO] 2016-05-16 22:25:02.007 [Test worker] o.h.t.s.e.i.InformationExtractorJdbcDatabaseMetaDataImpl - [requestID: ] HHH000262: Table not found: Simple
+[INFO] 2016-05-16 22:25:02.011 [Test worker] o.h.t.s.e.i.InformationExtractorJdbcDatabaseMetaDataImpl - [requestID: ] HHH000262: Table not found: SimpleProduct
+[INFO] 2016-05-16 22:25:02.014 [Test worker] o.h.t.s.e.i.InformationExtractorJdbcDatabaseMetaDataImpl - [requestID: ] HHH000262: Table not found: SimpleProduct
+[INFO] 2016-05-16 22:25:02.018 [Test worker] o.h.t.s.e.i.InformationExtractorJdbcDatabaseMetaDataImpl - [requestID: ] HHH000262: Table not found: User
+[INFO] 2016-05-16 22:25:02.021 [Test worker] o.h.t.s.e.i.InformationExtractorJdbcDatabaseMetaDataImpl - [requestID: ] HHH000262: Table not found: User
+[INFO] 2016-05-16 22:25:02.029 [Test worker] o.h.t.s.e.i.InformationExtractorJdbcDatabaseMetaDataImpl - [requestID: ] HHH000262: Table not found: USER_ROLE
+[INFO] 2016-05-16 22:25:02.031 [Test worker] o.h.t.s.e.i.InformationExtractorJdbcDatabaseMetaDataImpl - [requestID: ] HHH000262: Table not found: USER_ROLE
+[DEBUG] 2016-05-16 22:25:02.658 [Test worker] o.h.s.internal.StatisticsInitiator - [requestID: ] Statistics initialized [enabled=false]
+[INFO] 2016-05-16 22:25:02.880 [Test worker] o.h.h.i.QueryTranslatorFactoryInitiator - [requestID: ] HHH000397: Using ASTQueryTranslatorFactory
+[INFO] 2016-05-16 22:25:03.318 [Test worker] o.s.t.c.s.DefaultTestContextBootstrapper - [requestID: ] Loaded default TestExecutionListener class names from location [META-INF/spring.factories]: [org.springframework.test.context.web.ServletTestExecutionListener, org.springframework.test.context.support.DirtiesContextBeforeModesTestExecutionListener, org.springframework.test.context.support.DependencyInjectionTestExecutionListener, org.springframework.test.context.support.DirtiesContextTestExecutionListener, org.springframework.test.context.transaction.TransactionalTestExecutionListener, org.springframework.test.context.jdbc.SqlScriptsTestExecutionListener]
+[INFO] 2016-05-16 22:25:03.318 [Test worker] o.s.t.c.s.DefaultTestContextBootstrapper - [requestID: ] Using TestExecutionListeners: [org.springframework.test.context.web.ServletTestExecutionListener@6ab93db4, org.springframework.test.context.support.DirtiesContextBeforeModesTestExecutionListener@54347c79, org.springframework.test.context.support.DependencyInjectionTestExecutionListener@684e95b7, org.springframework.test.context.support.DirtiesContextTestExecutionListener@5553963a, org.springframework.test.context.transaction.TransactionalTestExecutionListener@762455b9, org.springframework.test.context.jdbc.SqlScriptsTestExecutionListener@10438b0]
+[INFO] 2016-05-16 22:25:03.328 [Test worker] o.s.c.s.GenericApplicationContext - [requestID: ] Refreshing org.springframework.context.support.GenericApplicationContext@1d7be60a: startup date [Mon May 16 22:25:03 CEST 2016]; root of context hierarchy
+[INFO] 2016-05-16 22:25:03.706 [Test worker] o.s.o.j.LocalContainerEntityManagerFactoryBean - [requestID: ] Building JPA container EntityManagerFactory for persistence unit 'default'
+[INFO] 2016-05-16 22:25:03.707 [Test worker] o.h.jpa.internal.util.LogHelper - [requestID: ] HHH000204: Processing PersistenceUnitInfo [
+	name: default
+	...]
+[WARN] 2016-05-16 22:25:03.712 [Test worker] org.hibernate.orm.deprecation - [requestID: ] HHH90000006: Attempted to specify unsupported NamingStrategy via setting [hibernate.ejb.naming_strategy]; NamingStrategy has been removed in favor of the split ImplicitNamingStrategy and PhysicalNamingStrategy; use [hibernate.implicit_naming_strategy] or [hibernate.physical_naming_strategy], respectively, instead.
+[INFO] 2016-05-16 22:25:03.720 [Test worker] org.hibernate.dialect.Dialect - [requestID: ] HHH000400: Using dialect: org.hibernate.dialect.H2Dialect
+[WARN] 2016-05-16 22:25:04.127 [Test worker] o.h.j.i.EntityManagerFactoryRegistry - [requestID: ] HHH000436: Entity manager factory name (default) is already registered.  If entity manager will be clustered or passivated, specify a unique value for property 'hibernate.ejb.entitymanager_factory_name'
+[INFO] 2016-05-16 22:25:04.132 [Test worker] pl.java.scalatech.config.AuditConfig - [requestID: ] ++++ auditConfig started
+[DEBUG] 2016-05-16 22:25:04.219 [Test worker] o.h.s.internal.StatisticsInitiator - [requestID: ] Statistics initialized [enabled=false]
+[INFO] 2016-05-16 22:25:04.235 [Test worker] o.h.h.i.QueryTranslatorFactoryInitiator - [requestID: ] HHH000397: Using ASTQueryTranslatorFactory
+[INFO] 2016-05-16 22:25:04.431 [Test worker] p.j.s.a.SpringSecurityAuditorAware - [requestID: ] ++++ auditor !!!
+[INFO] 2016-05-16 22:25:04.433 [Test worker] p.j.s.a.SpringSecurityAuditorAware - [requestID: ] ++++ auditor !!!
+[INFO] 2016-05-16 22:25:04.584 [Test worker] pl.java.scalatech.data.AuditTest - [requestID: ] option : null
+[INFO] 2016-05-16 22:25:04.590 [Test worker] o.s.t.c.s.DefaultTestContextBootstrapper - [requestID: ] Loaded default TestExecutionListener class names from location [META-INF/spring.factories]: [org.springframework.test.context.web.ServletTestExecutionListener, org.springframework.test.context.support.DirtiesContextBeforeModesTestExecutionListener, org.springframework.test.context.support.DependencyInjectionTestExecutionListener, org.springframework.test.context.support.DirtiesContextTestExecutionListener, org.springframework.test.context.transaction.TransactionalTestExecutionListener, org.springframework.test.context.jdbc.SqlScriptsTestExecutionListener]
+[INFO] 2016-05-16 22:25:04.591 [Test worker] o.s.t.c.s.DefaultTestContextBootstrapper - [requestID: ] Using TestExecutionListeners: [org.springframework.test.context.web.ServletTestExecutionListener@31c27931, org.springframework.test.context.support.DirtiesContextBeforeModesTestExecutionListener@3c64c3af, org.springframework.test.context.support.DependencyInjectionTestExecutionListener@77347400, org.springframework.test.context.support.DirtiesContextTestExecutionListener@5d38292, org.springframework.test.context.transaction.TransactionalTestExecutionListener@27fa68e8, org.springframework.test.context.jdbc.SqlScriptsTestExecutionListener@3d19be03]
+[INFO] 2016-05-16 22:25:04.600 [Test worker] p.j.s.data.SpringDataRepositoryTest - [requestID: ] Simple(name=przodownik, createDate=2016-02-01T06:46, lastModifiedDate=2016-02-16T10:50)
+[INFO] 2016-05-16 22:25:04.607 [Test worker] p.j.s.data.SpringDataRepositoryTest - [requestID: ] Simple(name=przodownik, createDate=2016-05-16T22:25:04.603, lastModifiedDate=null)
+[INFO] 2016-05-16 22:25:06.864 [Test worker] p.j.s.data.SpringDataRepositoryTest - [requestID: ]  Complete!! 1002
+[INFO] 2016-05-16 22:25:06.864 [Test worker] p.j.s.data.SpringDataRepositoryTest - [requestID: ] +++  End!!
+[INFO] 2016-05-16 22:25:06.954 [Test worker] p.j.s.data.SpringDataRepositoryTest - [requestID: ] RKqbnSGTTFErouE
+[INFO] 2016-05-16 22:25:06.955 [Test worker] p.j.s.data.SpringDataRepositoryTest - [requestID: ] tjtrJrbzbCvCkVE
+[INFO] 2016-05-16 22:25:06.956 [Test worker] p.j.s.data.SpringDataRepositoryTest - [requestID: ] rrPNnjxJrxvGAWP
+[INFO] 2016-05-16 22:25:06.957 [Test worker] p.j.s.data.SpringDataRepositoryTest - [requestID: ] xdqMfhSxmlaGDiz
+[INFO] 2016-05-16 22:25:06.957 [Test worker] p.j.s.data.SpringDataRepositoryTest - [requestID: ] YavsAjQNUmSfSCV
+[INFO] 2016-05-16 22:25:06.957 [Test worker] p.j.s.data.SpringDataRepositoryTest - [requestID: ] fiaEcnRzOAUShAN
+[INFO] 2016-05-16 22:25:06.958 [Test worker] p.j.s.data.SpringDataRepositoryTest - [requestID: ] mqZpiDAPnIJYjzY
+[INFO] 2016-05-16 22:25:06.958 [Test worker] p.j.s.data.SpringDataRepositoryTest - [requestID: ] kHYBTSWKHmLNows
+[INFO] 2016-05-16 22:25:06.959 [Test worker] p.j.s.data.SpringDataRepositoryTest - [requestID: ] kVXohRzzmxGJHlB
+[INFO] 2016-05-16 22:25:06.959 [Test worker] p.j.s.data.SpringDataRepositoryTest - [requestID: ] NZDsjsVZLhWSKEZ
+[INFO] 2016-05-16 22:25:06.969 [Test worker] o.s.t.c.s.DefaultTestContextBootstrapper - [requestID: ] Loaded default TestExecutionListener class names from location [META-INF/spring.factories]: [org.springframework.test.context.web.ServletTestExecutionListener, org.springframework.test.context.support.DirtiesContextBeforeModesTestExecutionListener, org.springframework.test.context.support.DependencyInjectionTestExecutionListener, org.springframework.test.context.support.DirtiesContextTestExecutionListener, org.springframework.test.context.transaction.TransactionalTestExecutionListener, org.springframework.test.context.jdbc.SqlScriptsTestExecutionListener]
+[INFO] 2016-05-16 22:25:06.970 [Test worker] o.s.t.c.s.DefaultTestContextBootstrapper - [requestID: ] Using TestExecutionListeners: [org.springframework.test.context.web.ServletTestExecutionListener@767310b, org.springframework.test.context.support.DirtiesContextBeforeModesTestExecutionListener@204ac9e9, org.springframework.test.context.support.DependencyInjectionTestExecutionListener@7409fa9a, org.springframework.test.context.support.DirtiesContextTestExecutionListener@18680951, org.springframework.test.context.transaction.TransactionalTestExecutionListener@26b98c3e, org.springframework.test.context.jdbc.SqlScriptsTestExecutionListener@50ca0c81]
+[INFO] 2016-05-16 22:25:06.984 [Test worker] o.s.t.c.t.TransactionContext - [requestID: ] Began transaction (1) for test context [DefaultTestContext@75641f3a testClass = OneToOneBiTest, testInstance = pl.java.scalatech.oneToOneBi.OneToOneBiTest@4ae23f8, testMethod = shouldSave@OneToOneBiTest, testException = [null], mergedContextConfiguration = [MergedContextConfiguration@59e4fdb5 testClass = OneToOneBiTest, locations = '{}', classes = '{class pl.java.scalatech.config.TestJpaConfig}', contextInitializerClasses = '[]', activeProfiles = '{}', propertySourceLocations = '{}', propertySourceProperties = '{}', contextLoader = 'org.springframework.test.context.support.DelegatingSmartContextLoader', parent = [null]]]; transaction manager [org.springframework.orm.jpa.JpaTransactionManager@68fa3222]; rollback [true]
+[INFO] 2016-05-16 22:25:06.989 [Test worker] o.s.t.c.t.TransactionContext - [requestID: ] Rolled back transaction for test context [DefaultTestContext@75641f3a testClass = OneToOneBiTest, testInstance = pl.java.scalatech.oneToOneBi.OneToOneBiTest@4ae23f8, testMethod = shouldSave@OneToOneBiTest, testException = [null], mergedContextConfiguration = [MergedContextConfiguration@59e4fdb5 testClass = OneToOneBiTest, locations = '{}', classes = '{class pl.java.scalatech.config.TestJpaConfig}', contextInitializerClasses = '[]', activeProfiles = '{}', propertySourceLocations = '{}', propertySourceProperties = '{}', contextLoader = 'org.springframework.test.context.support.DelegatingSmartContextLoader', parent = [null]]].
+[INFO] 2016-05-16 22:25:07.030 [Test worker] p.j.scalatech.monetary.MonetaryTest - [requestID: ] money : USD 10
+[INFO] 2016-05-16 22:25:07.030 [Test worker] p.j.scalatech.monetary.MonetaryTest - [requestID: ] money2 :USD 20.00000
+[INFO] 2016-05-16 22:25:07.059 [Test worker] o.s.t.c.s.DefaultTestContextBootstrapper - [requestID: ] Loaded default TestExecutionListener class names from location [META-INF/spring.factories]: [org.springframework.test.context.web.ServletTestExecutionListener, org.springframework.test.context.support.DirtiesContextBeforeModesTestExecutionListener, org.springframework.test.context.support.DependencyInjectionTestExecutionListener, org.springframework.test.context.support.DirtiesContextTestExecutionListener, org.springframework.test.context.transaction.TransactionalTestExecutionListener, org.springframework.test.context.jdbc.SqlScriptsTestExecutionListener]
+[INFO] 2016-05-16 22:25:07.060 [Test worker] o.s.t.c.s.DefaultTestContextBootstrapper - [requestID: ] Using TestExecutionListeners: [org.springframework.test.context.web.ServletTestExecutionListener@4b6d092d, org.springframework.test.context.support.DirtiesContextBeforeModesTestExecutionListener@8571, org.springframework.test.context.support.DependencyInjectionTestExecutionListener@3c29d677, org.springframework.test.context.support.DirtiesContextTestExecutionListener@5c42c1dc, org.springframework.test.context.transaction.TransactionalTestExecutionListener@7f459f18, org.springframework.test.context.jdbc.SqlScriptsTestExecutionListener@7beaa68c]
+[INFO] 2016-05-16 22:25:07.091 [Test worker] p.j.scalatech.oneToOne.OneToOneTest - [requestID: ] [EmailMessage(content=this is text, email=Email(from=przodownik, to=slawek, topic=null, time=2016-05-16T22:25:07.064))]
+[INFO] 2016-05-16 22:25:07.110 [Test worker] o.s.t.c.s.AbstractContextLoader - [requestID: ] Could not detect default resource locations for test class [pl.java.scalatech.SpringDataTestApplicationTests]: no resource found for suffixes {-context.xml, Context.groovy}.
+[INFO] 2016-05-16 22:25:07.113 [Test worker] o.s.t.c.s.DefaultTestContextBootstrapper - [requestID: ] Loaded default TestExecutionListener class names from location [META-INF/spring.factories]: [org.springframework.test.context.web.ServletTestExecutionListener, org.springframework.test.context.support.DirtiesContextBeforeModesTestExecutionListener, org.springframework.test.context.support.DependencyInjectionTestExecutionListener, org.springframework.test.context.support.DirtiesContextTestExecutionListener, org.springframework.test.context.transaction.TransactionalTestExecutionListener, org.springframework.test.context.jdbc.SqlScriptsTestExecutionListener]
+[INFO] 2016-05-16 22:25:07.114 [Test worker] o.s.t.c.s.DefaultTestContextBootstrapper - [requestID: ] Using TestExecutionListeners: [org.springframework.test.context.web.ServletTestExecutionListener@10801f6a, org.springframework.test.context.support.DirtiesContextBeforeModesTestExecutionListener@4755de9a, org.springframework.test.context.support.DependencyInjectionTestExecutionListener@6a902b06, org.springframework.test.context.support.DirtiesContextTestExecutionListener@487905c8, org.springframework.test.context.transaction.TransactionalTestExecutionListener@589228e2, org.springframework.test.context.jdbc.SqlScriptsTestExecutionListener@31da8c64]
+[INFO] 2016-05-16 22:25:07.327 [Test worker] p.j.s.SpringDataTestApplicationTests - [requestID: ] Starting SpringDataTestApplicationTests on przodownik-Dell-System-XPS-L702X with PID 14699 (/home/przodownik/blog/springDataKata/build/classes/test started by przodownik in /home/przodownik/blog/springDataKata)
+[INFO] 2016-05-16 22:25:07.328 [Test worker] p.j.s.SpringDataTestApplicationTests - [requestID: ] No active profile set, falling back to default profiles: default
+[INFO] 2016-05-16 22:25:07.930 [Test worker] o.s.c.a.AnnotationConfigApplicationContext - [requestID: ] Refreshing org.springframework.context.annotation.AnnotationConfigApplicationContext@557a2e35: startup date [Mon May 16 22:25:07 CEST 2016]; root of context hierarchy
+[INFO] 2016-05-16 22:25:09.113 [Test worker] o.s.o.j.LocalContainerEntityManagerFactoryBean - [requestID: ] Building JPA container EntityManagerFactory for persistence unit 'default'
+[INFO] 2016-05-16 22:25:09.114 [Test worker] o.h.jpa.internal.util.LogHelper - [requestID: ] HHH000204: Processing PersistenceUnitInfo [
+	name: default
+	...]
+[WARN] 2016-05-16 22:25:09.118 [Test worker] org.hibernate.orm.deprecation - [requestID: ] HHH90000006: Attempted to specify unsupported NamingStrategy via setting [hibernate.ejb.naming_strategy]; NamingStrategy has been removed in favor of the split ImplicitNamingStrategy and PhysicalNamingStrategy; use [hibernate.implicit_naming_strategy] or [hibernate.physical_naming_strategy], respectively, instead.
+[INFO] 2016-05-16 22:25:09.126 [Test worker] org.hibernate.dialect.Dialect - [requestID: ] HHH000400: Using dialect: org.hibernate.dialect.H2Dialect
+[WARN] 2016-05-16 22:25:09.356 [Test worker] o.h.j.i.EntityManagerFactoryRegistry - [requestID: ] HHH000436: Entity manager factory name (default) is already registered.  If entity manager will be clustered or passivated, specify a unique value for property 'hibernate.ejb.entitymanager_factory_name'
+[DEBUG] 2016-05-16 22:25:09.452 [Test worker] o.h.s.internal.StatisticsInitiator - [requestID: ] Statistics initialized [enabled=true]
+[INFO] 2016-05-16 22:25:09.453 [Test worker] o.h.e.i.StatisticalLoggingSessionEventListener - [requestID: ] Session Metrics {
+    0 nanoseconds spent acquiring 0 JDBC connections;
+    0 nanoseconds spent releasing 0 JDBC connections;
+    0 nanoseconds spent preparing 0 JDBC statements;
+    0 nanoseconds spent executing 0 JDBC statements;
+    0 nanoseconds spent executing 0 JDBC batches;
+    0 nanoseconds spent performing 0 L2C puts;
+    0 nanoseconds spent performing 0 L2C hits;
+    0 nanoseconds spent performing 0 L2C misses;
+    0 nanoseconds spent executing 0 flushes (flushing a total of 0 entities and 0 collections);
+    0 nanoseconds spent executing 0 partial-flushes (flushing a total of 0 entities and 0 collections)
+}
+[INFO] 2016-05-16 22:25:09.455 [Test worker] o.h.e.i.StatisticalLoggingSessionEventListener - [requestID: ] Session Metrics {
+    0 nanoseconds spent acquiring 0 JDBC connections;
+    0 nanoseconds spent releasing 0 JDBC connections;
+    0 nanoseconds spent preparing 0 JDBC statements;
+    0 nanoseconds spent executing 0 JDBC statements;
+    0 nanoseconds spent executing 0 JDBC batches;
+    0 nanoseconds spent performing 0 L2C puts;
+    0 nanoseconds spent performing 0 L2C hits;
+    0 nanoseconds spent performing 0 L2C misses;
+    0 nanoseconds spent executing 0 flushes (flushing a total of 0 entities and 0 collections);
+    0 nanoseconds spent executing 0 partial-flushes (flushing a total of 0 entities and 0 collections)
+}
+[INFO] 2016-05-16 22:25:09.456 [Test worker] o.h.e.i.StatisticalLoggingSessionEventListener - [requestID: ] Session Metrics {
+    0 nanoseconds spent acquiring 0 JDBC connections;
+    0 nanoseconds spent releasing 0 JDBC connections;
+    0 nanoseconds spent preparing 0 JDBC statements;
+    0 nanoseconds spent executing 0 JDBC statements;
+    0 nanoseconds spent executing 0 JDBC batches;
+    0 nanoseconds spent performing 0 L2C puts;
+    0 nanoseconds spent performing 0 L2C hits;
+    0 nanoseconds spent performing 0 L2C misses;
+    0 nanoseconds spent executing 0 flushes (flushing a total of 0 entities and 0 collections);
+    0 nanoseconds spent executing 0 partial-flushes (flushing a total of 0 entities and 0 collections)
+}
+[INFO] 2016-05-16 22:25:09.457 [Test worker] o.h.e.i.StatisticalLoggingSessionEventListener - [requestID: ] Session Metrics {
+    0 nanoseconds spent acquiring 0 JDBC connections;
+    0 nanoseconds spent releasing 0 JDBC connections;
+    0 nanoseconds spent preparing 0 JDBC statements;
+    0 nanoseconds spent executing 0 JDBC statements;
+    0 nanoseconds spent executing 0 JDBC batches;
+    0 nanoseconds spent performing 0 L2C puts;
+    0 nanoseconds spent performing 0 L2C hits;
+    0 nanoseconds spent performing 0 L2C misses;
+    0 nanoseconds spent executing 0 flushes (flushing a total of 0 entities and 0 collections);
+    0 nanoseconds spent executing 0 partial-flushes (flushing a total of 0 entities and 0 collections)
+}
+[INFO] 2016-05-16 22:25:09.460 [Test worker] o.h.h.i.QueryTranslatorFactoryInitiator - [requestID: ] HHH000397: Using ASTQueryTranslatorFactory
+[INFO] 2016-05-16 22:25:09.462 [Test worker] o.h.e.i.StatisticalLoggingSessionEventListener - [requestID: ] Session Metrics {
+    0 nanoseconds spent acquiring 0 JDBC connections;
+    0 nanoseconds spent releasing 0 JDBC connections;
+    0 nanoseconds spent preparing 0 JDBC statements;
+    0 nanoseconds spent executing 0 JDBC statements;
+    0 nanoseconds spent executing 0 JDBC batches;
+    0 nanoseconds spent performing 0 L2C puts;
+    0 nanoseconds spent performing 0 L2C hits;
+    0 nanoseconds spent performing 0 L2C misses;
+    0 nanoseconds spent executing 0 flushes (flushing a total of 0 entities and 0 collections);
+    0 nanoseconds spent executing 0 partial-flushes (flushing a total of 0 entities and 0 collections)
+}
+[INFO] 2016-05-16 22:25:09.482 [Test worker] pl.java.scalatech.config.AuditConfig - [requestID: ] ++++ auditConfig started
+[INFO] 2016-05-16 22:25:09.525 [Test worker] o.h.e.i.StatisticalLoggingSessionEventListener - [requestID: ] Session Metrics {
+    0 nanoseconds spent acquiring 0 JDBC connections;
+    0 nanoseconds spent releasing 0 JDBC connections;
+    0 nanoseconds spent preparing 0 JDBC statements;
+    0 nanoseconds spent executing 0 JDBC statements;
+    0 nanoseconds spent executing 0 JDBC batches;
+    0 nanoseconds spent performing 0 L2C puts;
+    0 nanoseconds spent performing 0 L2C hits;
+    0 nanoseconds spent performing 0 L2C misses;
+    0 nanoseconds spent executing 0 flushes (flushing a total of 0 entities and 0 collections);
+    0 nanoseconds spent executing 0 partial-flushes (flushing a total of 0 entities and 0 collections)
+}
+[INFO] 2016-05-16 22:25:09.527 [Test worker] o.h.e.i.StatisticalLoggingSessionEventListener - [requestID: ] Session Metrics {
+    0 nanoseconds spent acquiring 0 JDBC connections;
+    0 nanoseconds spent releasing 0 JDBC connections;
+    0 nanoseconds spent preparing 0 JDBC statements;
+    0 nanoseconds spent executing 0 JDBC statements;
+    0 nanoseconds spent executing 0 JDBC batches;
+    0 nanoseconds spent performing 0 L2C puts;
+    0 nanoseconds spent performing 0 L2C hits;
+    0 nanoseconds spent performing 0 L2C misses;
+    0 nanoseconds spent executing 0 flushes (flushing a total of 0 entities and 0 collections);
+    0 nanoseconds spent executing 0 partial-flushes (flushing a total of 0 entities and 0 collections)
+}
+[INFO] 2016-05-16 22:25:09.530 [Test worker] o.h.e.i.StatisticalLoggingSessionEventListener - [requestID: ] Session Metrics {
+    0 nanoseconds spent acquiring 0 JDBC connections;
+    0 nanoseconds spent releasing 0 JDBC connections;
+    0 nanoseconds spent preparing 0 JDBC statements;
+    0 nanoseconds spent executing 0 JDBC statements;
+    0 nanoseconds spent executing 0 JDBC batches;
+    0 nanoseconds spent performing 0 L2C puts;
+    0 nanoseconds spent performing 0 L2C hits;
+    0 nanoseconds spent performing 0 L2C misses;
+    0 nanoseconds spent executing 0 flushes (flushing a total of 0 entities and 0 collections);
+    0 nanoseconds spent executing 0 partial-flushes (flushing a total of 0 entities and 0 collections)
+}
+[INFO] 2016-05-16 22:25:09.538 [Test worker] o.h.e.i.StatisticalLoggingSessionEventListener - [requestID: ] Session Metrics {
+    0 nanoseconds spent acquiring 0 JDBC connections;
+    0 nanoseconds spent releasing 0 JDBC connections;
+    0 nanoseconds spent preparing 0 JDBC statements;
+    0 nanoseconds spent executing 0 JDBC statements;
+    0 nanoseconds spent executing 0 JDBC batches;
+    0 nanoseconds spent performing 0 L2C puts;
+    0 nanoseconds spent performing 0 L2C hits;
+    0 nanoseconds spent performing 0 L2C misses;
+    0 nanoseconds spent executing 0 flushes (flushing a total of 0 entities and 0 collections);
+    0 nanoseconds spent executing 0 partial-flushes (flushing a total of 0 entities and 0 collections)
+}
+[INFO] 2016-05-16 22:25:09.539 [Test worker] o.h.e.i.StatisticalLoggingSessionEventListener - [requestID: ] Session Metrics {
+    0 nanoseconds spent acquiring 0 JDBC connections;
+    0 nanoseconds spent releasing 0 JDBC connections;
+    0 nanoseconds spent preparing 0 JDBC statements;
+    0 nanoseconds spent executing 0 JDBC statements;
+    0 nanoseconds spent executing 0 JDBC batches;
+    0 nanoseconds spent performing 0 L2C puts;
+    0 nanoseconds spent performing 0 L2C hits;
+    0 nanoseconds spent performing 0 L2C misses;
+    0 nanoseconds spent executing 0 flushes (flushing a total of 0 entities and 0 collections);
+    0 nanoseconds spent executing 0 partial-flushes (flushing a total of 0 entities and 0 collections)
+}
+[INFO] 2016-05-16 22:25:09.541 [Test worker] o.h.e.i.StatisticalLoggingSessionEventListener - [requestID: ] Session Metrics {
+    0 nanoseconds spent acquiring 0 JDBC connections;
+    0 nanoseconds spent releasing 0 JDBC connections;
+    0 nanoseconds spent preparing 0 JDBC statements;
+    0 nanoseconds spent executing 0 JDBC statements;
+    0 nanoseconds spent executing 0 JDBC batches;
+    0 nanoseconds spent performing 0 L2C puts;
+    0 nanoseconds spent performing 0 L2C hits;
+    0 nanoseconds spent performing 0 L2C misses;
+    0 nanoseconds spent executing 0 flushes (flushing a total of 0 entities and 0 collections);
+    0 nanoseconds spent executing 0 partial-flushes (flushing a total of 0 entities and 0 collections)
+}
+[INFO] 2016-05-16 22:25:09.549 [Test worker] o.h.e.i.StatisticalLoggingSessionEventListener - [requestID: ] Session Metrics {
+    0 nanoseconds spent acquiring 0 JDBC connections;
+    0 nanoseconds spent releasing 0 JDBC connections;
+    0 nanoseconds spent preparing 0 JDBC statements;
+    0 nanoseconds spent executing 0 JDBC statements;
+    0 nanoseconds spent executing 0 JDBC batches;
+    0 nanoseconds spent performing 0 L2C puts;
+    0 nanoseconds spent performing 0 L2C hits;
+    0 nanoseconds spent performing 0 L2C misses;
+    0 nanoseconds spent executing 0 flushes (flushing a total of 0 entities and 0 collections);
+    0 nanoseconds spent executing 0 partial-flushes (flushing a total of 0 entities and 0 collections)
+}
+[INFO] 2016-05-16 22:25:09.551 [Test worker] o.h.e.i.StatisticalLoggingSessionEventListener - [requestID: ] Session Metrics {
+    0 nanoseconds spent acquiring 0 JDBC connections;
+    0 nanoseconds spent releasing 0 JDBC connections;
+    0 nanoseconds spent preparing 0 JDBC statements;
+    0 nanoseconds spent executing 0 JDBC statements;
+    0 nanoseconds spent executing 0 JDBC batches;
+    0 nanoseconds spent performing 0 L2C puts;
+    0 nanoseconds spent performing 0 L2C hits;
+    0 nanoseconds spent performing 0 L2C misses;
+    0 nanoseconds spent executing 0 flushes (flushing a total of 0 entities and 0 collections);
+    0 nanoseconds spent executing 0 partial-flushes (flushing a total of 0 entities and 0 collections)
+}
+[INFO] 2016-05-16 22:25:09.553 [Test worker] o.h.e.i.StatisticalLoggingSessionEventListener - [requestID: ] Session Metrics {
+    0 nanoseconds spent acquiring 0 JDBC connections;
+    0 nanoseconds spent releasing 0 JDBC connections;
+    0 nanoseconds spent preparing 0 JDBC statements;
+    0 nanoseconds spent executing 0 JDBC statements;
+    0 nanoseconds spent executing 0 JDBC batches;
+    0 nanoseconds spent performing 0 L2C puts;
+    0 nanoseconds spent performing 0 L2C hits;
+    0 nanoseconds spent performing 0 L2C misses;
+    0 nanoseconds spent executing 0 flushes (flushing a total of 0 entities and 0 collections);
+    0 nanoseconds spent executing 0 partial-flushes (flushing a total of 0 entities and 0 collections)
+}
+[INFO] 2016-05-16 22:25:09.557 [Test worker] o.h.e.i.StatisticalLoggingSessionEventListener - [requestID: ] Session Metrics {
+    0 nanoseconds spent acquiring 0 JDBC connections;
+    0 nanoseconds spent releasing 0 JDBC connections;
+    0 nanoseconds spent preparing 0 JDBC statements;
+    0 nanoseconds spent executing 0 JDBC statements;
+    0 nanoseconds spent executing 0 JDBC batches;
+    0 nanoseconds spent performing 0 L2C puts;
+    0 nanoseconds spent performing 0 L2C hits;
+    0 nanoseconds spent performing 0 L2C misses;
+    0 nanoseconds spent executing 0 flushes (flushing a total of 0 entities and 0 collections);
+    0 nanoseconds spent executing 0 partial-flushes (flushing a total of 0 entities and 0 collections)
+}
+[INFO] 2016-05-16 22:25:09.560 [Test worker] o.h.e.i.StatisticalLoggingSessionEventListener - [requestID: ] Session Metrics {
+    0 nanoseconds spent acquiring 0 JDBC connections;
+    0 nanoseconds spent releasing 0 JDBC connections;
+    0 nanoseconds spent preparing 0 JDBC statements;
+    0 nanoseconds spent executing 0 JDBC statements;
+    0 nanoseconds spent executing 0 JDBC batches;
+    0 nanoseconds spent performing 0 L2C puts;
+    0 nanoseconds spent performing 0 L2C hits;
+    0 nanoseconds spent performing 0 L2C misses;
+    0 nanoseconds spent executing 0 flushes (flushing a total of 0 entities and 0 collections);
+    0 nanoseconds spent executing 0 partial-flushes (flushing a total of 0 entities and 0 collections)
+}
+[INFO] 2016-05-16 22:25:09.564 [Test worker] o.h.e.i.StatisticalLoggingSessionEventListener - [requestID: ] Session Metrics {
+    0 nanoseconds spent acquiring 0 JDBC connections;
+    0 nanoseconds spent releasing 0 JDBC connections;
+    0 nanoseconds spent preparing 0 JDBC statements;
+    0 nanoseconds spent executing 0 JDBC statements;
+    0 nanoseconds spent executing 0 JDBC batches;
+    0 nanoseconds spent performing 0 L2C puts;
+    0 nanoseconds spent performing 0 L2C hits;
+    0 nanoseconds spent performing 0 L2C misses;
+    0 nanoseconds spent executing 0 flushes (flushing a total of 0 entities and 0 collections);
+    0 nanoseconds spent executing 0 partial-flushes (flushing a total of 0 entities and 0 collections)
+}
+[INFO] 2016-05-16 22:25:09.567 [Test worker] o.h.e.i.StatisticalLoggingSessionEventListener - [requestID: ] Session Metrics {
+    0 nanoseconds spent acquiring 0 JDBC connections;
+    0 nanoseconds spent releasing 0 JDBC connections;
+    0 nanoseconds spent preparing 0 JDBC statements;
+    0 nanoseconds spent executing 0 JDBC statements;
+    0 nanoseconds spent executing 0 JDBC batches;
+    0 nanoseconds spent performing 0 L2C puts;
+    0 nanoseconds spent performing 0 L2C hits;
+    0 nanoseconds spent performing 0 L2C misses;
+    0 nanoseconds spent executing 0 flushes (flushing a total of 0 entities and 0 collections);
+    0 nanoseconds spent executing 0 partial-flushes (flushing a total of 0 entities and 0 collections)
+}
+[INFO] 2016-05-16 22:25:09.569 [Test worker] o.h.e.i.StatisticalLoggingSessionEventListener - [requestID: ] Session Metrics {
+    0 nanoseconds spent acquiring 0 JDBC connections;
+    0 nanoseconds spent releasing 0 JDBC connections;
+    0 nanoseconds spent preparing 0 JDBC statements;
+    0 nanoseconds spent executing 0 JDBC statements;
+    0 nanoseconds spent executing 0 JDBC batches;
+    0 nanoseconds spent performing 0 L2C puts;
+    0 nanoseconds spent performing 0 L2C hits;
+    0 nanoseconds spent performing 0 L2C misses;
+    0 nanoseconds spent executing 0 flushes (flushing a total of 0 entities and 0 collections);
+    0 nanoseconds spent executing 0 partial-flushes (flushing a total of 0 entities and 0 collections)
+}
+[INFO] 2016-05-16 22:25:09.572 [Test worker] o.h.e.i.StatisticalLoggingSessionEventListener - [requestID: ] Session Metrics {
+    0 nanoseconds spent acquiring 0 JDBC connections;
+    0 nanoseconds spent releasing 0 JDBC connections;
+    0 nanoseconds spent preparing 0 JDBC statements;
+    0 nanoseconds spent executing 0 JDBC statements;
+    0 nanoseconds spent executing 0 JDBC batches;
+    0 nanoseconds spent performing 0 L2C puts;
+    0 nanoseconds spent performing 0 L2C hits;
+    0 nanoseconds spent performing 0 L2C misses;
+    0 nanoseconds spent executing 0 flushes (flushing a total of 0 entities and 0 collections);
+    0 nanoseconds spent executing 0 partial-flushes (flushing a total of 0 entities and 0 collections)
+}
+[INFO] 2016-05-16 22:25:09.574 [Test worker] o.h.e.i.StatisticalLoggingSessionEventListener - [requestID: ] Session Metrics {
+    0 nanoseconds spent acquiring 0 JDBC connections;
+    0 nanoseconds spent releasing 0 JDBC connections;
+    0 nanoseconds spent preparing 0 JDBC statements;
+    0 nanoseconds spent executing 0 JDBC statements;
+    0 nanoseconds spent executing 0 JDBC batches;
+    0 nanoseconds spent performing 0 L2C puts;
+    0 nanoseconds spent performing 0 L2C hits;
+    0 nanoseconds spent performing 0 L2C misses;
+    0 nanoseconds spent executing 0 flushes (flushing a total of 0 entities and 0 collections);
+    0 nanoseconds spent executing 0 partial-flushes (flushing a total of 0 entities and 0 collections)
+}
+[INFO] 2016-05-16 22:25:09.583 [Test worker] o.h.e.i.StatisticalLoggingSessionEventListener - [requestID: ] Session Metrics {
+    0 nanoseconds spent acquiring 0 JDBC connections;
+    0 nanoseconds spent releasing 0 JDBC connections;
+    0 nanoseconds spent preparing 0 JDBC statements;
+    0 nanoseconds spent executing 0 JDBC statements;
+    0 nanoseconds spent executing 0 JDBC batches;
+    0 nanoseconds spent performing 0 L2C puts;
+    0 nanoseconds spent performing 0 L2C hits;
+    0 nanoseconds spent performing 0 L2C misses;
+    0 nanoseconds spent executing 0 flushes (flushing a total of 0 entities and 0 collections);
+    0 nanoseconds spent executing 0 partial-flushes (flushing a total of 0 entities and 0 collections)
+}
+[INFO] 2016-05-16 22:25:09.585 [Test worker] o.h.e.i.StatisticalLoggingSessionEventListener - [requestID: ] Session Metrics {
+    0 nanoseconds spent acquiring 0 JDBC connections;
+    0 nanoseconds spent releasing 0 JDBC connections;
+    0 nanoseconds spent preparing 0 JDBC statements;
+    0 nanoseconds spent executing 0 JDBC statements;
+    0 nanoseconds spent executing 0 JDBC batches;
+    0 nanoseconds spent performing 0 L2C puts;
+    0 nanoseconds spent performing 0 L2C hits;
+    0 nanoseconds spent performing 0 L2C misses;
+    0 nanoseconds spent executing 0 flushes (flushing a total of 0 entities and 0 collections);
+    0 nanoseconds spent executing 0 partial-flushes (flushing a total of 0 entities and 0 collections)
+}
+[INFO] 2016-05-16 22:25:09.587 [Test worker] o.h.e.i.StatisticalLoggingSessionEventListener - [requestID: ] Session Metrics {
+    0 nanoseconds spent acquiring 0 JDBC connections;
+    0 nanoseconds spent releasing 0 JDBC connections;
+    0 nanoseconds spent preparing 0 JDBC statements;
+    0 nanoseconds spent executing 0 JDBC statements;
+    0 nanoseconds spent executing 0 JDBC batches;
+    0 nanoseconds spent performing 0 L2C puts;
+    0 nanoseconds spent performing 0 L2C hits;
+    0 nanoseconds spent performing 0 L2C misses;
+    0 nanoseconds spent executing 0 flushes (flushing a total of 0 entities and 0 collections);
+    0 nanoseconds spent executing 0 partial-flushes (flushing a total of 0 entities and 0 collections)
+}
+[INFO] 2016-05-16 22:25:09.589 [Test worker] o.h.e.i.StatisticalLoggingSessionEventListener - [requestID: ] Session Metrics {
+    0 nanoseconds spent acquiring 0 JDBC connections;
+    0 nanoseconds spent releasing 0 JDBC connections;
+    0 nanoseconds spent preparing 0 JDBC statements;
+    0 nanoseconds spent executing 0 JDBC statements;
+    0 nanoseconds spent executing 0 JDBC batches;
+    0 nanoseconds spent performing 0 L2C puts;
+    0 nanoseconds spent performing 0 L2C hits;
+    0 nanoseconds spent performing 0 L2C misses;
+    0 nanoseconds spent executing 0 flushes (flushing a total of 0 entities and 0 collections);
+    0 nanoseconds spent executing 0 partial-flushes (flushing a total of 0 entities and 0 collections)
+}
+[INFO] 2016-05-16 22:25:09.598 [Test worker] o.h.e.i.StatisticalLoggingSessionEventListener - [requestID: ] Session Metrics {
+    0 nanoseconds spent acquiring 0 JDBC connections;
+    0 nanoseconds spent releasing 0 JDBC connections;
+    0 nanoseconds spent preparing 0 JDBC statements;
+    0 nanoseconds spent executing 0 JDBC statements;
+    0 nanoseconds spent executing 0 JDBC batches;
+    0 nanoseconds spent performing 0 L2C puts;
+    0 nanoseconds spent performing 0 L2C hits;
+    0 nanoseconds spent performing 0 L2C misses;
+    0 nanoseconds spent executing 0 flushes (flushing a total of 0 entities and 0 collections);
+    0 nanoseconds spent executing 0 partial-flushes (flushing a total of 0 entities and 0 collections)
+}
+[INFO] 2016-05-16 22:25:09.600 [Test worker] o.h.e.i.StatisticalLoggingSessionEventListener - [requestID: ] Session Metrics {
+    0 nanoseconds spent acquiring 0 JDBC connections;
+    0 nanoseconds spent releasing 0 JDBC connections;
+    0 nanoseconds spent preparing 0 JDBC statements;
+    0 nanoseconds spent executing 0 JDBC statements;
+    0 nanoseconds spent executing 0 JDBC batches;
+    0 nanoseconds spent performing 0 L2C puts;
+    0 nanoseconds spent performing 0 L2C hits;
+    0 nanoseconds spent performing 0 L2C misses;
+    0 nanoseconds spent executing 0 flushes (flushing a total of 0 entities and 0 collections);
+    0 nanoseconds spent executing 0 partial-flushes (flushing a total of 0 entities and 0 collections)
+}
+[INFO] 2016-05-16 22:25:09.602 [Test worker] o.h.e.i.StatisticalLoggingSessionEventListener - [requestID: ] Session Metrics {
+    0 nanoseconds spent acquiring 0 JDBC connections;
+    0 nanoseconds spent releasing 0 JDBC connections;
+    0 nanoseconds spent preparing 0 JDBC statements;
+    0 nanoseconds spent executing 0 JDBC statements;
+    0 nanoseconds spent executing 0 JDBC batches;
+    0 nanoseconds spent performing 0 L2C puts;
+    0 nanoseconds spent performing 0 L2C hits;
+    0 nanoseconds spent performing 0 L2C misses;
+    0 nanoseconds spent executing 0 flushes (flushing a total of 0 entities and 0 collections);
+    0 nanoseconds spent executing 0 partial-flushes (flushing a total of 0 entities and 0 collections)
+}
+[INFO] 2016-05-16 22:25:09.612 [Test worker] o.h.e.i.StatisticalLoggingSessionEventListener - [requestID: ] Session Metrics {
+    0 nanoseconds spent acquiring 0 JDBC connections;
+    0 nanoseconds spent releasing 0 JDBC connections;
+    0 nanoseconds spent preparing 0 JDBC statements;
+    0 nanoseconds spent executing 0 JDBC statements;
+    0 nanoseconds spent executing 0 JDBC batches;
+    0 nanoseconds spent performing 0 L2C puts;
+    0 nanoseconds spent performing 0 L2C hits;
+    0 nanoseconds spent performing 0 L2C misses;
+    0 nanoseconds spent executing 0 flushes (flushing a total of 0 entities and 0 collections);
+    0 nanoseconds spent executing 0 partial-flushes (flushing a total of 0 entities and 0 collections)
+}
+[INFO] 2016-05-16 22:25:09.615 [Test worker] o.h.e.i.StatisticalLoggingSessionEventListener - [requestID: ] Session Metrics {
+    0 nanoseconds spent acquiring 0 JDBC connections;
+    0 nanoseconds spent releasing 0 JDBC connections;
+    0 nanoseconds spent preparing 0 JDBC statements;
+    0 nanoseconds spent executing 0 JDBC statements;
+    0 nanoseconds spent executing 0 JDBC batches;
+    0 nanoseconds spent performing 0 L2C puts;
+    0 nanoseconds spent performing 0 L2C hits;
+    0 nanoseconds spent performing 0 L2C misses;
+    0 nanoseconds spent executing 0 flushes (flushing a total of 0 entities and 0 collections);
+    0 nanoseconds spent executing 0 partial-flushes (flushing a total of 0 entities and 0 collections)
+}
+[INFO] 2016-05-16 22:25:09.617 [Test worker] o.h.e.i.StatisticalLoggingSessionEventListener - [requestID: ] Session Metrics {
+    0 nanoseconds spent acquiring 0 JDBC connections;
+    0 nanoseconds spent releasing 0 JDBC connections;
+    0 nanoseconds spent preparing 0 JDBC statements;
+    0 nanoseconds spent executing 0 JDBC statements;
+    0 nanoseconds spent executing 0 JDBC batches;
+    0 nanoseconds spent performing 0 L2C puts;
+    0 nanoseconds spent performing 0 L2C hits;
+    0 nanoseconds spent performing 0 L2C misses;
+    0 nanoseconds spent executing 0 flushes (flushing a total of 0 entities and 0 collections);
+    0 nanoseconds spent executing 0 partial-flushes (flushing a total of 0 entities and 0 collections)
+}
+[INFO] 2016-05-16 22:25:09.625 [Test worker] o.h.e.i.StatisticalLoggingSessionEventListener - [requestID: ] Session Metrics {
+    0 nanoseconds spent acquiring 0 JDBC connections;
+    0 nanoseconds spent releasing 0 JDBC connections;
+    0 nanoseconds spent preparing 0 JDBC statements;
+    0 nanoseconds spent executing 0 JDBC statements;
+    0 nanoseconds spent executing 0 JDBC batches;
+    0 nanoseconds spent performing 0 L2C puts;
+    0 nanoseconds spent performing 0 L2C hits;
+    0 nanoseconds spent performing 0 L2C misses;
+    0 nanoseconds spent executing 0 flushes (flushing a total of 0 entities and 0 collections);
+    0 nanoseconds spent executing 0 partial-flushes (flushing a total of 0 entities and 0 collections)
+}
+[INFO] 2016-05-16 22:25:09.627 [Test worker] o.h.e.i.StatisticalLoggingSessionEventListener - [requestID: ] Session Metrics {
+    0 nanoseconds spent acquiring 0 JDBC connections;
+    0 nanoseconds spent releasing 0 JDBC connections;
+    0 nanoseconds spent preparing 0 JDBC statements;
+    0 nanoseconds spent executing 0 JDBC statements;
+    0 nanoseconds spent executing 0 JDBC batches;
+    0 nanoseconds spent performing 0 L2C puts;
+    0 nanoseconds spent performing 0 L2C hits;
+    0 nanoseconds spent performing 0 L2C misses;
+    0 nanoseconds spent executing 0 flushes (flushing a total of 0 entities and 0 collections);
+    0 nanoseconds spent executing 0 partial-flushes (flushing a total of 0 entities and 0 collections)
+}
+[INFO] 2016-05-16 22:25:09.629 [Test worker] o.h.e.i.StatisticalLoggingSessionEventListener - [requestID: ] Session Metrics {
+    0 nanoseconds spent acquiring 0 JDBC connections;
+    0 nanoseconds spent releasing 0 JDBC connections;
+    0 nanoseconds spent preparing 0 JDBC statements;
+    0 nanoseconds spent executing 0 JDBC statements;
+    0 nanoseconds spent executing 0 JDBC batches;
+    0 nanoseconds spent performing 0 L2C puts;
+    0 nanoseconds spent performing 0 L2C hits;
+    0 nanoseconds spent performing 0 L2C misses;
+    0 nanoseconds spent executing 0 flushes (flushing a total of 0 entities and 0 collections);
+    0 nanoseconds spent executing 0 partial-flushes (flushing a total of 0 entities and 0 collections)
+}
+[INFO] 2016-05-16 22:25:09.637 [Test worker] o.h.e.i.StatisticalLoggingSessionEventListener - [requestID: ] Session Metrics {
+    0 nanoseconds spent acquiring 0 JDBC connections;
+    0 nanoseconds spent releasing 0 JDBC connections;
+    0 nanoseconds spent preparing 0 JDBC statements;
+    0 nanoseconds spent executing 0 JDBC statements;
+    0 nanoseconds spent executing 0 JDBC batches;
+    0 nanoseconds spent performing 0 L2C puts;
+    0 nanoseconds spent performing 0 L2C hits;
+    0 nanoseconds spent performing 0 L2C misses;
+    0 nanoseconds spent executing 0 flushes (flushing a total of 0 entities and 0 collections);
+    0 nanoseconds spent executing 0 partial-flushes (flushing a total of 0 entities and 0 collections)
+}
+[INFO] 2016-05-16 22:25:09.639 [Test worker] o.h.e.i.StatisticalLoggingSessionEventListener - [requestID: ] Session Metrics {
+    0 nanoseconds spent acquiring 0 JDBC connections;
+    0 nanoseconds spent releasing 0 JDBC connections;
+    0 nanoseconds spent preparing 0 JDBC statements;
+    0 nanoseconds spent executing 0 JDBC statements;
+    0 nanoseconds spent executing 0 JDBC batches;
+    0 nanoseconds spent performing 0 L2C puts;
+    0 nanoseconds spent performing 0 L2C hits;
+    0 nanoseconds spent performing 0 L2C misses;
+    0 nanoseconds spent executing 0 flushes (flushing a total of 0 entities and 0 collections);
+    0 nanoseconds spent executing 0 partial-flushes (flushing a total of 0 entities and 0 collections)
+}
+[INFO] 2016-05-16 22:25:09.641 [Test worker] o.h.e.i.StatisticalLoggingSessionEventListener - [requestID: ] Session Metrics {
+    0 nanoseconds spent acquiring 0 JDBC connections;
+    0 nanoseconds spent releasing 0 JDBC connections;
+    0 nanoseconds spent preparing 0 JDBC statements;
+    0 nanoseconds spent executing 0 JDBC statements;
+    0 nanoseconds spent executing 0 JDBC batches;
+    0 nanoseconds spent performing 0 L2C puts;
+    0 nanoseconds spent performing 0 L2C hits;
+    0 nanoseconds spent performing 0 L2C misses;
+    0 nanoseconds spent executing 0 flushes (flushing a total of 0 entities and 0 collections);
+    0 nanoseconds spent executing 0 partial-flushes (flushing a total of 0 entities and 0 collections)
+}
+[INFO] 2016-05-16 22:25:09.643 [Test worker] o.h.e.i.StatisticalLoggingSessionEventListener - [requestID: ] Session Metrics {
+    0 nanoseconds spent acquiring 0 JDBC connections;
+    0 nanoseconds spent releasing 0 JDBC connections;
+    0 nanoseconds spent preparing 0 JDBC statements;
+    0 nanoseconds spent executing 0 JDBC statements;
+    0 nanoseconds spent executing 0 JDBC batches;
+    0 nanoseconds spent performing 0 L2C puts;
+    0 nanoseconds spent performing 0 L2C hits;
+    0 nanoseconds spent performing 0 L2C misses;
+    0 nanoseconds spent executing 0 flushes (flushing a total of 0 entities and 0 collections);
+    0 nanoseconds spent executing 0 partial-flushes (flushing a total of 0 entities and 0 collections)
+}
+[INFO] 2016-05-16 22:25:09.647 [Test worker] o.h.e.i.StatisticalLoggingSessionEventListener - [requestID: ] Session Metrics {
+    0 nanoseconds spent acquiring 0 JDBC connections;
+    0 nanoseconds spent releasing 0 JDBC connections;
+    0 nanoseconds spent preparing 0 JDBC statements;
+    0 nanoseconds spent executing 0 JDBC statements;
+    0 nanoseconds spent executing 0 JDBC batches;
+    0 nanoseconds spent performing 0 L2C puts;
+    0 nanoseconds spent performing 0 L2C hits;
+    0 nanoseconds spent performing 0 L2C misses;
+    0 nanoseconds spent executing 0 flushes (flushing a total of 0 entities and 0 collections);
+    0 nanoseconds spent executing 0 partial-flushes (flushing a total of 0 entities and 0 collections)
+}
+[INFO] 2016-05-16 22:25:09.651 [Test worker] o.h.e.i.StatisticalLoggingSessionEventListener - [requestID: ] Session Metrics {
+    0 nanoseconds spent acquiring 0 JDBC connections;
+    0 nanoseconds spent releasing 0 JDBC connections;
+    0 nanoseconds spent preparing 0 JDBC statements;
+    0 nanoseconds spent executing 0 JDBC statements;
+    0 nanoseconds spent executing 0 JDBC batches;
+    0 nanoseconds spent performing 0 L2C puts;
+    0 nanoseconds spent performing 0 L2C hits;
+    0 nanoseconds spent performing 0 L2C misses;
+    0 nanoseconds spent executing 0 flushes (flushing a total of 0 entities and 0 collections);
+    0 nanoseconds spent executing 0 partial-flushes (flushing a total of 0 entities and 0 collections)
+}
+[INFO] 2016-05-16 22:25:09.659 [Test worker] o.h.e.i.StatisticalLoggingSessionEventListener - [requestID: ] Session Metrics {
+    0 nanoseconds spent acquiring 0 JDBC connections;
+    0 nanoseconds spent releasing 0 JDBC connections;
+    0 nanoseconds spent preparing 0 JDBC statements;
+    0 nanoseconds spent executing 0 JDBC statements;
+    0 nanoseconds spent executing 0 JDBC batches;
+    0 nanoseconds spent performing 0 L2C puts;
+    0 nanoseconds spent performing 0 L2C hits;
+    0 nanoseconds spent performing 0 L2C misses;
+    0 nanoseconds spent executing 0 flushes (flushing a total of 0 entities and 0 collections);
+    0 nanoseconds spent executing 0 partial-flushes (flushing a total of 0 entities and 0 collections)
+}
+[INFO] 2016-05-16 22:25:09.661 [Test worker] o.h.e.i.StatisticalLoggingSessionEventListener - [requestID: ] Session Metrics {
+    0 nanoseconds spent acquiring 0 JDBC connections;
+    0 nanoseconds spent releasing 0 JDBC connections;
+    0 nanoseconds spent preparing 0 JDBC statements;
+    0 nanoseconds spent executing 0 JDBC statements;
+    0 nanoseconds spent executing 0 JDBC batches;
+    0 nanoseconds spent performing 0 L2C puts;
+    0 nanoseconds spent performing 0 L2C hits;
+    0 nanoseconds spent performing 0 L2C misses;
+    0 nanoseconds spent executing 0 flushes (flushing a total of 0 entities and 0 collections);
+    0 nanoseconds spent executing 0 partial-flushes (flushing a total of 0 entities and 0 collections)
+}
+[INFO] 2016-05-16 22:25:09.662 [Test worker] o.h.e.i.StatisticalLoggingSessionEventListener - [requestID: ] Session Metrics {
+    0 nanoseconds spent acquiring 0 JDBC connections;
+    0 nanoseconds spent releasing 0 JDBC connections;
+    0 nanoseconds spent preparing 0 JDBC statements;
+    0 nanoseconds spent executing 0 JDBC statements;
+    0 nanoseconds spent executing 0 JDBC batches;
+    0 nanoseconds spent performing 0 L2C puts;
+    0 nanoseconds spent performing 0 L2C hits;
+    0 nanoseconds spent performing 0 L2C misses;
+    0 nanoseconds spent executing 0 flushes (flushing a total of 0 entities and 0 collections);
+    0 nanoseconds spent executing 0 partial-flushes (flushing a total of 0 entities and 0 collections)
+}
+[INFO] 2016-05-16 22:25:09.664 [Test worker] o.h.e.i.StatisticalLoggingSessionEventListener - [requestID: ] Session Metrics {
+    0 nanoseconds spent acquiring 0 JDBC connections;
+    0 nanoseconds spent releasing 0 JDBC connections;
+    0 nanoseconds spent preparing 0 JDBC statements;
+    0 nanoseconds spent executing 0 JDBC statements;
+    0 nanoseconds spent executing 0 JDBC batches;
+    0 nanoseconds spent performing 0 L2C puts;
+    0 nanoseconds spent performing 0 L2C hits;
+    0 nanoseconds spent performing 0 L2C misses;
+    0 nanoseconds spent executing 0 flushes (flushing a total of 0 entities and 0 collections);
+    0 nanoseconds spent executing 0 partial-flushes (flushing a total of 0 entities and 0 collections)
+}
+[INFO] 2016-05-16 22:25:09.667 [Test worker] o.h.e.i.StatisticalLoggingSessionEventListener - [requestID: ] Session Metrics {
+    0 nanoseconds spent acquiring 0 JDBC connections;
+    0 nanoseconds spent releasing 0 JDBC connections;
+    0 nanoseconds spent preparing 0 JDBC statements;
+    0 nanoseconds spent executing 0 JDBC statements;
+    0 nanoseconds spent executing 0 JDBC batches;
+    0 nanoseconds spent performing 0 L2C puts;
+    0 nanoseconds spent performing 0 L2C hits;
+    0 nanoseconds spent performing 0 L2C misses;
+    0 nanoseconds spent executing 0 flushes (flushing a total of 0 entities and 0 collections);
+    0 nanoseconds spent executing 0 partial-flushes (flushing a total of 0 entities and 0 collections)
+}
+[TRACE] 2016-05-16 22:25:10.379 [Test worker] o.s.a.i.CustomizableTraceInterceptor - [requestID: ] Entering save(Person(id=null, firstname=slawek, email=przodownikR1@gmail.com, modify=null, birthDay=2016-05-16T22:25:10.377+02:00[Europe/Warsaw])).
+[INFO] 2016-05-16 22:25:10.387 [Test worker] o.h.e.i.StatisticalLoggingSessionEventListener - [requestID: ] Session Metrics {
+    29999 nanoseconds spent acquiring 1 JDBC connections;
+    0 nanoseconds spent releasing 0 JDBC connections;
+    248440 nanoseconds spent preparing 2 JDBC statements;
+    183455 nanoseconds spent executing 2 JDBC statements;
+    0 nanoseconds spent executing 0 JDBC batches;
+    0 nanoseconds spent performing 0 L2C puts;
+    0 nanoseconds spent performing 0 L2C hits;
+    0 nanoseconds spent performing 0 L2C misses;
+    3184572 nanoseconds spent executing 1 flushes (flushing a total of 1 entities and 0 collections);
+    0 nanoseconds spent executing 0 partial-flushes (flushing a total of 0 entities and 0 collections)
+}
+[TRACE] 2016-05-16 22:25:10.388 [Test worker] o.s.a.i.CustomizableTraceInterceptor - [requestID: ] Leaving save(..) with return value Person(id=1020, firstname=slawek, email=przodownikR1@gmail.com, modify=null, birthDay=2016-05-16T22:25:10.377+02:00[Europe/Warsaw]), took 9ms.
+[TRACE] 2016-05-16 22:25:10.390 [Test worker] o.s.a.i.CustomizableTraceInterceptor - [requestID: ] Entering findAll().
+[DEBUG] 2016-05-16 22:25:10.399 [Test worker] o.h.s.i.ConcurrentStatisticsImpl - [requestID: ] HHH000117: HQL: select generatedAlias0 from Person as generatedAlias0, time: 4ms, rows: 5
+[INFO] 2016-05-16 22:25:10.403 [Test worker] o.h.e.i.StatisticalLoggingSessionEventListener - [requestID: ] Session Metrics {
+    30920 nanoseconds spent acquiring 1 JDBC connections;
+    0 nanoseconds spent releasing 0 JDBC connections;
+    285673 nanoseconds spent preparing 1 JDBC statements;
+    124634 nanoseconds spent executing 1 JDBC statements;
+    0 nanoseconds spent executing 0 JDBC batches;
+    0 nanoseconds spent performing 0 L2C puts;
+    0 nanoseconds spent performing 0 L2C hits;
+    0 nanoseconds spent performing 0 L2C misses;
+    0 nanoseconds spent executing 0 flushes (flushing a total of 0 entities and 0 collections);
+    12010 nanoseconds spent executing 1 partial-flushes (flushing a total of 0 entities and 0 collections)
+}
+[TRACE] 2016-05-16 22:25:10.405 [Test worker] o.s.a.i.CustomizableTraceInterceptor - [requestID: ] Leaving findAll(..) with return value [Person(id=1, firstname=przodownik, email=przodownikR1@gmail.com, modify=2016-05-16, birthDay=2016-05-16T22:25:03.176+02:00[Europe/Warsaw]), Person(id=2, firstname=kalina, email=kalinaR1@gmail.com, modify=2016-05-16, birthDay=2016-05-16T22:25:03.301+02:00[Europe/Warsaw]), Person(id=3, firstname=aga, email=aga@gmail.com, modify=2016-05-16, birthDay=2016-05-16T22:25:03.305+02:00[Europe/Warsaw]), Person(id=4, firstname=bak, email=bak@gmail.com, modify=2016-05-16, birthDay=2016-05-16T22:25:03.308+02:00[Europe/Warsaw]), Person(id=1020, firstname=slawek, email=przodownikR1@gmail.com, modify=null, birthDay=2016-05-16T22:25:10.377+02:00[Europe/Warsaw])], took 15ms.
+[INFO] 2016-05-16 22:25:10.406 [Test worker] p.j.s.SpringDataTestApplication - [requestID: ] [Person(id=1, firstname=przodownik, email=przodownikR1@gmail.com, modify=2016-05-16, birthDay=2016-05-16T22:25:03.176+02:00[Europe/Warsaw]), Person(id=2, firstname=kalina, email=kalinaR1@gmail.com, modify=2016-05-16, birthDay=2016-05-16T22:25:03.301+02:00[Europe/Warsaw]), Person(id=3, firstname=aga, email=aga@gmail.com, modify=2016-05-16, birthDay=2016-05-16T22:25:03.305+02:00[Europe/Warsaw]), Person(id=4, firstname=bak, email=bak@gmail.com, modify=2016-05-16, birthDay=2016-05-16T22:25:03.308+02:00[Europe/Warsaw]), Person(id=1020, firstname=slawek, email=przodownikR1@gmail.com, modify=null, birthDay=2016-05-16T22:25:10.377+02:00[Europe/Warsaw])] 
+[INFO] 2016-05-16 22:25:10.407 [Test worker] p.j.s.SpringDataTestApplicationTests - [requestID: ] Started SpringDataTestApplicationTests in 3.246 seconds (JVM running for 15.82)
+[INFO] 2016-05-16 22:25:10.420 [Test worker] o.s.t.c.s.DefaultTestContextBootstrapper - [requestID: ] Loaded default TestExecutionListener class names from location [META-INF/spring.factories]: [org.springframework.test.context.web.ServletTestExecutionListener, org.springframework.test.context.support.DirtiesContextBeforeModesTestExecutionListener, org.springframework.test.context.support.DependencyInjectionTestExecutionListener, org.springframework.test.context.support.DirtiesContextTestExecutionListener, org.springframework.test.context.transaction.TransactionalTestExecutionListener, org.springframework.test.context.jdbc.SqlScriptsTestExecutionListener]
+[INFO] 2016-05-16 22:25:10.421 [Test worker] o.s.t.c.s.DefaultTestContextBootstrapper - [requestID: ] Using TestExecutionListeners: [org.springframework.test.context.web.ServletTestExecutionListener@7f9e3e6a, org.springframework.test.context.support.DirtiesContextBeforeModesTestExecutionListener@5a32c2ac, org.springframework.test.context.support.DependencyInjectionTestExecutionListener@201877e9, org.springframework.test.context.support.DirtiesContextTestExecutionListener@5b7c051d, org.springframework.test.context.transaction.TransactionalTestExecutionListener@559f0d76, org.springframework.test.context.jdbc.SqlScriptsTestExecutionListener@19f492cb]
+[INFO] 2016-05-16 22:25:10.507 [Test worker] pl.java.scalatech.example.CartTest - [requestID: ] null
+[INFO] 2016-05-16 22:25:10.513 [Test worker] o.s.t.c.s.DefaultTestContextBootstrapper - [requestID: ] Loaded default TestExecutionListener class names from location [META-INF/spring.factories]: [org.springframework.test.context.web.ServletTestExecutionListener, org.springframework.test.context.support.DirtiesContextBeforeModesTestExecutionListener, org.springframework.test.context.support.DependencyInjectionTestExecutionListener, org.springframework.test.context.support.DirtiesContextTestExecutionListener, org.springframework.test.context.transaction.TransactionalTestExecutionListener, org.springframework.test.context.jdbc.SqlScriptsTestExecutionListener]
+[INFO] 2016-05-16 22:25:10.514 [Test worker] o.s.t.c.s.DefaultTestContextBootstrapper - [requestID: ] Using TestExecutionListeners: [org.springframework.test.context.web.ServletTestExecutionListener@1ebd356b, org.springframework.test.context.support.DirtiesContextBeforeModesTestExecutionListener@559781f2, org.springframework.test.context.support.DependencyInjectionTestExecutionListener@e5b5553, org.springframework.test.context.support.DirtiesContextTestExecutionListener@3445e990, org.springframework.test.context.transaction.TransactionalTestExecutionListener@4324841e, org.springframework.test.context.jdbc.SqlScriptsTestExecutionListener@2ad51599]
+[INFO] 2016-05-16 22:25:10.537 [Thread-7] o.s.c.s.GenericApplicationContext - [requestID: ] Closing org.springframework.context.support.GenericApplicationContext@47a21fa5: startup date [Mon May 16 22:24:56 CEST 2016]; root of context hierarchy
+[INFO] 2016-05-16 22:25:10.537 [Thread-10] o.s.c.a.AnnotationConfigApplicationContext - [requestID: ] Closing org.springframework.context.annotation.AnnotationConfigApplicationContext@557a2e35: startup date [Mon May 16 22:25:07 CEST 2016]; root of context hierarchy
+[INFO] 2016-05-16 22:25:10.538 [Thread-8] o.s.c.s.GenericApplicationContext - [requestID: ] Closing org.springframework.context.support.GenericApplicationContext@1d7be60a: startup date [Mon May 16 22:25:03 CEST 2016]; root of context hierarchy
+[WARN] 2016-05-16 22:25:10.663 [Thread-10] o.s.b.f.s.DisposableBeanAdapter - [requestID: ] Invocation of destroy method failed on bean with name 'inMemoryDatabaseShutdownExecutor': org.h2.jdbc.JdbcSQLException: Baza danych jest już zamknięta (aby zablokować samoczynne zamykanie podczas zamknięcia VM dodaj ";DB_CLOSE_ON_EXIT=FALSE" do URL bazy danych)
+Database is already closed (to disable automatic closing at VM shutdown, add ";DB_CLOSE_ON_EXIT=FALSE" to the db URL) [90121-191]
+[INFO] 2016-05-16 22:25:10.665 [Thread-8] o.s.o.j.LocalContainerEntityManagerFactoryBean - [requestID: ] Closing JPA EntityManagerFactory for persistence unit 'default'
+[INFO] 2016-05-16 22:25:10.665 [Thread-7] o.s.o.j.LocalContainerEntityManagerFactoryBean - [requestID: ] Closing JPA EntityManagerFactory for persistence unit 'default'
+[INFO] 2016-05-16 22:25:10.677 [Thread-10] o.s.o.j.LocalContainerEntityManagerFactoryBean - [requestID: ] Closing JPA EntityManagerFactory for persistence unit 'default'
