@@ -16,7 +16,6 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import pl.java.scalatech.domain.AbstractEntity;
 
 @Entity
 @AllArgsConstructor
@@ -33,12 +32,13 @@ public class Simple extends AbstractEntity implements Supplier<Simple>{
     private @CreatedDate LocalDateTime createDate;
 
     private @LastModifiedDate LocalDateTime lastModifiedDate ;
-    
-    
-  
+
+
+
     @Override
-    public Simple get() {      
+    public Simple get() {
         return Simple.builder().name(randomAlphabetic(15)).build();
     }
+
 
 }

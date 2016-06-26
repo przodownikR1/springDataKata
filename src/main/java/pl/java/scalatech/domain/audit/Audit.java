@@ -4,6 +4,7 @@ import java.time.ZonedDateTime;
 
 import javax.persistence.EntityListeners;
 import javax.persistence.MappedSuperclass;
+import javax.persistence.SecondaryTable;
 
 import org.springframework.data.annotation.CreatedBy;
 import org.springframework.data.annotation.CreatedDate;
@@ -19,6 +20,7 @@ import pl.java.scalatech.domain.AbstractEntity;
 @EntityListeners(AuditingEntityListener.class)
 @Data
 @ToString
+@SecondaryTable(name="audit")
 public abstract class Audit  extends AbstractEntity {
     private static final long serialVersionUID = 2663518387056045900L;
 
@@ -32,7 +34,6 @@ public abstract class Audit  extends AbstractEntity {
     private String createdBy;
 
     @LastModifiedBy
-
     private String lastModifiedBy;
 
 }

@@ -8,6 +8,7 @@ import java.util.stream.Stream;
 
 import javax.persistence.Tuple;
 
+import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Slice;
 import org.springframework.data.domain.Sort;
@@ -25,6 +26,8 @@ public interface SimpleRepository extends JpaRepository<Simple, Long> , JpaSpeci
     Future<Simple> findByName( String username );
 
     Slice<Simple> findTop100ByName ( String name, Pageable pageable );
+
+    Page<Simple> findByName(String name, Pageable pageable);
 
     List<Simple>  findFirst10ByName ( String name, Sort sort);
 

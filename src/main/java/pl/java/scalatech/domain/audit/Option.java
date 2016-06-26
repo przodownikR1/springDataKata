@@ -19,8 +19,8 @@ import lombok.ToString;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-@EntityListeners(AuditingEntityListener.class)
-
+@EntityListeners(AuditingEntityListener.class)//musi gdzie w kontekscie Spring
+//lezec implementacje SpringSecurityAuditorAware
 @ToString(callSuper=true)
 public class Option extends Audit {
 
